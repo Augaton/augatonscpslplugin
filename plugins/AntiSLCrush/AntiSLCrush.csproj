@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AntiSLCrush</RootNamespace>
+    <Version>4.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.4.1" PrivateAssets="all" ExcludeAssets="runtime" />
+    <EmbeddedResource Include="LICENSE.md" />
+  </ItemGroup>
+
+</Project>

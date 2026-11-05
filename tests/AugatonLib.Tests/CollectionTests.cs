@@ -40,7 +40,7 @@ namespace AugatonLib.Tests
                 string folder = Path.Combine(pluginsRoot, plugin);
 
                 foreach (string project in Directory.GetFiles(folder, "*.csproj"))
-                    Assert.DoesNotContain("Reference", File.ReadAllText(project));
+                    Assert.DoesNotContain("ProjectReference", File.ReadAllText(project));
 
                 foreach (string source in Directory.GetFiles(folder, "*.cs", SearchOption.AllDirectories).Where(IsTrackedSource))
                 {

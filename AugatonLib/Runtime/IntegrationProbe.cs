@@ -38,11 +38,6 @@ namespace AugatonLib.Runtime
                 "selection des SCP",
                 false),
             new Integration(
-                new[] { "AntiSLCrush" },
-                "AntiSLCrush",
-                "protection anti-crash",
-                false),
-            new Integration(
                 new[] { "Better3114Spawn" },
                 "Better3114Spawn",
                 "SCP-3114 deguise",
