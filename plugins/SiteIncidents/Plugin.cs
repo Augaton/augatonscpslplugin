@@ -1,6 +1,8 @@
+using System;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.Handlers;
+using LabApi.Features.Console;
 
 namespace SiteIncidents
 {
@@ -23,7 +25,7 @@ namespace SiteIncidents
             Instance = this;
             Service = new IncidentService(this);
 
-            CharacterClassManager.OnRoundStarted += Service.Start;
+            CharacterClassManager.OnRoundStarted += OnRoundStarted;
             ServerEvents.RoundEnded += OnRoundEnded;
             ServerEvents.RoundRestarted += Service.Stop;
 
@@ -32,7 +34,7 @@ namespace SiteIncidents
 
         public override void Disable()
         {
-            CharacterClassManager.OnRoundStarted -= Service.Start;
+            CharacterClassManager.OnRoundStarted -= OnRoundStarted;
             ServerEvents.RoundEnded -= OnRoundEnded;
             ServerEvents.RoundRestarted -= Service.Stop;
 
@@ -41,6 +43,19 @@ namespace SiteIncidents
 
             Service = null;
             Instance = null;
+        }
+
+        // Evenement du jeu, sans la protection de LabAPI : une exception priverait les abonnes suivants.
+        private void OnRoundStarted()
+        {
+            try
+            {
+                Service.Start();
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnRoundStarted: {e}");
+            }
         }
 
         private void OnRoundEnded(RoundEndedEventArgs ev) => Service.Stop();
