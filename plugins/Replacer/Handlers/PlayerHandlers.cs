@@ -6,6 +6,7 @@ using AugatonLib.Bus;
 using AugatonLib.Effects;
 using AugatonLib.Text;
 using CustomPlayerEffects;
+using InventorySystem.Disarming;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -19,9 +20,15 @@ namespace Replacer.Handlers
 {
     public sealed class PlayerHandlers
     {
+        private const float PendingTickSeconds = 1f;
+
         private readonly Plugin plugin;
         private readonly SpectatorQueue queue;
         private readonly List<CoroutineHandle> pendingSnapshots = new List<CoroutineHandle>(4);
+        private readonly List<PendingRole> pendingRoles = new List<PendingRole>(4);
+
+        private CoroutineHandle pendingWatcher;
+        private bool watchingPendingRoles;
 
         public PlayerHandlers(Plugin plugin, SpectatorQueue queue)
         {
@@ -65,7 +72,7 @@ namespace Replacer.Handlers
 
                 if (replacement is null)
                 {
-                    Logger.Debug($"Aucun spectateur eligible pour remplacer {snapshot.Nickname}.", plugin.Config.Debug);
+                    Defer(leaver, snapshot);
                     return;
                 }
 
@@ -119,10 +126,14 @@ namespace Replacer.Handlers
                 Health = player.Health,
                 MaxHealth = player.MaxHealth,
                 HumeShield = player.HumeShield,
+                Team = player.Team,
                 ArtificialHealth = player.ArtificialHealth,
                 IsDisarmed = player.IsDisarmed,
                 Disarmer = player.DisarmedBy,
             };
+
+            if (plugin.Config.TransferCuffs && plugin.Config.TransferPosition)
+                CaptureCaptives(player, snapshot);
 
             if (plugin.Config.TransferEffects)
             {
@@ -156,7 +167,8 @@ namespace Replacer.Handlers
             if (!plugin.Config.TransferPosition)
                 flags |= RoleSpawnFlags.UseSpawnpoint;
 
-            if (!plugin.Config.TransferInventory)
+            // Un remplacant differe arrive apres coup : les objets du joueur parti l'attendent au sol.
+            if (!plugin.Config.TransferInventory || (snapshot.IsDeferred && !plugin.Config.TransferPosition))
                 flags |= RoleSpawnFlags.AssignInventory;
 
             replacement.SetRole(snapshot.Role, RoleChangeReason.Respawn, flags);
@@ -186,6 +198,8 @@ namespace Replacer.Handlers
 
                     if (plugin.Config.TransferCuffs && snapshot.IsDisarmed)
                         RestoreCuffs(target, snapshot.Disarmer);
+
+                    RestoreCaptives(target, snapshot);
 
                     if (plugin.Config.TransferEffects)
                     {
@@ -269,6 +283,112 @@ namespace Replacer.Handlers
                 target.DisarmedBy = disarmer;
         }
 
+        private static void CaptureCaptives(Player guard, PlayerSnapshot snapshot)
+        {
+            foreach (DisarmedPlayers.DisarmedEntry entry in DisarmedPlayers.Entries)
+            {
+                if (entry.Disarmer == guard.NetworkId && Player.TryGet(entry.DisarmedPlayer, out Player captive))
+                    snapshot.Captives.Add(captive);
+            }
+        }
+
+        // Le depart du gardien libere ses prisonniers le temps que le remplacant soit en place.
+        private static void RestoreCaptives(Player target, PlayerSnapshot snapshot)
+        {
+            if (snapshot.IsDeferred)
+                return;
+
+            foreach (Player captive in snapshot.Captives)
+            {
+                if (!captive.IsDestroyed && captive.IsAlive && !captive.IsDisarmed)
+                    captive.DisarmedBy = target;
+            }
+        }
+
+        private void Defer(Player leaver, PlayerSnapshot snapshot)
+        {
+            float seconds = plugin.Config.PendingRoleSeconds;
+
+            if (seconds <= 0f)
+            {
+                Logger.Debug($"Aucun spectateur eligible pour remplacer {snapshot.Nickname}.", plugin.Config.Debug);
+                return;
+            }
+
+            if (plugin.Config.TransferInventory && !leaver.IsSCP)
+                leaver.DropEverything();
+
+            snapshot.IsDeferred = true;
+            pendingRoles.Add(new PendingRole(snapshot, UnityEngine.Time.realtimeSinceStartup + seconds));
+            GenocideArbiter.Hold(Plugin.DepartureOwner, snapshot.Team, seconds + PendingTickSeconds);
+
+            if (watchingPendingRoles)
+                return;
+
+            watchingPendingRoles = true;
+            pendingWatcher = Timing.RunCoroutine(WatchPendingRoles());
+        }
+
+        private IEnumerator<float> WatchPendingRoles()
+        {
+            while (pendingRoles.Count > 0)
+            {
+                yield return Timing.WaitForSeconds(PendingTickSeconds);
+
+                try
+                {
+                    AssignPendingRoles();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"AssignPendingRoles: {e}");
+                }
+            }
+
+            watchingPendingRoles = false;
+        }
+
+        private void AssignPendingRoles()
+        {
+            float now = UnityEngine.Time.realtimeSinceStartup;
+            bool inProgress = Round.IsRoundInProgress;
+
+            for (int i = 0; i < pendingRoles.Count;)
+            {
+                PendingRole pending = pendingRoles[i];
+                bool open = inProgress && now < pending.ExpiresAt;
+                Player replacement = open ? queue.Pick(null, plugin.Config) : null;
+
+                if (open && replacement is null)
+                {
+                    i++;
+                    continue;
+                }
+
+                pendingRoles.RemoveAt(i);
+
+                if (replacement is not null)
+                {
+                    queue.MarkReplaced(replacement);
+                    ApplySnapshot(replacement, pending.Snapshot);
+                }
+
+                ReleaseTeamHold(pending.Snapshot.Team);
+            }
+        }
+
+        private void ReleaseTeamHold(Team team)
+        {
+            foreach (PendingRole other in pendingRoles)
+            {
+                if (other.Snapshot.Team == team)
+                    return;
+            }
+
+            GenocideArbiter.Release(Plugin.DepartureOwner, team);
+            PluginBus.Publish(BusTopics.TeamCheckRequested, Plugin.DepartureOwner, team);
+        }
+
         private static int CountRealPlayers()
         {
             int count = 0;
@@ -288,6 +408,16 @@ namespace Replacer.Handlers
                 Timing.KillCoroutines(handle);
 
             pendingSnapshots.Clear();
+
+            if (watchingPendingRoles)
+                Timing.KillCoroutines(pendingWatcher);
+
+            watchingPendingRoles = false;
+
+            foreach (PendingRole pending in pendingRoles)
+                GenocideArbiter.Release(Plugin.DepartureOwner, pending.Snapshot.Team);
+
+            pendingRoles.Clear();
         }
 
         private void Announce(Player target, PlayerSnapshot snapshot)

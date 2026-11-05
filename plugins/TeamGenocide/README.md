@@ -6,7 +6,9 @@
 Annonce l'extinction complete d'une equipe : C.A.S.S.I.E, broadcast, hint et
 effet lumineux. Seule la **mort** du dernier membre declenche l'annonce : une
 evasion ou un changement de role force par le staff ne compte pas comme une
-extinction. Une deconnexion compte si `disconnect_drop` est actif (defaut), car
+extinction. L'annonce attend le resultat quand un remplacant peut encore arriver, via
+SCPReplacer ou Replacer, et part si personne n'est venu. Une deconnexion compte si
+`disconnect_drop` est actif (defaut), car
 le jeu tue alors le joueur qui part.
 
 **LabAPI 1.1.7** — `dotnet build -c Release plugins/TeamGenocide/TeamGenocide.csproj`

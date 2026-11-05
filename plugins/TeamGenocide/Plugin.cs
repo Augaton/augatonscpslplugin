@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
@@ -32,6 +33,8 @@ namespace TeamGenocide
             ServerEvents.RoundEnded += genocideHandlers.OnRoundEnded;
             ServerEvents.RoundRestarted += genocideHandlers.OnRoundRestarted;
 
+            PluginBus.Subscribe(Name, BusTopics.TeamCheckRequested, genocideHandlers.OnTeamCheckRequested);
+
             PluginDirectory.Register(
                 this,
                 Capability.Hints,
@@ -48,6 +51,8 @@ namespace TeamGenocide
                 ServerEvents.RoundStarted -= genocideHandlers.OnRoundStarted;
                 ServerEvents.RoundEnded -= genocideHandlers.OnRoundEnded;
                 ServerEvents.RoundRestarted -= genocideHandlers.OnRoundRestarted;
+
+                PluginBus.UnsubscribeOwner(Name);
 
                 genocideHandlers.Reset();
             }

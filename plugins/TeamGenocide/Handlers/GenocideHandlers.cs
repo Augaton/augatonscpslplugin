@@ -54,52 +54,60 @@ namespace TeamGenocide.Handlers
                 if (!activated || ev?.Player is null || ev.ChangeReason != RoleChangeReason.Died)
                     return;
 
-                if (GenocideArbiter.IsSuppressed)
-                    return;
-
                 Team leaving = ev.OldRole.Team;
 
-                if (leaving == Team.Dead)
+                if (leaving == Team.Dead || ev.NewRole.GetTeam() == leaving)
                     return;
 
-                if (ev.NewRole.GetTeam() == leaving)
-                    return;
-
-                Config config = plugin.Config;
-
-                if (config.AnnounceOncePerTeam && announced.Contains(leaving))
-                    return;
-
-                if (!config.Announcements.TryGetValue(leaving, out List<Announcement> announcements)
-                    || announcements is null
-                    || announcements.Count == 0)
-                {
-                    return;
-                }
-
-                if (CountTeam(leaving, ev.Player) > 0)
-                    return;
-
-                announced.Add(leaving);
-
-                Announcement announcement = announcements[UnityEngine.Random.Range(0, announcements.Count)];
-
-                if (announcement is null)
-                    return;
-
-                CoroutineHandle handle = announcement.Announce();
-
-                if (handle.IsRunning)
-                    pending.Add(handle);
-
-                PluginBus.Publish(BusTopics.TeamWiped, "TeamGenocide", leaving);
-
-                Logger.Info($"[TeamGenocide] Equipe {leaving} entierement eliminee.");
+                AnnounceIfWiped(leaving, ev.Player);
             }
             catch (Exception e)
             {
                 Logger.Error($"OnChangingRole: {e}");
             }
+        }
+
+        public void OnTeamCheckRequested(BusMessage message)
+        {
+            if (activated && message is not null && message.TryGet(out Team team))
+                AnnounceIfWiped(team, null);
+        }
+
+        private void AnnounceIfWiped(Team team, Player excluded)
+        {
+            if (GenocideArbiter.IsSuppressed || GenocideArbiter.IsHeld(team))
+                return;
+
+            Config config = plugin.Config;
+
+            if (config.AnnounceOncePerTeam && announced.Contains(team))
+                return;
+
+            if (!config.Announcements.TryGetValue(team, out List<Announcement> announcements)
+                || announcements is null
+                || announcements.Count == 0)
+            {
+                return;
+            }
+
+            if (CountTeam(team, excluded) > 0)
+                return;
+
+            announced.Add(team);
+
+            Announcement announcement = announcements[UnityEngine.Random.Range(0, announcements.Count)];
+
+            if (announcement is null)
+                return;
+
+            CoroutineHandle handle = announcement.Announce();
+
+            if (handle.IsRunning)
+                pending.Add(handle);
+
+            PluginBus.Publish(BusTopics.TeamWiped, "TeamGenocide", team);
+
+            Logger.Info($"[TeamGenocide] Equipe {team} entierement eliminee.");
         }
 
         private static int CountTeam(Team team, Player excluded)

@@ -120,3 +120,10 @@ La version 3.x ciblait EXILED 2.3.4. Quatre defauts corriges :
 
 L'anti-lag aleatoire est remplace par un etalement deterministe, et les
 callbacks differes sont annules au depart du joueur et au changement de round.
+
+## Effets de la taille
+
+Desactive par defaut, `enable_size_gameplay` donne un petit avantage a chaque gabarit. Il ne touche
+que les humains : un petit personnage va plus vite, un grand a plus de vie. Reglages :
+`speed_percent_per_tenth`, `health_percent_per_tenth`, `max_speed_percent`, `max_health_percent`.
+Avec les valeurs par defaut, une taille de 0,9 donne +3 % de vitesse et -5 % de vie.

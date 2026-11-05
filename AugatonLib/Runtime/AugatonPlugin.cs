@@ -8,7 +8,7 @@ namespace AugatonLib.Runtime
 {
     /// <summary>
     /// Socle des plugins : la validation et les reglages de hints sont rejoues a chaque rechargement,
-    /// car LoadConfigs est le seul point d'entree de <c>lapi reload configs</c>.
+    /// car LoadConfigs est le seul point d'entree de <c>labapi reload configs</c>.
     /// </summary>
     public abstract class AugatonPlugin<TConfig> : Plugin<TConfig>
         where TConfig : class, new()

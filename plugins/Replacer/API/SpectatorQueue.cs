@@ -8,6 +8,7 @@ namespace Replacer.API
     {
         private readonly Dictionary<string, float> spectatingSince = new Dictionary<string, float>();
         private readonly Dictionary<string, float> lastReplacement = new Dictionary<string, float>();
+        private readonly HashSet<string> optedOut = new HashSet<string>();
         private readonly List<Player> candidates = new List<Player>(32);
 
         public void MarkSpectating(Player player)
@@ -42,8 +43,18 @@ namespace Replacer.API
                 return;
 
             spectatingSince.Remove(player.UserId);
-            lastReplacement.Remove(player.UserId);
         }
+
+        public bool ToggleOptOut(Player player)
+        {
+            if (optedOut.Remove(player.UserId))
+                return false;
+
+            optedOut.Add(player.UserId);
+            return true;
+        }
+
+        public void ClearOptOuts() => optedOut.Clear();
 
         public void Clear()
         {
@@ -69,7 +80,7 @@ namespace Replacer.API
                 if (player.Role != RoleTypeId.Spectator)
                     continue;
 
-                if (player.IsOverwatchEnabled)
+                if (player.IsOverwatchEnabled || optedOut.Contains(player.UserId))
                     continue;
 
                 if (config.PerPlayerCooldownSeconds > 0f

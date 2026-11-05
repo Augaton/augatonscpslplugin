@@ -40,6 +40,21 @@ namespace RealisticSizes
         [Description("Ecart en secondes ajoute entre chaque joueur lors de l'etalement.")]
         public float SpreadStep { get; set; } = 0.15f;
 
+        [Description("La taille influe sur les humains : petit = plus rapide, grand = plus de vie. Desactive par defaut, a equilibrer.")]
+        public bool EnableSizeGameplay { get; set; } = false;
+
+        [Description("Vitesse gagnee ou perdue, en pourcent, par ecart de 0.1 de taille.")]
+        public float SpeedPercentPerTenth { get; set; } = 3f;
+
+        [Description("Vie gagnee ou perdue, en pourcent, par ecart de 0.1 de taille.")]
+        public float HealthPercentPerTenth { get; set; } = 5f;
+
+        [Description("Ecart maximal de vitesse, en pourcent.")]
+        public float MaxSpeedPercent { get; set; } = 15f;
+
+        [Description("Ecart maximal de vie, en pourcent.")]
+        public float MaxHealthPercent { get; set; } = 20f;
+
         [Description("Plage utilisee en mode Roleplay.")]
         public SizeRange RoleplayRange { get; set; } = new SizeRange
         {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AugatonLib.Arbitration;
+using AugatonLib.Caching;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.Handlers;
@@ -22,7 +23,10 @@ namespace Replacer
 
         public static Plugin Instance { get; private set; }
 
-        private SpectatorQueue queue;
+        public SpectatorQueue Queue { get; private set; }
+
+        public CooldownTracker Cooldowns { get; private set; }
+
         private PlayerHandlers playerHandlers;
 
         public override void Enable()
@@ -30,8 +34,9 @@ namespace Replacer
             Instance = this;
 
 
-            queue = new SpectatorQueue();
-            playerHandlers = new PlayerHandlers(this, queue);
+            Queue = new SpectatorQueue();
+            Cooldowns = new CooldownTracker();
+            playerHandlers = new PlayerHandlers(this, Queue);
 
             PlayerDeparture.Departing += playerHandlers.OnDeparting;
             PlayerEvents.ChangingRole += playerHandlers.OnChangingRole;
@@ -63,14 +68,16 @@ namespace Replacer
             ServerEvents.RoundEnded -= OnRoundEnded;
             ServerEvents.RoundRestarted -= OnRoundRestarted;
 
-            queue?.Clear();
+            Queue?.Clear();
+            Cooldowns?.Clear();
             Hints.Clear();
 
             DepartureArbiter.Withdraw(DepartureOwner);
             PluginDirectory.Unregister(this);
 
             playerHandlers = null;
-            queue = null;
+            Queue = null;
+            Cooldowns = null;
             Instance = null;
         }
 
@@ -94,6 +101,12 @@ namespace Replacer
                 Config.PerPlayerCooldownSeconds = 0f;
             }
 
+            if (Config.PendingRoleSeconds < 0f)
+            {
+                Logger.Warn($"PendingRoleSeconds ({Config.PendingRoleSeconds}) est negatif, remis a 0.");
+                Config.PendingRoleSeconds = 0f;
+            }
+
             if (Config.ReplaceableRoles is null)
             {
                 Logger.Warn("ReplaceableRoles est absent, remis a une liste vide.");
@@ -109,15 +122,17 @@ namespace Replacer
 
         private void OnRoundStarted()
         {
-            queue.Clear();
+            Queue.Clear();
             Hints.Clear();
         }
 
-        private void OnRoundEnded(RoundEndedEventArgs ev) => queue.Clear();
+        private void OnRoundEnded(RoundEndedEventArgs ev) => Queue.Clear();
 
         private void OnRoundRestarted()
         {
-            queue.Clear();
+            Queue.Clear();
+            Queue.ClearOptOuts();
+            Cooldowns.Clear();
             playerHandlers.Reset();
             Hints.Clear();
         }

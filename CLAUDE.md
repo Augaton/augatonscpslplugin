@@ -36,7 +36,7 @@ Un fichier, une responsabilité. Chaque plugin garde son `README.md` et son `NOT
 
 Un plugin hérite de `AugatonPlugin<Config, Translation>`, ou de `AugatonPlugin<Config>` s'il n'a aucun
 texte à traduire, et fournit `Name`, `Description`, `Author`,
-`Enable()` et `Disable()`. `LoadConfigs` est appelé avant `Enable` et par `lapi reload configs` ; il
+`Enable()` et `Disable()`. `LoadConfigs` est appelé avant `Enable` et par `labapi reload configs` ; il
 charge `config.yml` et `translation.yml`, puis appelle `ValidateConfig()`, que l'on surcharge pour
 borner les valeurs avec un `Logger.Warn`. Une config qui implémente `IHintSettings` règle `plugin.Hints`
 à chaque chargement. L'activation du plugin se règle dans `properties.yml`, créé
@@ -99,11 +99,12 @@ Ces ressources sont arbitrées par AugatonLib et ne s'écrivent jamais en direct
 | Lumières | `LightArbiter` | `Map.TurnOffLights`, `Map.SetColorOfLights`, `OverrideLightsColor` |
 | Portes verrouillées | `DoorLockRegistry` | `ev.IsAllowed` sur une porte sans consulter le registre |
 | Départ d'un joueur | `DepartureArbiter` | agir sur un départ sans vérifier `IsOwner` |
-| Annonces d'extinction | `GenocideArbiter` | annoncer sans vérifier `IsSuppressed` |
+| Annonces d'extinction | `GenocideArbiter` | annoncer sans vérifier `IsSuppressed` et `IsHeld(team)` |
 
 Chaque plugin dépose une demande sous un nom de propriétaire unique et la libère dans `Disable` **et**
 au redémarrage de round : AugatonLib vit dans `dependencies/`, une demande non libérée reste posée.
-Déclarer ses capacités avec `PluginDirectory.Register(this, Capability.Scale, ...)` et
+`GenocideArbiter.Hold` retient une seule équipe le temps qu'un remplaçant arrive ; celui qui retient
+publie ensuite `BusTopics.TeamCheckRequested`. Déclarer ses capacités avec `PluginDirectory.Register(this, Capability.Scale, ...)` et
 `PluginDirectory.Unregister(this)`. Les synergies optionnelles passent par `PluginBus`, jamais par une
 référence directe entre plugins.
 

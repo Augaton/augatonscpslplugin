@@ -96,7 +96,7 @@ Voir le [README racine](../../README.md) pour la compilation et l'installation.
 - Une arme larguee part chargee, avec ses accessoires par defaut. LabAPI cree un
   pickup au chargeur vide : `FirearmPickup.OnDistributed` le remplit, apres
   l'enregistrement d'un code d'accessoires pour eviter le tirage au hasard.
-- `lapi reload configs` remplace l'objet `Config` : le service relit `plugin.Config`
+- `labapi reload configs` remplace l'objet `Config` : le service relit `plugin.Config`
   a chaque usage, et un largage annonce relit son profil par sa cle.
 
 ## Note de version 4.3
@@ -160,3 +160,13 @@ C.A.S.S.I.E configurable par profil.
 
 Les deux coroutines independantes sont remplacees par **un seul ordonnanceur**
 qui pilote tous les profils, conformement aux conventions du projet.
+
+## Pilules et declencheurs
+
+`pill_draws` et `pill_chance` ajoutent des pilules SCP500s a un largage. Sans SCP500s, ces cles sont
+sans effet. Elles remplacent `custom_items`, qui dependait d'EXILED.
+
+Un profil peut aussi partir sur un evenement de la partie, en plus de son minuteur :
+`generators_trigger` (nombre de generateurs actives), `decontamination_trigger` et `warhead_trigger`.
+Ces largages comptent dans `max_drops_per_round`. Par defaut, seul le profil `mtf` en utilise un :
+il part quand les 3 generateurs sont actifs.

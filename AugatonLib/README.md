@@ -38,6 +38,7 @@ Il doit etre mis a jour en meme temps que les plugins qui en dependent.
 | `Runtime.PlayerDeparture` | Depart d'un joueur tant que son etat est lisible, voir plus bas |
 | `Spawning.RoleSpawn` | Point d'apparition d'un role |
 | `World.Mice` | Apparition des souris, avec controle du type |
+| `Voting.BallotBox` | Urne : un vote par joueur, modifiable, avec egalites |
 | `Text.RoleNames` | Nom complet d'un role |
 
 ## Depart d'un joueur

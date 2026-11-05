@@ -5,6 +5,7 @@ using CommandSystem;
 using LabApi.Features.Wrappers;
 using PlayerRoles.FirstPersonControl;
 using UnityEngine;
+using RealisticSizes.API;
 
 namespace RealisticSizes.Commands
 {
@@ -39,6 +40,7 @@ namespace RealisticSizes.Commands
                         continue;
 
                     ScaleArbiter.Reset(player, Vector3.one);
+                    SizeGameplay.Clear(player, Plugin.Instance.Config);
                     count++;
                 }
 
@@ -55,6 +57,7 @@ namespace RealisticSizes.Commands
             }
 
             ScaleArbiter.Reset(found, Vector3.one);
+            SizeGameplay.Clear(found, Plugin.Instance.Config);
             Audit(sender, "RealisticSizes", $"a remis a zero la taille de {found.Nickname} ({found.UserId})");
 
             response = $"{found.Nickname} est revenu a sa taille normale.";

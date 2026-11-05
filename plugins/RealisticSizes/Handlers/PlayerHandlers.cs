@@ -63,6 +63,7 @@ namespace RealisticSizes.Handlers
                             return;
 
                         ScaleArbiter.SetBaseline(target, scale);
+                        SizeGameplay.Apply(target, scale.y, plugin.Config);
 
                         Logger.Debug($"Taille appliquee a {target.Nickname} ({role}) : {scale}.", plugin.Config.Debug);
                     }

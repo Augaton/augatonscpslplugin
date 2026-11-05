@@ -79,6 +79,11 @@ namespace RealisticSizes
                 Config.SpreadMinPlayers = 1;
             }
 
+            Config.SpeedPercentPerTenth = UnityEngine.Mathf.Max(0f, Config.SpeedPercentPerTenth);
+            Config.HealthPercentPerTenth = UnityEngine.Mathf.Max(0f, Config.HealthPercentPerTenth);
+            Config.MaxSpeedPercent = UnityEngine.Mathf.Clamp(Config.MaxSpeedPercent, 0f, 50f);
+            Config.MaxHealthPercent = UnityEngine.Mathf.Clamp(Config.MaxHealthPercent, 0f, 50f);
+
             if (Config.IgnoredRoles is null)
             {
                 Logger.Warn("IgnoredRoles est absent, remis a une liste vide.");

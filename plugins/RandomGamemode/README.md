@@ -85,7 +85,7 @@ plugin, n'existe plus : l'activation se regle dans `properties.yml`, cree par
 LabAPI. `no_permission` et `plugin_unavailable` sont retires de la traduction : le
 refus de permission vient du socle de commandes d'AugatonLib.
 
-`lapi reload configs` s'applique tout de suite : chaque mode relit ses reglages a
+`labapi reload configs` s'applique tout de suite : chaque mode relit ses reglages a
 chaque usage, y compris ceux d'un mode en cours.
 
 ## Dependances
@@ -151,3 +151,11 @@ registre unique repartit les evenements vers le seul mode actif.
 plugins passent par un **arbitre** a demandes nommees,
 `AugatonLib.FriendlyFire.FriendlyFireArbiter`. Les deux peuvent intervenir sur le
 meme round sans s'ecraser.
+
+## Vote du mode
+
+Avec `enable_vote`, `gamemode_chance` est tire dans le lobby. Si un mode doit avoir lieu, `vote_options`
+modes sont proposes et les joueurs votent dans la console `~` : `.votemode` liste les choix,
+`.votemode 2` vote, et `.vm` est un alias. Le mode le plus vote demarre, avec un tirage en cas
+d'egalite. Sans vote, ou si aucun choix ne peut demarrer, le tirage pondere habituel s'applique.
+`gamemode force` l'emporte toujours.

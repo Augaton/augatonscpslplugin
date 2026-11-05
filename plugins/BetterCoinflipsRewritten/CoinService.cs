@@ -29,7 +29,7 @@ namespace BetterCoinflipsRewritten
             RegisterEffects();
         }
 
-        private void RegisterEffects()
+        public void RegisterEffects()
         {
             goodEffects.Clear();
             badEffects.Clear();

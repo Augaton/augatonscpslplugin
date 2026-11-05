@@ -22,33 +22,40 @@ namespace RandomGamemode.Handlers
         {
             registry.End(false);
             Plugin.Instance?.Bridge?.Refresh();
+            registry.PrepareVote();
         });
 
-        public void OnPlayerDied(PlayerDeathEventArgs ev) => Dispatch(g => g.OnPlayerDied(ev));
+        public void OnJoined(PlayerJoinedEventArgs ev) => Guard(() => registry.ShowVote(ev?.Player));
+
+        public void OnPlayerDied(PlayerDeathEventArgs ev) => Dispatch((g, e) => g.OnPlayerDied(e), ev);
 
         // ChangedRole et non Spawned : Spawned ignore les roles sans point d'apparition, comme SCP-079,
         // et part avant la remise de l'inventaire.
         public void OnPlayerSpawned(PlayerChangedRoleEventArgs ev)
         {
             Guard(() => registry.EnforceHumansOnly(ev?.Player));
-            Dispatch(g => g.OnPlayerSpawned(ev));
+            Dispatch((g, e) => g.OnPlayerSpawned(e), ev);
         }
 
-        public void OnThrownProjectile(PlayerThrewProjectileEventArgs ev) => Dispatch(g => g.OnThrownProjectile(ev));
+        public void OnThrownProjectile(PlayerThrewProjectileEventArgs ev) => Dispatch((g, e) => g.OnThrownProjectile(e), ev);
 
-        public void OnDroppingItem(PlayerDroppingItemEventArgs ev) => Dispatch(g => g.OnDroppingItem(ev));
+        public void OnDroppingItem(PlayerDroppingItemEventArgs ev) => Dispatch((g, e) => g.OnDroppingItem(e), ev);
 
-        public void OnStoppingGenerator(PlayerDeactivatingGeneratorEventArgs ev) => Dispatch(g => g.OnStoppingGenerator(ev));
+        public void OnStoppingGenerator(PlayerDeactivatingGeneratorEventArgs ev) => Dispatch((g, e) => g.OnStoppingGenerator(e), ev);
 
-        public void OnInteractingDoor(PlayerInteractingDoorEventArgs ev) => Dispatch(g => g.OnInteractingDoor(ev));
+        public void OnInteractingDoor(PlayerInteractingDoorEventArgs ev) => Dispatch((g, e) => g.OnInteractingDoor(e), ev);
 
-        public void OnDecontaminating(LczDecontaminationStartingEventArgs ev) => Dispatch(g => g.OnDecontaminating(ev));
+        public void OnDecontaminating(LczDecontaminationStartingEventArgs ev) => Dispatch((g, e) => g.OnDecontaminating(e), ev);
 
-        public void OnRespawningTeam(WaveRespawningEventArgs ev) => Dispatch(g => g.OnRespawningTeam(ev));
+        public void OnRespawningTeam(WaveRespawningEventArgs ev) => Dispatch((g, e) => g.OnRespawningTeam(e), ev);
 
-        public void OnEndingRound(RoundEndingConditionsCheckEventArgs ev) => Dispatch(g => g.OnEndingRound(ev));
+        public void OnEndingRound(RoundEndingConditionsCheckEventArgs ev)
+        {
+            Dispatch((g, e) => g.OnEndingRound(e), ev);
+            registry.ApplyForcedEnd(ev);
+        }
 
-        private void Dispatch(Action<GamemodeBase> action)
+        private void Dispatch<T>(Action<GamemodeBase, T> action, T ev)
         {
             GamemodeBase active = registry.Active;
 
@@ -57,7 +64,7 @@ namespace RandomGamemode.Handlers
 
             try
             {
-                action(active);
+                action(active, ev);
             }
             catch (Exception e)
             {

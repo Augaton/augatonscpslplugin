@@ -2,6 +2,7 @@ using AugatonLib.Effects;
 using System;
 using System.Collections.Generic;
 using AugatonLib.Arbitration;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using Cassie;
 using LabApi.Events.Arguments.PlayerEvents;
@@ -78,6 +79,8 @@ namespace SCP500s
             PlayerEvents.ChangedRole += OnChangedRole;
             PlayerEvents.Left += OnLeft;
 
+            PluginBus.Subscribe(Interop.Owner, BusTopics.PillSpawnRequested, OnPillSpawnRequested);
+
             PluginDirectory.Register(
                 this,
                 Capability.Hints,
@@ -111,6 +114,7 @@ namespace SCP500s
             Targets?.Clear();
 
             LightArbiter.ReleaseOwner(Interop.Owner);
+            PluginBus.UnsubscribeOwner(Interop.Owner);
             PluginDirectory.Unregister(this);
 
             registry = null;
@@ -523,6 +527,12 @@ namespace SCP500s
             {
                 Logger.Error($"OnChangedRole: {e}");
             }
+        }
+
+        private void OnPillSpawnRequested(BusMessage message)
+        {
+            if (message.TryGet(out Vector3 position))
+                lootReplacement.SpawnAt(position);
         }
 
         private void OnLeft(PlayerLeftEventArgs ev)

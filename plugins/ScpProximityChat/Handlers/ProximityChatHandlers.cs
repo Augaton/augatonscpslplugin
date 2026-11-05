@@ -21,13 +21,11 @@ namespace ScpProximityChat.Handlers
         private readonly ActivationType activationType;
         private readonly Dictionary<string, SpeakerToy> toggledPlayers = new Dictionary<string, SpeakerToy>();
         private readonly Dictionary<string, float> lastToggle = new Dictionary<string, float>();
-        private readonly float effectiveVolume;
 
         public ProximityChatHandlers(Plugin plugin)
         {
             this.plugin = plugin;
             activationType = plugin.Config.ActivationType;
-            effectiveVolume = Mathf.Clamp(plugin.Config.Volume, 0f, plugin.Config.MaxVolume);
         }
 
         private Config config => plugin.Config;
@@ -112,13 +110,15 @@ namespace ScpProximityChat.Handlers
                 if (opusHandler is null)
                     return;
 
+                Config settings = config;
+                float gain = Mathf.Clamp(settings.Volume, 0f, settings.MaxVolume);
                 float[] samples = opusHandler.SampleBuffer;
 
                 if (opusHandler.Decoder.Decode(ev.Message.Data, ev.Message.DataLength, samples) != samples.Length)
                     return;
 
                 for (int i = 0; i < samples.Length; i++)
-                    samples[i] = Mathf.Clamp(samples[i] * effectiveVolume, -1f, 1f);
+                    samples[i] = Mathf.Clamp(samples[i] * gain, -1f, 1f);
 
                 byte[] encoded = opusHandler.EncodedBuffer;
                 int dataLength = opusHandler.Encoder.Encode(samples, encoded);
@@ -131,7 +131,7 @@ namespace ScpProximityChat.Handlers
                     if (!target.IsPlayer || !target.IsReady)
                         continue;
 
-                    if (config.UseDefaultScpChat && target.IsSCP)
+                    if (settings.UseDefaultScpChat && target.IsSCP)
                         continue;
 
                     if (target.RoleBase is not IVoiceRole voiceRole)
@@ -143,7 +143,7 @@ namespace ScpProximityChat.Handlers
                     target.ReferenceHub.connectionToClient.Send(audioMessage);
                 }
 
-                if (!config.UseDefaultScpChat)
+                if (!settings.UseDefaultScpChat)
                     ev.IsAllowed = false;
             }
             catch (OpusException e)

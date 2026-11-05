@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Caching;
 using AugatonLib.Integrations;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
@@ -20,6 +21,8 @@ namespace RandomGamemode
         public static Plugin Instance { get; private set; }
 
         public GamemodeRegistry Registry { get; private set; }
+
+        public CooldownTracker VoteCooldowns { get; } = new CooldownTracker();
 
         public UncomplicatedBridge Bridge { get; private set; }
 
@@ -47,6 +50,7 @@ namespace RandomGamemode
             ServerEvents.WaveRespawning += gamemodeHandlers.OnRespawningTeam;
             ServerEvents.LczDecontaminationStarting += gamemodeHandlers.OnDecontaminating;
 
+            PlayerEvents.Joined += gamemodeHandlers.OnJoined;
             PlayerEvents.Death += gamemodeHandlers.OnPlayerDied;
             PlayerEvents.ChangedRole += gamemodeHandlers.OnPlayerSpawned;
             PlayerEvents.ThrewProjectile += gamemodeHandlers.OnThrownProjectile;
@@ -77,6 +81,7 @@ namespace RandomGamemode
                 ServerEvents.WaveRespawning -= gamemodeHandlers.OnRespawningTeam;
                 ServerEvents.LczDecontaminationStarting -= gamemodeHandlers.OnDecontaminating;
 
+                PlayerEvents.Joined -= gamemodeHandlers.OnJoined;
                 PlayerEvents.Death -= gamemodeHandlers.OnPlayerDied;
                 PlayerEvents.ChangedRole -= gamemodeHandlers.OnPlayerSpawned;
                 PlayerEvents.ThrewProjectile -= gamemodeHandlers.OnThrownProjectile;

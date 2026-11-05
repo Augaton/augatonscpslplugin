@@ -52,6 +52,12 @@ namespace Replacer
         [Description("Duree en secondes pendant laquelle un joueur deja remplacant ne peut pas etre repioche. 0 = desactive.")]
         public float PerPlayerCooldownSeconds { get; set; } = 120f;
 
+        [Description("Duree en secondes pendant laquelle un role sans remplacant reste a prendre. 0 = role perdu.")]
+        public float PendingRoleSeconds { get; set; } = 30f;
+
+        [Description("Delai minimal en secondes entre deux utilisations de .noreplace.")]
+        public float CommandCooldownSeconds { get; set; } = 3f;
+
         [Description("Annonce le remplacement a tout le serveur en plus du remplacant.")]
         public bool AnnounceToServer { get; set; } = false;
 

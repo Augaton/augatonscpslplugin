@@ -39,5 +39,23 @@ namespace RandomGamemode
 
         [Description("Hint de passage de palier au Gun Game. %TIER% est remplace par le numero du palier.")]
         public string GunGameTier { get; set; } = "<color=yellow>Palier %TIER%</color>";
+
+        [Description("Broadcast du vote. %OPTIONS% est remplace par la liste numerotee des modes.")]
+        public string VoteBroadcast { get; set; } = "<size=28><color=yellow>Mode special au prochain round ! Console (~) : .votemode numero</color>\n%OPTIONS%</size>";
+
+        [Description("Reponse quand aucun vote n'est ouvert.")]
+        public string VoteClosed { get; set; } = "Aucun vote n'est ouvert.";
+
+        [Description("Reponse a un numero invalide.")]
+        public string VoteInvalid { get; set; } = "Numero invalide. Tapez .votemode pour voir les choix.";
+
+        [Description("Reponse quand le joueur vote trop vite.")]
+        public string VoteTooFast { get; set; } = "Attendez un instant avant de revoter.";
+
+        [Description("Reponse quand la commande ne vient pas d'un joueur.")]
+        public string VotePlayerOnly { get; set; } = "Commande reservee aux joueurs.";
+
+        [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
+        public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }
 }

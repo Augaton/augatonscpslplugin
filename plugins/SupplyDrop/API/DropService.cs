@@ -25,10 +25,42 @@ namespace SupplyDrop.API
 
         private CoroutineHandle scheduler;
         private bool running;
+        private int generatorsActivated;
 
         public DropService(Plugin plugin) => this.plugin = plugin;
 
         private Config Config => plugin.Config;
+
+        public void OnGeneratorActivated()
+        {
+            generatorsActivated++;
+            FireEventDrops(profile => profile.GeneratorsTrigger == generatorsActivated);
+        }
+
+        public void OnDecontaminationStarted() => FireEventDrops(profile => profile.DecontaminationTrigger);
+
+        public void OnWarheadDetonated() => FireEventDrops(profile => profile.WarheadTrigger);
+
+        private void FireEventDrops(Func<DropProfile, bool> isTriggered)
+        {
+            if (!Round.IsRoundInProgress || Player.Count < Config.MinPlayers)
+                return;
+
+            foreach (DropProfile profile in Config.Profiles)
+            {
+                if (profile is null || !profile.IsEnabled || !isTriggered(profile))
+                    continue;
+
+                if (string.IsNullOrEmpty(profile.Key) || !states.TryGetValue(profile.Key, out DropState state))
+                    continue;
+
+                if (profile.MaxDropsPerRound > 0 && state.DropsUsed >= profile.MaxDropsPerRound)
+                    continue;
+
+                state.DropsUsed++;
+                Trigger(profile, true);
+            }
+        }
 
         public void Start()
         {
@@ -51,6 +83,7 @@ namespace SupplyDrop.API
 
         public void Stop()
         {
+            generatorsActivated = 0;
             if (running)
                 Timing.KillCoroutines(scheduler);
 
@@ -191,6 +224,8 @@ namespace SupplyDrop.API
 
                 int spawned = PlaceItems(profile, forcedPosition, anchor, out int attempted);
 
+                PlacePills(profile, forcedPosition, anchor);
+
                 PlaceBeacon(profile, forcedPosition ?? ResolveBeaconPosition(profile, anchor));
 
                 PluginBus.Publish(BusTopics.SupplyDropped, Plugin.BusOwner, profile.Key);
@@ -238,6 +273,22 @@ namespace SupplyDrop.API
             }
 
             return spawned;
+        }
+
+        private void PlacePills(DropProfile profile, Vector3? forcedPosition, Vector3 anchor)
+        {
+            Vector3 origin = forcedPosition ?? ResolvePosition(profile, ItemType.SCP500, anchor);
+
+            for (int i = 0; i < profile.PillDraws; i++)
+            {
+                if (UnityEngine.Random.Range(0, 100) >= profile.PillChance)
+                    continue;
+
+                Vector3 position = Scatter(origin, profile.ScatterRadius) + (Vector3.up * Config.SpawnHeightOffset);
+
+                if (PluginBus.Publish(BusTopics.PillSpawnRequested, Plugin.BusOwner, position) == 0)
+                    return;
+            }
         }
 
         private static bool SpawnPickup(ItemType type, Vector3 position)

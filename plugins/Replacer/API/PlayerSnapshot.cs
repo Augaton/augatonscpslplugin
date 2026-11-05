@@ -21,6 +21,12 @@ namespace Replacer.API
 
         public float HumeShield { get; set; }
 
+        public Team Team { get; set; }
+
+        public bool IsDeferred { get; set; }
+
+        public List<Player> Captives { get; } = new List<Player>(2);
+
         public float ArtificialHealth { get; set; }
 
         public bool IsDisarmed { get; set; }

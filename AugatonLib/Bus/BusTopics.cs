@@ -17,5 +17,9 @@ namespace AugatonLib.Bus
         public const string SupplyDropped = "supply.dropped";
 
         public const string PlayerReplaced = "player.replaced";
+
+        public const string TeamCheckRequested = "team.check.requested";
+
+        public const string PillSpawnRequested = "pill.spawn.requested";
     }
 }

@@ -13,6 +13,18 @@ namespace RandomGamemode
         [Description("Chance en pourcent qu un mode special soit tire au debut de chaque round.")]
         public int GamemodeChance { get; set; } = 10;
 
+        [Description("Quand un mode est tire, les joueurs votent dans le lobby au lieu de le subir.")]
+        public bool EnableVote { get; set; } = true;
+
+        [Description("Nombre de modes proposes au vote (2-9).")]
+        public int VoteOptions { get; set; } = 3;
+
+        [Description("Duree du broadcast de vote, en secondes.")]
+        public ushort VoteBroadcastDuration { get; set; } = 10;
+
+        [Description("Delai minimal en secondes entre deux votes d'un joueur.")]
+        public float VoteCommandCooldownSeconds { get; set; } = 1f;
+
         [Description("Texte annonce au demarrage d un mode. {0} est remplace par son nom.")]
         public string StartText { get; set; } = "<size=35><color=red>Mode special : {0}</color></size>";
 

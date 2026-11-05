@@ -72,5 +72,20 @@ namespace SupplyDrop.API
 
         [Description("Contenu du largage.")]
         public List<DropItem> Items { get; set; } = new List<DropItem>();
+
+        [Description("Tirages de pilules SCP500s a chaque largage. Sans effet si SCP500s n'est pas charge.")]
+        public int PillDraws { get; set; } = 2;
+
+        [Description("Chance en pourcent qu'un tirage donne une pilule (0-100).")]
+        public int PillChance { get; set; } = 60;
+
+        [Description("Nombre de generateurs actives qui declenche ce largage. 0 = desactive.")]
+        public int GeneratorsTrigger { get; set; } = 0;
+
+        [Description("Declenche ce largage au debut de la decontamination de la zone legere.")]
+        public bool DecontaminationTrigger { get; set; } = false;
+
+        [Description("Declenche ce largage a l'explosion de l'ogive Alpha.")]
+        public bool WarheadTrigger { get; set; } = false;
     }
 }

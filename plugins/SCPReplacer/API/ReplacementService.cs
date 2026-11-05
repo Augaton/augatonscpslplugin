@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Arbitration;
+using AugatonLib.Bus;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -14,6 +16,8 @@ namespace SCPReplacer.API
         private readonly List<Player> candidateBuffer = new List<Player>(16);
 
         private int replacementsThisRound;
+        private CoroutineHandle holdTimeout;
+        private bool extinctionHeld;
 
         public ReplacementService(Plugin plugin) => this.plugin = plugin;
 
@@ -64,6 +68,13 @@ namespace SCPReplacer.API
 
             pending.Clear();
             replacementsThisRound = 0;
+
+            if (extinctionHeld)
+            {
+                extinctionHeld = false;
+                Timing.KillCoroutines(holdTimeout);
+                GenocideArbiter.Release(Plugin.DepartureOwner, Team.SCPs);
+            }
         }
 
         public void RemoveVolunteer(string userId)
@@ -142,7 +153,33 @@ namespace SCPReplacer.API
             Logger.Info($"SCP-{scpNumber} ({scpPlayer.Nickname}) est remplacable apres {elapsedSeconds:0}s de round.");
 
             Announce(scpNumber);
+            HoldExtinctionAnnouncement();
             return true;
+        }
+
+        // Le dernier SCP qui part n'est pas une extinction tant qu'un volontaire peut le reprendre.
+        private void HoldExtinctionAnnouncement()
+        {
+            float remaining = UnityEngine.Mathf.Max(0f, plugin.Config.ReplaceCutoff - (float)Round.Duration.TotalSeconds);
+            float window = remaining + plugin.Config.LotteryPeriodSeconds + 1f;
+
+            if (extinctionHeld)
+                Timing.KillCoroutines(holdTimeout);
+
+            extinctionHeld = true;
+            GenocideArbiter.Hold(Plugin.DepartureOwner, Team.SCPs, window);
+            holdTimeout = Timing.CallDelayed(window, ReleaseExtinctionAnnouncement);
+        }
+
+        private void ReleaseExtinctionAnnouncement()
+        {
+            if (!extinctionHeld)
+                return;
+
+            extinctionHeld = false;
+            Timing.KillCoroutines(holdTimeout);
+            GenocideArbiter.Release(Plugin.DepartureOwner, Team.SCPs);
+            PluginBus.Publish(BusTopics.TeamCheckRequested, Plugin.DepartureOwner, Team.SCPs);
         }
 
         public bool TryVolunteer(Player player, ScpToReplace entry, out string error)
@@ -180,11 +217,15 @@ namespace SCPReplacer.API
                 if (winner is null)
                 {
                     Logger.Info($"Loterie SCP-{entry.Name} annulee : aucun volontaire valide.");
-                    return;
+                }
+                else
+                {
+                    ApplyRole(winner, entry);
+                    replacementsThisRound++;
                 }
 
-                ApplyRole(winner, entry);
-                replacementsThisRound++;
+                if (pending.Count == 0)
+                    ReleaseExtinctionAnnouncement();
             }
             catch (Exception e)
             {

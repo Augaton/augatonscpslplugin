@@ -38,6 +38,9 @@ namespace SupplyDrop
             ServerEvents.RoundEnded += serverHandlers.OnRoundEnded;
             ServerEvents.RoundRestarted += serverHandlers.OnRoundRestarted;
             ServerEvents.WaitingForPlayers += serverHandlers.OnWaitingForPlayers;
+            ServerEvents.GeneratorActivated += serverHandlers.OnGeneratorActivated;
+            ServerEvents.LczDecontaminationStarted += serverHandlers.OnDecontaminationStarted;
+            WarheadEvents.Detonated += serverHandlers.OnWarheadDetonated;
 
             PluginBus.Subscribe(BusOwner, BusTopics.TeamWiped, OnTeamWiped);
 
@@ -52,6 +55,9 @@ namespace SupplyDrop
                 ServerEvents.RoundEnded -= serverHandlers.OnRoundEnded;
                 ServerEvents.RoundRestarted -= serverHandlers.OnRoundRestarted;
                 ServerEvents.WaitingForPlayers -= serverHandlers.OnWaitingForPlayers;
+                ServerEvents.GeneratorActivated -= serverHandlers.OnGeneratorActivated;
+                ServerEvents.LczDecontaminationStarted -= serverHandlers.OnDecontaminationStarted;
+                WarheadEvents.Detonated -= serverHandlers.OnWarheadDetonated;
             }
 
             Service?.Stop();
@@ -111,6 +117,9 @@ namespace SupplyDrop
             {
                 if (profile is null)
                     continue;
+
+                profile.PillDraws = UnityEngine.Mathf.Clamp(profile.PillDraws, 0, 16);
+                profile.PillChance = UnityEngine.Mathf.Clamp(profile.PillChance, 0, 100);
 
                 if (string.IsNullOrEmpty(profile.Key))
                 {

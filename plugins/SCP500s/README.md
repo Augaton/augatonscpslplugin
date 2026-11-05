@@ -134,7 +134,7 @@ effects:
 La casse est ignoree et le nom doit etre exact. Trois noms different de l'ancien
 format : `Blinded` devient `Blindness`, `SinkHole` devient `Sinkhole`, et
 `Marshmallow` devient `MarshmallowEffect`. Un nom inconnu est signale par un
-`Warn` au chargement et a chaque `lapi reload configs`, puis ignore : le reste de
+`Warn` au chargement et a chaque `labapi reload configs`, puis ignore : le reste de
 la pilule fonctionne.
 
 ### Effets negatifs : roulette uniquement

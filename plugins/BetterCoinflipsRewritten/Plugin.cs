@@ -54,6 +54,12 @@ namespace BetterCoinflipsRewritten
             Logger.Info($"[BetterCoinflipsRewritten] Coins on map: {Config.MapCoinAmount}, extra coins in loot pools: {(Config.AddBonusCoinsToLoot ? Config.BonusCoinAmount : 0)}, coin consumed on flip: {Config.ConsumeCoinOnFlip}.");
         }
 
+        public override void LoadConfigs()
+        {
+            base.LoadConfigs();
+            coinService?.RegisterEffects();
+        }
+
         protected override void ValidateConfig()
         {
             Config.CoinConsumeDelay = Clamp(

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
 using AugatonLib.FriendlyFire;
+using AugatonLib.Random;
+using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -24,6 +26,7 @@ namespace RandomGamemode.API
         private bool limitScheduled;
         private bool friendlyFireOverridden;
         private bool genocideSuppressed;
+        private bool roundEndForced;
 
         private const string Owner = Interop.Owner;
 
@@ -33,9 +36,25 @@ namespace RandomGamemode.API
 
         public GamemodeBase Active { get; private set; }
 
+        public GamemodeVote Vote { get; } = new GamemodeVote();
+
         public string Forced { get; set; }
 
         public IReadOnlyList<GamemodeBase> All => all;
+
+        // Round.End(true) ne suffit pas : RoundSummary reecrit IsRoundEnded toutes les 2,5 s d'apres les
+        // camps en vie, puis ne garde que CanEnd. Le forcage doit donc passer par cet event.
+        public void ForceRoundEnd()
+        {
+            roundEndForced = true;
+            Round.End(true);
+        }
+
+        public void ApplyForcedEnd(RoundEndingConditionsCheckEventArgs ev)
+        {
+            if (roundEndForced)
+                ev.CanEnd = true;
+        }
 
         public void Build()
         {
@@ -95,8 +114,8 @@ namespace RandomGamemode.API
                     }
                 }
 
-                if (selected is null && UnityEngine.Random.Range(0, 100) < Config.GamemodeChance)
-                    selected = PickWeighted(players);
+                selected ??= DrawMode(players);
+                Vote.Cancel();
 
                 if (selected is null)
                     return;
@@ -107,6 +126,72 @@ namespace RandomGamemode.API
             {
                 Logger.Error($"OnRoundStarted: {e}");
             }
+        }
+
+        // Le tirage part du lobby, et non du debut de round, pour laisser aux joueurs le temps de voter.
+        public void PrepareVote()
+        {
+            Vote.Cancel();
+            plugin.VoteCooldowns.Clear();
+
+            if (!Config.EnableVote || !string.IsNullOrEmpty(Forced) || !RollsGamemode())
+                return;
+
+            List<GamemodeBase> candidates = DrawVoteOptions();
+
+            if (candidates.Count < 2)
+                return;
+
+            Vote.Open(candidates);
+
+            foreach (Player player in Player.ReadyList)
+                ShowVote(player);
+        }
+
+        public void ShowVote(Player player)
+        {
+            if (Vote.IsOpen && player is not null)
+                player.SendBroadcast(plugin.Translation.VoteBroadcast.Replace("%OPTIONS%", Vote.Describe()), Config.VoteBroadcastDuration);
+        }
+
+        private bool RollsGamemode() => UnityEngine.Random.Range(0, 100) < Config.GamemodeChance;
+
+        private GamemodeBase DrawMode(int players)
+        {
+            if (!Config.EnableVote)
+                return RollsGamemode() ? PickWeighted(players) : null;
+
+            if (!Vote.IsOpen)
+                return null;
+
+            return Vote.Winner(gamemode => CanRun(gamemode, players)) ?? PickWeighted(players);
+        }
+
+        private List<GamemodeBase> DrawVoteOptions()
+        {
+            List<GamemodeBase> remaining = all.FindAll(gamemode => gamemode.Settings.IsEnabled && gamemode.Settings.Weight > 0);
+            List<GamemodeBase> drawn = new List<GamemodeBase>(Config.VoteOptions);
+
+            while (drawn.Count < Config.VoteOptions && remaining.Count > 0)
+            {
+                GamemodeBase gamemode = Chance.PickWeighted(remaining, candidate => candidate.Settings.Weight);
+
+                drawn.Add(gamemode);
+                remaining.Remove(gamemode);
+            }
+
+            return drawn;
+        }
+
+        private static bool CanRun(GamemodeBase gamemode, int players)
+        {
+            GamemodeSettings settings = gamemode.Settings;
+
+            return settings.IsEnabled
+                && settings.Weight > 0
+                && players >= settings.MinPlayers
+                && (settings.MaxPlayers <= 0 || players <= settings.MaxPlayers)
+                && gamemode.CanStart(players);
         }
 
         public void EnforceHumansOnly(Player player)
@@ -155,7 +240,7 @@ namespace RandomGamemode.API
 
                     try
                     {
-                        Round.End(true);
+                        ForceRoundEnd();
                     }
                     catch (Exception e)
                     {
@@ -215,6 +300,8 @@ namespace RandomGamemode.API
                 limitScheduled = false;
             }
 
+            roundEndForced = false;
+
             if (friendlyFireOverridden)
             {
                 FriendlyFireArbiter.Release(Owner);
@@ -253,22 +340,11 @@ namespace RandomGamemode.API
 
             foreach (GamemodeBase gamemode in all)
             {
-                GamemodeSettings settings = gamemode.Settings;
-
-                if (!settings.IsEnabled || settings.Weight <= 0)
-                    continue;
-
-                if (players < settings.MinPlayers)
-                    continue;
-
-                if (settings.MaxPlayers > 0 && players > settings.MaxPlayers)
-                    continue;
-
-                if (!gamemode.CanStart(players))
+                if (!CanRun(gamemode, players))
                     continue;
 
                 pool.Add(gamemode);
-                total += settings.Weight;
+                total += gamemode.Settings.Weight;
             }
 
             if (pool.Count == 0 || total <= 0)

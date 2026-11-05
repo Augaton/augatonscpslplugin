@@ -12,6 +12,7 @@ namespace SupplyDrop.API
                 new DropProfile
                 {
                     Key = "mtf",
+                    GeneratorsTrigger = 3,
                     DisplayName = "Largage MTF",
                     Broadcast = "<size=35><i><color=#0080FF>Un helicoptere MTF</color> <color=#5c5c5c>vient de larguer</color> <color=#7a7a7a>du ravitaillement</color></i></size>",
                     BroadcastDuration = 10,
