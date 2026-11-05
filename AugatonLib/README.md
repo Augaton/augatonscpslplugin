@@ -40,6 +40,7 @@ Il doit etre mis a jour en meme temps que les plugins qui en dependent.
 | `World.Mice` | Apparition des souris, avec controle du type |
 | `World.LootSpots` | Emplacements de loot surs, pour faire reapparaitre des objets pendant le round |
 | `Chaos.Escalation` | Paliers qui montent avec la duree du round |
+| `Chaos.ChaosState` | Paliers bonus poses par ChaosDirector, a zero sans lui |
 | `Runtime.TeamWatcher` | Detecte l'extinction d'une equipe et la publie sur le bus |
 | `Runtime.WorldEvents` | Suspend les apparitions automatiques pendant un mode de type arene |
 | `Voting.BallotBox` | Urne : un vote par joueur, modifiable, avec egalites |

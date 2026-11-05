@@ -1,6 +1,6 @@
 # Augaton SCP:SL Plugins
 
-Douze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
+Quinze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
 
 [![CI](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml)
 ![LabAPI 1.1.7](https://img.shields.io/badge/LabAPI-1.1.7-blue)
@@ -25,6 +25,7 @@ Douze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Labo
 ## Points forts
 
 - **Une collection cohérente.** Des plugins qui touchent à la même ressource peuvent se contredire : l'un éteint les lumières pendant qu'un autre les rallume. Ici, les ressources partagées passent par des arbitres communs.
+- **À la carte.** Chaque plugin fonctionne seul avec AugatonLib. Installés ensemble, ils se complètent ; absent, un plugin ne désactive que la synergie concernée.
 - **100 % LabAPI.** Aucune dépendance à EXILED, aucun patch Harmony dans les plugins.
 - **Sobre en ressources.** Le serveur tourne sur une boucle Unity à un seul thread, donc le code évite les allocations et les boucles coûteuses dans les chemins fréquents.
 - **Configurable.** Chaque plugin a sa config YAML commentée, ses textes séparés dans une traduction et un rechargement à chaud.
@@ -35,9 +36,11 @@ Douze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Labo
 | Plugin | Version | Rôle |
 |---|---|---|
 | [AugatonLib](AugatonLib) | 2.1.0 | Bibliothèque partagée, **obligatoire** |
+| [ChaosDirector](plugins/ChaosDirector) | 1.0.0 | Niveau de chaos commun, nourri par les événements du round |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
 | [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.0.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
 | [RandomGamemode](plugins/RandomGamemode) | 4.0.0 | 17 modes de jeu spéciaux, avec vote des joueurs |
+| [RoundRecap](plugins/RoundRecap) | 1.0.0 | Bilan de fin de round |
 | [RealisticSizes](plugins/RealisticSizes) | 5.0.0 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
 | [Replacer](plugins/Replacer) | 3.0.0 | Remplace un joueur parti par un spectateur, avec son état complet |
@@ -45,6 +48,7 @@ Douze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Labo
 | [SCP500s](plugins/SCP500s) | 7.0.0 | 44 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
 | [ScpProximityChat](plugins/ScpProximityChat) | 3.0.0 | Permet aux SCP de parler aux joueurs proches |
 | [SCPReplacer](plugins/SCPReplacer) | 3.0.0 | Loterie de volontaires pour reprendre un SCP parti |
+| [SiteIncidents](plugins/SiteIncidents) | 1.0.0 | Pannes, alertes et portes bloquées au hasard |
 | [SupplyDrop](plugins/SupplyDrop) | 5.0.0 | Largages de ravitaillement, sur minuteur ou événement |
 | [TeamGenocide](plugins/TeamGenocide) | 4.0.0 | Annonces C.A.S.S.I.E à l'extinction d'une équipe |
 
@@ -132,8 +136,10 @@ Disponibles dans le Remote Admin et la console du serveur. Sans argument, une co
 | Commande | Alias | Permission | Sous-commandes principales |
 |---|---|---|---|
 | `autoff` | `ff` | `autofftoggle.manage` | `status`, `set` |
+| `chaos` | `chaosdirector` | `chaosdirector.manage` | `status` |
 | `coinflip` | `bcf` | `bettercoinflips.manage` | `status` |
 | `gamemode` | `gm` | `randomgamemode.manage` | `list`, `force`, `start`, `stop` |
+| `incidents` | `inc` | `siteincidents.manage` | `status`, `trigger` |
 | `sizes` | `rsize` | `realisticsizes.manage` | `status`, `reset` |
 | `remotekeycard` | `rk` | `remotekeycard.manage` | `status` |
 | `replacer` | `rep` | `replacer.manage` | `status` |
@@ -150,7 +156,7 @@ La sous-commande `collection` affiche l'état de toute la collection : plugins c
 
 ```mermaid
 flowchart TD
-    P["12 plugins"] --> A["AugatonLib"]
+    P["Plugins"] --> A["AugatonLib"]
     A --> L["LabAPI"]
     A -. hints .-> H["HintServiceMeow"]
     L --> G["Serveur SCP:SL"]
@@ -168,7 +174,7 @@ Les plugins ne se référencent jamais entre eux. Ils partagent AugatonLib, qui 
 | `StaffCommand` | Socle commun : permission, bornage des arguments, audit |
 | `SafeText` | Assainit tout texte venant d'un joueur |
 
-Six ressources sont arbitrées :
+Six ressources sont arbitrées, et une pause commune suspend largages, pilules, pièces et incidents pendant les modes de type arène :
 
 | Ressource | Arbitre |
 |---|---|
@@ -179,7 +185,19 @@ Six ressources sont arbitrées :
 | Départ d'un joueur | `DepartureArbiter` |
 | Annonces d'extinction | `GenocideArbiter` |
 
-Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou à SCPReplacer pour faire patienter TeamGenocide : le dernier SCP qui part n'est pas annoncé comme éliminé tant qu'un volontaire peut le reprendre. Si un plugin n'est pas installé, l'autre continue de fonctionner.
+Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou à SCPReplacer pour faire patienter TeamGenocide : le dernier SCP qui part n'est pas annoncé comme éliminé tant qu'un volontaire peut le reprendre.
+
+| Si... | Alors |
+|---|---|
+| RandomGamemode est présent | Les modes arène suspendent largages, pilules, pièces et incidents |
+| Replacer et RealisticSizes sont présents | Le remplaçant garde la taille du joueur parti |
+| SCP500s et SupplyDrop sont présents | Les largages contiennent des pilules |
+| SCP500s et RandomGamemode sont présents | Soirée pilules distribue les vraies pilules |
+| ChaosDirector est présent | Les pilules, pièces et incidents s'accélèrent avec l'agitation du round |
+| RoundRecap est présent | Le bilan compte ce que font les autres plugins |
+| Un plugin manque | Seule la synergie concernée disparaît |
+
+Une CI vérifie qu'aucun plugin n'en référence un autre.
 
 Le détail est dans le [README d'AugatonLib](AugatonLib/README.md).
 
@@ -234,11 +252,12 @@ Pensez à retirer les anciennes DLL de `.config/EXILED/Plugins/`, sinon les deux
 
 ## Crédits et licences
 
-Ces plugins sont des réécritures. Leur conception et leurs mécaniques reviennent à leurs auteurs d'origine, cités en jeu dans le champ `Author` de chaque plugin.
+Les plugins portés sont des réécritures. Leur conception et leurs mécaniques reviennent à leurs auteurs d'origine, cités en jeu dans le champ `Author` de chaque plugin.
 
 | Composant | Auteur(s) d'origine | Licence |
 |---|---|---|
 | AugatonLib, tests et outillage | Augaton | [MIT](LICENSE) |
+| ChaosDirector, RoundRecap, SiteIncidents | Augaton | [MIT](plugins/ChaosDirector/LICENSE) |
 | AutoFFToggle | Kognity | [MIT](plugins/AutoFFToggle/LICENSE) |
 | BetterCoinflipsRewritten | Mikihero, Matisiowy | [Non précisée](plugins/BetterCoinflipsRewritten/NOTICE.md) |
 | RandomGamemode | OPGman | [MIT](plugins/RandomGamemode/LICENSE) |
