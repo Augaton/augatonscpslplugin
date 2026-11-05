@@ -1,6 +1,6 @@
 # Augaton SCP:SL Plugins
 
-Quinze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
+Seize plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
 
 [![CI](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml)
 ![LabAPI 1.1.7](https://img.shields.io/badge/LabAPI-1.1.7-blue)
@@ -27,7 +27,7 @@ Quinze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Lab
 
 - **Une collection cohérente.** Des plugins qui touchent à la même ressource peuvent se contredire : l'un éteint les lumières pendant qu'un autre les rallume. Ici, les ressources partagées passent par des arbitres communs.
 - **À la carte.** Chaque plugin fonctionne seul avec AugatonLib. Installés ensemble, ils se complètent ; absent, un plugin ne désactive que la synergie concernée.
-- **100 % LabAPI.** Aucune dépendance à EXILED, et aucun patch Harmony dans les plugins de la collection.
+- **100 % LabAPI.** Aucune dépendance à EXILED. Seuls AntiSLCrush et FairScpSelection utilisent des patchs Harmony.
 - **Sobre en ressources.** Le serveur tourne sur une boucle Unity à un seul thread, donc le code évite les allocations et les boucles coûteuses dans les chemins fréquents.
 - **Configurable.** Chaque plugin a sa config YAML commentée, ses textes séparés dans une traduction et un rechargement à chaud.
 - **Sécurisé.** Permissions vérifiées en premier, arguments bornés, actions du staff tracées, et texte des joueurs assaini avant affichage.
@@ -37,6 +37,7 @@ Quinze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Lab
 | Plugin | Version | Rôle |
 |---|---|---|
 | [AugatonLib](AugatonLib) | 2.1.0 | Bibliothèque partagée, **obligatoire** |
+| [AntiSLCrush](plugins/AntiSLCrush) | 4.0.0 | Protège le serveur contre des bugs du jeu. **Licence non commerciale** |
 | [ChaosDirector](plugins/ChaosDirector) | 1.0.0 | Niveau de chaos commun, nourri par les événements du round |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
 | [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.0.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
@@ -62,10 +63,9 @@ Ces plugins viennent d'autres auteurs. Ils restent optionnels, et la bannière d
 | Plugin | Rôle | Installation |
 |---|---|---|
 | [FairScpSelection](https://github.com/CosmosZvezdo4kin/FairScpSelection) | Choix des SCP selon les préférences des joueurs | **Inclus**, voir [third_party](third_party/FairScpSelection/NOTICE.md) |
-| [AntiSLCrush](https://github.com/ui2506/AntiSLCrush) | Protège le serveur contre certains crashs | À installer depuis ses releases. Sa licence interdit tout usage commercial |
 | [Better3114Spawn](https://github.com/tayjay/Better3114Spawn) | Fait démarrer SCP-3114 déguisé parmi les humains | À installer depuis ses releases. Lié à l'événement d'Halloween du jeu |
 
-Seul FairScpSelection est redistribué ici, car sa licence le permet. Les deux autres ne sont pas copiés dans ce dépôt : leur code reste chez leurs auteurs, sous leurs propres conditions.
+Better3114Spawn n'a pas de licence : son code n'est donc pas copié ici et reste chez son auteur.
 
 FairScpSelection remplace le choix des SCP du jeu : sa cohabitation avec Better3114Spawn n'a pas été vérifiée.
 
@@ -151,6 +151,7 @@ Disponibles dans le Remote Admin et la console du serveur. Sans argument, une co
 
 | Commande | Alias | Permission | Sous-commandes principales |
 |---|---|---|---|
+| `anticrash` | `asc` | `anticrash.manage` | `status` |
 | `autoff` | `ff` | `autofftoggle.manage` | `status`, `set` |
 | `chaos` | `chaosdirector` | `chaosdirector.manage` | `status` |
 | `coinflip` | `bcf` | `bettercoinflips.manage` | `status` |
@@ -275,6 +276,7 @@ Les plugins portés sont des réécritures. Leur conception et leurs mécaniques
 |---|---|---|
 | AugatonLib, tests et outillage | Augaton | [MIT](LICENSE) |
 | ChaosDirector, RoundRecap, SiteIncidents | Augaton | [MIT](plugins/ChaosDirector/LICENSE) |
+| AntiSLCrush | ui_2506, version modifiée | [Non commerciale](plugins/AntiSLCrush/LICENSE.md) |
 | AutoFFToggle | Kognity | [MIT](plugins/AutoFFToggle/LICENSE) |
 | BetterCoinflipsRewritten | Mikihero, Matisiowy | [Non précisée](plugins/BetterCoinflipsRewritten/NOTICE.md) |
 | RandomGamemode | OPGman | [MIT](plugins/RandomGamemode/LICENSE) |

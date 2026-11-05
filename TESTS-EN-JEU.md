@@ -41,6 +41,11 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 
 ## 3. Plugins
 
+**AntiSLCrush**
+- [ ] `anticrash status` repond, et aucune protection n'est en echec au demarrage.
+- [ ] Le jeu fonctionne normalement avec les protections : connexions, visee, sacs SCP-330, munitions.
+- [ ] TPS identiques avec et sans le plugin.
+
 **AutoFFToggle**
 - [ ] Tir allie coupe au debut du round, reactive avec broadcast a la fin, restaure au restart.
 

@@ -18,6 +18,7 @@ cp "$packages/lib.harmony/2.4.1/lib/net48/0Harmony.dll" "$stage/dependencies/glo
 
 cp "$root/third_party/FairScpSelection/LICENSE.txt" "$stage/licenses/FairScpSelection-LICENSE.txt"
 cp "$root"/third_party/licenses/*.txt "$stage/licenses/"
+cp "$root/plugins/AntiSLCrush/LICENSE.md" "$stage/licenses/AntiSLCrush-LICENSE.md"
 
 rm -f "$root/out/zone-shilari-labapi.zip"
 (cd "$stage" && zip -qr "$root/out/zone-shilari-labapi.zip" .)

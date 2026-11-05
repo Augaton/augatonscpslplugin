@@ -60,6 +60,11 @@ par LabAPI : il n'y a pas de clé `IsEnabled` dans la config.
 Stocker le `CoroutineHandle`, le tuer dans `Disable` et en fin de round. Intervalle minimal raisonnable :
 `0.1f`. Une coroutine par système, pas une par joueur. Il n'existe pas de `OnUpdate`.
 
+## Harmony
+
+Pas de patch Harmony dans un plugin, sauf AntiSLCrush, dont c'est le role. Aucun fichier de ce plugin ne
+perd son en-tete de copyright : sa licence l'interdit.
+
 ## Performance
 
 En hot path (handler fréquent, coroutine sous la seconde), éviter la LINQ chaînée, `Player.Get` en
