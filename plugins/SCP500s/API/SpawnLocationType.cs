@@ -1,0 +1,36 @@
+namespace SCP500s.API
+{
+    public enum SpawnLocationType
+    {
+        Inside330,
+        Inside330Chamber,
+        Inside049Armory,
+        Inside079Secondary,
+        Inside096,
+        Inside173Armory,
+        Inside173Bottom,
+        Inside173Connector,
+        InsideEscapePrimary,
+        InsideEscapeSecondary,
+        InsideIntercom,
+        InsideLczArmory,
+        InsideLczCafe,
+        InsideSurfaceNuke,
+        Inside079First,
+        Inside173Gate,
+        Inside914,
+        InsideGateA,
+        InsideGateB,
+        InsideGr18,
+        InsideHczArmory,
+        InsideHidChamber,
+        InsideLczWc,
+        InsideGr18Glass,
+        Inside106Primary,
+        Inside106Secondary,
+        Inside939Cryo,
+        Inside079Armory,
+        Inside127Lab,
+        InsideHidLab,
+    }
+}

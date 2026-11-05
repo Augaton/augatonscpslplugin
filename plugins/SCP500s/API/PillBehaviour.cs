@@ -1,0 +1,28 @@
+namespace SCP500s.API
+{
+    public enum PillBehaviour
+    {
+        None,
+        Shrink,
+        Enlarge,
+        RandomTeleport,
+        Betrayal,
+        Disguise,
+        SkyLaunch,
+        Swap,
+        Summon,
+        ForceWave,
+        RandomEffect,
+        Blackout,
+        DiscoLights,
+        Mice,
+        Tantrum,
+        Fireworks,
+        Contagion,
+        CassiePrank,
+        AmmoRefill,
+        Census,
+        ScpRadar,
+        KeycardUpgrade,
+    }
+}

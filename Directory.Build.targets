@@ -1,0 +1,36 @@
+<Project>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" HintPath="$(SL_REFERENCES)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(SL_REFERENCES)/Assembly-CSharp-firstpass.dll" Private="false" />
+    <Reference Include="CommandSystem.Core" HintPath="$(SL_REFERENCES)/CommandSystem.Core.dll" Private="false" />
+    <Reference Include="Mirror" HintPath="$(SL_REFERENCES)/Mirror.dll" Private="false" />
+    <Reference Include="NorthwoodLib" HintPath="$(SL_REFERENCES)/NorthwoodLib.dll" Private="false" />
+    <Reference Include="Pooling" HintPath="$(SL_REFERENCES)/Pooling.dll" Private="false" />
+    <Reference Include="Unity.TextMeshPro" HintPath="$(SL_REFERENCES)/Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(SL_REFERENCES)/UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.AudioModule" HintPath="$(SL_REFERENCES)/UnityEngine.AudioModule.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(SL_REFERENCES)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.InputLegacyModule" HintPath="$(SL_REFERENCES)/UnityEngine.InputLegacyModule.dll" Private="false" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(SL_REFERENCES)/UnityEngine.PhysicsModule.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(MSBuildProjectName)' != 'AugatonLib' ">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)AugatonLib/AugatonLib.csproj" Private="false" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DeployFolder>plugins</DeployFolder>
+    <DeployFolder Condition=" '$(MSBuildProjectName)' == 'AugatonLib' ">dependencies</DeployFolder>
+  </PropertyGroup>
+
+  <Target Name="CheckGameReferences" BeforeTargets="ResolveAssemblyReferences"
+          Condition="!Exists('$(SL_REFERENCES)/Assembly-CSharp.dll')">
+    <Error Text="Assemblies du jeu introuvables dans $(SL_REFERENCES). Lancez tools/fetch-references.sh, ou definissez SL_REFERENCES vers SCPSL_Data/Managed." />
+  </Target>
+
+  <Target Name="CollectDeployables" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildThisFileDirectory)out/$(DeployFolder)" />
+  </Target>
+
+</Project>

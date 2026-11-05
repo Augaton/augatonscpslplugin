@@ -1,0 +1,49 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Recuperer les assemblies du jeu
+        run: ./tools/fetch-references.sh
+
+      - name: Compiler
+        run: dotnet build -c Release
+
+      - name: Tester
+        run: dotnet test tests/AugatonLib.Tests -c Release --no-build
+
+      - name: Preparer l'archive
+        run: ./tools/package.sh
+
+      - name: Publier
+        run: |
+          cat > notes.md <<'NOTES'
+          ## Installation
+
+          Extraire `zone-shilari-labapi.zip` dans le dossier `LabAPI` du serveur :
+
+          ```
+          plugins/global/*.dll
+          dependencies/global/AugatonLib.dll
+          ```
+
+          HintServiceMeow reste a installer a part, voir le README.
+          NOTES
+          gh release create "$TAG" out/zone-shilari-labapi.zip \
+            --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes-file notes.md
