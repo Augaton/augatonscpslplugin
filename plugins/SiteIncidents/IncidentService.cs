@@ -6,10 +6,12 @@ using AugatonLib.Chaos;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
+using CustomPlayerEffects;
 using Interactables.Interobjects.DoorUtils;
 using LabApi.Features.Wrappers;
 using MapGeneration;
 using MEC;
+using PlayerRoles.PlayableScps.Scp079;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 
@@ -18,6 +20,8 @@ namespace SiteIncidents
     public sealed class IncidentService
     {
         private const float MinIntervalSeconds = 30f;
+        private const float GasTickSeconds = 1f;
+        private const float GasEffectSeconds = 2f;
 
         private static readonly FacilityZone[] Zones =
         {
@@ -31,6 +35,9 @@ namespace SiteIncidents
             IncidentType.Blackout,
             IncidentType.Alert,
             IncidentType.Lockdown,
+            IncidentType.GasLeak,
+            IncidentType.TeslaSurge,
+            IncidentType.CameraOutage,
         };
 
         private readonly Plugin plugin;
@@ -70,7 +77,15 @@ namespace SiteIncidents
         public string CheckCassieWords()
         {
             Translation text = plugin.Translation;
-            string unknown = CassieLines.FindUnknownWord(new[] { text.BlackoutCassie, text.AlertCassie, text.LockdownCassie });
+            string unknown = CassieLines.FindUnknownWord(new[]
+            {
+                text.BlackoutCassie,
+                text.AlertCassie,
+                text.LockdownCassie,
+                text.GasLeakCassie,
+                text.TeslaSurgeCassie,
+                text.CameraOutageCassie,
+            });
 
             return unknown is null ? null : $"mot inconnu : {unknown}";
         }
@@ -95,6 +110,29 @@ namespace SiteIncidents
                 case IncidentType.Lockdown:
                     StartLockdown(zone);
                     Announce(plugin.Translation.LockdownCassie, plugin.Translation.LockdownSubtitles, zone);
+                    break;
+
+                case IncidentType.GasLeak:
+                    if (!StartGasLeak(zone))
+                        return false;
+
+                    Announce(plugin.Translation.GasLeakCassie, plugin.Translation.GasLeakSubtitles, zone);
+                    break;
+
+                case IncidentType.TeslaSurge:
+                    if (Tesla.List.Count == 0)
+                        return false;
+
+                    zone = FacilityZone.HeavyContainment;
+                    timers.Add(Timing.RunCoroutine(SurgeTeslas()));
+                    Announce(plugin.Translation.TeslaSurgeCassie, plugin.Translation.TeslaSurgeSubtitles, zone);
+                    break;
+
+                case IncidentType.CameraOutage:
+                    if (!CutCameras())
+                        return false;
+
+                    Announce(plugin.Translation.CameraOutageCassie, plugin.Translation.CameraOutageSubtitles, zone);
                     break;
 
                 default:
@@ -167,6 +205,9 @@ namespace SiteIncidents
                 case IncidentType.Blackout: return Config.BlackoutWeight;
                 case IncidentType.Alert: return Config.AlertWeight;
                 case IncidentType.Lockdown: return Config.LockdownWeight;
+                case IncidentType.GasLeak: return Config.GasLeakWeight;
+                case IncidentType.TeslaSurge: return Config.TeslaSurgeWeight;
+                case IncidentType.CameraOutage: return HasScp079() ? Config.CameraOutageWeight : 0;
                 default: return 0;
             }
         }
@@ -222,6 +263,113 @@ namespace SiteIncidents
             }
 
             timers.Add(Timing.CallDelayed(Config.LockdownDuration, UnlockDoors));
+        }
+
+        // La fuite vise une salle occupee quand il y en a une : dans une salle vide, personne ne la verrait.
+        private bool StartGasLeak(FacilityZone zone)
+        {
+            List<Room> candidates = new List<Room>(16);
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (player.IsHuman && player.Zone == zone && player.Room is not null)
+                    candidates.Add(player.Room);
+            }
+
+            if (candidates.Count == 0)
+                candidates.AddRange(Room.Get(zone));
+
+            Room room = Chance.Pick(candidates);
+
+            if (room is null)
+                return false;
+
+            if (!ColorUtility.TryParseHtmlString(Config.GasLeakColor, out Color color))
+                color = Color.green;
+
+            LightArbiter.TintRoom(Plugin.Owner, room, color);
+            timers.Add(Timing.RunCoroutine(LeakGas(room)));
+            return true;
+        }
+
+        private IEnumerator<float> LeakGas(Room room)
+        {
+            float end = Time.time + Config.GasLeakDuration;
+
+            while (Time.time < end)
+            {
+                PoisonOccupants(room);
+                yield return Timing.WaitForSeconds(GasTickSeconds);
+            }
+
+            LightArbiter.ReleaseRoomTint(Plugin.Owner, room);
+        }
+
+        private static void PoisonOccupants(Room room)
+        {
+            try
+            {
+                foreach (Player player in Player.ReadyList)
+                {
+                    if (player.IsHuman && player.Room == room)
+                        player.EnableEffect<Poisoned>(1, GasEffectSeconds);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"PoisonOccupants: {e}");
+            }
+        }
+
+        private IEnumerator<float> SurgeTeslas()
+        {
+            float end = Time.time + Config.TeslaSurgeDuration;
+
+            while (Time.time < end)
+            {
+                TriggerTeslas();
+                yield return Timing.WaitForSeconds(Config.TeslaSurgeInterval);
+            }
+        }
+
+        private static void TriggerTeslas()
+        {
+            try
+            {
+                foreach (Tesla tesla in Tesla.List)
+                    tesla.Trigger();
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"TriggerTeslas: {e}");
+            }
+        }
+
+        private bool CutCameras()
+        {
+            bool found = false;
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (player.RoleBase is Scp079Role role && role.SubroutineModule.TryGetSubroutine(out Scp079LostSignalHandler handler))
+                {
+                    handler.ServerLoseSignal(Config.CameraOutageDuration);
+                    found = true;
+                }
+            }
+
+            return found;
+        }
+
+        private static bool HasScp079()
+        {
+            foreach (Player player in Player.ReadyList)
+            {
+                if (player.RoleBase is Scp079Role)
+                    return true;
+            }
+
+            return false;
         }
 
         private void UnlockDoors()

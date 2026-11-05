@@ -48,5 +48,29 @@ namespace SiteIncidents
 
         [Description("Nombre de portes verrouillees dans la zone.")]
         public int LockdownDoors { get; set; } = 10;
+
+        [Description("Poids de la fuite de gaz dans une salle. 0 = jamais.")]
+        public int GasLeakWeight { get; set; } = 6;
+
+        [Description("Duree de la fuite de gaz, en secondes.")]
+        public float GasLeakDuration { get; set; } = 20f;
+
+        [Description("Couleur de la salle touchee par la fuite.")]
+        public string GasLeakColor { get; set; } = "#33FF66";
+
+        [Description("Poids de la surcharge des portes Tesla. 0 = jamais.")]
+        public int TeslaSurgeWeight { get; set; } = 6;
+
+        [Description("Duree de la surcharge, en secondes.")]
+        public float TeslaSurgeDuration { get; set; } = 15f;
+
+        [Description("Secondes entre deux decharges pendant la surcharge, 2 au plus bas.")]
+        public float TeslaSurgeInterval { get; set; } = 3f;
+
+        [Description("Poids de la coupure de cameras. 0 = jamais. Sans SCP-079 en jeu, elle n'est pas tiree.")]
+        public int CameraOutageWeight { get; set; } = 6;
+
+        [Description("Duree de la coupure de cameras, en secondes.")]
+        public float CameraOutageDuration { get; set; } = 15f;
     }
 }

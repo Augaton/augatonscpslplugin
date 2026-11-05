@@ -34,7 +34,7 @@ namespace SiteIncidents.Commands
 
         public override string[] Aliases => new[] { "t" };
 
-        public override string Description => "Declenche un incident : Blackout, Alert ou Lockdown.";
+        public override string Description => "Declenche un incident : Blackout, Alert, Lockdown, GasLeak, TeslaSurge ou CameraOutage.";
 
         public override string Permission => IncidentsCommand.Node;
 
@@ -42,13 +42,13 @@ namespace SiteIncidents.Commands
         {
             if (arguments.Count != 1 || !Enum.TryParse(arguments.At(0), true, out IncidentType type) || !Enum.IsDefined(typeof(IncidentType), type))
             {
-                response = "Usage : incidents trigger <Blackout|Alert|Lockdown>";
+                response = "Usage : incidents trigger <Blackout|Alert|Lockdown|GasLeak|TeslaSurge|CameraOutage>";
                 return false;
             }
 
             if (!Plugin.Instance.Service.Trigger(type))
             {
-                response = "Aucune zone disponible pour cet incident.";
+                response = "Incident impossible : zone perdue, aucune porte Tesla, ou SCP-079 absent.";
                 return false;
             }
 

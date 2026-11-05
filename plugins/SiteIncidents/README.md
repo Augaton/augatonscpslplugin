@@ -1,8 +1,13 @@
 # SiteIncidents
 
 Provoque des incidents aleatoires dans le complexe pendant le round : panne d'eclairage d'une zone,
-alerte lumineuse rouge, ou portes bloquees quelques secondes. Chaque incident est annonce par
-C.A.S.S.I.E, avec des sous-titres en francais.
+alerte lumineuse rouge, portes bloquees, fuite de gaz dans une salle, surcharge des portes Tesla ou
+coupure de cameras pour SCP-079. Chaque incident est annonce par C.A.S.S.I.E, avec des sous-titres
+en francais.
+
+La fuite de gaz vise une salle ou se trouve un humain : elle s'eclaire en vert et empoisonne les humains
+qui y restent. La surcharge fait decharger toutes les portes Tesla a intervalle regulier. La coupure de
+cameras n'est tiree que si SCP-079 est en jeu.
 
 Les lumieres passent par `LightArbiter`, donc les incidents cohabitent avec les pannes des autres
 plugins. Le verrouillage utilise son propre drapeau : il ne touche jamais une porte bloquee par le
@@ -25,6 +30,10 @@ plus aucun incident apres l'explosion de l'ogive.
 | `blackout_duration`, `alert_duration`, `lockdown_duration` | `20`, `30`, `15` | Durees en secondes |
 | `alert_color` | `#FF0000` | Couleur de l'alerte |
 | `lockdown_doors` | `10` | Portes bloquees dans la zone |
+| `gas_leak_weight`, `tesla_surge_weight`, `camera_outage_weight` | `6` | Probabilite de chaque nouvel incident. `0` = jamais |
+| `gas_leak_duration`, `tesla_surge_duration`, `camera_outage_duration` | `20`, `15`, `15` | Durees en secondes |
+| `gas_leak_color` | `#33FF66` | Couleur de la salle touchee |
+| `tesla_surge_interval` | `3` | Secondes entre deux decharges, 2 au plus bas |
 
 Les annonces et les noms de zones se reglent dans `translation.yml`.
 
@@ -33,6 +42,6 @@ Les annonces et les noms de zones se reglent dans `translation.yml`.
 | Commande | Permission | Effet |
 |---|---|---|
 | `incidents status` | `siteincidents.manage` | Etat du plugin |
-| `incidents trigger <type>` | `siteincidents.manage` | Declenche `Blackout`, `Alert` ou `Lockdown` |
+| `incidents trigger <type>` | `siteincidents.manage` | Declenche `Blackout`, `Alert`, `Lockdown`, `GasLeak`, `TeslaSurge` ou `CameraOutage` |
 
 Alias `inc`. Chaque declenchement manuel est trace.

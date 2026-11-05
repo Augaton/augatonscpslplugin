@@ -22,6 +22,24 @@ namespace SiteIncidents
         [Description("Sous-titres du verrouillage. %ZONE% est remplace par le nom de la zone.")]
         public string LockdownSubtitles { get; set; } = "Attention. Portes bloquees en %ZONE%.";
 
+        [Description("Annonce C.A.S.S.I.E de la fuite de gaz. Vide = aucune annonce.")]
+        public string GasLeakCassie { get; set; } = "attention . danger detected";
+
+        [Description("Sous-titres de la fuite de gaz. %ZONE% est remplace par le nom de la zone.")]
+        public string GasLeakSubtitles { get; set; } = "Attention. Fuite de gaz en %ZONE%. Quittez les salles eclairees en vert.";
+
+        [Description("Annonce C.A.S.S.I.E de la surcharge. Vide = aucune annonce.")]
+        public string TeslaSurgeCassie { get; set; } = "attention . security system failure detected";
+
+        [Description("Sous-titres de la surcharge. %ZONE% est remplace par le nom de la zone.")]
+        public string TeslaSurgeSubtitles { get; set; } = "Attention. Surcharge des portes Tesla en %ZONE%.";
+
+        [Description("Annonce C.A.S.S.I.E de la coupure de cameras. Vide = aucune annonce.")]
+        public string CameraOutageCassie { get; set; } = "attention . system failure detected";
+
+        [Description("Sous-titres de la coupure de cameras. %ZONE% est remplace par le nom de la zone.")]
+        public string CameraOutageSubtitles { get; set; } = "Attention. Reseau de cameras hors service.";
+
         [Description("Nom affiche de la zone de confinement legere.")]
         public string LightContainmentName { get; set; } = "zone de confinement legere";
 

@@ -5,5 +5,8 @@ namespace SiteIncidents
         Blackout,
         Alert,
         Lockdown,
+        GasLeak,
+        TeslaSurge,
+        CameraOutage,
     }
 }

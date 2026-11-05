@@ -47,6 +47,11 @@ namespace SiteIncidents
             Instance = null;
         }
 
+        protected override void ValidateConfig()
+        {
+            Config.TeslaSurgeInterval = AtLeast("tesla_surge_interval", Config.TeslaSurgeInterval, 2f);
+        }
+
         // Evenement du jeu, sans la protection de LabAPI : une exception priverait les abonnes suivants.
         private void OnRoundStarted()
         {
