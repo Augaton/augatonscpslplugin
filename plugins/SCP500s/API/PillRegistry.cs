@@ -87,6 +87,12 @@ namespace SCP500s.API
             return true;
         }
 
+        public void ClearDefinitions()
+        {
+            pills.Clear();
+            byId.Clear();
+        }
+
         public PillBase Find(string key)
         {
             if (string.IsNullOrEmpty(key))

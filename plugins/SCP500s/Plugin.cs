@@ -206,6 +206,18 @@ namespace SCP500s
             return new EffectPill(definition, color);
         }
 
+        public override void LoadConfigs()
+        {
+            base.LoadConfigs();
+
+            if (registry is null)
+                return;
+
+            // bySerial n'y passe pas : les pilules deja en jeu gardent leur definition jusqu'a leur consommation.
+            registry.ClearDefinitions();
+            BuildPills();
+        }
+
         protected override void ValidateConfig()
         {
             EnsureLists();
