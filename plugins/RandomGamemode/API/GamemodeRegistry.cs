@@ -4,6 +4,7 @@ using AugatonLib.Arbitration;
 using AugatonLib.Bus;
 using AugatonLib.FriendlyFire;
 using AugatonLib.Random;
+using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -226,6 +227,9 @@ namespace RandomGamemode.API
             if (gamemode.Settings.PauseRespawnWaves)
                 SetWavesPaused(true);
 
+            if (gamemode.PausesWorldEvents)
+                WorldEvents.Pause(Owner);
+
             Server.SendBroadcast(string.Format(Config.StartText, gamemode.DisplayName), Config.HeaderDuration);
 
             runScheduled = true;
@@ -301,6 +305,7 @@ namespace RandomGamemode.API
             }
 
             roundEndForced = false;
+            WorldEvents.Resume(Owner);
 
             if (friendlyFireOverridden)
             {

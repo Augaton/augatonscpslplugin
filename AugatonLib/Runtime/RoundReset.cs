@@ -26,6 +26,7 @@ namespace AugatonLib.Runtime
                 ScaleArbiter.ForgetAll();
                 DoorLockRegistry.Clear();
                 GenocideArbiter.Clear();
+                WorldEvents.Clear();
             }
             catch (Exception e)
             {

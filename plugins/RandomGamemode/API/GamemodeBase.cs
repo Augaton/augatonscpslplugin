@@ -47,6 +47,8 @@ namespace RandomGamemode.API
 
         public virtual bool HumansOnly => false;
 
+        public virtual bool PausesWorldEvents => HumansOnly;
+
         protected virtual RoleTypeId HumanRole => RoleTypeId.ClassD;
 
         public abstract IEnumerator<float> Run();
