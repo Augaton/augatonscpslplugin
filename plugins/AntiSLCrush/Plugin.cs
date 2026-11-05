@@ -34,6 +34,7 @@ namespace AntiSLCrush
 
             Patcher.PatchAll();
             ServerEvents.RoundRestarted += OnTransportDataPatch.Clear;
+            ServerEvents.WaitingForPlayers += ObserverSweep.Start;
 
             PluginDirectory.Register(this);
         }
@@ -42,6 +43,8 @@ namespace AntiSLCrush
         {
             Patcher.UnpatchAll(PluginName);
             ServerEvents.RoundRestarted -= OnTransportDataPatch.Clear;
+            ServerEvents.WaitingForPlayers -= ObserverSweep.Start;
+            ObserverSweep.Stop();
 
             PluginDirectory.Unregister(this);
             Instance = null;
