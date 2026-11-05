@@ -61,6 +61,12 @@ namespace SCPReplacer.Commands
 
             plugin.Cooldowns.Register(player.UserId);
 
+            if (plugin.Service.IsSuspended)
+            {
+                response = plugin.Translation.GamemodeActiveMessage;
+                return false;
+            }
+
             if (!player.IsSCP)
             {
                 response = plugin.Translation.HumanCommandNotScp;

@@ -58,6 +58,9 @@ namespace SCPReplacer
         [Description("Reponse de .human quand le role du SCP est exclu.")]
         public string HumanCommandIgnoredRole { get; set; } = "Votre role ne peut pas utiliser cette commande.";
 
+        [Description("Reponse de .human et .volunteer pendant un mode de jeu.")]
+        public string GamemodeActiveMessage { get; set; } = "Indisponible pendant un mode de jeu.";
+
         [Description("Reponse de .human quand personne ne pourrait reprendre le role.")]
         public string HumanCommandUnavailable { get; set; } = "Votre role ne peut pas etre repris pour le moment.";
 

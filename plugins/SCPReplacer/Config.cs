@@ -24,6 +24,9 @@ namespace SCPReplacer
         [Description("Cooldown en secondes entre deux utilisations d'une commande du plugin par un meme joueur.")]
         public float CommandCooldownSeconds { get; set; } = 3f;
 
+        [Description("Coupe .human, .volunteer et la reprise des SCP pendant un mode de RandomGamemode.")]
+        public bool PauseDuringGamemodes { get; set; } = true;
+
         [Description("Autorise les joueurs vivants a se porter volontaires. Si false, seuls les spectateurs peuvent.")]
         public bool AllowAliveVolunteers { get; set; } = false;
 

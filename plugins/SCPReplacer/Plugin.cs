@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AugatonLib.Arbitration;
+using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
@@ -44,6 +45,9 @@ namespace SCPReplacer
 
             DepartureArbiter.Declare(DepartureOwner, 100, Service.CanClaimDeparture);
 
+            PluginBus.Subscribe(DepartureOwner, BusTopics.GamemodeStarted, _ => Service.GamemodeActive = true);
+            PluginBus.Subscribe(DepartureOwner, BusTopics.GamemodeEnded, _ => Service.GamemodeActive = false);
+
             PluginDirectory.Register(this, Capability.Departure, Capability.Genocide, Capability.Bus);
         }
 
@@ -61,6 +65,7 @@ namespace SCPReplacer
             Cooldowns?.Clear();
 
             DepartureArbiter.Withdraw(DepartureOwner);
+            PluginBus.UnsubscribeOwner(DepartureOwner);
             PluginDirectory.Unregister(this);
 
             serverHandlers = null;

@@ -33,6 +33,7 @@ loterie sont tuees a `RoundEnded`, `RoundRestarted` et `Disable`.
 
 | Cle | Defaut | Role |
 |---|---|---|
+| `pause_during_gamemodes` | `true` | Coupe `.human`, `.volunteer` et la reprise des SCP pendant un mode de jeu |
 | `quit_cutoff` | `60` | Fenetre pendant laquelle le depart d'un SCP declenche l'annonce |
 | `replace_cutoff` | `90` | Fenetre pendant laquelle `.volunteer` reste utilisable |
 | `required_health_percentage` | `95` | Vie minimale du SCP partant pour etre remplacable |

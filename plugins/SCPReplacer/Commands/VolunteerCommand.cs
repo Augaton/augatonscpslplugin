@@ -54,6 +54,12 @@ namespace SCPReplacer.Commands
 
             plugin.Cooldowns.Register(player.UserId);
 
+            if (plugin.Service.IsSuspended)
+            {
+                response = plugin.Translation.GamemodeActiveMessage;
+                return false;
+            }
+
             if (plugin.Service.Pending.Count == 0)
             {
                 response = plugin.Translation.NoEligibleScpsError;

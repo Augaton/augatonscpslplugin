@@ -63,6 +63,7 @@ namespace SCPReplacer.Handlers
             try
             {
                 plugin.Service.Reset();
+                plugin.Service.GamemodeActive = false;
                 plugin.Cooldowns.Clear();
             }
             catch (Exception e)

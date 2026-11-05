@@ -77,6 +77,12 @@ namespace SCPReplacer.API
             }
         }
 
+        // Remis a zero en fin de round et non dans Reset, qui repasse au debut du round, sur le meme
+        // evenement que le depart du mode : selon l'ordre de chargement, le drapeau serait efface.
+        public bool GamemodeActive { get; set; }
+
+        public bool IsSuspended => GamemodeActive && plugin.Config.PauseDuringGamemodes;
+
         public void RemoveVolunteer(string userId)
         {
             if (string.IsNullOrEmpty(userId))
@@ -88,7 +94,7 @@ namespace SCPReplacer.API
 
         public bool CanClaimDeparture(Player scpPlayer)
         {
-            if (scpPlayer is null || !scpPlayer.IsSCP)
+            if (scpPlayer is null || !scpPlayer.IsSCP || IsSuspended)
                 return false;
 
             if (plugin.Config.IgnoredRoles.Contains(scpPlayer.Role))
