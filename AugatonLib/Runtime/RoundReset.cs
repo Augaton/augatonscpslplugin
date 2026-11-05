@@ -1,5 +1,6 @@
 using System;
 using AugatonLib.Arbitration;
+using AugatonLib.Chaos;
 using LabApi.Features.Console;
 using RoundRestarting;
 
@@ -27,6 +28,7 @@ namespace AugatonLib.Runtime
                 DoorLockRegistry.Clear();
                 GenocideArbiter.Clear();
                 WorldEvents.Clear();
+                ChaosState.Reset();
             }
             catch (Exception e)
             {

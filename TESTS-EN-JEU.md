@@ -71,6 +71,13 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Position de l'anomalie dans `Lcz173`, echange d'armes et de munitions.
 - [ ] Correspondance `RoomType` vers `RoomName` du README : seul `Lcz173` a ete verifie.
 
+**SiteIncidents**
+- [ ] `incidents trigger Blackout`, `Alert` et `Lockdown` fonctionnent et s'annoncent avec sous-titres.
+- [ ] Les annonces C.A.S.S.I.E se prononcent correctement : les mots sont a confirmer.
+- [ ] Les portes se debloquent apres le delai, et une porte verrouillee par le staff le reste.
+- [ ] Les lumieres reviennent a la normale, meme pendant une autre panne.
+- [ ] Rien en zone legere pendant la decontamination, rien apres l'ogive, rien pendant un mode arene.
+
 **SupplyDrop**
 - [ ] Armes larguees chargees, y compris revolver et fusil a pompe.
 - [ ] `team_wipe_drops` fonctionne sans TeamGenocide, et une seule fois par equipe et par round.

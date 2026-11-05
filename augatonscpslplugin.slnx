@@ -11,6 +11,7 @@
     <Project Path="plugins/SCP500s/SCP500s.csproj" />
     <Project Path="plugins/ScpProximityChat/ScpProximityChat.csproj" />
     <Project Path="plugins/SCPReplacer/SCPReplacer.csproj" />
+    <Project Path="plugins/SiteIncidents/SiteIncidents.csproj" />
     <Project Path="plugins/SupplyDrop/SupplyDrop.csproj" />
     <Project Path="plugins/TeamGenocide/TeamGenocide.csproj" />
   </Folder>

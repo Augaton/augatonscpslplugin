@@ -70,7 +70,7 @@ namespace AugatonLib.Runtime
             new Pairing(
                 Capability.Light,
                 "BetterCoinflipsRewritten",
-                new[] { "RandomGamemode", "SCP500s", "TeamGenocide" },
+                new[] { "RandomGamemode", "SCP500s", "TeamGenocide", "SiteIncidents" },
                 "les effets de lumiere s'annuleront entre eux"),
         };
 

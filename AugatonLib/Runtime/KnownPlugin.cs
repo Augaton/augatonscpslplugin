@@ -33,6 +33,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("SCP500s", "SCP500s", "pilules SCP-500"),
             new KnownPlugin("ScpProximityChat", "ScpProximityChat", "proximite SCP"),
             new KnownPlugin("SCPReplacer", "SCPReplacer", "volontariat SCP"),
+            new KnownPlugin("SiteIncidents", "SiteIncidents", "incidents de site"),
             new KnownPlugin("SupplyDrop", "SupplyDrop", "largages"),
             new KnownPlugin("TeamGenocide", "TeamGenocide", "extinction d'equipe"),
         };
