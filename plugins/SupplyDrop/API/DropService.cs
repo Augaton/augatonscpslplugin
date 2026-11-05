@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AugatonLib.Bus;
+using AugatonLib.Runtime;
 using AugatonLib.Spawning;
 using Cassie;
 using InventorySystem;
@@ -31,6 +32,8 @@ namespace SupplyDrop.API
 
         private Config Config => plugin.Config;
 
+        private bool IsPaused => Config.PauseDuringGamemodes && WorldEvents.IsPaused;
+
         public void OnGeneratorActivated()
         {
             generatorsActivated++;
@@ -43,7 +46,7 @@ namespace SupplyDrop.API
 
         private void FireEventDrops(Func<DropProfile, bool> isTriggered)
         {
-            if (!Round.IsRoundInProgress || Player.Count < Config.MinPlayers)
+            if (!Round.IsRoundInProgress || IsPaused || Player.Count < Config.MinPlayers)
                 return;
 
             foreach (DropProfile profile in Config.Profiles)
@@ -144,7 +147,7 @@ namespace SupplyDrop.API
             {
                 yield return Timing.WaitForSeconds(tick);
 
-                if (!Round.IsRoundInProgress)
+                if (!Round.IsRoundInProgress || IsPaused)
                     continue;
 
                 float elapsed = (float)Round.Duration.TotalSeconds;

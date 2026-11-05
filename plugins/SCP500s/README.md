@@ -364,3 +364,5 @@ La 7.0 remplace `CustomItem`, absent de LabAPI, par un suivi des numeros de seri
 dans `PillRegistry`. Les comportements utiles sont conserves : une pilule tombe
 au sol a la mort de son porteur et lors d'un changement de role, reapparait a ses
 pieds apres une evasion, et traverse SCP-914 sans etre transformee.
+
+`pause_during_gamemodes` suspend l'apparition de pilules pendant un mode de type arene de RandomGamemode. Sans ce plugin, le reglage n'a aucun effet.

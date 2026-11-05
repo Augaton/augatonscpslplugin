@@ -44,6 +44,9 @@ namespace SCP500s
         [Description("Fait apparaitre des pilules pendant tout le round, un peu partout sur la carte, aux emplacements de loot, pour qu'il y en ait toujours au sol.")]
         public bool ContinuousSpawn { get; set; } = true;
 
+        [Description("Suspend l'apparition de pilules pendant un mode de jeu de type arene, comme le Gun Game.")]
+        public bool PauseDuringGamemodes { get; set; } = true;
+
         [Description("Fait monter le chaos par paliers : plus de pilules, et plus vite, au fil du round.")]
         public bool ChaosEscalation { get; set; } = true;
 

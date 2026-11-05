@@ -77,6 +77,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] `decontamination_trigger` et `warhead_trigger` declenchent bien un largage.
 
 **RandomGamemode**
+- [ ] Mode arene (Gun Game, Dodgeball) : ni largage, ni pilule, ni piece n'apparait, et tout reprend ensuite.
 - [ ] Vote : le broadcast apparait dans le lobby, `.votemode` liste les choix, `.votemode 2` vote.
 - [ ] Vote : le mode le plus vote demarre, et sans vote un des modes proposes est tire au sort.
 - [ ] Vote : un mode qui manque de joueurs au depart est ecarte.

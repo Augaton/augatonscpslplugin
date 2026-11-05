@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AugatonLib.Chaos;
 using AugatonLib.Random;
+using AugatonLib.Runtime;
 using AugatonLib.World;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -80,7 +81,7 @@ namespace SCP500s.API
 
         private void Tick()
         {
-            if (!Round.IsRoundStarted || Round.IsRoundEnded)
+            if (!CanSpawn())
                 return;
 
             int level = CurrentLevel();
@@ -102,8 +103,13 @@ namespace SCP500s.API
 
         private void Renew(int amount)
         {
-            if (running && Round.IsRoundInProgress)
+            if (running && CanSpawn())
                 SpawnPills(Mathf.Min(amount, Config.MaxPillsOnGround - CountPillsOnGround()));
+        }
+
+        private static bool CanSpawn()
+        {
+            return Round.IsRoundInProgress && !(Config.PauseDuringGamemodes && WorldEvents.IsPaused);
         }
 
         private static int CurrentLevel()

@@ -234,6 +234,9 @@ namespace BetterCoinflipsRewritten
         [Description("Whether coins reappear on the map during the round, in safe loot spots away from players.")]
         public bool CoinRenewal { get; set; } = true;
 
+        [Description("Pauses coin renewal during arena gamemodes such as Gun Game.")]
+        public bool PauseDuringGamemodes { get; set; } = true;
+
         [Description("Seconds between two coin renewal checks. Minimum 30.")]
         public float CoinRenewalIntervalSeconds { get; set; } = 90f;
 

@@ -206,3 +206,5 @@ jamais pres d'un joueur vivant. Le plugin maintient `coin_renewal_target` pieces
 `coin_renewal_batch` au plus toutes les `coin_renewal_interval_seconds` secondes. Cette cible monte de
 `coin_chaos_target_per_level` a chaque palier de `coin_chaos_step_seconds` secondes, jusqu'a
 `coin_chaos_max_level` paliers. Avec les valeurs par defaut, elle passe de 6 a 16 pieces.
+
+`pause_during_gamemodes` suspend ce renouvellement pendant un mode de type arene de RandomGamemode. Sans ce plugin, le reglage n'a aucun effet.

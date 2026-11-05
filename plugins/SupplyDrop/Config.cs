@@ -10,6 +10,9 @@ namespace SupplyDrop
         [Description("Active les logs de debug.")]
         public bool Debug { get; set; } = false;
 
+        [Description("Suspend les largages automatiques pendant un mode de jeu de type arene, comme le Gun Game.")]
+        public bool PauseDuringGamemodes { get; set; } = true;
+
         [Description("Nombre minimum de joueurs connectes pour qu'un largage se declenche.")]
         public int MinPlayers { get; set; } = 2;
 

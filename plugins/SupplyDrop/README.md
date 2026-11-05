@@ -170,3 +170,5 @@ Un profil peut aussi partir sur un evenement de la partie, en plus de son minute
 `generators_trigger` (nombre de generateurs actives), `decontamination_trigger` et `warhead_trigger`.
 Ces largages comptent dans `max_drops_per_round`. Par defaut, seul le profil `mtf` en utilise un :
 il part quand les 3 generateurs sont actifs.
+
+`pause_during_gamemodes` suspend les largages automatiques pendant un mode de type arene de RandomGamemode. Les appels du staff restent possibles. Sans RandomGamemode, ce reglage n'a aucun effet.

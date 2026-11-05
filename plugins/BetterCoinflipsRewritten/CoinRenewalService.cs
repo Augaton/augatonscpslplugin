@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AugatonLib.Chaos;
+using AugatonLib.Runtime;
 using AugatonLib.World;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -71,10 +72,11 @@ namespace BetterCoinflipsRewritten
 
         private void Tick()
         {
-            if (!Round.IsRoundInProgress)
+            Config config = plugin.Config;
+
+            if (!Round.IsRoundInProgress || (config.PauseDuringGamemodes && WorldEvents.IsPaused))
                 return;
 
-            Config config = plugin.Config;
             int level = Escalation.Level(Round.Duration.TotalSeconds, config.CoinChaosStepSeconds, config.CoinChaosMaxLevel);
             int target = Escalation.Grow(config.CoinRenewalTarget, config.CoinChaosTargetPerLevel, level);
             int missing = Mathf.Min(target - CountCoinsOnGround(), config.CoinRenewalBatch);
