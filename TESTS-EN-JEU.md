@@ -72,6 +72,22 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Il accelere les pilules, les pieces et les incidents, et repart de zero au round suivant.
 - [ ] Equilibrage : 30 points par niveau et 5 niveaux au maximum sont des valeurs de depart.
 
+**PocketCorpses**
+- [ ] Un joueur meurt dans la dimension de poche : son corps retombe du plafond, au-dessus d'un joueur vivant.
+- [ ] Le corps tombe vraiment : il ne reste pas fige au plafond, et garde son nom et sa cause de mort.
+- [ ] L'alerte sonore retentit avant la chute, et les clients voient le gouffre au sol.
+- [ ] Le gouffre ralentit un humain, pas un SCP, et disparait apres `sinkhole_seconds`.
+- [ ] SCP-049 peut ranimer le corps retombe.
+- [ ] Le corps d'un joueur deconnecte retombe aussi, sans erreur dans les logs.
+- [ ] `sinkhole_under_items: true` : un gouffre precede les objets rendus.
+
+**MicroHidDock**
+- [ ] Micro-HID en main, l'interaction sur le socle vide fonctionne. Si le socle ne recoit pas l'interaction, lacher le Micro-HID reste possible.
+- [ ] Lache a portee, le Micro-HID se pose sur le socle, au bon endroit pour les clients.
+- [ ] Il se reprend normalement, et garde son energie.
+- [ ] Il se recharge sur le socle, jusqu'a `recharge_limit`.
+- [ ] Un socle occupe refuse un second Micro-HID, et un Micro-HID casse le reste apres un passage sur le socle.
+
 **Scp261**
 - [ ] La machine apparait dans `EzOfficeSmall`, et une piece en main permet de l'utiliser.
 - [ ] Le bloc simple recoit bien l'interaction, malgre son collider : c'est la version sans ProjectMER.

@@ -1,6 +1,6 @@
 # Augaton SCP:SL Plugins
 
-Dix-sept plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
+Dix-neuf plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
 
 [![CI](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml)
 ![LabAPI 1.1.7](https://img.shields.io/badge/LabAPI-1.1.7-blue)
@@ -41,6 +41,8 @@ Dix-sept plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**,
 | [ChaosDirector](plugins/ChaosDirector) | 1.0.0 | Niveau de chaos commun, nourri par les événements du round |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
 | [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.0.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
+| [MicroHidDock](plugins/MicroHidDock) | 1.0.0 | Repose le Micro-HID sur son socle, où il se recharge |
+| [PocketCorpses](plugins/PocketCorpses) | 1.0.0 | Fait retomber les corps de la dimension de poche |
 | [RandomGamemode](plugins/RandomGamemode) | 4.0.0 | 17 modes de jeu spéciaux, avec vote des joueurs |
 | [RoundRecap](plugins/RoundRecap) | 1.0.0 | Bilan de fin de round |
 | [RealisticSizes](plugins/RealisticSizes) | 5.0.0 | Taille variable par joueur, avec effets de gameplay en option |
@@ -65,11 +67,11 @@ Ces plugins viennent d'autres auteurs. Ils restent optionnels, et la bannière d
 |---|---|---|
 | [FairScpSelection](https://github.com/CosmosZvezdo4kin/FairScpSelection) | Choix des SCP selon les préférences des joueurs | **Inclus**, voir [third_party](third_party/FairScpSelection/NOTICE.md) |
 | [Better3114Spawn](https://github.com/tayjay/Better3114Spawn) | Fait démarrer SCP-3114 déguisé parmi les humains | À installer depuis ses releases. Lié à l'événement d'Halloween du jeu |
-| [CorpsesFallPocketDimension](https://github.com/DentyTxR/CorpsesFallPocketDimension) | Fait tomber des corps de la dimension de poche | À installer depuis ses releases, version LabAPI |
-| [MicroHIDReturn](https://github.com/EngineerLND/MicroHIDReturn) | Permet de reposer et recharger le Micro-HID sur son socle | À installer depuis ses releases. Requiert AudioPlayerApi |
 | [ProjectMER](https://github.com/Michal78900/ProjectMER/) | Donne son vrai modèle à SCP-261 | Optionnel, à installer depuis ses releases |
 
-Better3114Spawn, CorpsesFallPocketDimension et MicroHIDReturn n'ont pas de licence : leur code n'est donc pas copié ici et reste chez leurs auteurs.
+Better3114Spawn n'a pas de licence : son code n'est donc pas copié ici et reste chez son auteur.
+
+PocketCorpses et MicroHidDock reprennent les idées de [CorpsesFallPocketDimension](https://github.com/DentyTxR/CorpsesFallPocketDimension) et [MicroHIDReturn](https://github.com/EngineerLND/MicroHIDReturn), deux plugins sans licence. Ils ont été réécrits sans lire leur code. N'installe pas un original avec sa réécriture : l'effet serait appliqué deux fois.
 
 FairScpSelection remplace le choix des SCP du jeu : sa cohabitation avec Better3114Spawn n'a pas été vérifiée.
 
@@ -282,6 +284,8 @@ Les plugins portés sont des réécritures. Leur conception et leurs mécaniques
 |---|---|---|
 | AugatonLib, tests et outillage | Augaton | [MIT](LICENSE) |
 | ChaosDirector, RoundRecap, SiteIncidents | Augaton | [MIT](plugins/ChaosDirector/LICENSE) |
+| MicroHidDock | Augaton, d'après une idée d'EngineerLND | [MIT](plugins/MicroHidDock/LICENSE) |
+| PocketCorpses | Augaton, d'après une idée de DentyTxR | [MIT](plugins/PocketCorpses/LICENSE) |
 | AntiSLCrush | ui_2506, version modifiée | [Non commerciale](plugins/AntiSLCrush/LICENSE.md) |
 | AutoFFToggle | Kognity | [MIT](plugins/AutoFFToggle/LICENSE) |
 | BetterCoinflipsRewritten | Mikihero, Matisiowy | [Non précisée](plugins/BetterCoinflipsRewritten/NOTICE.md) |
