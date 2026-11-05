@@ -1,7 +1,7 @@
 # RoundRecap
 
-Affiche un bilan a la fin de chaque round : morts, evasions, pilules avalees, pieces lancees,
-largages, remplacements, incidents de site et equipes eliminees.
+Affiche un bilan a la fin de chaque round : mode de jeu, morts, evasions, pilules avalees, pieces
+lancees, largages, remplacements, incidents de site, echanges a SCP-1162 et equipes eliminees.
 
 Le plugin ecoute le bus d'AugatonLib et ne depend d'aucun autre plugin. Une ligne dont le total vaut
 zero n'apparait pas : sans SCP500s, le bilan ne parle simplement pas de pilules.

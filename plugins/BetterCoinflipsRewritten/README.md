@@ -15,7 +15,9 @@ le lancer. Un joueur ne peut donc plus rester assis sur une piece a enchainer
 les tirages jusqu'a decrocher le bon effet, ce que le cooldown par joueur ne
 faisait que ralentir.
 
-La destruction est **differee** de `coin_consume_delay` (1,5 s par defaut).
+La destruction est **differee** de `coin_consume_delay` (1,5 s par defaut). Elle suit la piece :
+lachee puis ramassee par un autre pendant ce delai, elle disparait de son inventaire, et elle ne
+peut pas etre relancee entre-temps.
 `PlayerEvents.FlippingCoin` part avant l'envoi du RPC qui lance l'animation :
 retirer l'objet pendant l'event la casse et laisse le jeu manipuler un item
 detruit. Ne pas descendre sous la seconde.

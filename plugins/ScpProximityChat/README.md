@@ -30,7 +30,7 @@ Deux modes via `activation_type` :
 | `use_default_scp_chat` | `true` | Si `false`, les SCP n'entendent plus le locuteur hors portee |
 | `volume` | `10` | Gain applique a la voix |
 | `max_volume` | `25` | Garde-fou contre la saturation |
-| `min_distance` / `max_distance` | `2` / `10` | Portee du haut-parleur |
+| `min_distance` / `max_distance` | `2` / `10` | Portee du haut-parleur. La voix n'est envoyee qu'aux joueurs a portee, et aux spectateurs qui en suivent un |
 | `toggle_cooldown_seconds` | `1` | Anti-spam sur la bascule |
 | `disable_on_role_change` | `true` | Coupe la proximite a la mort ou au changement de role |
 

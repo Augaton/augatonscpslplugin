@@ -11,7 +11,7 @@ namespace ScpProximityChat
         [Description("Active les logs de debug.")]
         public bool Debug { get; set; } = false;
 
-        [Description("Mode d'activation : ServerSpecificSettings (touche configurable) ou NoClip (touche noclip).")]
+        [Description("Lu au demarrage, labapi reload configs ne le change pas. Mode d'activation : ServerSpecificSettings (touche configurable) ou NoClip (touche noclip).")]
         public ActivationType ActivationType { get; set; } = ActivationType.ServerSpecificSettings;
 
         [Description("Roles SCP autorises a utiliser le chat de proximite.")]

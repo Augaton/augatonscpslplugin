@@ -131,4 +131,5 @@ nouvelle.
 Desactive par defaut, `enable_size_gameplay` donne un petit avantage a chaque gabarit. Il ne touche
 que les humains : un petit personnage va plus vite, un grand a plus de vie. Reglages :
 `speed_percent_per_tenth`, `health_percent_per_tenth`, `max_speed_percent`, `max_health_percent`.
-Avec les valeurs par defaut, une taille de 0,9 donne +3 % de vitesse et -5 % de vie.
+Avec les valeurs par defaut, une taille de 0,9 donne +3 % de vitesse et -5 % de vie. L'effet est
+ignore pendant un mode de RandomGamemode, qui regle lui-meme les PV et la vitesse.
