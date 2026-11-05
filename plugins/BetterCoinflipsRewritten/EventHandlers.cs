@@ -75,6 +75,12 @@ namespace BetterCoinflipsRewritten
                     return;
                 }
 
+                if (coinConsumeService.IsSpent(ev.CoinItem))
+                {
+                    ev.IsAllowed = false;
+                    return;
+                }
+
                 coinService.SetCooldown(ev.Player);
 
                 Logger.Debug(
@@ -85,7 +91,7 @@ namespace BetterCoinflipsRewritten
                     ".",
                     plugin.Config.Debug);
 
-                coinConsumeService.Schedule(ev.Player, ev.CoinItem);
+                coinConsumeService.Schedule(ev.CoinItem);
 
                 coinService.ExecuteFlip(
                     ev.Player,
@@ -141,6 +147,7 @@ namespace BetterCoinflipsRewritten
                 ReleaseArbiters();
                 API.GlobalCooldown.Clear();
                 API.Scheduler.Clear();
+                coinConsumeService.Clear();
 
                 Logger.Debug(
                     "[BetterCoinflipsRewritten] Round started. " +
@@ -184,6 +191,7 @@ namespace BetterCoinflipsRewritten
                 ReleaseArbiters();
                 API.GlobalCooldown.Clear();
                 API.Scheduler.Clear();
+                coinConsumeService.Clear();
                 coinRenewalService.Stop();
 
                 Logger.Debug(

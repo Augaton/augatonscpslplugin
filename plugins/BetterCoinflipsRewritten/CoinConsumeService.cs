@@ -1,4 +1,4 @@
-using InventorySystem.Items;
+using System.Collections.Generic;
 using LabApi.Features.Wrappers;
 
 namespace BetterCoinflipsRewritten
@@ -6,6 +6,7 @@ namespace BetterCoinflipsRewritten
     public sealed class CoinConsumeService
     {
         private readonly Plugin plugin;
+        private readonly HashSet<ushort> spent = new HashSet<ushort>();
 
         public CoinConsumeService(Plugin plugin)
         {
@@ -17,25 +18,37 @@ namespace BetterCoinflipsRewritten
             get { return plugin.Config.ConsumeCoinOnFlip; }
         }
 
-        public void Schedule(Player player, Item coin)
+        public bool IsSpent(Item coin)
         {
-            if (!IsEnabled || player is null || coin is null)
+            return coin is not null && spent.Contains(coin.Serial);
+        }
+
+        public void Schedule(Item coin)
+        {
+            if (!IsEnabled || coin is null)
                 return;
 
             ushort serial = coin.Serial;
 
+            spent.Add(serial);
+
             API.Scheduler.Delay(
                 plugin.Config.CoinConsumeDelay,
-                delegate { Consume(player, serial); });
+                delegate { Consume(serial); });
         }
 
-        private void Consume(Player player, ushort serial)
+        public void Clear() => spent.Clear();
+
+        // Pendant le delai, la piece peut etre lachee et ramassee par un autre : seul son serial la suit.
+        private void Consume(ushort serial)
         {
-            if (player is not null &&
-                !player.IsDestroyed &&
-                player.Inventory.UserInventory.Items.TryGetValue(serial, out ItemBase coin))
+            spent.Remove(serial);
+
+            Item carried = Item.Get(serial);
+
+            if (carried is not null && !carried.IsDestroyed && carried.CurrentOwner is Player owner)
             {
-                player.RemoveItem(coin);
+                owner.RemoveItem(carried);
                 return;
             }
 

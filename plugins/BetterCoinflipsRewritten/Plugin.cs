@@ -120,14 +120,6 @@ namespace BetterCoinflipsRewritten
             if (!Config.ConsumeCoinOnFlip)
                 return;
 
-            if (Config.CoinCooldown <= Config.CoinConsumeDelay)
-            {
-                Logger.Warn(
-                    "[BetterCoinflipsRewritten] coin_cooldown is not longer " +
-                    "than coin_consume_delay, the same coin can be flipped " +
-                    "again before it is destroyed.");
-            }
-
             if (Config.AddBonusCoinsToLoot || Config.SpawnCoinsOnMap)
                 return;
 
