@@ -97,7 +97,7 @@ namespace MicroHidDock
         {
             try
             {
-                if (ev?.Player is null || ev.Pickup is not MicroHIDPickup pickup)
+                if (ev?.Player is null || ev.Pickup is not MicroHIDPickup pickup || pickup.Phase != MicroHidPhase.Standby)
                     return;
 
                 if (!dock.TryFindFreeChamber(pickup.Position, out LockerChamber chamber) || dock.IsOnCooldown(ev.Player))
