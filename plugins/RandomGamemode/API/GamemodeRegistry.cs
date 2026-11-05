@@ -78,6 +78,8 @@ namespace RandomGamemode.API
             all.Add(new Juggernaut());
             all.Add(new Blackout());
             all.Add(new GunGame());
+            all.Add(new HideAndSeek());
+            all.Add(new Evacuation());
 
             Logger.Info($"[RandomGamemode] {all.Count} modes enregistres.");
         }

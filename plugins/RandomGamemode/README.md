@@ -5,7 +5,7 @@
 
 Modes de jeu speciaux tires au hasard au debut d'un round.
 
-## Les 17 modes
+## Les 19 modes
 
 **Portes depuis la version 2.x**
 
@@ -33,6 +33,8 @@ Modes de jeu speciaux tires au hasard au debut d'un round.
 | `juggernaut` | Juggernaut | Un joueur surpuissant contre tous les autres |
 | `blackout` | Panne generale | Obscurite permanente, lampes distribuees |
 | `gungame` | Gun Game | Chaque elimination ameliore votre arme |
+| `hideandseek` | Cache-cache | Les Classe-D se cachent, puis un chasseur les traque jusqu'a la fin du temps |
+| `evacuation` | Evacuation generale | L'ogive part au bout d'une minute, verrouillee : il faut rejoindre la surface |
 
 `pillparty` et `coinroyale` s'appuient sur SCP500s et BetterCoinflips s'ils sont
 installes, mais fonctionnent aussi en vanilla.

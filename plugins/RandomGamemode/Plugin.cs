@@ -167,6 +167,10 @@ namespace RandomGamemode
                 Config.PillPartyCustomChance = 70;
             }
 
+            Config.HideAndSeekHideSeconds = AtLeast("hide_and_seek_hide_seconds", Config.HideAndSeekHideSeconds, 5f);
+            Config.HideAndSeekHuntSeconds = AtLeast("hide_and_seek_hunt_seconds", Config.HideAndSeekHuntSeconds, 30f);
+            Config.EvacuationDelaySeconds = AtLeast("evacuation_delay_seconds", Config.EvacuationDelaySeconds, 5f);
+
             if (Config.JuggernautHealth < 1f)
             {
                 Logger.Warn($"JuggernautHealth ({Config.JuggernautHealth}) trop bas, remis a 2500.");

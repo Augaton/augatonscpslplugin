@@ -55,6 +55,12 @@ namespace RandomGamemode
         [Description("Reponse quand la commande ne vient pas d'un joueur.")]
         public string VotePlayerOnly { get; set; } = "Commande reservee aux joueurs.";
 
+        [Description("Cache-cache : le chasseur entre en jeu.")]
+        public string HideAndSeekReleased { get; set; } = "<size=30><color=red>Le chasseur est lache.</color></size>";
+
+        [Description("Cache-cache : les survivants ont tenu.")]
+        public string HideAndSeekSurvived { get; set; } = "<size=30><color=green>Les survivants ont tenu jusqu'au bout.</color></size>";
+
         [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }

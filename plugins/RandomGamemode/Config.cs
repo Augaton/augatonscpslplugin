@@ -1,6 +1,7 @@
 using AugatonLib.Hints;
 using System.Collections.Generic;
 using System.ComponentModel;
+using PlayerRoles;
 using RandomGamemode.API;
 
 namespace RandomGamemode
@@ -82,6 +83,18 @@ namespace RandomGamemode
 
         [Description("Echelle des zombies du mode Infection.")]
         public float InfectionZombieScale { get; set; } = 1.15f;
+
+        [Description("Cache-cache : secondes laissees aux joueurs pour se cacher.")]
+        public float HideAndSeekHideSeconds { get; set; } = 45f;
+
+        [Description("Cache-cache : secondes de traque avant que les survivants ne gagnent.")]
+        public float HideAndSeekHuntSeconds { get; set; } = 240f;
+
+        [Description("Cache-cache : role du chasseur.")]
+        public RoleTypeId HideAndSeekSeekerRole { get; set; } = RoleTypeId.Scp939;
+
+        [Description("Evacuation : secondes avant le depart de l'ogive.")]
+        public float EvacuationDelaySeconds { get; set; } = 60f;
 
         [Description("Vie du joueur Juggernaut.")]
         public float JuggernautHealth { get; set; } = 2500f;
@@ -270,6 +283,20 @@ namespace RandomGamemode
                 PauseRespawnWaves = false,
                 ForceFriendlyFire = false,
                 RoundTimeLimit = 0f,
+            },
+            ["hideandseek"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 5,
+                Description = "Cachez-vous et taisez-vous : le chasseur arrive. Survivez jusqu'au bout.",
+                PauseRespawnWaves = true,
+            },
+            ["evacuation"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 6,
+                Description = "L'ogive va partir, et rien ne l'arretera. Rejoignez la surface.",
+                PauseRespawnWaves = true,
             },
             ["gungame"] = new GamemodeSettings
             {
