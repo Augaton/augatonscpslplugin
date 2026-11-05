@@ -127,6 +127,7 @@ namespace Replacer.Handlers
                 MaxHealth = player.MaxHealth,
                 HumeShield = player.HumeShield,
                 Team = player.Team,
+                Size = ScaleArbiter.BaselineOf(player),
                 ArtificialHealth = player.ArtificialHealth,
                 IsDisarmed = player.IsDisarmed,
                 Disarmer = player.DisarmedBy,
@@ -221,7 +222,7 @@ namespace Replacer.Handlers
 
                     Announce(target, snapshot);
 
-                    PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, target);
+                    PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, new PlayerReplacement(target, snapshot.Size));
 
                     Logger.Info($"{target.Nickname} ({target.UserId}) remplace {snapshot.Nickname} en tant que {snapshot.Role}.");
                 }

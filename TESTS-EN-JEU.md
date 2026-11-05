@@ -56,6 +56,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 **RealisticSizes**
 - [ ] Taille visible par les autres clients, conservee apres mort et respawn, hitbox correcte.
 - [ ] `sizes reset *`.
+- [ ] Un remplacant de Replacer garde la taille du joueur parti.
 - [ ] Avec `enable_size_gameplay: true` : un petit humain va plus vite, un grand a plus de vie, les
       SCP ne changent pas, et l'effet disparait a la mort et apres `sizes reset`.
 - [ ] Fin de round : les tailles reviennent a la normale. C'est un changement : elles restaient avant.

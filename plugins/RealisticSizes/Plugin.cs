@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
@@ -32,11 +33,13 @@ namespace RealisticSizes
             PlayerEvents.ChangedRole += playerHandlers.OnChangedRole;
             PlayerEvents.Left += playerHandlers.OnLeft;
 
+            PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, playerHandlers.OnPlayerReplaced);
+
             ServerEvents.RoundStarted += playerHandlers.OnRoundStarted;
             ServerEvents.RoundEnded += playerHandlers.OnRoundEnded;
             ServerEvents.RoundRestarted += playerHandlers.OnRoundRestarted;
 
-            PluginDirectory.Register(this, Capability.Scale);
+            PluginDirectory.Register(this, Capability.Scale, Capability.Bus);
         }
 
         public override void Disable()
@@ -45,6 +48,7 @@ namespace RealisticSizes
             {
                 PlayerEvents.ChangedRole -= playerHandlers.OnChangedRole;
                 PlayerEvents.Left -= playerHandlers.OnLeft;
+                PluginBus.UnsubscribeOwner(Name);
 
                 ServerEvents.RoundStarted -= playerHandlers.OnRoundStarted;
                 ServerEvents.RoundEnded -= playerHandlers.OnRoundEnded;

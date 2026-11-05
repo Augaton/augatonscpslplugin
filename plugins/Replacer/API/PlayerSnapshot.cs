@@ -23,6 +23,8 @@ namespace Replacer.API
 
         public Team Team { get; set; }
 
+        public Vector3 Size { get; set; }
+
         public bool IsDeferred { get; set; }
 
         public List<Player> Captives { get; } = new List<Player>(2);

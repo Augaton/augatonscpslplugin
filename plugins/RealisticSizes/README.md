@@ -121,6 +121,11 @@ La version 3.x ciblait EXILED 2.3.4. Quatre defauts corriges :
 L'anti-lag aleatoire est remplace par un etalement deterministe, et les
 callbacks differes sont annules au depart du joueur et au changement de round.
 
+## Avec Replacer
+
+Avec `keep_size_on_replacement`, le remplacant garde la taille du joueur parti au lieu d'en tirer une
+nouvelle.
+
 ## Effets de la taille
 
 Desactive par defaut, `enable_size_gameplay` donne un petit avantage a chaque gabarit. Il ne touche

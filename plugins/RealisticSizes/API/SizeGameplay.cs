@@ -14,6 +14,9 @@ namespace RealisticSizes.API
             if (!config.EnableSizeGameplay || !player.IsHuman)
                 return;
 
+            player.DisableEffect<MovementBoost>();
+            player.DisableEffect<Slowness>();
+
             float tenths = (height - 1f) * 10f;
 
             ApplySpeed(player, -tenths * config.SpeedPercentPerTenth, config.MaxSpeedPercent);

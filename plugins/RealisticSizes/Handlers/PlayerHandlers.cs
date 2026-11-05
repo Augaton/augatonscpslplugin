@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AugatonLib.Arbitration;
+using AugatonLib.Bus;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Wrappers;
@@ -77,6 +78,21 @@ namespace RealisticSizes.Handlers
             {
                 Logger.Error($"OnChangedRole: {e}");
             }
+        }
+
+        public void OnPlayerReplaced(BusMessage message)
+        {
+            if (!plugin.Config.KeepSizeOnReplacement || !message.TryGet(out PlayerReplacement replacement))
+                return;
+
+            Player player = replacement.Replacement;
+
+            if (player is null || player.IsDestroyed || !IsEligible(player, player.Role))
+                return;
+
+            Cancel(player.UserId);
+            ScaleArbiter.SetBaseline(player, replacement.Size);
+            SizeGameplay.Apply(player, replacement.Size.y, plugin.Config);
         }
 
         public void OnLeft(PlayerLeftEventArgs ev)

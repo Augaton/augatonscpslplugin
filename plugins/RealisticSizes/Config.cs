@@ -40,6 +40,9 @@ namespace RealisticSizes
         [Description("Ecart en secondes ajoute entre chaque joueur lors de l'etalement.")]
         public float SpreadStep { get; set; } = 0.15f;
 
+        [Description("Un remplacant de Replacer garde la taille du joueur parti. Sans Replacer, ce reglage n'a aucun effet.")]
+        public bool KeepSizeOnReplacement { get; set; } = true;
+
         [Description("La taille influe sur les humains : petit = plus rapide, grand = plus de vie. Desactive par defaut, a equilibrer.")]
         public bool EnableSizeGameplay { get; set; } = false;
 
