@@ -18,6 +18,12 @@ namespace AugatonLib.Commands
 
         protected override bool OnExecute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
+            if (arguments.Count > 0 && string.Equals(arguments.At(0), "check", StringComparison.OrdinalIgnoreCase))
+            {
+                response = SelfCheck.Report();
+                return true;
+            }
+
             if (arguments.Count > 0 && string.Equals(arguments.At(0), "console", StringComparison.OrdinalIgnoreCase))
             {
                 PluginDirectory.PrintBanner();

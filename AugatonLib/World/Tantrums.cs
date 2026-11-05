@@ -1,5 +1,4 @@
 using Hazards;
-using Mirror;
 using RelativePositioning;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace AugatonLib.World
     {
         public static bool TrySpawn(Vector3 position)
         {
-            TantrumEnvironmentalHazard prefab = FindPrefab();
+            TantrumEnvironmentalHazard prefab = NetworkPrefabs.Find<TantrumEnvironmentalHazard>();
 
             if (prefab == null)
                 return false;
@@ -19,17 +18,6 @@ namespace AugatonLib.World
             // A poser avant le Start de la flaque, qui la met sur le reseau.
             tantrum.SynchronizedPosition = new RelativePosition(position + (Vector3.up * 0.25f));
             return true;
-        }
-
-        private static TantrumEnvironmentalHazard FindPrefab()
-        {
-            foreach (GameObject prefab in NetworkClient.prefabs.Values)
-            {
-                if (prefab.TryGetComponent(out TantrumEnvironmentalHazard hazard))
-                    return hazard;
-            }
-
-            return null;
         }
     }
 }

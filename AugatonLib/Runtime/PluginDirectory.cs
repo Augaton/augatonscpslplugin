@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using AugatonLib.Arbitration;
+using AugatonLib.Hints;
+using AugatonLib.World;
+using Hazards;
+using LabApi.Features.Wrappers;
 using LabApi.Events.Handlers;
 using LabApi.Loader.Features.Plugins;
 
@@ -68,6 +72,15 @@ namespace AugatonLib.Runtime
 
         public static void PrintBanner() => Banner.Print();
 
+        private static void RegisterChecks()
+        {
+            const string owner = "AugatonLib";
+
+            SelfCheck.Register(owner, "HintServiceMeow charge", () => HintChannel.ServiceAvailable ? null : "introuvable");
+            SelfCheck.Register(owner, "prefab de tantrum", () => NetworkPrefabs.Find<TantrumEnvironmentalHazard>() is null ? "introuvable" : null);
+            SelfCheck.Register(owner, "mots de C.A.S.S.I.E", () => Announcer.LineDatabase == null ? "non charges" : null);
+        }
+
         private static void Hook()
         {
             if (hooked)
@@ -78,6 +91,7 @@ namespace AugatonLib.Runtime
             PlayerDeparture.Hook();
             TeamWatcher.Hook();
             ScaleArbiter.Hook();
+            RegisterChecks();
             ServerEvents.PluginsEnabled += Banner.Print;
         }
 
