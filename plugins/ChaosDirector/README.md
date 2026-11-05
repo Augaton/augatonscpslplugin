@@ -12,6 +12,7 @@ chacun garde sa montee en puissance au fil du temps.
 
 | Cle | Defaut | Role |
 |---|---|---|
+| `pause_during_gamemodes` | `true` | Ne compte rien pendant un mode arene |
 | `points_per_pill` | `1` | Points par pilule consommee |
 | `points_per_coin_flip` | `1` | Points par piece lancee |
 | `points_per_death` | `1` | Points par mort |

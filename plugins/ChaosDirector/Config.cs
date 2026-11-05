@@ -4,6 +4,9 @@ namespace ChaosDirector
 {
     public sealed class Config
     {
+        [Description("Ne compte rien pendant un mode arene de RandomGamemode.")]
+        public bool PauseDuringGamemodes { get; set; } = true;
+
         [Description("Points de chaos par pilule consommee.")]
         public int PointsPerPill { get; set; } = 1;
 

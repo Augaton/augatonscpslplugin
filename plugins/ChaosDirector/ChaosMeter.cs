@@ -1,6 +1,7 @@
 using System;
 using AugatonLib.Bus;
 using AugatonLib.Chaos;
+using AugatonLib.Runtime;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -48,6 +49,9 @@ namespace ChaosDirector
         private void Add(int amount)
         {
             if (amount <= 0 || !Round.IsRoundInProgress)
+                return;
+
+            if (Config.PauseDuringGamemodes && WorldEvents.IsPaused)
                 return;
 
             Points += amount;
