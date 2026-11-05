@@ -36,13 +36,13 @@ Douze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Labo
 |---|---|---|
 | [AugatonLib](AugatonLib) | 2.0.0 | Bibliothèque partagée, **obligatoire** |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
-| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.0.0 | Pile ou face aux effets positifs et négatifs |
+| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.0.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
 | [RandomGamemode](plugins/RandomGamemode) | 4.0.0 | 17 modes de jeu spéciaux, avec vote des joueurs |
 | [RealisticSizes](plugins/RealisticSizes) | 5.0.0 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
 | [Replacer](plugins/Replacer) | 3.0.0 | Remplace un joueur parti par un spectateur, avec son état complet |
 | [SCP1162](plugins/SCP1162) | 3.0.0 | Le trou dans le mur : échange un objet contre un autre |
-| [SCP500s](plugins/SCP500s) | 7.0.0 | 44 pilules personnalisées, dont une roulette |
+| [SCP500s](plugins/SCP500s) | 7.0.0 | 44 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
 | [ScpProximityChat](plugins/ScpProximityChat) | 3.0.0 | Permet aux SCP de parler aux joueurs proches |
 | [SCPReplacer](plugins/SCPReplacer) | 3.0.0 | Loterie de volontaires pour reprendre un SCP parti |
 | [SupplyDrop](plugins/SupplyDrop) | 5.0.0 | Largages de ravitaillement, sur minuteur ou événement |
@@ -160,6 +160,7 @@ Les plugins ne se référencent jamais entre eux. Ils partagent AugatonLib, qui 
 | `PluginBus` | Fait communiquer les plugins sans dépendance directe |
 | `PlayerDeparture` | Signale un départ tant que l'état du joueur est encore lisible |
 | `HintChannel` | Donne à chaque plugin son canal de hints |
+| `Escalation`, `LootSpots` | Font monter le chaos par paliers et réapparaître des objets à des endroits sûrs |
 | `StaffCommand` | Socle commun : permission, bornage des arguments, audit |
 | `SafeText` | Assainit tout texte venant d'un joueur |
 
@@ -198,7 +199,7 @@ dotnet build -c Release
 dotnet test tests/AugatonLib.Tests -c Release
 ```
 
-Les tests tournent sans le jeu : ils couvrent la logique indépendante d'Unity, comme `SafeText`, `PluginBus` ou l'urne de vote. Le reste se valide sur un serveur.
+Les tests tournent sans le jeu : ils couvrent la logique indépendante d'Unity, comme `SafeText`, `PluginBus`, l'urne de vote ou les paliers de chaos. Le reste se valide sur un serveur.
 
 ### Ajouter un plugin
 
