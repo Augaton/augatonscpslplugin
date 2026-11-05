@@ -272,7 +272,7 @@ namespace SiteIncidents
 
             foreach (Player player in Player.ReadyList)
             {
-                if (player.IsHuman && player.Zone == zone && player.Room is not null)
+                if (player.IsHuman && !player.IsTutorial && player.Zone == zone && player.Room is not null)
                     candidates.Add(player.Room);
             }
 
@@ -311,7 +311,7 @@ namespace SiteIncidents
             {
                 foreach (Player player in Player.ReadyList)
                 {
-                    if (player.IsHuman && player.Room == room)
+                    if (player.IsHuman && !player.IsTutorial && player.Room == room)
                         player.EnableEffect<Poisoned>(1, GasEffectSeconds);
                 }
             }

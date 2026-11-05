@@ -78,7 +78,7 @@ namespace RoundRecap
                 if (string.IsNullOrEmpty(userId))
                     return;
 
-                if (!ev.Player.IsHuman)
+                if (!ev.Player.IsHuman || ev.Player.IsTutorial)
                     aliveSince.Remove(userId);
                 else if (!aliveSince.ContainsKey(userId))
                     aliveSince[userId] = Round.Duration;
