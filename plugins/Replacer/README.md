@@ -47,6 +47,7 @@ survit a une reconnexion et se remet a zero a chaque round.
 
 | Cle | Defaut | Role |
 |---|---|---|
+| `pause_during_gamemodes` | `true` | Ne remplace personne pendant un mode arene |
 | `replacement_delay` | `0.4` | Delai avant application de l'etat, laisse le spawn se terminer |
 | `max_round_seconds` | `0` | Fenetre de remplacement apres le debut du round. `0` = illimite |
 | `minimum_players` | `4` | Nombre de joueurs connectes requis |

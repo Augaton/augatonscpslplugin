@@ -10,6 +10,9 @@ namespace Replacer
         [Description("Active les logs de debug.")]
         public bool Debug { get; set; } = false;
 
+        [Description("Ne remplace personne pendant un mode arene de RandomGamemode.")]
+        public bool PauseDuringGamemodes { get; set; } = true;
+
         [Description("Delai en secondes avant d'appliquer le role au remplacant.")]
         public float ReplacementDelay { get; set; } = 0.4f;
 

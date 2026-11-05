@@ -4,6 +4,7 @@ using System.Linq;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
 using AugatonLib.Effects;
+using AugatonLib.Runtime;
 using AugatonLib.Text;
 using CustomPlayerEffects;
 using InventorySystem.Disarming;
@@ -91,6 +92,9 @@ namespace Replacer.Handlers
         private bool IsReplaceable(Player player)
         {
             if (player.IsDummy || !Round.IsRoundInProgress)
+                return false;
+
+            if (plugin.Config.PauseDuringGamemodes && WorldEvents.IsPaused)
                 return false;
 
             if (plugin.Config.MaxRoundSeconds > 0f && Round.Duration.TotalSeconds > plugin.Config.MaxRoundSeconds)
