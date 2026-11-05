@@ -21,5 +21,7 @@ namespace AugatonLib.Bus
         public const string TeamCheckRequested = "team.check.requested";
 
         public const string PillSpawnRequested = "pill.spawn.requested";
+
+        public const string PillGiveRequested = "pill.give.requested";
     }
 }

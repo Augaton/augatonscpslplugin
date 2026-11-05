@@ -82,6 +82,8 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Vote : le mode le plus vote demarre, et sans vote un des modes proposes est tire au sort.
 - [ ] Vote : un mode qui manque de joueurs au depart est ecarte.
 - [ ] `gamemode force` dans le lobby l'emporte sur le vote.
+- [ ] Soiree pilules : les pilules recues sont celles de SCP500s, avec leurs effets.
+- [ ] Sans BetterCoinflips, Pile ou face royale n'est jamais tire ni propose au vote.
 - [ ] Dodgeball : balle x3 visible, explosion 1 s apres le premier rebond, cote lanceur compris.
 - [ ] Fin forcee : la limite de temps de `bluescreen` et la victoire a GunGame terminent le round
       en moins de 3 s, meme avec plusieurs camps en vie.

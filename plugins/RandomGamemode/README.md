@@ -159,3 +159,9 @@ modes sont proposes et les joueurs votent dans la console `~` : `.votemode` list
 `.votemode 2` vote, et `.vm` est un alias. Le mode le plus vote demarre, avec un tirage en cas
 d'egalite. Sans vote, ou si aucun choix ne peut demarrer, le tirage pondere habituel s'applique.
 `gamemode force` l'emporte toujours.
+
+## Modes et plugins presents
+
+Pile ou face royale n'est tire que si BetterCoinflips est installe. Soiree pilules distribue les
+pilules de SCP500s s'il est present, puis les objets d'UncomplicatedCustomItems, et des SCP-500
+normales sinon. `pill_party_custom_chance` fixe la part de pilules speciales.

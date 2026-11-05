@@ -1,3 +1,4 @@
+using AugatonLib.Bus;
 using System.Collections.Generic;
 using AugatonLib.Integrations;
 using LabApi.Features.Wrappers;
@@ -14,6 +15,22 @@ namespace RandomGamemode.Gamemodes
 
         public override bool HumansOnly => true;
 
+        private static void GivePill(Player player)
+        {
+            if (UnityEngine.Random.Range(0, 100) < Config.PillPartyCustomChance)
+            {
+                if (PluginBus.Publish(BusTopics.PillGiveRequested, Interop.Owner, player) > 0)
+                    return;
+
+                UncomplicatedEntry entry = Bridge.ItemsAvailable ? Bridge.RandomItem() : null;
+
+                if (entry is not null && Bridge.TryGiveItem(player, entry.Id))
+                    return;
+            }
+
+            player.AddItem(ItemType.SCP500);
+        }
+
         public override IEnumerator<float> Run()
         {
             yield return Timing.WaitForSeconds(2.5f);
@@ -21,8 +38,6 @@ namespace RandomGamemode.Gamemodes
             ConvertScpsToHumans();
 
             yield return Timing.WaitForSeconds(1.5f);
-
-            bool custom = Bridge.ItemsAvailable && Bridge.Items.Count > 0;
 
             foreach (Player player in Player.ReadyList)
             {
@@ -32,17 +47,7 @@ namespace RandomGamemode.Gamemodes
                 player.ClearInventory();
 
                 for (int i = 0; i < Config.PillPartyCount; i++)
-                {
-                    if (custom && UnityEngine.Random.Range(0, 100) < Config.PillPartyCustomChance)
-                    {
-                        UncomplicatedEntry entry = Bridge.RandomItem();
-
-                        if (entry is not null && Bridge.TryGiveItem(player, entry.Id))
-                            continue;
-                    }
-
-                    player.AddItem(ItemType.SCP500);
-                }
+                    GivePill(player);
 
                 player.AddItem(ItemType.Flashlight);
             }

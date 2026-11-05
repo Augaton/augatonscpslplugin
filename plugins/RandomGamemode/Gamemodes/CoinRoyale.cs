@@ -1,3 +1,4 @@
+using AugatonLib.Runtime;
 using System.Collections.Generic;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -7,6 +8,8 @@ namespace RandomGamemode.Gamemodes
 {
     public sealed class CoinRoyale : GamemodeBase
     {
+        public override bool CanStart(int playerCount) => PluginDirectory.IsLoaded("BetterCoinflipsRewritten");
+
         public override string Key => "coinroyale";
 
         public override string DisplayName => "Pile ou face royale";

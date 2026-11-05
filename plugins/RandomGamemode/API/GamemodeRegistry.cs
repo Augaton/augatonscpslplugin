@@ -170,7 +170,7 @@ namespace RandomGamemode.API
 
         private List<GamemodeBase> DrawVoteOptions()
         {
-            List<GamemodeBase> remaining = all.FindAll(gamemode => gamemode.Settings.IsEnabled && gamemode.Settings.Weight > 0);
+            List<GamemodeBase> remaining = all.FindAll(gamemode => gamemode.Settings.IsEnabled && gamemode.Settings.Weight > 0 && gamemode.CanStart(int.MaxValue));
             List<GamemodeBase> drawn = new List<GamemodeBase>(Config.VoteOptions);
 
             while (drawn.Count < Config.VoteOptions && remaining.Count > 0)

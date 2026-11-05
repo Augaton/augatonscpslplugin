@@ -81,6 +81,7 @@ namespace SCP500s
 
             PluginBus.Subscribe(Interop.Owner, BusTopics.PillSpawnRequested, OnPillSpawnRequested);
             PluginBus.Subscribe(Interop.Owner, BusTopics.PillConsumed, OnPillConsumed);
+            PluginBus.Subscribe(Interop.Owner, BusTopics.PillGiveRequested, OnPillGiveRequested);
 
             PluginDirectory.Register(
                 this,
@@ -535,6 +536,12 @@ namespace SCP500s
         }
 
         private void OnPillConsumed(BusMessage message) => continuousSpawn.OnPillConsumed();
+
+        private void OnPillGiveRequested(BusMessage message)
+        {
+            if (message.TryGet(out Player player))
+                lootReplacement.GiveTo(player);
+        }
 
         private void OnPillSpawnRequested(BusMessage message)
         {

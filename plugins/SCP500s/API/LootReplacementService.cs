@@ -105,9 +105,7 @@ namespace SCP500s.API
 
         public PillBase SpawnAt(Vector3 position, float bonusRandomShare = 0f)
         {
-            PillBase random = registry.Find(Config.RandomPillKey);
-            bool useRandom = random is not null && Chance.Roll(Config.RandomPillSharePercent + bonusRandomShare);
-            PillBase pill = useRandom ? random : PickWeightedPill() ?? random;
+            PillBase pill = PickPill(bonusRandomShare);
 
             if (pill is null || pill.Spawn(position) is null)
                 return null;
@@ -115,6 +113,21 @@ namespace SCP500s.API
             placedThisRound.TryGetValue(pill.Id, out int placed);
             placedThisRound[pill.Id] = placed + 1;
             return pill;
+        }
+
+        public bool GiveTo(Player player)
+        {
+            PillBase pill = PickPill(0f);
+
+            return pill is not null && pill.Give(player);
+        }
+
+        private PillBase PickPill(float bonusRandomShare)
+        {
+            PillBase random = registry.Find(Config.RandomPillKey);
+            bool useRandom = random is not null && Chance.Roll(Config.RandomPillSharePercent + bonusRandomShare);
+
+            return useRandom ? random : PickWeightedPill() ?? random;
         }
 
         private void CollectCandidates()
