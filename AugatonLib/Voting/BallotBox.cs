@@ -28,6 +28,12 @@ namespace AugatonLib.Voting
             return true;
         }
 
+        public void Retract(string voter)
+        {
+            if (!string.IsNullOrEmpty(voter))
+                ballots.Remove(voter);
+        }
+
         public int CountFor(int option)
         {
             int count = 0;

@@ -30,6 +30,30 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void ARetractedBallotNoLongerCounts()
+        {
+            BallotBox box = OpenBox();
+
+            box.Cast("a", 1);
+            box.Cast("b", 1);
+            box.Retract("a");
+
+            Assert.Equal(1, box.CountFor(1));
+        }
+
+        [Fact]
+        public void RetractingAnUnknownVoterChangesNothing()
+        {
+            BallotBox box = OpenBox();
+
+            box.Cast("a", 1);
+            box.Retract("b");
+            box.Retract(null);
+
+            Assert.Equal(1, box.CountFor(1));
+        }
+
+        [Fact]
         public void RefusesAnonymousVoters()
         {
             Assert.False(OpenBox().Cast(string.Empty, 0));

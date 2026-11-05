@@ -29,6 +29,8 @@ namespace RandomGamemode.API
 
         public bool Cast(string userId, int option) => box.Cast(userId, option);
 
+        public void Retract(string userId) => box.Retract(userId);
+
         public GamemodeBase Winner(System.Func<GamemodeBase, bool> canStart)
         {
             List<int> leaders = box.Leaders(option => canStart(options[option]));

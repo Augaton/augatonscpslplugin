@@ -51,6 +51,7 @@ namespace RandomGamemode
             ServerEvents.LczDecontaminationStarting += gamemodeHandlers.OnDecontaminating;
 
             PlayerEvents.Joined += gamemodeHandlers.OnJoined;
+            PlayerEvents.Left += gamemodeHandlers.OnLeft;
             PlayerEvents.Death += gamemodeHandlers.OnPlayerDied;
             PlayerEvents.ChangedRole += gamemodeHandlers.OnPlayerSpawned;
             PlayerEvents.ThrewProjectile += gamemodeHandlers.OnThrownProjectile;
@@ -82,6 +83,7 @@ namespace RandomGamemode
                 ServerEvents.LczDecontaminationStarting -= gamemodeHandlers.OnDecontaminating;
 
                 PlayerEvents.Joined -= gamemodeHandlers.OnJoined;
+                PlayerEvents.Left -= gamemodeHandlers.OnLeft;
                 PlayerEvents.Death -= gamemodeHandlers.OnPlayerDied;
                 PlayerEvents.ChangedRole -= gamemodeHandlers.OnPlayerSpawned;
                 PlayerEvents.ThrewProjectile -= gamemodeHandlers.OnThrownProjectile;

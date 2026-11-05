@@ -27,6 +27,8 @@ namespace RandomGamemode.Handlers
 
         public void OnJoined(PlayerJoinedEventArgs ev) => Guard(() => registry.ShowVote(ev?.Player));
 
+        public void OnLeft(PlayerLeftEventArgs ev) => Guard(() => registry.Vote.Retract(ev?.Player?.UserId));
+
         public void OnPlayerDied(PlayerDeathEventArgs ev) => Dispatch((g, e) => g.OnPlayerDied(e), ev);
 
         // ChangedRole et non Spawned : Spawned ignore les roles sans point d'apparition, comme SCP-079,
