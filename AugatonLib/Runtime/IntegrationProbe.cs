@@ -43,16 +43,6 @@ namespace AugatonLib.Runtime
                 "SCP-3114 deguise",
                 false),
             new Integration(
-                new[] { "CorpsesFallPocketDimensionLabApi", "CorpsesFallPocketDimension" },
-                "CorpsesFallPocketDimension",
-                "corps en dimension de poche",
-                false),
-            new Integration(
-                new[] { "MicroHIDReturn" },
-                "MicroHIDReturn",
-                "retour du Micro-HID",
-                false),
-            new Integration(
                 new[] { "ProjectMER" },
                 "ProjectMER",
                 "modele de SCP-261",
