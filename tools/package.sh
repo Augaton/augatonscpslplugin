@@ -7,9 +7,11 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 stage="$(mktemp -d)"
 trap 'rm -rf "$stage"' EXIT
 
-mkdir -p "$stage/plugins/global" "$stage/dependencies/global"
+mkdir -p "$stage/plugins/global" "$stage/dependencies/global" "$stage/licenses"
 cp "$root"/out/plugins/*.dll "$stage/plugins/global/"
 cp "$root"/out/dependencies/AugatonLib.dll "$stage/dependencies/global/"
+
+cp "$root/third_party/FairScpSelection/LICENSE.txt" "$stage/licenses/FairScpSelection-LICENSE.txt"
 
 rm -f "$root/out/zone-shilari-labapi.zip"
 (cd "$stage" && zip -qr "$root/out/zone-shilari-labapi.zip" .)

@@ -1,8 +1,8 @@
 Ce depot rassemble des composants soumis a des conditions differentes.
 
 La licence MIT ci-dessous couvre AugatonLib/, tests/, tools/, .github/ et les
-fichiers de la racine. Elle ne couvre pas plugins/ : chaque plugin y est regi par
-son propre fichier LICENSE ou, a defaut, par son fichier NOTICE.md.
+fichiers de la racine. Elle ne couvre ni plugins/ ni third_party/ : chaque plugin y
+est regi par son propre fichier LICENSE ou, a defaut, par son fichier NOTICE.md.
 
 --------------------------------------------------------------------------------
 

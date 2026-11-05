@@ -19,5 +19,8 @@
   <Folder Name="/tests/">
     <Project Path="tests/AugatonLib.Tests/AugatonLib.Tests.csproj" />
   </Folder>
+  <Folder Name="/third_party/">
+    <Project Path="third_party/FairScpSelection/FairScpSelection.csproj" />
+  </Folder>
   <Project Path="AugatonLib/AugatonLib.csproj" />
 </Solution>

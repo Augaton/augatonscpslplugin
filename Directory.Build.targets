@@ -1,7 +1,12 @@
 <Project>
 
+  <PropertyGroup>
+    <GameAssemblyFile>Assembly-CSharp.dll</GameAssemblyFile>
+    <GameAssemblyFile Condition=" '$(UsePublicizedGame)' == 'true' ">Assembly-CSharp-Publicized.dll</GameAssemblyFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Assembly-CSharp" HintPath="$(SL_REFERENCES)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(SL_REFERENCES)/$(GameAssemblyFile)" Private="false" />
     <Reference Include="Assembly-CSharp-firstpass" HintPath="$(SL_REFERENCES)/Assembly-CSharp-firstpass.dll" Private="false" />
     <Reference Include="CommandSystem.Core" HintPath="$(SL_REFERENCES)/CommandSystem.Core.dll" Private="false" />
     <Reference Include="Mirror" HintPath="$(SL_REFERENCES)/Mirror.dll" Private="false" />
@@ -15,7 +20,7 @@
     <Reference Include="UnityEngine.PhysicsModule" HintPath="$(SL_REFERENCES)/UnityEngine.PhysicsModule.dll" Private="false" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(MSBuildProjectName)' != 'AugatonLib' ">
+  <ItemGroup Condition=" '$(MSBuildProjectName)' != 'AugatonLib' And '$(UseAugatonLib)' != 'false' ">
     <ProjectReference Include="$(MSBuildThisFileDirectory)AugatonLib/AugatonLib.csproj" Private="false" />
   </ItemGroup>
 
