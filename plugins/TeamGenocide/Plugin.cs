@@ -28,12 +28,11 @@ namespace TeamGenocide
 
             genocideHandlers = new GenocideHandlers(this);
 
-            PlayerEvents.ChangingRole += genocideHandlers.OnChangingRole;
             ServerEvents.RoundStarted += genocideHandlers.OnRoundStarted;
             ServerEvents.RoundEnded += genocideHandlers.OnRoundEnded;
             ServerEvents.RoundRestarted += genocideHandlers.OnRoundRestarted;
 
-            PluginBus.Subscribe(Name, BusTopics.TeamCheckRequested, genocideHandlers.OnTeamCheckRequested);
+            PluginBus.Subscribe(Name, BusTopics.TeamWiped, genocideHandlers.OnTeamWiped);
 
             PluginDirectory.Register(
                 this,
@@ -47,7 +46,6 @@ namespace TeamGenocide
         {
             if (genocideHandlers is not null)
             {
-                PlayerEvents.ChangingRole -= genocideHandlers.OnChangingRole;
                 ServerEvents.RoundStarted -= genocideHandlers.OnRoundStarted;
                 ServerEvents.RoundEnded -= genocideHandlers.OnRoundEnded;
                 ServerEvents.RoundRestarted -= genocideHandlers.OnRoundRestarted;

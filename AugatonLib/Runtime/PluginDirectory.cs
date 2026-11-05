@@ -75,6 +75,7 @@ namespace AugatonLib.Runtime
             hooked = true;
             RoundReset.Hook();
             PlayerDeparture.Hook();
+            TeamWatcher.Hook();
             ServerEvents.PluginsEnabled += Banner.Print;
         }
 

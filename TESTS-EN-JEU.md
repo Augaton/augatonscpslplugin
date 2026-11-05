@@ -72,6 +72,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 
 **SupplyDrop**
 - [ ] Armes larguees chargees, y compris revolver et fusil a pompe.
+- [ ] `team_wipe_drops` fonctionne sans TeamGenocide, et une seule fois par equipe et par round.
 - [ ] Des pilules SCP500s apparaissent dans les largages, et rien ne casse sans SCP500s.
 - [ ] Le profil `mtf` part quand les 3 generateurs sont actifs, en respectant `max_drops_per_round`.
 - [ ] `decontamination_trigger` et `warhead_trigger` declenchent bien un largage.

@@ -172,10 +172,10 @@ namespace SupplyDrop
                     return;
                 }
 
-                if (!Round.IsRoundInProgress)
+                if (!Round.IsRoundInProgress || Service is null || !Service.MarkTeamWiped(team))
                     return;
 
-                DropProfile profile = Service?.Find(key);
+                DropProfile profile = Service.Find(key);
 
                 if (profile is null)
                 {

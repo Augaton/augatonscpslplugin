@@ -12,6 +12,7 @@ using LabApi.Features.Enums;
 using LabApi.Features.Wrappers;
 using MapGeneration;
 using MEC;
+using PlayerRoles;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 
@@ -27,12 +28,15 @@ namespace SupplyDrop.API
         private CoroutineHandle scheduler;
         private bool running;
         private int generatorsActivated;
+        private readonly HashSet<Team> wipedTeams = new HashSet<Team>();
 
         public DropService(Plugin plugin) => this.plugin = plugin;
 
         private Config Config => plugin.Config;
 
         private bool IsPaused => Config.PauseDuringGamemodes && WorldEvents.IsPaused;
+
+        public bool MarkTeamWiped(Team team) => wipedTeams.Add(team);
 
         public void OnGeneratorActivated()
         {
@@ -87,6 +91,7 @@ namespace SupplyDrop.API
         public void Stop()
         {
             generatorsActivated = 0;
+            wipedTeams.Clear();
             if (running)
                 Timing.KillCoroutines(scheduler);
 

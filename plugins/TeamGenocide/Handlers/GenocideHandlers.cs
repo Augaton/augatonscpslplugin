@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using AugatonLib.Arbitration;
 using AugatonLib.Bus;
-using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Console;
-using LabApi.Features.Wrappers;
 using MEC;
 using PlayerRoles;
 using TeamGenocide.API;
@@ -47,35 +44,9 @@ namespace TeamGenocide.Handlers
 
         public void OnRoundRestarted() => Reset();
 
-        public void OnChangingRole(PlayerChangingRoleEventArgs ev)
+        public void OnTeamWiped(BusMessage message)
         {
-            try
-            {
-                if (!activated || ev?.Player is null || ev.ChangeReason != RoleChangeReason.Died)
-                    return;
-
-                Team leaving = ev.OldRole.Team;
-
-                if (leaving == Team.Dead || ev.NewRole.GetTeam() == leaving)
-                    return;
-
-                AnnounceIfWiped(leaving, ev.Player);
-            }
-            catch (Exception e)
-            {
-                Logger.Error($"OnChangingRole: {e}");
-            }
-        }
-
-        public void OnTeamCheckRequested(BusMessage message)
-        {
-            if (activated && message is not null && message.TryGet(out Team team))
-                AnnounceIfWiped(team, null);
-        }
-
-        private void AnnounceIfWiped(Team team, Player excluded)
-        {
-            if (GenocideArbiter.IsSuppressed || GenocideArbiter.IsHeld(team))
+            if (!activated || message is null || !message.TryGet(out Team team))
                 return;
 
             Config config = plugin.Config;
@@ -90,9 +61,6 @@ namespace TeamGenocide.Handlers
                 return;
             }
 
-            if (CountTeam(team, excluded) > 0)
-                return;
-
             announced.Add(team);
 
             Announcement announcement = announcements[UnityEngine.Random.Range(0, announcements.Count)];
@@ -105,25 +73,7 @@ namespace TeamGenocide.Handlers
             if (handle.IsRunning)
                 pending.Add(handle);
 
-            PluginBus.Publish(BusTopics.TeamWiped, "TeamGenocide", team);
-
             Logger.Info($"[TeamGenocide] Equipe {team} entierement eliminee.");
-        }
-
-        private static int CountTeam(Team team, Player excluded)
-        {
-            int count = 0;
-
-            foreach (Player player in Player.ReadyList)
-            {
-                if (player == excluded)
-                    continue;
-
-                if (player.Team == team)
-                    count++;
-            }
-
-            return count;
         }
 
         public void Reset()
