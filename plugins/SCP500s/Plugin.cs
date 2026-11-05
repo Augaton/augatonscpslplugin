@@ -539,8 +539,13 @@ namespace SCP500s
 
         private void OnPillGiveRequested(BusMessage message)
         {
-            if (message.TryGet(out Player player))
-                lootReplacement.GiveTo(player);
+            if (!message.TryGet(out Player player) || lootReplacement.GiveTo(player))
+                return;
+
+            // Le demandeur tient la pilule pour livree des qu'un plugin repond : sans pilule active ou
+            // sans place dans l'inventaire, elle tombe au sol plutot que de disparaitre.
+            if (lootReplacement.SpawnAt(player.Position) is null)
+                Pickup.Create(ItemType.SCP500, player.Position, Quaternion.identity);
         }
 
         private void OnPillSpawnRequested(BusMessage message)
