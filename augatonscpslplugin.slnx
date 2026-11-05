@@ -15,6 +15,7 @@
     <Project Path="plugins/SCP1162/SCP1162.csproj" />
     <Project Path="plugins/Scp261/Scp261.csproj" />
     <Project Path="plugins/SCP500s/SCP500s.csproj" />
+    <Project Path="plugins/Scp914Recipes/Scp914Recipes.csproj" />
     <Project Path="plugins/ScpProximityChat/ScpProximityChat.csproj" />
     <Project Path="plugins/SCPReplacer/SCPReplacer.csproj" />
     <Project Path="plugins/SiteIncidents/SiteIncidents.csproj" />
