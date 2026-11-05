@@ -2,8 +2,6 @@ namespace AugatonLib.Bus
 {
     public static class BusTopics
     {
-        public const string RoundReset = "round.reset";
-
         public const string GamemodeStarted = "gamemode.started";
 
         public const string GamemodeEnded = "gamemode.ended";
