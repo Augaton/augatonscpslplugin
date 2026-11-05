@@ -1,3 +1,4 @@
+using AugatonLib.World;
 using System.Collections.Generic;
 using System.Text;
 using AugatonLib.Arbitration;
@@ -420,15 +421,8 @@ namespace SCP500s.API
 
         private static void Tantrum(Player player)
         {
-            foreach (GameObject prefab in NetworkClient.prefabs.Values)
-            {
-                if (!prefab.TryGetComponent(out TantrumEnvironmentalHazard template))
-                    continue;
-
-                TantrumEnvironmentalHazard tantrum = UnityEngine.Object.Instantiate(template);
-                tantrum.SynchronizedPosition = new RelativePosition(player.Position + (Vector3.up * 0.25f));
-                return;
-            }
+            if (!Tantrums.TrySpawn(player.Position))
+                Logger.Warn("Modele de tantrum introuvable.");
         }
 
         private static void Explode(Player target)

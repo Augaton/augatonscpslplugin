@@ -38,6 +38,7 @@ Il doit etre mis a jour en meme temps que les plugins qui en dependent.
 | `Runtime.PlayerDeparture` | Depart d'un joueur tant que son etat est lisible, voir plus bas |
 | `Spawning.RoleSpawn` | Point d'apparition d'un role |
 | `World.Mice` | Apparition des souris, avec controle du type |
+| `World.Tantrums` | Flaque de SCP-173 visible par les clients |
 | `World.LootSpots` | Emplacements de loot surs, pour faire reapparaitre des objets pendant le round |
 | `Chaos.Escalation` | Paliers qui montent avec la duree du round |
 | `Chaos.ChaosState` | Paliers bonus poses par ChaosDirector, a zero sans lui |
