@@ -5,7 +5,6 @@
 
 using AntiSLCrush.Patches;
 using AugatonLib.Runtime;
-using HarmonyLib;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using LabApi.Loader.Features.Plugins.Enums;
@@ -15,8 +14,6 @@ namespace AntiSLCrush
     public sealed class Plugin : AugatonPlugin<Config>
     {
         public const string PluginName = "AntiSLCrush";
-
-        private static readonly Harmony Patcher = new Harmony(PluginName);
 
         public override string Name => PluginName;
 
@@ -32,16 +29,18 @@ namespace AntiSLCrush
         {
             Instance = this;
 
-            Patcher.PatchAll();
+            Protections.Apply(Config);
             ServerEvents.RoundRestarted += OnTransportDataPatch.Clear;
-            ServerEvents.WaitingForPlayers += ObserverSweep.Start;
+
+            if (Config.CleanObservers)
+                ServerEvents.WaitingForPlayers += ObserverSweep.Start;
 
             PluginDirectory.Register(this);
         }
 
         public override void Disable()
         {
-            Patcher.UnpatchAll(PluginName);
+            Protections.Remove();
             ServerEvents.RoundRestarted -= OnTransportDataPatch.Clear;
             ServerEvents.WaitingForPlayers -= ObserverSweep.Start;
             ObserverSweep.Stop();

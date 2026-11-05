@@ -11,5 +11,23 @@ namespace AntiSLCrush
     {
         [Description("Active les logs de debug.")]
         public bool Debug { get; set; } = false;
+
+        [Description("Deconnecte les paquets venant d'une connexion inconnue du serveur.")]
+        public bool ProtectTransportData { get; set; } = true;
+
+        [Description("Retire les objets detruits de la liste reseau avant l'arrivee d'un joueur.")]
+        public bool ProtectPlayerJoin { get; set; } = true;
+
+        [Description("Stoppe l'erreur en boucle causee par une arme dont le proprietaire est detruit.")]
+        public bool ProtectReserveAmmo { get; set; } = true;
+
+        [Description("Ignore un second ajout de sac SCP-330 pour le meme joueur dans la meme frame.")]
+        public bool ProtectScp330Bag { get; set; } = true;
+
+        [Description("Remet a zero la visee du serveur quand un joueur rengaine son arme.")]
+        public bool ProtectAdsHolster { get; set; } = true;
+
+        [Description("Retire regulierement les objets detruits suivis par chaque joueur.")]
+        public bool CleanObservers { get; set; } = true;
     }
 }
