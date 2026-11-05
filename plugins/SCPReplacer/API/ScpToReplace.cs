@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MEC;
 using PlayerRoles;
+using UnityEngine;
 
 namespace SCPReplacer.API
 {
@@ -9,6 +10,8 @@ namespace SCPReplacer.API
         public string Name { get; set; }
 
         public RoleTypeId Role { get; set; }
+
+        public Vector3 Size { get; set; } = Vector3.one;
 
         public List<string> Volunteers { get; } = new List<string>(8);
 
