@@ -119,6 +119,18 @@ namespace BetterCoinflipsRewritten
             }
         }
 
+        public void OnChangedRole(PlayerChangedRoleEventArgs ev)
+        {
+            try
+            {
+                ScaleArbiter.Release(ev?.Player, Interop.Owner);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnChangedRole: {e}");
+            }
+        }
+
         public void OnRoundStarted()
         {
             try

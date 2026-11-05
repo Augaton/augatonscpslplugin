@@ -40,6 +40,7 @@ namespace BetterCoinflipsRewritten
 
             PlayerEvents.FlippingCoin += eventHandlers.OnFlippingCoin;
             PlayerEvents.Left += eventHandlers.OnLeft;
+            PlayerEvents.ChangedRole += eventHandlers.OnChangedRole;
 
             CharacterClassManager.OnRoundStarted += eventHandlers.OnRoundStarted;
             ServerEvents.RoundRestarted += eventHandlers.OnRoundRestarted;
@@ -169,6 +170,7 @@ namespace BetterCoinflipsRewritten
             {
                 PlayerEvents.FlippingCoin -= eventHandlers.OnFlippingCoin;
                 PlayerEvents.Left -= eventHandlers.OnLeft;
+                PlayerEvents.ChangedRole -= eventHandlers.OnChangedRole;
 
                 CharacterClassManager.OnRoundStarted -= eventHandlers.OnRoundStarted;
                 ServerEvents.RoundRestarted -= eventHandlers.OnRoundRestarted;
