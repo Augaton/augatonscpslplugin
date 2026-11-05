@@ -13,6 +13,7 @@ Quinze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Lab
 
 - [Points forts](#points-forts)
 - [Plugins](#plugins)
+- [Plugins tiers](#plugins-tiers)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Commandes](#commandes)
@@ -26,7 +27,7 @@ Quinze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Lab
 
 - **Une collection cohérente.** Des plugins qui touchent à la même ressource peuvent se contredire : l'un éteint les lumières pendant qu'un autre les rallume. Ici, les ressources partagées passent par des arbitres communs.
 - **À la carte.** Chaque plugin fonctionne seul avec AugatonLib. Installés ensemble, ils se complètent ; absent, un plugin ne désactive que la synergie concernée.
-- **100 % LabAPI.** Aucune dépendance à EXILED, aucun patch Harmony dans les plugins.
+- **100 % LabAPI.** Aucune dépendance à EXILED, et aucun patch Harmony dans les plugins de la collection.
 - **Sobre en ressources.** Le serveur tourne sur une boucle Unity à un seul thread, donc le code évite les allocations et les boucles coûteuses dans les chemins fréquents.
 - **Configurable.** Chaque plugin a sa config YAML commentée, ses textes séparés dans une traduction et un rechargement à chaud.
 - **Sécurisé.** Permissions vérifiées en premier, arguments bornés, actions du staff tracées, et texte des joueurs assaini avant affichage.
@@ -54,6 +55,20 @@ Quinze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Lab
 
 Chaque plugin a son propre README, avec le détail de sa configuration.
 
+## Plugins tiers
+
+Ces plugins viennent d'autres auteurs. Ils restent optionnels, et la bannière de démarrage signale ceux qui sont installés.
+
+| Plugin | Rôle | Installation |
+|---|---|---|
+| [FairScpSelection](https://github.com/CosmosZvezdo4kin/FairScpSelection) | Choix des SCP selon les préférences des joueurs | **Inclus**, voir [third_party](third_party/FairScpSelection/NOTICE.md). Requiert `0Harmony.dll` |
+| [AntiSLCrush](https://github.com/ui2506/AntiSLCrush) | Protège le serveur contre certains crashs | À installer depuis ses releases. Sa licence interdit tout usage commercial |
+| [Better3114Spawn](https://github.com/tayjay/Better3114Spawn) | Fait démarrer SCP-3114 déguisé parmi les humains | À installer depuis ses releases. Lié à l'événement d'Halloween du jeu |
+
+Seul FairScpSelection est redistribué ici, car sa licence le permet. Les deux autres ne sont pas copiés dans ce dépôt : leur code reste chez leurs auteurs, sous leurs propres conditions.
+
+FairScpSelection remplace le choix des SCP du jeu : sa cohabitation avec Better3114Spawn n'a pas été vérifiée.
+
 ## Installation
 
 ### Prérequis
@@ -73,7 +88,7 @@ dotnet build -c Release
 ./tools/package.sh
 ```
 
-`fetch-references.sh` télécharge les assemblies du jeu dans `.references/`. Elles servent uniquement à la compilation et ne sont ni versionnées ni déployées. Pour compiler contre votre propre serveur, définissez plutôt `SL_REFERENCES` vers son dossier `SCPSL_Data/Managed`.
+`fetch-references.sh` télécharge les assemblies du jeu dans `.references/`. Elles servent uniquement à la compilation et ne sont ni versionnées ni déployées. Pour compiler contre votre propre serveur, définissez plutôt `SL_REFERENCES` vers son dossier `SCPSL_Data/Managed`. FairScpSelection a besoin de `Assembly-CSharp-Publicized.dll`, présent uniquement dans `.references/` : retirez-le de la solution si vous compilez contre un serveur.
 
 Les fichiers compilés arrivent dans `out/`, et `package.sh` les assemble dans `out/zone-shilari-labapi.zip`. Quand une version sera publiée, la même archive sera disponible dans [Releases](https://github.com/Augaton/augatonscpslplugin/releases).
 
@@ -208,6 +223,7 @@ Le détail est dans le [README d'AugatonLib](AugatonLib/README.md).
 ```
 AugatonLib/            bibliothèque partagée
 plugins/<Nom>/         un dossier par plugin
+third_party/           plugins d'autres auteurs, code inchangé
 tests/                 tests automatisés
 tools/                 récupération des références et assemblage de l'archive
 ```
@@ -270,6 +286,7 @@ Les plugins portés sont des réécritures. Leur conception et leurs mécaniques
 | SCPReplacer | Jon M | [Non précisée](plugins/SCPReplacer/NOTICE.md) |
 | SupplyDrop | Wafel, KadeDev, JesusQC | [Non précisée](plugins/SupplyDrop/NOTICE.md) |
 | TeamGenocide | Heisenberg3666 | [MIT](plugins/TeamGenocide/LICENSE) |
+| FairScpSelection | CosmosZvezdochkin | [Apache 2.0](third_party/FairScpSelection/LICENSE.txt) |
 
 « Non précisée » signifie qu'aucun fichier de licence n'accompagnait les sources d'origine. Ce dépôt n'accorde alors aucun droit supplémentaire sur ces plugins : ils sont publiés comme travaux dérivés à des fins communautaires, avec attribution. La licence MIT du dépôt ne s'y applique pas.
 

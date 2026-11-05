@@ -28,6 +28,7 @@ Les DLL du jeu ne sont jamais committées. La configuration commune vit dans
 ```
 AugatonLib/            bibliotheque partagee, deployee dans dependencies/
 plugins/<Nom>/         un plugin : Plugin.cs, Config.cs, Translation.cs, Handlers/, Commands/, API/
+third_party/<Nom>/     plugin d'un autre auteur, code inchange, hors des regles ci-dessous
 ```
 
 Un fichier, une responsabilité. Chaque plugin garde son `README.md` et son `NOTICE.md` d'attribution.

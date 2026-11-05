@@ -76,6 +76,11 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Position de l'anomalie dans `Lcz173`, echange d'armes et de munitions.
 - [ ] Correspondance `RoomType` vers `RoomName` du README : seul `Lcz173` a ete verifie.
 
+**FairScpSelection**
+- [ ] Le plugin se charge avec `0Harmony.dll`, et les SCP sont bien attribues au debut du round.
+- [ ] Son interface de lobby reste lisible avec HintServiceMeow.
+- [ ] Avec Better3114Spawn, SCP-3114 demarre bien deguise. La combinaison n'a pas ete verifiee.
+
 **SiteIncidents**
 - [ ] `incidents trigger Blackout`, `Alert` et `Lockdown` fonctionnent et s'annoncent avec sous-titres.
 - [ ] Les annonces C.A.S.S.I.E se prononcent correctement : les mots sont a confirmer.
