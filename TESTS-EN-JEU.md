@@ -72,6 +72,15 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Il accelere les pilules, les pieces et les incidents, et repart de zero au round suivant.
 - [ ] Equilibrage : 30 points par niveau et 5 niveaux au maximum sont des valeurs de depart.
 
+**Scp261**
+- [ ] La machine apparait dans `EzOfficeSmall`, et une piece en main permet de l'utiliser.
+- [ ] Le bloc simple recoit bien l'interaction, malgre son collider : c'est la version sans ProjectMER.
+- [ ] Avec ProjectMER et le schema d'origine, le vrai modele apparait et reagit.
+- [ ] Chaque resultat fonctionne : objet, effet, teleportation, tantrum visible, retrecissement, flash, explosion.
+- [ ] Inventaire plein : l'objet tombe au sol.
+- [ ] Le retrecissement disparait au changement de role, et cohabite avec RealisticSizes.
+- [ ] La machine est hors service pendant un mode arene.
+
 **ScpProximityChat**
 - [ ] Touche visible dans les reglages a la connexion, bascule, voix entendue a portee.
 - [ ] Chat SCP coupe si `use_default_scp_chat: false`, mode NoClip.
@@ -136,7 +145,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Mort, forceclass, Betrayal, evasion, SCP-914 : les pilules restent des pilules.
 - [ ] Hints a la selection, au ramassage et au `give`.
 - [ ] Deguisement, surtout avec un NTF.
-- [ ] Tantrum, fusee, `SpawnPoints`, vagues forcees, Cassie.
+- [ ] Tantrum visible par les joueurs, fusee, `SpawnPoints`, vagues forcees, Cassie.
 - [ ] Teinte de salle, y compris deux pilules de suite dans la meme salle.
 - [ ] Chaos : le nombre de pilules au sol monte au fil du round, sans depasser `max_pills_on_ground`.
 - [ ] Chaos : une pilule consommee reapparait ailleurs apres 20 s, jamais sous les yeux d'un joueur.

@@ -1,6 +1,6 @@
 # Augaton SCP:SL Plugins
 
-Seize plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
+Dix-sept plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
 
 [![CI](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml)
 ![LabAPI 1.1.7](https://img.shields.io/badge/LabAPI-1.1.7-blue)
@@ -46,6 +46,7 @@ Seize plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, co
 | [RealisticSizes](plugins/RealisticSizes) | 5.0.0 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
 | [Replacer](plugins/Replacer) | 3.0.0 | Remplace un joueur parti par un spectateur, avec son état complet |
+| [Scp261](plugins/Scp261) | 2.0.0 | Machine distributrice : une pièce contre un résultat au hasard |
 | [SCP1162](plugins/SCP1162) | 3.0.0 | Le trou dans le mur : échange un objet contre un autre |
 | [SCP500s](plugins/SCP500s) | 7.0.0 | 44 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
 | [ScpProximityChat](plugins/ScpProximityChat) | 3.0.0 | Permet aux SCP de parler aux joueurs proches |
@@ -64,8 +65,11 @@ Ces plugins viennent d'autres auteurs. Ils restent optionnels, et la bannière d
 |---|---|---|
 | [FairScpSelection](https://github.com/CosmosZvezdo4kin/FairScpSelection) | Choix des SCP selon les préférences des joueurs | **Inclus**, voir [third_party](third_party/FairScpSelection/NOTICE.md) |
 | [Better3114Spawn](https://github.com/tayjay/Better3114Spawn) | Fait démarrer SCP-3114 déguisé parmi les humains | À installer depuis ses releases. Lié à l'événement d'Halloween du jeu |
+| [CorpsesFallPocketDimension](https://github.com/DentyTxR/CorpsesFallPocketDimension) | Fait tomber des corps de la dimension de poche | À installer depuis ses releases, version LabAPI |
+| [MicroHIDReturn](https://github.com/EngineerLND/MicroHIDReturn) | Permet de reposer et recharger le Micro-HID sur son socle | À installer depuis ses releases. Requiert AudioPlayerApi |
+| [ProjectMER](https://github.com/Michal78900/ProjectMER/) | Donne son vrai modèle à SCP-261 | Optionnel, à installer depuis ses releases |
 
-Better3114Spawn n'a pas de licence : son code n'est donc pas copié ici et reste chez son auteur.
+Better3114Spawn, CorpsesFallPocketDimension et MicroHIDReturn n'ont pas de licence : leur code n'est donc pas copié ici et reste chez leurs auteurs.
 
 FairScpSelection remplace le choix des SCP du jeu : sa cohabitation avec Better3114Spawn n'a pas été vérifiée.
 
@@ -210,6 +214,8 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | Replacer et RealisticSizes sont présents | Le remplaçant garde la taille du joueur parti |
 | SCP500s et SupplyDrop sont présents | Les largages contiennent des pilules |
 | SCP500s et RandomGamemode sont présents | Soirée pilules distribue les vraies pilules |
+| SCP500s et Scp261 sont présents | La machine distribue les vraies pilules |
+| BetterCoinflips et Scp261 sont présents | Les pièces renouvelées alimentent la machine |
 | ChaosDirector est présent | Les pilules, pièces et incidents s'accélèrent avec l'agitation du round |
 | RoundRecap est présent | Le bilan compte ce que font les autres plugins |
 | Un plugin manque | Seule la synergie concernée disparaît |
@@ -284,6 +290,7 @@ Les plugins portés sont des réécritures. Leur conception et leurs mécaniques
 | RemoteKeycard | Beryl | [Non précisée](plugins/RemoteKeycard/NOTICE.md) |
 | Replacer | DGvagabond | [Non précisée](plugins/Replacer/NOTICE.md) |
 | SCP1162 | [MrAfitol](https://github.com/MrAfitol/SCP-1162), d'après le [plugin Synapse](https://github.com/SynapseSL/Scp1162) | [Non précisée](plugins/SCP1162/NOTICE.md) |
+| Scp261 | MedveMarci, version modifiée | [MIT](plugins/Scp261/LICENSE) |
 | SCP500s | VividZap, Lumi | [MIT](plugins/SCP500s/LICENSE) |
 | ScpProximityChat | Bolton | [Non précisée](plugins/ScpProximityChat/NOTICE.md) |
 | SCPReplacer | Jon M | [Non précisée](plugins/SCPReplacer/NOTICE.md) |
