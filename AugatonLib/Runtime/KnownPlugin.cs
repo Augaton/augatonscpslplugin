@@ -22,6 +22,7 @@ namespace AugatonLib.Runtime
     {
         private static readonly KnownPlugin[] Catalog =
         {
+            new KnownPlugin("AmbientCassie", "AmbientCassie", "annonces d'ambiance"),
             new KnownPlugin("AntiSLCrush", "AntiSLCrush", "protection anti-crash"),
             new KnownPlugin("AutoFFToggle", "AutoFFToggle", "tir allie auto"),
             new KnownPlugin("BetterCoinflipsRewritten", "BetterCoinflips", "pile ou face"),

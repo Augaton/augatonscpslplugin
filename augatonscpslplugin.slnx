@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/plugins/">
+    <Project Path="plugins/AmbientCassie/AmbientCassie.csproj" />
     <Project Path="plugins/AntiSLCrush/AntiSLCrush.csproj" />
     <Project Path="plugins/AutoFFToggle/AutoFFToggle.csproj" />
     <Project Path="plugins/BetterCoinflipsRewritten/BetterCoinflipsRewritten.csproj" />
