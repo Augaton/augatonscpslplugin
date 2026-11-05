@@ -13,7 +13,7 @@ namespace PocketCorpses
 
         public Ragdoll Ragdoll { get; }
 
-        public double DropTime { get; }
+        public double DropTime { get; set; }
 
         public Vector3? Roof { get; set; }
     }

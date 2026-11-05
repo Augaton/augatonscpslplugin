@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using LabApi.Features.Wrappers;
-using Mirror;
 using PlayerRoles.FirstPersonControl;
 using UnityEngine;
 
@@ -17,12 +16,7 @@ namespace PocketCorpses
             if (!Physics.Raycast(roof, Vector3.down, out RaycastHit floor, FloorSearchRange, FpcStateProcessor.Mask))
                 return;
 
-            SinkholeHazard hazard = SinkholeHazard.Spawn(floor.point, Quaternion.identity, Vector3.one);
-
-            // SinkholeHazard.Spawn de LabAPI n'appelle pas NetworkServer.Spawn : sans cet appel, le gouffre
-            // n'existerait que cote serveur et aucun joueur ne le verrait.
-            NetworkServer.Spawn(hazard.Base.gameObject);
-            open.Add(new OpenSinkhole(hazard, closeTime));
+            open.Add(new OpenSinkhole(SinkholeHazard.Spawn(floor.point, Quaternion.identity, Vector3.one), closeTime));
         }
 
         public void CloseExpired(double now)

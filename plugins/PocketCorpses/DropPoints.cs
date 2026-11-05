@@ -1,7 +1,6 @@
 using LabApi.Features.Wrappers;
 using MapGeneration;
 using PlayerRoles.FirstPersonControl;
-using RelativePositioning;
 using UnityEngine;
 
 namespace PocketCorpses
@@ -47,10 +46,7 @@ namespace PocketCorpses
                 return false;
 
             roof = hit.point + (Vector3.down * RoofClearance);
-
-            // Ragdoll.UnFreeze perd le corps et casse le suivi des ragdolls de LabAPI si le jeu refuse
-            // de le recreer, ce qu'il fait hors de portee de tout point de reference.
-            return !new RelativePosition(roof).OutOfRange;
+            return true;
         }
     }
 }

@@ -5,6 +5,7 @@ using LabApi.Features.Wrappers;
 using MEC;
 using Mirror;
 using PlayerRoles.PlayableScps.Scp106;
+using PlayerRoles.Ragdolls;
 using RelativePositioning;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
@@ -116,16 +117,26 @@ namespace PocketCorpses
                     continue;
 
                 corpses.RemoveAt(i);
-
-                // Le client ne fait pas retomber un corps deplace : seul un corps recree reprend sa physique.
-                corpse.Ragdoll.Position = corpse.Roof.Value;
-                corpse.Ragdoll.UnFreeze();
+                Drop(corpse.Ragdoll, corpse.Roof.Value);
             }
+        }
+
+        // Le client ne fait pas retomber un corps deplace : seul un corps recree reprend sa physique.
+        // Ragdoll.UnFreeze le recreerait sans proprietaire, et SCP-049 ne pourrait plus le ranimer.
+        private static void Drop(Ragdoll ragdoll, Vector3 roof)
+        {
+            RagdollData data = ragdoll.Base.Info;
+
+            if (Ragdoll.SpawnRagdoll(data.RoleType, roof, ragdoll.Rotation, data.Handler, data.Nickname, null, data.Serial, data.OwnerHub) is not null)
+                ragdoll.Destroy();
         }
 
         private void Announce(FallingCorpse corpse, Vector3 roof, double now, Config config)
         {
             corpse.Roof = roof;
+
+            // Apres une attente sans joueur dehors, l'heure de chute est passee : l'alerte garde sa duree.
+            corpse.DropTime = Math.Max(corpse.DropTime, now + config.WarningSeconds);
 
             NetworkServer.SendToAll(
                 new Scp106PocketItemManager.WarningMessage { Position = new RelativePosition(roof) },
