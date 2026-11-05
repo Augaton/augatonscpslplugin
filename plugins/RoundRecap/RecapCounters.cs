@@ -13,6 +13,7 @@ namespace RoundRecap
         private int replacements;
         private int incidents;
         private int wipes;
+        private int vendings;
 
         public void Subscribe(string owner)
         {
@@ -22,6 +23,7 @@ namespace RoundRecap
             PluginBus.Subscribe(owner, BusTopics.PlayerReplaced, _ => replacements++);
             PluginBus.Subscribe(owner, BusTopics.SiteIncident, _ => incidents++);
             PluginBus.Subscribe(owner, BusTopics.TeamWiped, _ => wipes++);
+            PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => vendings++);
         }
 
         public void Reset()
@@ -32,6 +34,7 @@ namespace RoundRecap
             replacements = 0;
             incidents = 0;
             wipes = 0;
+            vendings = 0;
         }
 
         public string Describe(Translation text)
@@ -45,6 +48,7 @@ namespace RoundRecap
             Add(lines, text.Drops, drops);
             Add(lines, text.Replacements, replacements);
             Add(lines, text.Incidents, incidents);
+            Add(lines, text.Vendings, vendings);
             Add(lines, text.Wipes, wipes);
 
             if (lines.Count == 0)

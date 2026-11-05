@@ -28,6 +28,9 @@ namespace RoundRecap
         [Description("Ligne des incidents de site.")]
         public string Incidents { get; set; } = "%COUNT% incident(s) de site";
 
+        [Description("Ligne des utilisations de SCP-261.")]
+        public string Vendings { get; set; } = "%COUNT% passage(s) a SCP-261";
+
         [Description("Ligne des equipes eliminees.")]
         public string Wipes { get; set; } = "%COUNT% equipe(s) eliminee(s)";
     }

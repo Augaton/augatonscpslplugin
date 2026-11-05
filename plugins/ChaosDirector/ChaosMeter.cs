@@ -24,6 +24,7 @@ namespace ChaosDirector
             PluginBus.Subscribe(owner, BusTopics.SupplyDropped, _ => Add(Config.PointsPerDrop));
             PluginBus.Subscribe(owner, BusTopics.SiteIncident, _ => Add(Config.PointsPerIncident));
             PluginBus.Subscribe(owner, BusTopics.TeamWiped, _ => Add(Config.PointsPerTeamWipe));
+            PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => Add(Config.PointsPerVending));
         }
 
         public void OnDeath(PlayerDeathEventArgs ev)

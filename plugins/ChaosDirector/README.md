@@ -18,6 +18,7 @@ chacun garde sa montee en puissance au fil du temps.
 | `points_per_drop` | `3` | Points par largage |
 | `points_per_incident` | `3` | Points par incident de site |
 | `points_per_team_wipe` | `10` | Points par equipe eliminee |
+| `points_per_vending` | `1` | Points par utilisation de SCP-261 |
 | `points_per_level` | `30` | Points necessaires pour un niveau |
 | `max_bonus_level` | `5` | Niveau maximal |
 | `announce_levels` | `true` | Annonce chaque nouveau niveau |

@@ -19,6 +19,9 @@ namespace ChaosDirector
         [Description("Points de chaos par incident de site.")]
         public int PointsPerIncident { get; set; } = 3;
 
+        [Description("Points de chaos par utilisation de SCP-261.")]
+        public int PointsPerVending { get; set; } = 1;
+
         [Description("Points de chaos par equipe eliminee.")]
         public int PointsPerTeamWipe { get; set; } = 10;
 

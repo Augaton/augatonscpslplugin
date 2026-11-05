@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AugatonLib.Arbitration;
+using AugatonLib.Bus;
 using AugatonLib.Effects;
 using AugatonLib.Random;
 using AugatonLib.World;
@@ -56,6 +57,14 @@ namespace Scp261
                 return;
 
             ItemType type = Chance.Pick(stock);
+
+            // Avec SCP500s, la machine donne une vraie pilule. Sans lui, personne ne repond a la demande.
+            if (type == ItemType.SCP500 && PluginBus.Publish(BusTopics.PillGiveRequested, Plugin.Owner, player) > 0)
+            {
+                Show(player, Text.ItemDispensed);
+                return;
+            }
+
             Item item = player.AddItem(type);
 
             if (item is null)

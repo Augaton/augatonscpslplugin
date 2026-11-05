@@ -1,5 +1,6 @@
 using System;
 using AugatonLib.Arbitration;
+using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.PlayerEvents;
@@ -35,7 +36,7 @@ namespace Scp261
             ServerEvents.RoundStarted += machines.SpawnForRound;
             ServerEvents.RoundRestarted += OnRoundRestarted;
 
-            PluginDirectory.Register(this, Capability.Hints, Capability.Scale);
+            PluginDirectory.Register(this, Capability.Hints, Capability.Scale, Capability.Bus);
         }
 
         public override void Disable()
@@ -114,6 +115,7 @@ namespace Scp261
 
             player.RemoveItem(held);
             outcomes.Roll(player);
+            PluginBus.Publish(BusTopics.VendingUsed, Owner);
         }
     }
 }

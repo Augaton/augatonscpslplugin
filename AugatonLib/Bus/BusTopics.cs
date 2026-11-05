@@ -25,5 +25,7 @@ namespace AugatonLib.Bus
         public const string PillGiveRequested = "pill.give.requested";
 
         public const string SiteIncident = "site.incident";
+
+        public const string VendingUsed = "vending.used";
     }
 }
