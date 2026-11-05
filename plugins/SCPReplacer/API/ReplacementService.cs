@@ -218,7 +218,7 @@ namespace SCPReplacer.API
                 if (!pending.Contains(entry))
                     return;
 
-                Player winner = PickWinner(entry);
+                Player winner = IsSuspended ? null : PickWinner(entry);
                 pending.Remove(entry);
 
                 if (winner is null)

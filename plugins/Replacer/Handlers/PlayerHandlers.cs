@@ -356,7 +356,7 @@ namespace Replacer.Handlers
         private void AssignPendingRoles()
         {
             float now = UnityEngine.Time.realtimeSinceStartup;
-            bool inProgress = Round.IsRoundInProgress;
+            bool inProgress = Round.IsRoundInProgress && !(plugin.Config.PauseDuringGamemodes && WorldEvents.IsPaused);
 
             for (int i = 0; i < pendingRoles.Count;)
             {
