@@ -5,7 +5,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 
 ## 1. Chargement
 
-- [ ] La banniere AugatonLib apparait dans la console et annonce 12/12 plugins enregistres.
+- [ ] La banniere AugatonLib apparait dans la console et annonce tous les plugins installes.
 - [ ] Aucune erreur de chargement, et HintServiceMeow est detecte.
 - [ ] `config.yml`, `translation.yml` et `properties.yml` sont crees dans `configs/<port>/<Plugin>/`.
 - [ ] `labapi reload configs` s'execute sans erreur et applique une nouvelle position de hint.
@@ -60,6 +60,11 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Avec `enable_size_gameplay: true` : un petit humain va plus vite, un grand a plus de vie, les
       SCP ne changent pas, et l'effet disparait a la mort et apres `sizes reset`.
 - [ ] Fin de round : les tailles reviennent a la normale. C'est un changement : elles restaient avant.
+
+**ChaosDirector**
+- [ ] Le niveau monte avec les morts, pilules et pieces, et s'annonce. `chaos status` le confirme.
+- [ ] Il accelere les pilules, les pieces et les incidents, et repart de zero au round suivant.
+- [ ] Equilibrage : 30 points par niveau et 5 niveaux au maximum sont des valeurs de depart.
 
 **ScpProximityChat**
 - [ ] Touche visible dans les reglages a la connexion, bascule, voix entendue a portee.

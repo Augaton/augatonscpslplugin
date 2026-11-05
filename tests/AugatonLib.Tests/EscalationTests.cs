@@ -1,10 +1,47 @@
+using System;
 using AugatonLib.Chaos;
 using Xunit;
 
 namespace AugatonLib.Tests
 {
-    public class EscalationTests
+    public class EscalationTests : IDisposable
     {
+        public EscalationTests() => ChaosState.Reset();
+
+        public void Dispose() => ChaosState.Reset();
+
+        [Fact]
+        public void ChaosBonusAddsToTheTimeLevel()
+        {
+            ChaosState.SetBonusLevel(2);
+
+            Assert.Equal(3, Escalation.Level(120d, 120f, 10));
+        }
+
+        [Fact]
+        public void ChaosBonusNeverExceedsTheMaximum()
+        {
+            ChaosState.SetBonusLevel(50);
+
+            Assert.Equal(10, Escalation.Level(120d, 120f, 10));
+        }
+
+        [Fact]
+        public void DisabledEscalationIgnoresTheChaosBonus()
+        {
+            ChaosState.SetBonusLevel(5);
+
+            Assert.Equal(0, Escalation.Level(600d, 0f, 10));
+        }
+
+        [Fact]
+        public void BonusLevelCannotBeNegative()
+        {
+            ChaosState.SetBonusLevel(-3);
+
+            Assert.Equal(0, ChaosState.BonusLevel);
+        }
+
         [Theory]
         [InlineData(0d, 0)]
         [InlineData(119d, 0)]

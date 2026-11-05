@@ -13,7 +13,7 @@ namespace AugatonLib.Chaos
             if (stepSeconds <= 0f || maxLevel <= 0 || elapsedSeconds <= 0d)
                 return 0;
 
-            return (int)Math.Min(elapsedSeconds / stepSeconds, maxLevel);
+            return (int)Math.Min((elapsedSeconds / stepSeconds) + ChaosState.BonusLevel, maxLevel);
         }
 
         public static int Grow(int baseValue, int perLevel, int level) => baseValue + (Math.Max(0, perLevel) * level);
