@@ -66,6 +66,9 @@ namespace BetterCoinflipsRewritten
 
         protected override void ValidateConfig()
         {
+            Config.FacilityEffectCooldown = AtLeast("facility_effect_cooldown", Config.FacilityEffectCooldown, 1f);
+            Config.CoinCooldown = AtLeast("coin_cooldown", Config.CoinCooldown, 0.5f);
+
             Config.CoinConsumeDelay = Clamp(
                 "coin_consume_delay",
                 Config.CoinConsumeDelay,

@@ -91,11 +91,7 @@ namespace ScpProximityChat
                 Config.MaxDistance = Config.MinDistance + 10f;
             }
 
-            if (Config.ToggleCooldownSeconds < 0f)
-            {
-                Logger.Warn($"ToggleCooldownSeconds ({Config.ToggleCooldownSeconds}) negatif, remis a 0.");
-                Config.ToggleCooldownSeconds = 0f;
-            }
+            Config.ToggleCooldownSeconds = AtLeast("toggle_cooldown_seconds", Config.ToggleCooldownSeconds, 0.1f);
         }
 
         // LoadConfigs tourne a l'amorcage du serveur : RoleTypeId.GetTeam() y chargerait les prefabs de roles trop tot.

@@ -94,11 +94,7 @@ namespace SCPReplacer
                 Config.ReplaceCutoff = Config.QuitCutoff;
             }
 
-            if (Config.CommandCooldownSeconds < 0f)
-            {
-                Logger.Warn($"CommandCooldownSeconds ({Config.CommandCooldownSeconds}) negatif, remis a 0.");
-                Config.CommandCooldownSeconds = 0f;
-            }
+            Config.CommandCooldownSeconds = AtLeast("command_cooldown_seconds", Config.CommandCooldownSeconds, 1f);
 
             if (Config.IgnoredRoles is null)
             {

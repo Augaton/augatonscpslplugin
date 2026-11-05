@@ -103,6 +103,8 @@ namespace RandomGamemode
 
         protected override void ValidateConfig()
         {
+            Config.VoteCommandCooldownSeconds = AtLeast("vote_command_cooldown_seconds", Config.VoteCommandCooldownSeconds, 0.5f);
+
             if (Config.GamemodeChance < 0 || Config.GamemodeChance > 100)
             {
                 Logger.Warn($"GamemodeChance ({Config.GamemodeChance}) hors bornes 0-100, remis a 10.");

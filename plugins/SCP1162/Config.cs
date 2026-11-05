@@ -171,7 +171,7 @@ namespace SCP1162
             CutHandsChance = Clamp(CutHandsChance, 0f, 100f, nameof(CutHandsChance));
             DeleteChance = Clamp(DeleteChance, 0f, 100f, nameof(DeleteChance));
             SeveredHandsDuration = Clamp(SeveredHandsDuration, 0f, 3600f, nameof(SeveredHandsDuration));
-            CooldownSeconds = Clamp(CooldownSeconds, 0f, 300f, nameof(CooldownSeconds));
+            CooldownSeconds = Clamp(CooldownSeconds, 0.5f, 300f, nameof(CooldownSeconds));
             HintDuration = Clamp(HintDuration, 1f, 30f, nameof(HintDuration));
             Alpha = Clamp(Alpha, 0f, 1f, nameof(Alpha));
             HintFontSize = (int)Clamp(HintFontSize, 8f, 60f, nameof(HintFontSize));

@@ -46,6 +46,8 @@ namespace MicroHidDock
 
         protected override void ValidateConfig()
         {
+            Config.DockCooldownSeconds = AtLeast("dock_cooldown_seconds", Config.DockCooldownSeconds, 1f);
+
             if (Config.DockRange < 0f)
             {
                 Logger.Warn("dock_range negatif : valeur remise a 0.");

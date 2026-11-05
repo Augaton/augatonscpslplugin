@@ -38,6 +38,16 @@ namespace AugatonLib.Runtime
         protected virtual void ValidateConfig()
         {
         }
+
+        // Ecrit dans ce sens, le test ecarte aussi NaN.
+        protected float AtLeast(string key, float value, float minimum)
+        {
+            if (value >= minimum)
+                return value;
+
+            Logger.Warn($"{Name}: {key} ({value}) trop bas, remis a {minimum}.");
+            return minimum;
+        }
     }
 
     public abstract class AugatonPlugin<TConfig, TTranslation> : AugatonPlugin<TConfig>

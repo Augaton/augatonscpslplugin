@@ -84,6 +84,8 @@ namespace Replacer
 
         protected override void ValidateConfig()
         {
+            Config.CommandCooldownSeconds = AtLeast("command_cooldown_seconds", Config.CommandCooldownSeconds, 1f);
+
             if (Config.ReplacementDelay < 0f)
             {
                 Logger.Warn($"ReplacementDelay ({Config.ReplacementDelay}) est negatif, remis a 0.4.");

@@ -53,6 +53,11 @@ namespace Scp261
             outcomes = null;
         }
 
+        protected override void ValidateConfig()
+        {
+            Config.UseCooldownSeconds = AtLeast("use_cooldown_seconds", Config.UseCooldownSeconds, 0.5f);
+        }
+
         private void OnRoundRestarted()
         {
             machines.Clear();
