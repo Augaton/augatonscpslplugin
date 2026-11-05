@@ -103,10 +103,10 @@ namespace SCP500s.API
             }
         }
 
-        public PillBase SpawnAt(Vector3 position)
+        public PillBase SpawnAt(Vector3 position, float bonusRandomShare = 0f)
         {
             PillBase random = registry.Find(Config.RandomPillKey);
-            bool useRandom = random is not null && Chance.Roll(Config.RandomPillSharePercent);
+            bool useRandom = random is not null && Chance.Roll(Config.RandomPillSharePercent + bonusRandomShare);
             PillBase pill = useRandom ? random : PickWeightedPill() ?? random;
 
             if (pill is null || pill.Spawn(position) is null)

@@ -108,7 +108,7 @@ namespace SCP500s.API
                 if (!spots.TryPick(IsCrowded, out Vector3 position))
                     return;
 
-                PillBase pill = spawner.SpawnAt(position);
+                PillBase pill = spawner.SpawnAt(position, CurrentLevel() * Mathf.Max(0f, Config.ChaosRandomSharePerLevel));
 
                 if (pill is null)
                     return;

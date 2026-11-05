@@ -85,10 +85,11 @@ par round).
 | `chaos_target_per_level` | `3` | Pilules maintenues en plus par palier |
 | `chaos_batch_per_level` | `1` | Pilules ajoutees en plus par verification et par palier |
 | `chaos_interval_per_level` | `3` | Secondes retirees a l'intervalle par palier, sans passer sous 30 |
+| `chaos_random_share_per_level` | `4` | Points de part de roulette en plus par palier |
 | `max_pills_on_ground` | `60` | Plafond absolu, pour proteger le serveur |
 
 Avec les valeurs par defaut, le round demarre avec 12 pilules maintenues au sol et en vise
-42 au bout de 20 minutes.
+42 au bout de 20 minutes, dont la part de roulettes passe de 40 % a 80 %.
 
 Une pilule n'apparait jamais en LCZ une fois la zone decontaminee, ni sous
 terre apres la detonation de l'ogive. Quand les plafonds par round du catalogue

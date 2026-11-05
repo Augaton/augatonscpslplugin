@@ -62,6 +62,9 @@ namespace SCP500s
         [Description("Secondes retirees a l'intervalle par palier. L'intervalle ne descend jamais sous 30.")]
         public float ChaosIntervalPerLevel { get; set; } = 3f;
 
+        [Description("Points ajoutes par palier a random_pill_share_percent, pour les pilules apparues en continu.")]
+        public float ChaosRandomSharePerLevel { get; set; } = 4f;
+
         [Description("Plafond absolu de pilules au sol, pour proteger le serveur.")]
         public int MaxPillsOnGround { get; set; } = 60;
 
