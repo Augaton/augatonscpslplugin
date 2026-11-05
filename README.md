@@ -1,6 +1,6 @@
 # Augaton SCP:SL Plugins
 
-Dix-neuf plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
+Vingt-trois plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
 
 [![CI](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml)
 ![LabAPI 1.1.7](https://img.shields.io/badge/LabAPI-1.1.7-blue)
@@ -37,24 +37,28 @@ Dix-neuf plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**,
 | Plugin | Version | Rôle |
 |---|---|---|
 | [AugatonLib](AugatonLib) | 2.2.0 | Bibliothèque partagée, **obligatoire** |
+| [AmbientCassie](plugins/AmbientCassie) | 1.0.0 | Annonces d'ambiance de C.A.S.S.I.E pendant le round |
 | [AntiSLCrush](plugins/AntiSLCrush) | 4.0.0 | Protège le serveur contre des bugs du jeu. **Licence non commerciale** |
 | [ChaosDirector](plugins/ChaosDirector) | 1.1.0 | Niveau de chaos commun, nourri par les événements du round |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
 | [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.1.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
+| [DiscordAudit](plugins/DiscordAudit) | 1.0.0 | Envoie les actions du staff vers un webhook Discord |
 | [MicroHidDock](plugins/MicroHidDock) | 1.0.0 | Repose le Micro-HID sur son socle, où il se recharge |
 | [PocketCorpses](plugins/PocketCorpses) | 1.0.0 | Fait retomber les corps de la dimension de poche |
-| [RandomGamemode](plugins/RandomGamemode) | 4.1.0 | 17 modes de jeu spéciaux, avec vote des joueurs |
+| [RandomGamemode](plugins/RandomGamemode) | 4.1.0 | 19 modes de jeu spéciaux, avec vote des joueurs |
 | [RoundRecap](plugins/RoundRecap) | 1.1.0 | Bilan de fin de round |
 | [RealisticSizes](plugins/RealisticSizes) | 5.0.1 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
 | [Replacer](plugins/Replacer) | 3.1.0 | Remplace un joueur parti par un spectateur, avec son état complet |
 | [Scp261](plugins/Scp261) | 2.0.1 | Machine distributrice : une pièce contre un résultat au hasard |
+| [Scp914Recipes](plugins/Scp914Recipes) | 1.0.0 | Recettes de SCP-914 réglables en config |
 | [SCP1162](plugins/SCP1162) | 3.1.0 | Le trou dans le mur : échange un objet contre un autre |
 | [SCP500s](plugins/SCP500s) | 7.1.0 | 44 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
 | [ScpProximityChat](plugins/ScpProximityChat) | 3.1.0 | Permet aux SCP de parler aux joueurs proches |
 | [SCPReplacer](plugins/SCPReplacer) | 3.1.0 | Loterie de volontaires pour reprendre un SCP parti |
-| [SiteIncidents](plugins/SiteIncidents) | 1.0.1 | Pannes, alertes et portes bloquées au hasard |
+| [SiteIncidents](plugins/SiteIncidents) | 1.1.0 | Pannes, alertes, portes bloquées, fuites de gaz, surcharges Tesla et coupures de caméras |
 | [SupplyDrop](plugins/SupplyDrop) | 5.0.0 | Largages de ravitaillement, sur minuteur ou événement |
+| [TickGuard](plugins/TickGuard) | 1.0.0 | Surveille les TPS et suspend les événements si le serveur souffre |
 | [TeamGenocide](plugins/TeamGenocide) | 4.0.0 | Annonces C.A.S.S.I.E à l'extinction d'une équipe |
 
 Chaque plugin a son propre README, avec le détail de sa configuration.
@@ -157,12 +161,16 @@ Disponibles dans le Remote Admin et la console du serveur. Sans argument, une co
 
 | Commande | Alias | Permission | Sous-commandes principales |
 |---|---|---|---|
+| `ambient` | `amb` | `ambientcassie.manage` | `status`, `play` |
 | `anticrash` | `asc` | `anticrash.manage` | `status` |
 | `autoff` | `ff` | `autofftoggle.manage` | `status`, `set` |
 | `chaos` | `chaosdirector` | `chaosdirector.manage` | `status` |
 | `coinflip` | `bcf` | `bettercoinflips.manage` | `status` |
 | `gamemode` | `gm` | `randomgamemode.manage` | `list`, `force`, `start`, `stop` |
+| `discordaudit` | `daudit` | `discordaudit.manage` | `status`, `test` |
 | `incidents` | `inc` | `siteincidents.manage` | `status`, `trigger` |
+| `microdock` | `mdock` | `microhiddock.manage` | `status`, `test` |
+| `pocketcorpses` | `corpses` | `pocketcorpses.manage` | `status`, `test` |
 | `sizes` | `rsize` | `realisticsizes.manage` | `status`, `reset` |
 | `remotekeycard` | `rk` | `remotekeycard.manage` | `status` |
 | `replacer` | `rep` | `replacer.manage` | `status` |
@@ -172,8 +180,11 @@ Disponibles dans le Remote Admin et la console du serveur. Sans argument, une co
 | `scpreplacer` | `scprep` | `scpreplacer.manage` | `status` |
 | `supplydrop` | `sd` | `supplydrop.call` | `list`, `call` |
 | `teamgenocide` | `tg` | `teamgenocide.manage` | `status` |
+| `tickguard` | `tps` | `tickguard.manage` | `status` |
 
 La sous-commande `collection` affiche l'état de toute la collection : plugins chargés, intégrations et arbitres.
+
+`collection check` vérifie sur le vrai serveur ce que la compilation ne voit pas : prefabs, salles, mots de C.A.S.S.I.E, codec et dépendances. Lancez-la pendant un round, par exemple avec `chaos collection check`.
 
 ## Architecture
 
@@ -221,6 +232,9 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | BetterCoinflips et Scp261 sont présents | Les pièces renouvelées alimentent la machine |
 | ChaosDirector est présent | Les pilules, pièces et incidents s'accélèrent avec l'agitation du round |
 | RoundRecap est présent | Le bilan compte ce que font les autres plugins |
+| TickGuard est présent | Une baisse durable de TPS suspend les mêmes événements qu'un mode arène |
+| DiscordAudit est présent | Les actions tracées par chaque plugin arrivent sur Discord |
+| Scp914Recipes et SCP500s sont présents | Les recettes de SCP-914 donnent de vraies pilules |
 | Un plugin manque | Seule la synergie concernée disparaît |
 
 Une CI vérifie qu'aucun plugin n'en référence un autre.
@@ -284,7 +298,7 @@ Les plugins portés sont des réécritures. Leur conception et leurs mécaniques
 | Composant | Auteur(s) d'origine | Licence |
 |---|---|---|
 | AugatonLib, tests et outillage | Augaton | [MIT](LICENSE) |
-| ChaosDirector, RoundRecap, SiteIncidents | Augaton | [MIT](plugins/ChaosDirector/LICENSE) |
+| AmbientCassie, ChaosDirector, DiscordAudit, RoundRecap, Scp914Recipes, SiteIncidents, TickGuard | Augaton | [MIT](plugins/ChaosDirector/LICENSE) |
 | MicroHidDock | Augaton, d'après une idée d'EngineerLND | [MIT](plugins/MicroHidDock/LICENSE) |
 | PocketCorpses | Augaton, d'après une idée de DentyTxR | [MIT](plugins/PocketCorpses/LICENSE) |
 | AntiSLCrush | ui_2506, version modifiée | [Non commerciale](plugins/AntiSLCrush/LICENSE.md) |

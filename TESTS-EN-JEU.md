@@ -5,6 +5,8 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 
 ## 1. Chargement
 
+Commencer par `chaos collection check` pendant un round : chaque `[ECHEC]` signale un probleme avant meme de jouer.
+
 - [ ] La banniere AugatonLib apparait dans la console et annonce tous les plugins installes.
 - [ ] Aucune erreur de chargement, et HintServiceMeow est detecte avec le `0Harmony.dll` de l'archive.
 - [ ] Sans HintServiceMeow, la banniere le signale et le serveur continue de tourner.
@@ -74,6 +76,25 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Equilibrage : 30 points par niveau et 5 niveaux au maximum sont des valeurs de depart.
 - [ ] Pendant un mode arene, le niveau de chaos ne monte pas. Un echange a SCP-1162 rapporte des points.
 
+**TickGuard**
+- [ ] `tickguard status` affiche des TPS plausibles et le plus bas du round.
+- [ ] Avec `min_tps` au-dessus des TPS reels, l'alerte part apres `checks_before_alert` mesures et les evenements s'arretent, puis reprennent.
+
+**DiscordAudit**
+- [ ] Sans webhook, rien ne part et `discordaudit status` le dit.
+- [ ] `discordaudit test` arrive dans le salon, sans ralentir le serveur.
+- [ ] Un pseudo avec `@everyone` ou des backticks ne sonne personne et ne casse pas le bloc.
+- [ ] Une adresse fausse produit un avertissement sans jamais afficher l'adresse.
+
+**Scp914Recipes**
+- [ ] Pose au sol et en main : une piece en `Fine` donne parfois une pilule, et sinon la machine agit normalement.
+- [ ] La sortie `SCP500` est une vraie pilule avec SCP500s, et une SCP-500 ordinaire sans lui.
+- [ ] Une pilule de SCP500s ressort intacte.
+
+**AmbientCassie**
+- [ ] `ambient play` se fait entendre avec ses sous-titres, et `collection check` ne signale aucun mot inconnu.
+- [ ] Aucune annonce ne coupe une autre annonce, ni le compte a rebours de l'ogive.
+
 **PocketCorpses**
 - [ ] Un joueur meurt dans la dimension de poche : son corps retombe du plafond, au-dessus d'un joueur vivant.
 - [ ] Le corps tombe vraiment : il ne reste pas fige au plafond, et garde son nom et sa cause de mort.
@@ -82,6 +103,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] SCP-049 peut ranimer le corps retombe.
 - [ ] Le corps d'un joueur deconnecte retombe aussi, sans erreur dans les logs.
 - [ ] `sinkhole_under_items: true` : un gouffre precede les objets rendus.
+- [ ] `pocketcorpses test` : tout le scenario se joue au-dessus du testeur.
 
 **MicroHidDock**
 - [ ] Micro-HID en main, l'interaction sur le socle vide fonctionne. Si le socle ne recoit pas l'interaction, lacher le Micro-HID reste possible.
@@ -89,6 +111,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Il se reprend normalement, et garde son energie.
 - [ ] Il se recharge sur le socle, jusqu'a `recharge_limit`.
 - [ ] Un socle occupe refuse un second Micro-HID, et un Micro-HID casse le reste apres un passage sur le socle.
+- [ ] `microdock test` donne un Micro-HID a 10 %, et `microdock status` montre sa recharge une fois pose.
 
 **Scp261**
 - [ ] La machine apparait dans `EzOfficeSmall`, et une piece en main permet de l'utiliser.
@@ -123,6 +146,9 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Les portes se debloquent apres le delai, et une porte verrouillee par le staff le reste.
 - [ ] Les lumieres reviennent a la normale, meme pendant une autre panne.
 - [ ] Rien en zone legere pendant la decontamination, rien apres l'ogive, rien pendant un mode arene.
+- [ ] `incidents trigger GasLeak` : une salle occupee passe au vert, et seuls ses humains sont empoisonnes.
+- [ ] `incidents trigger TeslaSurge` : les portes Tesla dechargent pendant toute la duree, puis s'arretent.
+- [ ] `incidents trigger CameraOutage` : SCP-079 perd ses cameras, et le trigger refuse s'il est absent.
 
 **SupplyDrop**
 - [ ] Armes larguees chargees, y compris revolver et fusil a pompe.
@@ -148,6 +174,9 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Mode arene : personne n'est remplace, et le Juggernaut qui se deconnecte met fin au mode normalement.
 - [ ] `.human` et `.volunteer` sont refuses pendant Cacahuetes, Larry, Mimetisme et Infection, puis remarchent au round suivant.
 - [ ] Un joueur qui vote puis quitte le lobby ne compte plus au depouillement.
+- [ ] Cache-cache : le round ne se termine pas pendant la cachette, le chasseur arrive ensuite, et les survivants gagnent a la fin du temps.
+- [ ] Cache-cache : si le chasseur se deconnecte pendant la cachette, le round se termine proprement.
+- [ ] Evacuation : l'ogive part apres le delai, sans pouvoir etre annulee, et le verrou saute au round suivant.
 
 **BetterCoinflipsRewritten**
 - [ ] La piece disparait apres l'animation, y compris lachee au sol.
@@ -165,6 +194,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Le bilan s'affiche en fin de round, et une ligne a zero n'apparait pas.
 - [ ] Les compteurs repartent de zero au round suivant.
 - [ ] Le bilan affiche le mode du round, et compte les volontaires de SCPReplacer et les echanges a SCP-1162.
+- [ ] Le bilan nomme le meilleur tueur, la premiere evasion et le survivant, sans role Tutorial.
 
 **SCP500s**
 - [ ] Halo au spawn, apres depot, ramassage et mort, et disparition avec le pickup.

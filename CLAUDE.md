@@ -123,6 +123,9 @@ au début, où il partirait sur le même événement que le mode.
 
 ## Tests
 
+Ce qui dépend de la carte ou du jeu se déclare dans `SelfCheck.Register`, visible avec `collection check`.
+Les règles qui se lisent dans le texte du code vont dans `RepositoryRulesTests`.
+
 `tests/AugatonLib.Tests` tourne sur .NET 10, sans Unity : il ne couvre que le code qui ne touche ni au
 jeu ni à `UnityEngine`. Une méthode qui mentionne un type Unity ne peut pas y être chargée, même si la
 branche testée n'y passe pas. Le reste se valide en jeu avec `TESTS-EN-JEU.md`.
