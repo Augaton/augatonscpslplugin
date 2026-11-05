@@ -10,6 +10,15 @@ namespace RoundRecap
         [Description("Ligne du mode de jeu du round. %MODE% est son nom.")]
         public string Gamemode { get; set; } = "Mode : %MODE%";
 
+        [Description("Meilleur tueur. %PLAYER% est son pseudo, %COUNT% son total. Vide = masque.")]
+        public string BestKiller { get; set; } = "Meilleur tueur : %PLAYER% (%COUNT%)";
+
+        [Description("Premiere evasion. %PLAYER% est le pseudo, %TIME% le moment du round. Vide = masque.")]
+        public string FirstEscape { get; set; } = "Premiere evasion : %PLAYER% (%TIME%)";
+
+        [Description("Humain en vie depuis le plus longtemps a la fin du round. %PLAYER% est son pseudo. Vide = masque.")]
+        public string Survivor { get; set; } = "Survivant le plus tenace : %PLAYER%";
+
         [Description("Ligne des morts. Dans toutes ces lignes, %COUNT% est le total. Une ligne vide est masquee.")]
         public string Deaths { get; set; } = "%COUNT% mort(s)";
 

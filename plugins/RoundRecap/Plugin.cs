@@ -11,6 +11,7 @@ namespace RoundRecap
     public sealed class Plugin : AugatonPlugin<Config, Translation>
     {
         private readonly RecapCounters counters = new RecapCounters();
+        private readonly RoundHeroes heroes = new RoundHeroes();
 
         public override string Name => "RoundRecap";
 
@@ -23,7 +24,12 @@ namespace RoundRecap
             counters.Subscribe(Name);
 
             ServerEvents.RoundStarted += counters.Reset;
+            ServerEvents.RoundStarted += heroes.Reset;
             ServerEvents.RoundEnded += OnRoundEnded;
+            PlayerEvents.Death += heroes.OnDeath;
+            PlayerEvents.Escaped += heroes.OnEscaped;
+            PlayerEvents.ChangedRole += heroes.OnChangedRole;
+            PlayerEvents.Left += heroes.OnLeft;
 
             PluginDirectory.Register(this, Capability.Bus);
         }
@@ -31,7 +37,12 @@ namespace RoundRecap
         public override void Disable()
         {
             ServerEvents.RoundStarted -= counters.Reset;
+            ServerEvents.RoundStarted -= heroes.Reset;
             ServerEvents.RoundEnded -= OnRoundEnded;
+            PlayerEvents.Death -= heroes.OnDeath;
+            PlayerEvents.Escaped -= heroes.OnEscaped;
+            PlayerEvents.ChangedRole -= heroes.OnChangedRole;
+            PlayerEvents.Left -= heroes.OnLeft;
 
             PluginBus.UnsubscribeOwner(Name);
             PluginDirectory.Unregister(this);
@@ -41,7 +52,7 @@ namespace RoundRecap
         {
             try
             {
-                string recap = counters.Describe(Translation);
+                string recap = counters.Describe(Translation, heroes.Describe(Translation));
 
                 if (!string.IsNullOrEmpty(recap))
                     Server.SendBroadcast(recap, Config.BroadcastDuration);

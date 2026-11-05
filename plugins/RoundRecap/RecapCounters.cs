@@ -43,7 +43,7 @@ namespace RoundRecap
             gamemode = null;
         }
 
-        public string Describe(Translation text)
+        public string Describe(Translation text, List<string> heroes)
         {
             List<string> lines = new List<string>(8);
 
@@ -61,12 +61,16 @@ namespace RoundRecap
             Add(lines, text.Exchanges, exchanges);
             Add(lines, text.Wipes, wipes);
 
-            if (lines.Count == 0)
+            if (lines.Count == 0 && heroes.Count == 0)
                 return string.Empty;
 
             StringBuilder builder = new StringBuilder(text.Header);
 
-            builder.Append('\n').Append(string.Join("  |  ", lines));
+            if (lines.Count > 0)
+                builder.Append('\n').Append(string.Join("  |  ", lines));
+
+            if (heroes.Count > 0)
+                builder.Append('\n').Append(string.Join("  |  ", heroes));
 
             return builder.ToString();
         }
