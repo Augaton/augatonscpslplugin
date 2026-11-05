@@ -19,6 +19,7 @@
     <Project Path="plugins/SiteIncidents/SiteIncidents.csproj" />
     <Project Path="plugins/SupplyDrop/SupplyDrop.csproj" />
     <Project Path="plugins/TeamGenocide/TeamGenocide.csproj" />
+    <Project Path="plugins/TickGuard/TickGuard.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/AugatonLib.Tests/AugatonLib.Tests.csproj" />

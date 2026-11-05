@@ -6,7 +6,8 @@ namespace AugatonLib.Runtime
     /// <summary>
     /// Suspend ce qui apparait sur la carte sans action des joueurs : largages, pilules, pieces,
     /// incidents. Un mode de type arene pose cette pause, sinon un largage d'armes casserait un
-    /// Gun Game. Sans plugin pour la demander, rien n'est jamais suspendu.
+    /// Gun Game. TickGuard la pose aussi quand le serveur souffre. Sans plugin pour la demander, rien
+    /// n'est jamais suspendu.
     /// </summary>
     public static class WorldEvents
     {
