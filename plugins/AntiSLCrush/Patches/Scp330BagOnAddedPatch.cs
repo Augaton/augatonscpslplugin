@@ -13,16 +13,22 @@ namespace AntiSLCrush.Patches
     internal static class Scp330BagOnAddedPatch
     {
         private static float lastCalledTime = -1f;
+        private static ReferenceHub lastOwner;
 
+        // Seul un second appel pour le meme joueur est suspect : deux joueurs differents peuvent
+        // ramasser un sac dans la meme frame.
         private static bool Prefix(Scp330Bag __instance)
         {
-            if (lastCalledTime == Time.time)
+            ReferenceHub owner = __instance.Owner;
+
+            if (lastCalledTime == Time.time && lastOwner == owner)
             {
-                Plugin.Report($"[Scp330Bag.OnAdded] Appel trop rapide pour {__instance.Owner?.nicknameSync?.MyNick ?? "?"}, ignore.");
+                Plugin.Report($"[Scp330Bag.OnAdded] Appel trop rapide pour {owner?.nicknameSync?.MyNick ?? "?"}, ignore.");
                 return false;
             }
 
             lastCalledTime = Time.time;
+            lastOwner = owner;
             return true;
         }
     }
