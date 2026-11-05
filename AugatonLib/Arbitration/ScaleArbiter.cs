@@ -135,16 +135,13 @@ namespace AugatonLib.Arbitration
                 States.Remove(userId);
         }
 
-        public static void Clear()
+        public static void ResetBaselines()
         {
             foreach (KeyValuePair<string, State> entry in States)
             {
-                entry.Value.Layers.Clear();
                 entry.Value.Baseline = Vector3.one;
                 Apply(Player.Get(entry.Key), entry.Value);
             }
-
-            States.Clear();
         }
 
         internal static void ForgetAll() => States.Clear();

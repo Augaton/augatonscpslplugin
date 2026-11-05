@@ -132,7 +132,7 @@ namespace RealisticSizes.Handlers
             {
                 Stop();
                 GamemodeActive = false;
-                ScaleArbiter.Clear();
+                ScaleArbiter.ResetBaselines();
             }
             catch (Exception e)
             {

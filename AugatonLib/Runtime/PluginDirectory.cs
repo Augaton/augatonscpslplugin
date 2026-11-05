@@ -1,6 +1,6 @@
 using System;
-using AugatonLib.Arbitration;
 using System.Collections.Generic;
+using AugatonLib.Arbitration;
 using LabApi.Events.Handlers;
 using LabApi.Loader.Features.Plugins;
 
