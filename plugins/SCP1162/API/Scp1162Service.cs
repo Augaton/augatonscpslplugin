@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AugatonLib.Caching;
+using AugatonLib.Bus;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using CustomPlayerEffects;
@@ -132,6 +133,7 @@ namespace SCP1162.API
             }
 
             Dress(granted);
+            PluginBus.Publish(BusTopics.ItemExchanged, plugin.Name, entry.Item);
             plugin.Hints.Show(player, Format(translation.ItemExchanged, action, consumed, NameOf(entry.Item)), config.HintDuration);
 
             return false;

@@ -27,5 +27,7 @@ namespace AugatonLib.Bus
         public const string SiteIncident = "site.incident";
 
         public const string VendingUsed = "vending.used";
+
+        public const string ItemExchanged = "item.exchanged";
     }
 }

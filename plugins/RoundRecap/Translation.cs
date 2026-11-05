@@ -34,6 +34,9 @@ namespace RoundRecap
         [Description("Ligne des utilisations de SCP-261.")]
         public string Vendings { get; set; } = "%COUNT% passage(s) a SCP-261";
 
+        [Description("Ligne des echanges a SCP-1162.")]
+        public string Exchanges { get; set; } = "%COUNT% echange(s) a SCP-1162";
+
         [Description("Ligne des equipes eliminees.")]
         public string Wipes { get; set; } = "%COUNT% equipe(s) eliminee(s)";
     }

@@ -14,6 +14,7 @@ namespace RoundRecap
         private int incidents;
         private int wipes;
         private int vendings;
+        private int exchanges;
         private string gamemode;
 
         public void Subscribe(string owner)
@@ -25,6 +26,7 @@ namespace RoundRecap
             PluginBus.Subscribe(owner, BusTopics.SiteIncident, _ => incidents++);
             PluginBus.Subscribe(owner, BusTopics.TeamWiped, _ => wipes++);
             PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => vendings++);
+            PluginBus.Subscribe(owner, BusTopics.ItemExchanged, _ => exchanges++);
             PluginBus.Subscribe(owner, BusTopics.GamemodeStarted, OnGamemodeStarted);
         }
 
@@ -37,6 +39,7 @@ namespace RoundRecap
             incidents = 0;
             wipes = 0;
             vendings = 0;
+            exchanges = 0;
             gamemode = null;
         }
 
@@ -55,6 +58,7 @@ namespace RoundRecap
             Add(lines, text.Replacements, replacements);
             Add(lines, text.Incidents, incidents);
             Add(lines, text.Vendings, vendings);
+            Add(lines, text.Exchanges, exchanges);
             Add(lines, text.Wipes, wipes);
 
             if (lines.Count == 0)

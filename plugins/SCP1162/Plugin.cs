@@ -36,7 +36,7 @@ namespace SCP1162
             ServerEvents.RoundEnded += serverHandlers.OnRoundEnded;
             ServerEvents.RoundRestarted += serverHandlers.OnRoundRestarted;
 
-            PluginDirectory.Register(this, Capability.Hints);
+            PluginDirectory.Register(this, Capability.Hints, Capability.Bus);
         }
 
         public override void Disable()
