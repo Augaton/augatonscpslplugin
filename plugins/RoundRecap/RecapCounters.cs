@@ -14,6 +14,7 @@ namespace RoundRecap
         private int incidents;
         private int wipes;
         private int vendings;
+        private string gamemode;
 
         public void Subscribe(string owner)
         {
@@ -24,6 +25,7 @@ namespace RoundRecap
             PluginBus.Subscribe(owner, BusTopics.SiteIncident, _ => incidents++);
             PluginBus.Subscribe(owner, BusTopics.TeamWiped, _ => wipes++);
             PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => vendings++);
+            PluginBus.Subscribe(owner, BusTopics.GamemodeStarted, OnGamemodeStarted);
         }
 
         public void Reset()
@@ -35,11 +37,15 @@ namespace RoundRecap
             incidents = 0;
             wipes = 0;
             vendings = 0;
+            gamemode = null;
         }
 
         public string Describe(Translation text)
         {
             List<string> lines = new List<string>(8);
+
+            if (!string.IsNullOrEmpty(gamemode) && !string.IsNullOrEmpty(text.Gamemode))
+                lines.Add(text.Gamemode.Replace("%MODE%", gamemode));
 
             Add(lines, text.Deaths, Round.TotalDeaths);
             Add(lines, text.Escapes, Round.EscapedClassD + Round.EscapedScientists);
@@ -59,6 +65,12 @@ namespace RoundRecap
             builder.Append('\n').Append(string.Join("  |  ", lines));
 
             return builder.ToString();
+        }
+
+        private void OnGamemodeStarted(BusMessage message)
+        {
+            if (message.TryGet(out string name))
+                gamemode = name;
         }
 
         private static void Add(List<string> lines, string template, int count)

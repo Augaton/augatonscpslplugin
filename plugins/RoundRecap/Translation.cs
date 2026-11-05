@@ -7,6 +7,9 @@ namespace RoundRecap
         [Description("Titre du bilan de fin de round.")]
         public string Header { get; set; } = "<size=30><color=yellow>Bilan du round</color></size>";
 
+        [Description("Ligne du mode de jeu du round. %MODE% est son nom.")]
+        public string Gamemode { get; set; } = "Mode : %MODE%";
+
         [Description("Ligne des morts. Dans toutes ces lignes, %COUNT% est le total. Une ligne vide est masquee.")]
         public string Deaths { get; set; } = "%COUNT% mort(s)";
 

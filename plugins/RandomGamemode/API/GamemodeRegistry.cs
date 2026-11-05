@@ -253,7 +253,7 @@ namespace RandomGamemode.API
                 });
             }
 
-            PluginBus.Publish(BusTopics.GamemodeStarted, Owner, gamemode.Key);
+            PluginBus.Publish(BusTopics.GamemodeStarted, Owner, gamemode.DisplayName);
 
             Logger.Info($"[RandomGamemode] Mode \"{gamemode.Key}\" demarre.");
         }
