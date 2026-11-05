@@ -14,6 +14,10 @@ namespace PocketCorpses
     {
         private PocketReturns returns;
 
+        public static Plugin Instance { get; private set; }
+
+        internal PocketReturns Returns => returns;
+
         public override string Name => "PocketCorpses";
 
         public override string Description => "Les corps laisses dans la dimension de poche retombent dans le complexe.";
@@ -22,6 +26,7 @@ namespace PocketCorpses
 
         public override void Enable()
         {
+            Instance = this;
             returns = new PocketReturns(this);
 
             PlayerEvents.SpawnedRagdoll += OnSpawnedRagdoll;
@@ -44,6 +49,7 @@ namespace PocketCorpses
             PluginDirectory.Unregister(this);
 
             returns = null;
+            Instance = null;
         }
 
         protected override void ValidateConfig()

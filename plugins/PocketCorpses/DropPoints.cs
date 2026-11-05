@@ -38,7 +38,7 @@ namespace PocketCorpses
             return candidates > 0;
         }
 
-        private static bool TryGetRoofAbove(Vector3 position, out Vector3 roof)
+        public static bool TryGetRoofAbove(Vector3 position, out Vector3 roof)
         {
             roof = default;
 

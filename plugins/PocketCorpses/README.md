@@ -21,6 +21,15 @@ Tant qu'aucun joueur n'est hors de la dimension, le corps reste en attente.
 
 Un gouffre ralentit les humains qui marchent dessus, jamais les SCP.
 
+## Commandes
+
+| Commande | Permission | Effet |
+|---|---|---|
+| `pocketcorpses status` | `pocketcorpses.manage` | Etat du plugin et corps en attente |
+| `pocketcorpses test` | `pocketcorpses.manage` | Fait tomber un corps au-dessus de vous, avec alerte et gouffre |
+
+Alias `corpses`. Chaque test est trace.
+
 ## Attribution
 
 D'apres une idee de DentyTxR, reecrit sans reprendre son code : voir `NOTICE.md`.

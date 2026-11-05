@@ -6,6 +6,7 @@ using MEC;
 using Mirror;
 using PlayerRoles.PlayableScps.Scp106;
 using PlayerRoles.Ragdolls;
+using PlayerStatsSystem;
 using RelativePositioning;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
@@ -47,6 +48,26 @@ namespace PocketCorpses
             corpses.Clear();
             announcedItems.Clear();
             sinkholes.CloseAll();
+        }
+
+        public int PendingCount => corpses.Count;
+
+        public bool RunTest(Player player)
+        {
+            if (!running || !DropPoints.TryGetRoofAbove(player.Position, out Vector3 roof))
+                return false;
+
+            Ragdoll ragdoll = Ragdoll.SpawnRagdoll(player, new UniversalDamageHandler(-1f, DeathTranslations.PocketDecay));
+
+            if (ragdoll is null)
+                return false;
+
+            double now = NetworkTime.time;
+            FallingCorpse corpse = new FallingCorpse(ragdoll, now);
+
+            corpses.Add(corpse);
+            Announce(corpse, roof, now, plugin.Config);
+            return true;
         }
 
         public void Track(Ragdoll ragdoll)

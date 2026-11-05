@@ -22,6 +22,15 @@ Aucun son n'est joue : cela exigerait une dependance audio de plus.
 
 Le message se regle dans `translation.yml`.
 
+## Commandes
+
+| Commande | Permission | Effet |
+|---|---|---|
+| `microdock status` | `microhiddock.manage` | Socles trouves et energie des Micro-HID poses |
+| `microdock test` | `microhiddock.manage` | Vous donne un Micro-HID charge a 10 %, pour tester le depot et la recharge |
+
+Alias `mdock`. Chaque test est trace.
+
 ## Attribution
 
 D'apres une idee d'EngineerLND, reecrit sans reprendre son code : voir `NOTICE.md`.

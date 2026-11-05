@@ -13,6 +13,10 @@ namespace MicroHidDock
     {
         private MicroDock dock;
 
+        public static Plugin Instance { get; private set; }
+
+        internal MicroDock Dock => dock;
+
         public override string Name => "MicroHidDock";
 
         public override string Description => "Permet de reposer le Micro-HID sur son socle, ou il se recharge.";
@@ -21,6 +25,7 @@ namespace MicroHidDock
 
         public override void Enable()
         {
+            Instance = this;
             dock = new MicroDock(this);
 
             PlayerEvents.InteractingLocker += OnInteractingLocker;
@@ -44,6 +49,7 @@ namespace MicroHidDock
             PluginDirectory.Unregister(this);
 
             dock = null;
+            Instance = null;
         }
 
         protected override void ValidateConfig()

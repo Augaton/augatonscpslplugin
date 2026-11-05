@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using AugatonLib.Caching;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -51,6 +52,22 @@ namespace MicroHidDock
             }
 
             return "aucun socle utilisable";
+        }
+
+        public string Describe()
+        {
+            if (docked.Count == 0)
+                return "aucun";
+
+            StringBuilder builder = new StringBuilder(32);
+
+            foreach (MicroHIDPickup pickup in docked)
+            {
+                if (!pickup.IsDestroyed)
+                    builder.Append($"{pickup.Energy:P0} ");
+            }
+
+            return builder.ToString().TrimEnd();
         }
 
         public bool IsOnCooldown(Player player)
