@@ -44,7 +44,7 @@ namespace SCPReplacer
 
             DepartureArbiter.Declare(DepartureOwner, 100, Service.CanClaimDeparture);
 
-            PluginDirectory.Register(this, Capability.Departure);
+            PluginDirectory.Register(this, Capability.Departure, Capability.Genocide, Capability.Bus);
         }
 
         public override void Disable()

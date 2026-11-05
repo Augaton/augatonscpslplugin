@@ -51,6 +51,7 @@ namespace Replacer
                 this,
                 Capability.Hints,
                 Capability.Departure,
+                Capability.Genocide,
                 Capability.Bus);
         }
 

@@ -58,6 +58,16 @@ namespace AugatonLib.Runtime
                 new[] { "RandomGamemode" },
                 "les conversions de mode declencheront de fausses annonces"),
             new Pairing(
+                Capability.Genocide,
+                "TeamGenocide",
+                new[] { "Replacer", "SCPReplacer" },
+                "une extinction sera annoncee alors qu'un remplacant arrive"),
+            new Pairing(
+                Capability.Bus,
+                "SupplyDrop",
+                new[] { "SCP500s" },
+                "les largages ne contiendront pas de pilules"),
+            new Pairing(
                 Capability.Light,
                 "BetterCoinflipsRewritten",
                 new[] { "RandomGamemode", "SCP500s", "TeamGenocide" },
