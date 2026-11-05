@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AugatonLib.Chaos;
+using AugatonLib.Random;
 using AugatonLib.World;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -87,6 +88,22 @@ namespace SCP500s.API
             int batch = Escalation.Grow(Config.ContinuousSpawnBatch, Config.ChaosBatchPerLevel, level);
 
             SpawnPills(Mathf.Min(target - CountPillsOnGround(), batch));
+        }
+
+        public void OnPillConsumed()
+        {
+            if (!running || Config.RenewalPerConsumedPill <= 0)
+                return;
+
+            int amount = Config.RenewalPerConsumedPill + (Chance.Roll(Config.RenewalBonusChance) ? 1 : 0);
+
+            Plugin.Instance.Delayed.Run(Config.RenewalDelaySeconds, () => Renew(amount));
+        }
+
+        private void Renew(int amount)
+        {
+            if (running && Round.IsRoundInProgress)
+                SpawnPills(Mathf.Min(amount, Config.MaxPillsOnGround - CountPillsOnGround()));
         }
 
         private static int CurrentLevel()

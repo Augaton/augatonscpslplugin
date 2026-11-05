@@ -80,6 +80,7 @@ namespace SCP500s
             PlayerEvents.Left += OnLeft;
 
             PluginBus.Subscribe(Interop.Owner, BusTopics.PillSpawnRequested, OnPillSpawnRequested);
+            PluginBus.Subscribe(Interop.Owner, BusTopics.PillConsumed, OnPillConsumed);
 
             PluginDirectory.Register(
                 this,
@@ -295,6 +296,8 @@ namespace SCP500s
             }
 
             Config.MaxPillsOnGround = Mathf.Clamp(Config.MaxPillsOnGround, 1, 200);
+
+            Config.RenewalDelaySeconds = Mathf.Max(0f, Config.RenewalDelaySeconds);
 
             if (Config.ContinuousSpawnTarget < 0)
             {
@@ -530,6 +533,8 @@ namespace SCP500s
                 Logger.Error($"OnChangedRole: {e}");
             }
         }
+
+        private void OnPillConsumed(BusMessage message) => continuousSpawn.OnPillConsumed();
 
         private void OnPillSpawnRequested(BusMessage message)
         {

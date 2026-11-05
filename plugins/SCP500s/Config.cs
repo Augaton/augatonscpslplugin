@@ -65,6 +65,15 @@ namespace SCP500s
         [Description("Points ajoutes par palier a random_pill_share_percent, pour les pilules apparues en continu.")]
         public float ChaosRandomSharePerLevel { get; set; } = 4f;
 
+        [Description("Pilules rendues a la carte pour chaque pilule consommee. 0 = desactive. Requiert continuous_spawn.")]
+        public int RenewalPerConsumedPill { get; set; } = 1;
+
+        [Description("Chance en pourcent qu'une pilule consommee en rende une de plus.")]
+        public float RenewalBonusChance { get; set; } = 25f;
+
+        [Description("Delai en secondes avant l'apparition des pilules rendues.")]
+        public float RenewalDelaySeconds { get; set; } = 20f;
+
         [Description("Plafond absolu de pilules au sol, pour proteger le serveur.")]
         public int MaxPillsOnGround { get; set; } = 60;
 

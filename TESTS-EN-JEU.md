@@ -106,5 +106,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Tantrum, fusee, `SpawnPoints`, vagues forcees, Cassie.
 - [ ] Teinte de salle, y compris deux pilules de suite dans la meme salle.
 - [ ] Chaos : le nombre de pilules au sol monte au fil du round, sans depasser `max_pills_on_ground`.
+- [ ] Chaos : une pilule consommee reapparait ailleurs apres 20 s, jamais sous les yeux d'un joueur.
+- [ ] Chaos : la part de roulettes augmente en fin de round.
 - [ ] TPS du serveur stable en fin de round long, avec beaucoup de pilules et de halos.
 - [ ] Armes donnees : chargeur et attachements.
