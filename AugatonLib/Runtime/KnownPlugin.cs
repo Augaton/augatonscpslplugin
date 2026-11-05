@@ -32,6 +32,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("Replacer", "Replacer", "remplacement joueur"),
             new KnownPlugin("RoundRecap", "RoundRecap", "bilan de round"),
             new KnownPlugin("SCP1162", "SCP1162", "echange d'objets"),
+            new KnownPlugin("Scp261", "Scp261", "machine distributrice"),
             new KnownPlugin("SCP500s", "SCP500s", "pilules SCP-500"),
             new KnownPlugin("ScpProximityChat", "ScpProximityChat", "proximite SCP"),
             new KnownPlugin("SCPReplacer", "SCPReplacer", "volontariat SCP"),
