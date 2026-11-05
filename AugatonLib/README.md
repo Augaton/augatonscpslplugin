@@ -46,6 +46,11 @@ Il doit etre mis a jour en meme temps que les plugins qui en dependent.
 | `Runtime.WorldEvents` | Suspend les apparitions automatiques pendant un mode de type arene |
 | `Voting.BallotBox` | Urne : un vote par joueur, modifiable, avec egalites |
 | `Text.RoleNames` | Nom complet d'un role |
+| `Text.CassieLines` | Trouve le mot d'une annonce que C.A.S.S.I.E ne connait pas |
+| `Text.DiscordMessage` | Validation d'une adresse de webhook et message Discord sans mention |
+| `Runtime.SelfCheck` | Verifications faites sur le vrai serveur, lues par `collection check` |
+| `Runtime.LoadMonitor` | Detection d'une baisse durable de TPS, avec seuil de reprise |
+| `World.NetworkPrefabs` | Recherche d'un prefab reseau par composant |
 
 ## Depart d'un joueur
 
