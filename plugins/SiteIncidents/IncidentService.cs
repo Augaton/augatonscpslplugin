@@ -5,6 +5,7 @@ using AugatonLib.Bus;
 using AugatonLib.Chaos;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
+using AugatonLib.Text;
 using Interactables.Interobjects.DoorUtils;
 using LabApi.Features.Wrappers;
 using MapGeneration;
@@ -64,6 +65,14 @@ namespace SiteIncidents
             timers.Clear();
             LightArbiter.ReleaseOwner(Plugin.Owner);
             UnlockDoors();
+        }
+
+        public string CheckCassieWords()
+        {
+            Translation text = plugin.Translation;
+            string unknown = CassieLines.FindUnknownWord(new[] { text.BlackoutCassie, text.AlertCassie, text.LockdownCassie });
+
+            return unknown is null ? null : $"mot inconnu : {unknown}";
         }
 
         public bool Trigger(IncidentType type)

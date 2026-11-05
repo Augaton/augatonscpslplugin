@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
 using AugatonLib.Runtime;
+using AugatonLib.Text;
 using Cassie;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.ServerEvents;
@@ -82,6 +83,8 @@ namespace SCP500s
             PluginBus.Subscribe(Interop.Owner, BusTopics.PillSpawnRequested, OnPillSpawnRequested);
             PluginBus.Subscribe(Interop.Owner, BusTopics.PillConsumed, OnPillConsumed);
             PluginBus.Subscribe(Interop.Owner, BusTopics.PillGiveRequested, OnPillGiveRequested);
+
+            SelfCheck.Register(Name, "mots de C.A.S.S.I.E", CheckCassieWords);
 
             PluginDirectory.Register(
                 this,
@@ -406,6 +409,13 @@ namespace SCP500s
 
             Logger.Warn($"{name} est nul dans la config, liste vide utilisee.");
             return new List<T>();
+        }
+
+        private string CheckCassieWords()
+        {
+            string unknown = CassieLines.FindUnknownWord(Config.CassieLines);
+
+            return unknown is null ? null : $"mot inconnu : {unknown}";
         }
 
         private void ValidateCassieLines()

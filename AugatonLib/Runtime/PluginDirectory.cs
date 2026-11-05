@@ -37,6 +37,8 @@ namespace AugatonLib.Runtime
 
         public static void Unregister(Plugin plugin)
         {
+            SelfCheck.UnregisterOwner(plugin?.Name);
+
             if (plugin is not null)
                 Entries.Remove(AssemblyNameOf(plugin));
         }

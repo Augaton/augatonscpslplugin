@@ -42,6 +42,17 @@ namespace MicroHidDock
             cooldowns.Clear();
         }
 
+        public static string CheckPedestal()
+        {
+            foreach (MicroPedestal pedestal in MicroPedestal.List)
+            {
+                if (pedestal.Chambers.Count == 1 && pedestal.Chambers[0].Base.Spawnpoint != null)
+                    return null;
+            }
+
+            return "aucun socle utilisable";
+        }
+
         public bool IsOnCooldown(Player player)
         {
             return cooldowns.IsOnCooldown(player, plugin.Config.DockCooldownSeconds, out _);

@@ -19,6 +19,8 @@ namespace Scp261
 
         public VendingMachines(Plugin plugin) => this.plugin = plugin;
 
+        public int Count => spawned.Count;
+
         public void SpawnForRound()
         {
             Clear();

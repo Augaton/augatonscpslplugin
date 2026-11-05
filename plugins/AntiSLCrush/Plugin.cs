@@ -35,6 +35,8 @@ namespace AntiSLCrush
             if (Config.CleanObservers)
                 ServerEvents.WaitingForPlayers += ObserverSweep.Start;
 
+            SelfCheck.Register(Name, "protections en place", () => Protections.Failures.Count == 0 ? null : string.Join(", ", Protections.Failures));
+
             PluginDirectory.Register(this);
         }
 

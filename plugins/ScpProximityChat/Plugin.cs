@@ -35,6 +35,8 @@ namespace ScpProximityChat
             if (Config.ActivationType == ActivationType.ServerSpecificSettings)
                 RegisterSettings();
 
+            SelfCheck.Register(Name, "codec Opus", CheckCodec);
+
             PluginDirectory.Register(this, Capability.Hints);
         }
 
@@ -49,6 +51,12 @@ namespace ScpProximityChat
 
             proximityChatHandlers = null;
             Instance = null;
+        }
+
+        private static string CheckCodec()
+        {
+            new OpusHandler().Dispose();
+            return null;
         }
 
         protected override void ValidateConfig()

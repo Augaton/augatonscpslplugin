@@ -1,9 +1,12 @@
 using System;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
+using AugatonLib.World;
+using Hazards;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
 
 namespace PocketCorpses
 {
@@ -24,6 +27,9 @@ namespace PocketCorpses
             PlayerEvents.SpawnedRagdoll += OnSpawnedRagdoll;
             ServerEvents.RoundStarted += returns.Start;
             ServerEvents.RoundRestarted += returns.Stop;
+
+            SelfCheck.Register(Name, "prefab de gouffre", () => NetworkPrefabs.Find<SinkholeEnvironmentalHazard>() is null ? "introuvable" : null);
+            SelfCheck.Register(Name, "dimension de poche", () => PocketDimension.Instance is null ? "introuvable" : null);
 
             PluginDirectory.Register(this);
         }

@@ -28,6 +28,8 @@ namespace MicroHidDock
             ServerEvents.RoundStarted += dock.Start;
             ServerEvents.RoundRestarted += OnRoundRestarted;
 
+            SelfCheck.Register(Name, "socle du Micro-HID", MicroDock.CheckPedestal);
+
             PluginDirectory.Register(this, Capability.Hints);
         }
 

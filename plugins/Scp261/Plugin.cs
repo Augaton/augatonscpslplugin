@@ -36,6 +36,8 @@ namespace Scp261
             ServerEvents.RoundStarted += machines.SpawnForRound;
             ServerEvents.RoundRestarted += OnRoundRestarted;
 
+            SelfCheck.Register(Name, "machine en place", () => Round.IsRoundStarted && machines.Count == 0 ? "absente de ce round" : null);
+
             PluginDirectory.Register(this, Capability.Hints, Capability.Scale, Capability.Bus);
         }
 

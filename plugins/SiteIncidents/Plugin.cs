@@ -29,6 +29,8 @@ namespace SiteIncidents
             ServerEvents.RoundEnded += OnRoundEnded;
             ServerEvents.RoundRestarted += Service.Stop;
 
+            SelfCheck.Register(Name, "mots de C.A.S.S.I.E", Service.CheckCassieWords);
+
             PluginDirectory.Register(this, Capability.Light, Capability.Bus);
         }
 

@@ -1,5 +1,6 @@
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
+using LabApi.Features.Wrappers;
 using SCP1162.API;
 using SCP1162.Handlers;
 
@@ -35,6 +36,8 @@ namespace SCP1162
             ServerEvents.WaitingForPlayers += serverHandlers.OnWaitingForPlayers;
             ServerEvents.RoundEnded += serverHandlers.OnRoundEnded;
             ServerEvents.RoundRestarted += serverHandlers.OnRoundRestarted;
+
+            SelfCheck.Register(Name, "anomalie en place", () => Round.IsRoundStarted && Config.SpawnChance >= 100f && !Service.IsSpawned ? "absente de ce round" : null);
 
             PluginDirectory.Register(this, Capability.Hints, Capability.Bus);
         }
