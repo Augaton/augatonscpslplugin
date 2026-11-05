@@ -95,6 +95,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] La souris apparait, la flaque de tantrum est visible et tache.
 - [ ] Les annonces CASSIE gardent leurs sous-titres, les grenades respectent leur fuse.
 - [ ] `labapi reload configs` applique les nouveaux poids et durees des effets.
+- [ ] Des pieces reapparaissent pendant le round, jamais pres d'un joueur, et leur nombre monte.
 
 **SCP500s**
 - [ ] Halo au spawn, apres depot, ramassage et mort, et disparition avec le pickup.

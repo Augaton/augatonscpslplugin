@@ -198,3 +198,11 @@ changent pas, y compris `bonus_coin_source_items`, qui reste une liste d'`ItemTy
 
 `coinflip status`, ou `bcf status`, affiche l'etat du plugin. La commande demande
 la permission `bettercoinflips.manage`.
+
+## Renouvellement des pieces
+
+Avec `coin_renewal`, les pieces reapparaissent pendant le round sur des emplacements de loot surs,
+jamais pres d'un joueur vivant. Le plugin maintient `coin_renewal_target` pieces au sol, et en ajoute
+`coin_renewal_batch` au plus toutes les `coin_renewal_interval_seconds` secondes. Cette cible monte de
+`coin_chaos_target_per_level` a chaque palier de `coin_chaos_step_seconds` secondes, jusqu'a
+`coin_chaos_max_level` paliers. Avec les valeurs par defaut, elle passe de 6 a 16 pieces.

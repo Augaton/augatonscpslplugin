@@ -231,6 +231,30 @@ namespace BetterCoinflipsRewritten
         [Description("Duration in seconds of the deafness and concussion left by the fake explosion effect.")]
         public float FakeExplosionStunDuration { get; set; } = 5f;
 
+        [Description("Whether coins reappear on the map during the round, in safe loot spots away from players.")]
+        public bool CoinRenewal { get; set; } = true;
+
+        [Description("Seconds between two coin renewal checks. Minimum 30.")]
+        public float CoinRenewalIntervalSeconds { get; set; } = 90f;
+
+        [Description("Number of coins kept on the ground.")]
+        public int CoinRenewalTarget { get; set; } = 6;
+
+        [Description("Maximum number of coins added per check.")]
+        public int CoinRenewalBatch { get; set; } = 2;
+
+        [Description("Coins never appear closer than this to a living player.")]
+        public float CoinRenewalPlayerDistance { get; set; } = 15f;
+
+        [Description("Duration in seconds of a chaos level. 0 disables the escalation.")]
+        public float CoinChaosStepSeconds { get; set; } = 180f;
+
+        [Description("Maximum number of chaos levels.")]
+        public int CoinChaosMaxLevel { get; set; } = 5;
+
+        [Description("Coins added to coin_renewal_target per chaos level.")]
+        public int CoinChaosTargetPerLevel { get; set; } = 2;
+
         [Description("Whether this plugin replaces map loot with coins. Leave false when SCP500s owns loot replacement, otherwise both plugins compete for the same pickups and neither ratio holds.")]
         public bool SpawnCoinsOnMap { get; set; } = false;
 

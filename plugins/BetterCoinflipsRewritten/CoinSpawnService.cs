@@ -201,7 +201,7 @@ namespace BetterCoinflipsRewritten
 
         // Cette surcharge de Pickup.Create fait deja le spawn reseau : un Spawn() de plus ferait
         // seulement journaliser "was already spawned" par Mirror.
-        private static bool SpawnCoin(Vector3 position, Quaternion rotation)
+        internal static bool SpawnCoin(Vector3 position, Quaternion rotation)
         {
             if (Pickup.Create(ItemType.Coin, position, rotation) is not null)
                 return true;

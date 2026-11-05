@@ -14,6 +14,7 @@ namespace BetterCoinflipsRewritten
         private readonly CoinService coinService;
         private readonly CoinSpawnService coinSpawnService;
         private readonly CoinConsumeService coinConsumeService;
+        private readonly CoinRenewalService coinRenewalService;
 
         private CoroutineHandle spawnHandle;
         private bool spawnScheduled;
@@ -22,12 +23,14 @@ namespace BetterCoinflipsRewritten
             Plugin plugin,
             CoinService coinService,
             CoinSpawnService coinSpawnService,
-            CoinConsumeService coinConsumeService)
+            CoinConsumeService coinConsumeService,
+            CoinRenewalService coinRenewalService)
         {
             this.plugin = plugin;
             this.coinService = coinService;
             this.coinSpawnService = coinSpawnService;
             this.coinConsumeService = coinConsumeService;
+            this.coinRenewalService = coinRenewalService;
         }
 
         public void OnFlippingCoin(PlayerFlippingCoinEventArgs ev)
@@ -144,6 +147,7 @@ namespace BetterCoinflipsRewritten
                         try
                         {
                             coinSpawnService.SpawnMapCoins();
+                            coinRenewalService.Start();
                         }
                         catch (Exception e)
                         {
@@ -168,6 +172,7 @@ namespace BetterCoinflipsRewritten
                 ReleaseArbiters();
                 API.GlobalCooldown.Clear();
                 API.Scheduler.Clear();
+                coinRenewalService.Stop();
 
                 Logger.Debug(
                     "[BetterCoinflipsRewritten] Round is restarting.",

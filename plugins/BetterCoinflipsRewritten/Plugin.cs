@@ -19,6 +19,7 @@ namespace BetterCoinflipsRewritten
         private EventHandlers eventHandlers;
         private CoinSpawnService coinSpawnService;
         private CoinConsumeService coinConsumeService;
+        private CoinRenewalService coinRenewalService;
 
         public override void Enable()
         {
@@ -28,12 +29,14 @@ namespace BetterCoinflipsRewritten
             coinService = new CoinService(this);
             coinSpawnService = new CoinSpawnService(this);
             coinConsumeService = new CoinConsumeService(this);
+            coinRenewalService = new CoinRenewalService(this);
 
             eventHandlers = new EventHandlers(
                 this,
                 coinService,
                 coinSpawnService,
-                coinConsumeService);
+                coinConsumeService,
+                coinRenewalService);
 
             PlayerEvents.FlippingCoin += eventHandlers.OnFlippingCoin;
             PlayerEvents.Left += eventHandlers.OnLeft;
@@ -177,6 +180,7 @@ namespace BetterCoinflipsRewritten
 
             Hints.Clear();
             API.Scheduler.Clear();
+            coinRenewalService?.Stop();
             API.GlobalCooldown.Clear();
             API.RoomCache.Clear();
 
