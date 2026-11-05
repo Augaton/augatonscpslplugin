@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Handlers;
 using LabApi.Features.Wrappers;
 using UnityEngine;
+using Logger = LabApi.Features.Console.Logger;
 
 namespace AugatonLib.Arbitration
 {
@@ -30,6 +33,8 @@ namespace AugatonLib.Arbitration
         private static readonly Dictionary<string, State> States =
             new Dictionary<string, State>(StringComparer.Ordinal);
 
+        private static bool hooked;
+
         public static int TrackedPlayers => States.Count;
 
         public static int LayerCount
@@ -43,6 +48,15 @@ namespace AugatonLib.Arbitration
 
                 return total;
             }
+        }
+
+        internal static void Hook()
+        {
+            if (hooked)
+                return;
+
+            hooked = true;
+            PlayerEvents.ChangedRole += OnChangedRole;
         }
 
         public static void Reset(Player player, Vector3 baseline)
@@ -141,6 +155,21 @@ namespace AugatonLib.Arbitration
                 return "aucun joueur suivi";
 
             return $"{States.Count} joueur(s) suivi(s), {LayerCount} calque(s) actif(s)";
+        }
+
+        // Player.Scale ne fait rien hors role FPC : une taille liberee a la mort n'atteint pas le jeu, qui
+        // la reapplique au role suivant. Sans ce rattrapage, le joueur la garderait jusqu'a la fin du round.
+        private static void OnChangedRole(PlayerChangedRoleEventArgs ev)
+        {
+            try
+            {
+                if (TryKey(ev?.Player, out string userId) && States.TryGetValue(userId, out State state))
+                    Apply(ev.Player, state);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"ScaleArbiter: {e}");
+            }
         }
 
         private static void Apply(Player player, State state)

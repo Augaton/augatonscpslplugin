@@ -1,4 +1,5 @@
 using System;
+using AugatonLib.Arbitration;
 using System.Collections.Generic;
 using LabApi.Events.Handlers;
 using LabApi.Loader.Features.Plugins;
@@ -76,6 +77,7 @@ namespace AugatonLib.Runtime
             RoundReset.Hook();
             PlayerDeparture.Hook();
             TeamWatcher.Hook();
+            ScaleArbiter.Hook();
             ServerEvents.PluginsEnabled += Banner.Print;
         }
 
