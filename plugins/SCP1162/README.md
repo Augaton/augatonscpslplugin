@@ -1,4 +1,4 @@
-# SCP-1162 3.0
+# SCP-1162 3.1
 
 > Portage LabAPI 1.1.7 d'un plugin de **MrAfitol**. Depot non affilie a
 > l'auteur d'origine. Voir [NOTICE.md](NOTICE.md) pour l'attribution.

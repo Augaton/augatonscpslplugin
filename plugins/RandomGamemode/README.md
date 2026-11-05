@@ -1,4 +1,4 @@
-# RandomGamemode 4.0
+# RandomGamemode 4.1
 
 > Portage LabAPI d'un plugin de **OPGman**. Depot non affilie a l'auteur
 > d'origine. Voir [NOTICE.md](NOTICE.md) pour l'attribution.

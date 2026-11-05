@@ -36,24 +36,24 @@ Dix-neuf plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**,
 
 | Plugin | Version | Rôle |
 |---|---|---|
-| [AugatonLib](AugatonLib) | 2.1.0 | Bibliothèque partagée, **obligatoire** |
+| [AugatonLib](AugatonLib) | 2.2.0 | Bibliothèque partagée, **obligatoire** |
 | [AntiSLCrush](plugins/AntiSLCrush) | 4.0.0 | Protège le serveur contre des bugs du jeu. **Licence non commerciale** |
-| [ChaosDirector](plugins/ChaosDirector) | 1.0.0 | Niveau de chaos commun, nourri par les événements du round |
+| [ChaosDirector](plugins/ChaosDirector) | 1.1.0 | Niveau de chaos commun, nourri par les événements du round |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
-| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.0.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
+| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.1.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
 | [MicroHidDock](plugins/MicroHidDock) | 1.0.0 | Repose le Micro-HID sur son socle, où il se recharge |
 | [PocketCorpses](plugins/PocketCorpses) | 1.0.0 | Fait retomber les corps de la dimension de poche |
-| [RandomGamemode](plugins/RandomGamemode) | 4.0.0 | 17 modes de jeu spéciaux, avec vote des joueurs |
-| [RoundRecap](plugins/RoundRecap) | 1.0.0 | Bilan de fin de round |
-| [RealisticSizes](plugins/RealisticSizes) | 5.0.0 | Taille variable par joueur, avec effets de gameplay en option |
+| [RandomGamemode](plugins/RandomGamemode) | 4.1.0 | 17 modes de jeu spéciaux, avec vote des joueurs |
+| [RoundRecap](plugins/RoundRecap) | 1.1.0 | Bilan de fin de round |
+| [RealisticSizes](plugins/RealisticSizes) | 5.0.1 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
-| [Replacer](plugins/Replacer) | 3.0.0 | Remplace un joueur parti par un spectateur, avec son état complet |
-| [Scp261](plugins/Scp261) | 2.0.0 | Machine distributrice : une pièce contre un résultat au hasard |
-| [SCP1162](plugins/SCP1162) | 3.0.0 | Le trou dans le mur : échange un objet contre un autre |
-| [SCP500s](plugins/SCP500s) | 7.0.0 | 44 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
-| [ScpProximityChat](plugins/ScpProximityChat) | 3.0.0 | Permet aux SCP de parler aux joueurs proches |
-| [SCPReplacer](plugins/SCPReplacer) | 3.0.0 | Loterie de volontaires pour reprendre un SCP parti |
-| [SiteIncidents](plugins/SiteIncidents) | 1.0.0 | Pannes, alertes et portes bloquées au hasard |
+| [Replacer](plugins/Replacer) | 3.1.0 | Remplace un joueur parti par un spectateur, avec son état complet |
+| [Scp261](plugins/Scp261) | 2.0.1 | Machine distributrice : une pièce contre un résultat au hasard |
+| [SCP1162](plugins/SCP1162) | 3.1.0 | Le trou dans le mur : échange un objet contre un autre |
+| [SCP500s](plugins/SCP500s) | 7.1.0 | 44 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
+| [ScpProximityChat](plugins/ScpProximityChat) | 3.1.0 | Permet aux SCP de parler aux joueurs proches |
+| [SCPReplacer](plugins/SCPReplacer) | 3.1.0 | Loterie de volontaires pour reprendre un SCP parti |
+| [SiteIncidents](plugins/SiteIncidents) | 1.0.1 | Pannes, alertes et portes bloquées au hasard |
 | [SupplyDrop](plugins/SupplyDrop) | 5.0.0 | Largages de ravitaillement, sur minuteur ou événement |
 | [TeamGenocide](plugins/TeamGenocide) | 4.0.0 | Annonces C.A.S.S.I.E à l'extinction d'une équipe |
 

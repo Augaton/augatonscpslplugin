@@ -1,4 +1,4 @@
-# SCPReplacer 3.0
+# SCPReplacer 3.1
 
 
 > Portage LabAPI 1.1.7 d'un plugin de **Jon M**. Depot non affilie a

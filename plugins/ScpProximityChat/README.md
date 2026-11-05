@@ -1,4 +1,4 @@
-# ScpProximityChat 3.0
+# ScpProximityChat 3.1
 
 
 > Portage LabAPI 1.1.7 d'un plugin de **Bolton**. Depot non affilie a
