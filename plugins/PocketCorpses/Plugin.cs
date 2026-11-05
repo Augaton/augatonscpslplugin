@@ -77,7 +77,7 @@ namespace PocketCorpses
         {
             try
             {
-                if (ev?.Ragdoll is null || returns is null)
+                if (ev?.Ragdoll is null)
                     return;
 
                 // Le transform du corps n'est place qu'a son Start : seule sa donnee synchronisee est exacte ici.

@@ -4,7 +4,7 @@ Un joueur mort dans la dimension de poche ne disparait plus pour de bon : son co
 complexe, comme les objets que SCP-106 recrache. Le corps tombe du plafond au-dessus d'un joueur vivant
 pris au hasard. L'alerte sonore est celle du jeu, et un gouffre peut s'ouvrir au sol juste avant.
 
-Le corps garde son nom, son role et sa cause de mort. SCP-049 peut donc le trouver et le ranimer.
+Le corps garde son nom, son role et sa cause de mort.
 
 Tant qu'aucun joueur n'est hors de la dimension, le corps reste en attente.
 

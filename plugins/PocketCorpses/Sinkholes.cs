@@ -32,7 +32,7 @@ namespace PocketCorpses
                 if (open[i].CloseTime > now)
                     continue;
 
-                open[i].Hazard.Destroy();
+                Close(open[i].Hazard);
                 open.RemoveAt(i);
             }
         }
@@ -40,9 +40,16 @@ namespace PocketCorpses
         public void CloseAll()
         {
             foreach (OpenSinkhole sinkhole in open)
-                sinkhole.Hazard.Destroy();
+                Close(sinkhole.Hazard);
 
             open.Clear();
+        }
+
+        // Hazard.Destroy leve une exception sur un gouffre deja detruit.
+        private static void Close(SinkholeHazard hazard)
+        {
+            if (!hazard.IsDestroyed)
+                hazard.Destroy();
         }
 
         private readonly struct OpenSinkhole
