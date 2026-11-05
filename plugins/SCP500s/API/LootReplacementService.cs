@@ -51,7 +51,6 @@ namespace SCP500s.API
                     return;
 
                 placedThisRound.Clear();
-                randomPill = registry.Find(Config.RandomPillKey);
                 CollectCandidates();
 
                 if (candidates.Count == 0)
@@ -62,6 +61,7 @@ namespace SCP500s.API
 
                 Shuffle(candidates);
 
+                randomPill = registry.Find(Config.RandomPillKey);
                 running = true;
                 loop = Timing.RunCoroutine(ReplaceCandidates());
             }
