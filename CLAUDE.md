@@ -39,7 +39,7 @@ Un plugin hérite de `AugatonPlugin<Config, Translation>`, ou de `AugatonPlugin<
 texte à traduire, et fournit `Name`, `Description`, `Author`,
 `Enable()` et `Disable()`. `LoadConfigs` est appelé avant `Enable` et par `labapi reload configs` ; il
 charge `config.yml` et `translation.yml`, puis appelle `ValidateConfig()`, que l'on surcharge pour
-borner les valeurs avec un `Logger.Warn`. Une config qui implémente `IHintSettings` règle `plugin.Hints`
+borner les valeurs avec un `Logger.Warn` ou `AtLeast(cle, valeur, minimum)`. Une config qui implémente `IHintSettings` règle `plugin.Hints`
 à chaque chargement. L'activation du plugin se règle dans `properties.yml`, créé
 par LabAPI : il n'y a pas de clé `IsEnabled` dans la config.
 
@@ -80,7 +80,8 @@ départ. `Logger.Debug` prend `Config.Debug` en second argument. Pas de log par 
 - Texte joueur affiché à d'autres joueurs : passer par `SafeText`, qui retire le rich text et les
   caractères de contrôle.
 - Aucun secret dans le code ni dans une config committée.
-- Toute action déclenchable par un non-staff a un cooldown serveur, indexé sur `UserId`.
+- Toute action déclenchable par un non-staff a un cooldown serveur, indexé sur `UserId`, borné par
+  `AtLeast` : la config ne doit pas pouvoir le mettre à zéro.
 - Toute action staff à impact est tracée avec `Audit(...)`.
 
 ## Config et traduction
@@ -114,6 +115,11 @@ publie ensuite `BusTopics.TeamCheckRequested`. Déclarer ses capacités avec `Pl
 `PluginDirectory.Unregister(this)`. Les synergies optionnelles passent par `PluginBus`, jamais par une
 référence directe entre plugins : chaque plugin doit fonctionner seul avec AugatonLib, ce qu'un test
 et la CI vérifient. Un plugin absent ne doit changer que la synergie concernée.
+
+Un plugin qui agit sur le monde ou sur les rôles respecte `WorldEvents.IsPaused`, posé par les modes
+arène, avec une clé `pause_during_gamemodes`. Tous les modes ne posent pas cette pause : pour les voir
+tous, écouter `GamemodeStarted` et `GamemodeEnded`, et remettre le drapeau à zéro en fin de round, jamais
+au début, où il partirait sur le même événement que le mode.
 
 ## Tests
 

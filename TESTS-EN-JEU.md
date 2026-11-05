@@ -66,11 +66,13 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Avec `enable_size_gameplay: true` : un petit humain va plus vite, un grand a plus de vie, les
       SCP ne changent pas, et l'effet disparait a la mort et apres `sizes reset`.
 - [ ] Fin de round : les tailles reviennent a la normale. C'est un changement : elles restaient avant.
+- [ ] Sans RealisticSizes : un joueur retreci par SCP-261 ou une pilule retrouve sa taille normale au respawn.
 
 **ChaosDirector**
 - [ ] Le niveau monte avec les morts, pilules et pieces, et s'annonce. `chaos status` le confirme.
 - [ ] Il accelere les pilules, les pieces et les incidents, et repart de zero au round suivant.
 - [ ] Equilibrage : 30 points par niveau et 5 niveaux au maximum sont des valeurs de depart.
+- [ ] Pendant un mode arene, le niveau de chaos ne monte pas. Un echange a SCP-1162 rapporte des points.
 
 **PocketCorpses**
 - [ ] Un joueur meurt dans la dimension de poche : son corps retombe du plafond, au-dessus d'un joueur vivant.
@@ -102,10 +104,13 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Chat SCP coupe si `use_default_scp_chat: false`, mode NoClip.
 - [ ] Le haut-parleur disparait quand un SCP en proximite se deconnecte.
 - [ ] `labapi reload configs` applique un nouveau `volume` sans redemarrer.
+- [ ] Un humain hors de `max_distance` n'entend plus rien, et un spectateur n'entend que s'il suit un joueur a portee.
+- [ ] La premiere syllabe reste nette quand un auditeur arrive a portee apres un silence : le codec n'a pas tourne entre-temps.
 
 **SCP1162**
 - [ ] Position de l'anomalie dans `Lcz173`, echange d'armes et de munitions.
 - [ ] Correspondance `RoomType` vers `RoomName` du README : seul `Lcz173` a ete verifie.
+- [ ] Mode arene : lacher un objet pres de l'anomalie ne fait rien, en Dodgeball comme en Gun Game.
 
 **FairScpSelection**
 - [ ] Le plugin se charge avec `0Harmony.dll`, et les SCP sont bien attribues au debut du round.
@@ -127,7 +132,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] `decontamination_trigger` et `warhead_trigger` declenchent bien un largage.
 
 **RandomGamemode**
-- [ ] Mode arene (Gun Game, Dodgeball) : ni largage, ni pilule, ni piece n'apparait, et tout reprend ensuite.
+- [ ] Mode arene (Gun Game, Dodgeball) : ni largage, ni pilule, ni piece n'apparait, meme au debut du round, et tout reprend ensuite.
 - [ ] Vote : le broadcast apparait dans le lobby, `.votemode` liste les choix, `.votemode 2` vote.
 - [ ] Vote : le mode le plus vote demarre, et sans vote un des modes proposes est tire au sort.
 - [ ] Vote : un mode qui manque de joueurs au depart est ecarte.
@@ -140,6 +145,9 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Randomiseur : pas de fin avec 2 survivants ou plus d'une meme equipe.
 - [ ] Vagues de respawn retablies au round suivant et apres `gamemode stop`.
 - [ ] Portails A et B refuses avec le retour visuel, SCP-079 au niveau 3, CASSIE sans fond sonore.
+- [ ] Mode arene : personne n'est remplace, et le Juggernaut qui se deconnecte met fin au mode normalement.
+- [ ] `.human` et `.volunteer` sont refuses pendant Cacahuetes, Larry, Mimetisme et Infection, puis remarchent au round suivant.
+- [ ] Un joueur qui vote puis quitte le lobby ne compte plus au depouillement.
 
 **BetterCoinflipsRewritten**
 - [ ] La piece disparait apres l'animation, y compris lachee au sol.
@@ -149,10 +157,14 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Les annonces CASSIE gardent leurs sous-titres, les grenades respectent leur fuse.
 - [ ] `labapi reload configs` applique les nouveaux poids et durees des effets.
 - [ ] Des pieces reapparaissent pendant le round, jamais pres d'un joueur, et leur nombre monte.
+- [ ] Lancer, lacher : la piece ramassee par un autre disparait de son inventaire, et il ne peut pas la relancer avant.
+- [ ] La taille donnee par une piece disparait au changement de role.
+- [ ] Spammer une piece en cooldown n'affiche qu'un message par seconde.
 
 **RoundRecap**
 - [ ] Le bilan s'affiche en fin de round, et une ligne a zero n'apparait pas.
 - [ ] Les compteurs repartent de zero au round suivant.
+- [ ] Le bilan affiche le mode du round, et compte les volontaires de SCPReplacer et les echanges a SCP-1162.
 
 **SCP500s**
 - [ ] Halo au spawn, apres depot, ramassage et mort, et disparition avec le pickup.
@@ -168,3 +180,6 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Chaos : la part de roulettes augmente en fin de round.
 - [ ] TPS du serveur stable en fin de round long, avec beaucoup de pilules et de halos.
 - [ ] Armes donnees : chargeur et attachements.
+- [ ] Aucune saccade 5 s apres le debut du round, et tout le loot prevu est bien remplace.
+- [ ] `labapi reload configs` applique une pilule ajoutee ou un poids change. Une pilule deja au sol reste utilisable.
+- [ ] Sans pilule active ou inventaire plein, SCP-261 donne bien quelque chose au joueur.

@@ -212,8 +212,9 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 
 | Si... | Alors |
 |---|---|
-| RandomGamemode est présent | Les modes arène suspendent largages, pilules, pièces et incidents |
-| Replacer et RealisticSizes sont présents | Le remplaçant garde la taille du joueur parti |
+| RandomGamemode est présent | Les modes arène suspendent largages, pilules, pièces, incidents, SCP-1162, remplacements et chaos |
+| RandomGamemode et SCPReplacer sont présents | `.human` et `.volunteer` sont coupés pendant un mode |
+| Replacer ou SCPReplacer, et RealisticSizes, sont présents | Le remplaçant garde la taille du joueur parti |
 | SCP500s et SupplyDrop sont présents | Les largages contiennent des pilules |
 | SCP500s et RandomGamemode sont présents | Soirée pilules distribue les vraies pilules |
 | SCP500s et Scp261 sont présents | La machine distribue les vraies pilules |

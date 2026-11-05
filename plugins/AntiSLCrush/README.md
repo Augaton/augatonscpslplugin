@@ -9,6 +9,8 @@ vend des avantages ou se finance par des dons.
 
 ## Protections
 
+Les protections se lisent au demarrage : `labapi reload configs` ne les change pas.
+
 | Reglage | Defaut | Role |
 |---|---|---|
 | `protect_transport_data` | `true` | Deconnecte les paquets d'une connexion inconnue |
