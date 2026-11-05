@@ -33,6 +33,21 @@ namespace AugatonLib.Runtime
                 "hints coordonnes",
                 true),
             new Integration(
+                new[] { "FairScpSelection" },
+                "FairScpSelection",
+                "selection des SCP",
+                false),
+            new Integration(
+                new[] { "AntiSLCrush" },
+                "AntiSLCrush",
+                "protection anti-crash",
+                false),
+            new Integration(
+                new[] { "Better3114Spawn" },
+                "Better3114Spawn",
+                "SCP-3114 deguise",
+                false),
+            new Integration(
                 new[] { "UncomplicatedCustomItems-LabApi", "UncomplicatedCustomItems" },
                 "UncomplicatedCustomItems",
                 "objets UC",
