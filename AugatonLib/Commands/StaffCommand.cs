@@ -1,4 +1,5 @@
 using System;
+using AugatonLib.Bus;
 using CommandSystem;
 using LabApi.Features.Console;
 using LabApi.Features.Permissions;
@@ -56,7 +57,10 @@ namespace AugatonLib.Commands
 
         protected static void Audit(ICommandSender sender, string plugin, string action)
         {
-            Logger.Info($"[{plugin}] {Author(sender)} {action}.");
+            StaffAction entry = new StaffAction(plugin, Author(sender), action);
+
+            Logger.Info(entry.ToString());
+            PluginBus.Publish(BusTopics.StaffAction, plugin, entry);
         }
 
         protected static bool TryFindPlayer(string query, out Player player, out string error)
