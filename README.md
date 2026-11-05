@@ -34,7 +34,7 @@ Douze plugins de gameplay et une bibliothèque partagée pour **SCP: Secret Labo
 
 | Plugin | Version | Rôle |
 |---|---|---|
-| [AugatonLib](AugatonLib) | 2.0.0 | Bibliothèque partagée, **obligatoire** |
+| [AugatonLib](AugatonLib) | 2.1.0 | Bibliothèque partagée, **obligatoire** |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
 | [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.0.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
 | [RandomGamemode](plugins/RandomGamemode) | 4.0.0 | 17 modes de jeu spéciaux, avec vote des joueurs |

@@ -185,6 +185,9 @@ namespace AugatonLib.Runtime
         {
             List<string> warnings = new List<string>(8);
 
+            foreach (string plugin in LibraryVersionCheck.OutdatedPlugins)
+                warnings.Add($"{plugin} requiert une AugatonLib plus recente que celle chargee.");
+
             foreach (KnownPlugin known in KnownPlugins.All)
             {
                 if (PluginDirectory.IsRegistered(known.AssemblyName) || !IntegrationProbe.IsLoaded(known.AssemblyName))

@@ -17,6 +17,8 @@ namespace AugatonLib.Runtime
 
         private HintChannel hints;
 
+        protected AugatonPlugin() => LibraryVersionCheck.Verify(Name, GetType().Assembly);
+
         public override Version RequiredApiVersion => BuildInfo.LabApiVersion;
 
         public HintChannel Hints => hints ??= new HintChannel(Name.ToLowerInvariant(), DefaultHintYCoordinate);
