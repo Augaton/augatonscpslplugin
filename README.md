@@ -94,7 +94,11 @@ Le dossier `LabAPI` se trouve ici :
 2. Installez HintServiceMeow : `HintServiceMeow-LabAPI.dll` dans `plugins/global/`, et `0Harmony.dll` dans `dependencies/global/`.
 3. Redémarrez le serveur. La console affiche une bannière AugatonLib avec les plugins enregistrés, les intégrations détectées et les éventuels conflits.
 
-Vous pouvez ne garder que les plugins qui vous intéressent, mais `AugatonLib.dll` reste obligatoire et doit rester dans `dependencies/`. Pour viser un seul serveur, remplacez `global` par son port.
+Pour viser un seul serveur, remplacez `global` par son port.
+
+### Installer à la carte
+
+Rien n'oblige à tout prendre. Chaque plugin fonctionne seul avec `AugatonLib.dll`, la seule dépendance obligatoire : gardez uniquement les DLL qui vous intéressent, ou téléchargez-les une par une depuis une release. Un plugin absent ne désactive que la synergie concernée. Par exemple, SupplyDrop continue de larguer sans SCP500s, simplement sans pilules.
 
 ## Configuration
 
