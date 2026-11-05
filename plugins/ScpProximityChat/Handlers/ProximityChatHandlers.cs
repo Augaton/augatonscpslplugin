@@ -4,6 +4,7 @@ using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Wrappers;
 using PlayerRoles.FirstPersonControl;
+using PlayerRoles.Spectating;
 using PlayerRoles.Voice;
 using ScpProximityChat.Enums;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace ScpProximityChat.Handlers
         private readonly ActivationType activationType;
         private readonly Dictionary<string, SpeakerToy> toggledPlayers = new Dictionary<string, SpeakerToy>();
         private readonly Dictionary<string, float> lastToggle = new Dictionary<string, float>();
+        private readonly List<Player> listeners = new List<Player>(32);
 
         public ProximityChatHandlers(Plugin plugin)
         {
@@ -79,6 +81,7 @@ namespace ScpProximityChat.Handlers
 
             toggledPlayers.Clear();
             lastToggle.Clear();
+            listeners.Clear();
             OpusHandler.ClearAll();
             plugin.Hints.Clear();
         }
@@ -111,6 +114,16 @@ namespace ScpProximityChat.Handlers
                     return;
 
                 Config settings = config;
+
+                if (!settings.UseDefaultScpChat)
+                    ev.IsAllowed = false;
+
+                CollectListeners(ev.Player, speaker.MaxDistance, settings);
+
+                // Le codec est le seul cout notable de la voix : le jeu relaie les paquets sans les decoder.
+                if (listeners.Count == 0)
+                    return;
+
                 float gain = Mathf.Clamp(settings.Volume, 0f, settings.MaxVolume);
                 float[] samples = opusHandler.SampleBuffer;
 
@@ -125,26 +138,8 @@ namespace ScpProximityChat.Handlers
 
                 AudioMessage audioMessage = new AudioMessage(speaker.ControllerId, encoded, dataLength);
 
-                // Chemin chaud (un paquet par trame voix) : Player.ReadyList allouerait un iterateur LINQ a chaque paquet.
-                foreach (Player target in Player.Dictionary.Values)
-                {
-                    if (!target.IsPlayer || !target.IsReady)
-                        continue;
-
-                    if (settings.UseDefaultScpChat && target.IsSCP)
-                        continue;
-
-                    if (target.RoleBase is not IVoiceRole voiceRole)
-                        continue;
-
-                    if (voiceRole.VoiceModule.ValidateReceive(ev.Player.ReferenceHub, VoiceChatChannel.Proximity) == VoiceChatChannel.None)
-                        continue;
-
-                    target.ReferenceHub.connectionToClient.Send(audioMessage);
-                }
-
-                if (!settings.UseDefaultScpChat)
-                    ev.IsAllowed = false;
+                foreach (Player listener in listeners)
+                    listener.ReferenceHub.connectionToClient.Send(audioMessage);
             }
             catch (OpusException e)
             {
@@ -154,6 +149,43 @@ namespace ScpProximityChat.Handlers
             {
                 Logger.Error($"OnSendingVoiceMessage: {e}");
             }
+        }
+
+        private void CollectListeners(Player speaker, float maxDistance, Config settings)
+        {
+            listeners.Clear();
+
+            Vector3 origin = speaker.Position;
+            float maxDistanceSqr = maxDistance * maxDistance;
+
+            // Chemin chaud (un paquet par trame voix) : Player.ReadyList allouerait un iterateur LINQ a chaque paquet.
+            foreach (Player target in Player.Dictionary.Values)
+            {
+                if (!target.IsPlayer || !target.IsReady)
+                    continue;
+
+                if (settings.UseDefaultScpChat && target.IsSCP)
+                    continue;
+
+                if (target.RoleBase is not IVoiceRole voiceRole || !IsInRange(target, origin, maxDistanceSqr))
+                    continue;
+
+                if (voiceRole.VoiceModule.ValidateReceive(speaker.ReferenceHub, VoiceChatChannel.Proximity) == VoiceChatChannel.None)
+                    continue;
+
+                listeners.Add(target);
+            }
+        }
+
+        private static bool IsInRange(Player target, Vector3 origin, float maxDistanceSqr)
+        {
+            Player ears = target.RoleBase is SpectatorRole ? target.CurrentlySpectating : target;
+
+            if (ears is null)
+                return false;
+
+            // SCP-079 ecoute depuis sa camera, que Position ne suit pas.
+            return ears.RoleBase is not IFpcRole || (ears.Position - origin).sqrMagnitude <= maxDistanceSqr;
         }
 
         private void OnChangingRole(PlayerChangingRoleEventArgs ev)
