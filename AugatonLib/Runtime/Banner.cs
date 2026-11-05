@@ -157,7 +157,7 @@ namespace AugatonLib.Runtime
                     continue;
                 }
 
-                string note = integration.Required ? "recommande" : "optionnel";
+                string note = integration.Required ? "obligatoire" : "optionnel";
 
                 Write(Row("[-]", integration.DisplayName, "--", integration.Role, note), ConsoleColor.DarkGray);
             }
@@ -217,7 +217,7 @@ namespace AugatonLib.Runtime
             }
 
             if (!IntegrationProbe.IsPresent("HintServiceMeow") && HasCapability(Capability.Hints))
-                warnings.Add("HintServiceMeow absent : les hints se remplaceront mutuellement.");
+                warnings.Add("HintServiceMeow est obligatoire et absent : les hints ne s'afficheront pas.");
 
             if (warnings.Count == 0)
             {
@@ -231,10 +231,7 @@ namespace AugatonLib.Runtime
 
         private static string HintStatus()
         {
-            if (!IntegrationProbe.IsPresent("HintServiceMeow"))
-                return "natifs (HintServiceMeow absent)";
-
-            return HintChannel.ServiceAvailable ? "HintServiceMeow" : "natifs (repli apres echec)";
+            return HintChannel.ServiceAvailable ? "HintServiceMeow" : "HintServiceMeow absent";
         }
 
         private static bool HasCapability(Capability capability)

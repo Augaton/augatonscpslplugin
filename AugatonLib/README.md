@@ -21,7 +21,7 @@ Il doit etre mis a jour en meme temps que les plugins qui en dependent.
 
 | Espace de noms | Role |
 |---|---|
-| `Hints.HintChannel` | Canal de hint isole par plugin, adosse a HintServiceMeow, avec repli sur les hints natifs. Chaque plugin a le sien : `plugin.Hints` |
+| `Hints.HintChannel` | Canal de hint isole par plugin, adosse a HintServiceMeow, obligatoire. Chaque plugin a le sien : `plugin.Hints` |
 | `Hints.IHintSettings` | Position et taille des hints, appliquees a chaque chargement de la config |
 | `Arbitration.LightArbiter` | Pannes et teintes, globales ou par salle |
 | `FriendlyFire.FriendlyFireArbiter` | Arbitrage de `Server.FriendlyFire` entre plugins,  |

@@ -14,7 +14,7 @@ tick pour tous les joueurs. Cette contrainte prime sur toutes les autres.
 | Langage, cible | C# 9, `net48` |
 | Framework | `Northwood.LabAPI` 1.1.7 (NuGet) |
 | Assemblies du jeu | `.references/` (`tools/fetch-references.sh`), ou `SL_REFERENCES` vers `SCPSL_Data/Managed` |
-| Hints | HintServiceMeow 5.5, via `plugin.Hints` (`AugatonLib.Hints.HintChannel`) |
+| Hints | HintServiceMeow 5.5, obligatoire, via `plugin.Hints` (`AugatonLib.Hints.HintChannel`) |
 | Build | `dotnet build -c Release` à la racine |
 | Tests | `dotnet test tests/AugatonLib.Tests -c Release` |
 | Sortie | `out/plugins/`, `out/dependencies/`, et `tools/package.sh` pour l'archive |

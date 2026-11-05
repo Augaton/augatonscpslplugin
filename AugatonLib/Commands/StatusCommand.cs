@@ -39,7 +39,7 @@ namespace AugatonLib.Commands
                 builder.AppendLine($"{pluginName} v{version}");
                 builder.AppendLine($"  round : {(Round.IsRoundStarted ? "en cours" : "hors round")}, " +
                                    $"{Player.Count} joueur(s)");
-                builder.AppendLine($"  hints : {(HintChannel.ServiceAvailable ? "HintServiceMeow" : "natifs (repli)")}");
+                builder.AppendLine($"  hints : {(HintChannel.ServiceAvailable ? "HintServiceMeow" : "HintServiceMeow absent")}");
 
                 detail?.Invoke(builder);
 

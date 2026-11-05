@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using AugatonLib.Runtime;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -13,8 +14,8 @@ namespace AugatonLib.Hints
         private const string ReferencedAssembly = "HintServiceMeow";
         private const string ShippedAssembly = "HintServiceMeow-LabAPI";
 
-        private static bool serviceAvailable = true;
-        private static bool warned;
+        private static bool serviceFound;
+        private static bool missingReported;
         private static bool bindingHooked;
 
         static HintChannel() => HookAssemblyBinding();
@@ -35,7 +36,14 @@ namespace AugatonLib.Hints
 
         public int FontSize { get; set; }
 
-        public static bool ServiceAvailable => serviceAvailable;
+        public static bool ServiceAvailable
+        {
+            get
+            {
+                serviceFound = serviceFound || IntegrationProbe.IsPresent("HintServiceMeow");
+                return serviceFound;
+            }
+        }
 
         public void Show(Player player, string text, float duration)
         {
@@ -45,27 +53,17 @@ namespace AugatonLib.Hints
             if (duration <= 0f)
                 duration = 3f;
 
-            if (serviceAvailable)
+            if (ServiceAvailable)
             {
-                try
-                {
-                    ShowThroughService(player, text, duration);
-                    return;
-                }
-                catch (Exception e)
-                {
-                    serviceAvailable = false;
-                    activeHints.Clear();
-
-                    if (!warned)
-                    {
-                        warned = true;
-                        Logger.Warn($"HintServiceMeow indisponible, retour aux hints natifs : {e.Message}");
-                    }
-                }
+                ShowThroughService(player, text, duration);
+                return;
             }
 
-            player.SendHint(text, duration);
+            if (missingReported)
+                return;
+
+            missingReported = true;
+            Logger.Error("HintServiceMeow est obligatoire et introuvable : les hints ne s'afficheront pas.");
         }
 
         public void ShowAll(string text, float duration)
@@ -127,9 +125,6 @@ namespace AugatonLib.Hints
                 return;
 
             activeHints.Remove(userId);
-
-            if (!serviceAvailable)
-                return;
 
             try
             {

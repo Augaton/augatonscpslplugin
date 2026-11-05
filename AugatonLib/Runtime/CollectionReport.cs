@@ -86,7 +86,7 @@ namespace AugatonLib.Runtime
             builder.AppendLine($"  departs   : {DepartureArbiter.Describe()}");
             builder.AppendLine($"  genocide  : {GenocideArbiter.Describe()}");
             builder.AppendLine($"  bus       : {PluginBus.Describe()}");
-            builder.AppendLine($"  hints     : {(HintChannel.ServiceAvailable ? "HintServiceMeow" : "natifs (repli)")}");
+            builder.AppendLine($"  hints     : {(HintChannel.ServiceAvailable ? "HintServiceMeow" : "HintServiceMeow absent")}");
         }
 
         private static string Version(Version version)
