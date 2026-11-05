@@ -23,5 +23,7 @@ namespace AugatonLib.Bus
         public const string PillSpawnRequested = "pill.spawn.requested";
 
         public const string PillGiveRequested = "pill.give.requested";
+
+        public const string SiteIncident = "site.incident";
     }
 }

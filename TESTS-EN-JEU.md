@@ -102,6 +102,10 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] `labapi reload configs` applique les nouveaux poids et durees des effets.
 - [ ] Des pieces reapparaissent pendant le round, jamais pres d'un joueur, et leur nombre monte.
 
+**RoundRecap**
+- [ ] Le bilan s'affiche en fin de round, et une ligne a zero n'apparait pas.
+- [ ] Les compteurs repartent de zero au round suivant.
+
 **SCP500s**
 - [ ] Halo au spawn, apres depot, ramassage et mort, et disparition avec le pickup.
 - [ ] Rengainer pendant la prise : effet applique une seule fois.
