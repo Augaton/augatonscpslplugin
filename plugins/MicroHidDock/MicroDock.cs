@@ -71,8 +71,11 @@ namespace MicroHidDock
 
             Transform spot = chamber.Base.Spawnpoint;
 
-            // Cinematique, comme le Micro-HID d'origine sur son socle : il ne glisse ni ne tombe.
+            // Cinematique pour qu'il ne glisse ni ne tombe. Le jeu synchronise Rigidbody.position, pas le
+            // transform : le corps doit bouger tout de suite, sinon les clients gardent le point de chute.
             body.isKinematic = true;
+            body.position = spot.position;
+            body.rotation = spot.rotation;
             pickup.Position = spot.position;
             pickup.Rotation = spot.rotation;
 

@@ -85,7 +85,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 
 **MicroHidDock**
 - [ ] Micro-HID en main, l'interaction sur le socle vide fonctionne. Si le socle ne recoit pas l'interaction, lacher le Micro-HID reste possible.
-- [ ] Lache a portee, le Micro-HID se pose sur le socle, au bon endroit pour les clients.
+- [ ] Lache a portee, le Micro-HID se pose sur le socle, au bon endroit et sans trembler vu par un second client.
 - [ ] Il se reprend normalement, et garde son energie.
 - [ ] Il se recharge sur le socle, jusqu'a `recharge_limit`.
 - [ ] Un socle occupe refuse un second Micro-HID, et un Micro-HID casse le reste apres un passage sur le socle.
