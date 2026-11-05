@@ -100,8 +100,12 @@ namespace SCPReplacer.API
             if (Round.Duration.TotalSeconds > plugin.Config.QuitCutoff)
                 return false;
 
+            string scpNumber = scpPlayer.Role.ScpNumber();
+
+            // Meme test que TryRegisterDeparture : un depart reclame mais refuse ne serait repris par personne.
             return scpPlayer.Health >= plugin.Config.RequiredHealthPercentage / 100f * scpPlayer.MaxHealth
-                && !string.IsNullOrEmpty(scpPlayer.Role.ScpNumber());
+                && !string.IsNullOrEmpty(scpNumber)
+                && Find(scpNumber) is null;
         }
 
         public bool TryRegisterDeparture(Player scpPlayer, out string reason)

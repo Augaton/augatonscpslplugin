@@ -87,7 +87,11 @@ namespace SCPReplacer.Commands
                 return false;
             }
 
-            plugin.Service.TryRegisterDeparture(player, out _);
+            if (!plugin.Service.TryRegisterDeparture(player, out string reason))
+            {
+                response = reason ?? plugin.Translation.HumanCommandUnavailable;
+                return false;
+            }
 
             RoleTypeId newRole = PickHumanRole(plugin.Config.HumanCommandRoles);
 
