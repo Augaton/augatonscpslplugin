@@ -6,7 +6,8 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 ## 1. Chargement
 
 - [ ] La banniere AugatonLib apparait dans la console et annonce tous les plugins installes.
-- [ ] Aucune erreur de chargement, et HintServiceMeow est detecte.
+- [ ] Aucune erreur de chargement, et HintServiceMeow est detecte avec le `0Harmony.dll` de l'archive.
+- [ ] Sans HintServiceMeow, la banniere le signale et le serveur continue de tourner.
 - [ ] `config.yml`, `translation.yml` et `properties.yml` sont crees dans `configs/<port>/<Plugin>/`.
 - [ ] `labapi reload configs` s'execute sans erreur et applique une nouvelle position de hint.
 

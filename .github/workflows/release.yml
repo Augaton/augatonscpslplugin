@@ -46,7 +46,8 @@ jobs:
           Pour une installation a la carte, telecharger seulement les plugins voulus, a placer dans
           `plugins/global/`, ainsi que `AugatonLib.dll`, obligatoire, dans `dependencies/global/`.
 
-          HintServiceMeow reste a installer a part, voir le README.
+          HintServiceMeow et Harmony sont inclus dans l'archive. Pour une installation a la carte, ils
+          restent obligatoires : voir le README.
           NOTES
           gh release create "$TAG" out/zone-shilari-labapi.zip out/plugins/*.dll out/dependencies/AugatonLib.dll \
             --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes-file notes.md

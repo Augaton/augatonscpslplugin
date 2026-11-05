@@ -61,7 +61,7 @@ Ces plugins viennent d'autres auteurs. Ils restent optionnels, et la bannière d
 
 | Plugin | Rôle | Installation |
 |---|---|---|
-| [FairScpSelection](https://github.com/CosmosZvezdo4kin/FairScpSelection) | Choix des SCP selon les préférences des joueurs | **Inclus**, voir [third_party](third_party/FairScpSelection/NOTICE.md). Requiert `0Harmony.dll` |
+| [FairScpSelection](https://github.com/CosmosZvezdo4kin/FairScpSelection) | Choix des SCP selon les préférences des joueurs | **Inclus**, voir [third_party](third_party/FairScpSelection/NOTICE.md) |
 | [AntiSLCrush](https://github.com/ui2506/AntiSLCrush) | Protège le serveur contre certains crashs | À installer depuis ses releases. Sa licence interdit tout usage commercial |
 | [Better3114Spawn](https://github.com/tayjay/Better3114Spawn) | Fait démarrer SCP-3114 déguisé parmi les humains | À installer depuis ses releases. Lié à l'événement d'Halloween du jeu |
 
@@ -74,7 +74,7 @@ FairScpSelection remplace le choix des SCP du jeu : sa cohabitation avec Better3
 ### Prérequis
 
 - Un serveur dédié SCP: Secret Laboratory. LabAPI est inclus avec le jeu.
-- [HintServiceMeow](https://github.com/MeowServer/HintServiceMeow/releases), recommandé pour que les hints des plugins ne s'écrasent pas. Sans lui, les plugins reviennent aux hints natifs.
+- [HintServiceMeow](https://github.com/MeowServer/HintServiceMeow) et Harmony, **obligatoires** et inclus dans l'archive. HintServiceMeow affiche tous les hints de la collection sans qu'ils s'écrasent.
 
 ### Compiler
 
@@ -106,18 +106,19 @@ Le dossier `LabAPI` se trouve ici :
 
    ```
    LabAPI/
-   ├── plugins/global/*.dll
-   └── dependencies/global/AugatonLib.dll
+   ├── plugins/global/*.dll                  plugins et HintServiceMeow
+   ├── dependencies/global/AugatonLib.dll
+   ├── dependencies/global/0Harmony.dll
+   └── licenses/                             licences des composants tiers
    ```
 
-2. Installez HintServiceMeow : `HintServiceMeow-LabAPI.dll` dans `plugins/global/`, et `0Harmony.dll` dans `dependencies/global/`.
-3. Redémarrez le serveur. La console affiche une bannière AugatonLib avec les plugins enregistrés, les intégrations détectées et les éventuels conflits.
+2. Redémarrez le serveur. La console affiche une bannière AugatonLib avec les plugins enregistrés, les intégrations détectées et les éventuels conflits.
 
 Pour viser un seul serveur, remplacez `global` par son port.
 
 ### Installer à la carte
 
-Rien n'oblige à tout prendre. Chaque plugin fonctionne seul avec `AugatonLib.dll`, la seule dépendance obligatoire : gardez uniquement les DLL qui vous intéressent, ou téléchargez-les une par une depuis une release. Un plugin absent ne désactive que la synergie concernée. Par exemple, SupplyDrop continue de larguer sans SCP500s, simplement sans pilules.
+Rien n'oblige à tout prendre. Chaque plugin fonctionne seul avec ses trois dépendances obligatoires : `AugatonLib.dll` et `0Harmony.dll` dans `dependencies/`, et `HintServiceMeow.dll` dans `plugins/`. Gardez uniquement les DLL qui vous intéressent, ou téléchargez-les une par une depuis une release. Un plugin absent ne désactive que la synergie concernée. Par exemple, SupplyDrop continue de larguer sans SCP500s, simplement sans pilules.
 
 ## Configuration
 
@@ -287,12 +288,14 @@ Les plugins portés sont des réécritures. Leur conception et leurs mécaniques
 | SupplyDrop | Wafel, KadeDev, JesusQC | [Non précisée](plugins/SupplyDrop/NOTICE.md) |
 | TeamGenocide | Heisenberg3666 | [MIT](plugins/TeamGenocide/LICENSE) |
 | FairScpSelection | CosmosZvezdochkin | [Apache 2.0](third_party/FairScpSelection/LICENSE.txt) |
+| HintServiceMeow, inclus dans l'archive | MeowServer | [MIT](third_party/licenses/HintServiceMeow-LICENSE.txt) |
+| Harmony, inclus dans l'archive | Andreas Pardeike | [MIT](third_party/licenses/Harmony-LICENSE.txt) |
 
 « Non précisée » signifie qu'aucun fichier de licence n'accompagnait les sources d'origine. Ce dépôt n'accorde alors aucun droit supplémentaire sur ces plugins : ils sont publiés comme travaux dérivés à des fins communautaires, avec attribution. La licence MIT du dépôt ne s'y applique pas.
 
 **Auteurs d'origine :** si vous souhaitez qu'un plugin soit retiré, renommé ou placé sous une autre licence, ouvrez une [issue](https://github.com/Augaton/augatonscpslplugin/issues). Nous donnerons suite sans discussion.
 
-Ce projet n'est pas affilié à Northwood Studios. Il utilise aussi [LabAPI](https://github.com/northwood-studios/LabAPI) et [HintServiceMeow](https://github.com/MeowServer/HintServiceMeow).
+Ce projet n'est pas affilié à Northwood Studios.
 
 ## Contribuer
 
