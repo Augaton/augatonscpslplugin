@@ -77,6 +77,7 @@ garde son nom technique.
 
 | Reglage | Defaut | Role |
 |---|---|---|
+| `pause_during_gamemodes` | `true` | Suspend l'anomalie pendant un mode arene |
 | `ignored_roles` | `Scp3114` | Roles qui ne peuvent pas utiliser l'anomalie |
 | `ignored_items` | `SCP330`, `MicroHID` | Objets que l'anomalie refuse d'avaler |
 

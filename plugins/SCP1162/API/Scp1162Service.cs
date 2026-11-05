@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using AugatonLib.Caching;
 using AugatonLib.Random;
+using AugatonLib.Runtime;
 using CustomPlayerEffects;
 using InventorySystem;
 using InventorySystem.Items.Firearms.Attachments;
@@ -82,6 +83,9 @@ namespace SCP1162.API
         public bool AllowDrop(Player player, Item item, bool thrown)
         {
             if (!IsSpawned || !Round.IsRoundStarted || player is null || item is null)
+                return true;
+
+            if (config.PauseDuringGamemodes && WorldEvents.IsPaused)
                 return true;
 
             if (!player.IsAlive || !IsInReach(player) || IsIgnored(player, item))

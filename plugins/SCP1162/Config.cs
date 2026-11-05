@@ -13,6 +13,9 @@ namespace SCP1162
         [Description("Active les logs de debug.")]
         public bool Debug { get; set; } = false;
 
+        [Description("Suspend l'anomalie pendant un mode arene de RandomGamemode.")]
+        public bool PauseDuringGamemodes { get; set; } = true;
+
         [Description("Distance maximale, en metres, a laquelle un objet lache est aspire par SCP-1162.")]
         public float UseDistance { get; set; } = 2f;
 
