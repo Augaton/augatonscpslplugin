@@ -2,7 +2,7 @@
 
 Copie du plugin [FairScpSelection](https://github.com/CosmosZvezdo4kin/FairScpSelection) de
 **CosmosZvezdochkin**, au commit `4bf2ec4` du 2 novembre 2026. Il est distribue sous licence Apache 2.0 :
-voir `LICENSE.txt`. Ce dossier n'est couvert ni par la licence MIT du depot, ni par ses auteurs.
+voir `LICENSE.txt`. La licence MIT du depot ne couvre pas ce dossier.
 
 ## Modifications
 
