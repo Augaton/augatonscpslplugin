@@ -294,6 +294,8 @@ namespace SCP500s
                 Config.ContinuousSpawnIntervalSeconds = 30f;
             }
 
+            Config.MaxPillsOnGround = Mathf.Clamp(Config.MaxPillsOnGround, 1, 200);
+
             if (Config.ContinuousSpawnTarget < 0)
             {
                 Logger.Warn($"ContinuousSpawnTarget ({Config.ContinuousSpawnTarget}) negatif, remis a 0.");

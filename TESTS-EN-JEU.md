@@ -105,4 +105,6 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 - [ ] Deguisement, surtout avec un NTF.
 - [ ] Tantrum, fusee, `SpawnPoints`, vagues forcees, Cassie.
 - [ ] Teinte de salle, y compris deux pilules de suite dans la meme salle.
+- [ ] Chaos : le nombre de pilules au sol monte au fil du round, sans depasser `max_pills_on_ground`.
+- [ ] TPS du serveur stable en fin de round long, avec beaucoup de pilules et de halos.
 - [ ] Armes donnees : chargeur et attachements.

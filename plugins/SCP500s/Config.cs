@@ -44,6 +44,27 @@ namespace SCP500s
         [Description("Fait apparaitre des pilules pendant tout le round, un peu partout sur la carte, aux emplacements de loot, pour qu'il y en ait toujours au sol.")]
         public bool ContinuousSpawn { get; set; } = true;
 
+        [Description("Fait monter le chaos par paliers : plus de pilules, et plus vite, au fil du round.")]
+        public bool ChaosEscalation { get; set; } = true;
+
+        [Description("Duree en secondes d'un palier de chaos.")]
+        public float ChaosStepSeconds { get; set; } = 120f;
+
+        [Description("Nombre maximal de paliers de chaos.")]
+        public int ChaosMaxLevel { get; set; } = 10;
+
+        [Description("Pilules ajoutees a continuous_spawn_target par palier.")]
+        public int ChaosTargetPerLevel { get; set; } = 3;
+
+        [Description("Pilules ajoutees a continuous_spawn_batch par palier.")]
+        public int ChaosBatchPerLevel { get; set; } = 1;
+
+        [Description("Secondes retirees a l'intervalle par palier. L'intervalle ne descend jamais sous 30.")]
+        public float ChaosIntervalPerLevel { get; set; } = 3f;
+
+        [Description("Plafond absolu de pilules au sol, pour proteger le serveur.")]
+        public int MaxPillsOnGround { get; set; } = 60;
+
         [Description("Intervalle en secondes entre deux verifications de l'apparition continue. Minimum 30.")]
         public float ContinuousSpawnIntervalSeconds { get; set; } = 60f;
 

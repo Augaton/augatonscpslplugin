@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Chaos;
 using AugatonLib.World;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -10,6 +11,8 @@ namespace SCP500s.API
 {
     public sealed class ContinuousSpawnService
     {
+        private const float MinIntervalSeconds = 30f;
+
         private readonly PillRegistry registry;
         private readonly LootReplacementService spawner;
         private readonly LootSpots spots = new LootSpots();
@@ -61,7 +64,7 @@ namespace SCP500s.API
         {
             while (running)
             {
-                yield return Timing.WaitForSeconds(Config.ContinuousSpawnIntervalSeconds);
+                yield return Timing.WaitForSeconds(CurrentInterval());
 
                 try
                 {
@@ -79,9 +82,28 @@ namespace SCP500s.API
             if (!Round.IsRoundStarted || Round.IsRoundEnded)
                 return;
 
-            int missing = Mathf.Min(Config.ContinuousSpawnTarget - CountPillsOnGround(), Config.ContinuousSpawnBatch);
+            int level = CurrentLevel();
+            int target = Mathf.Min(Escalation.Grow(Config.ContinuousSpawnTarget, Config.ChaosTargetPerLevel, level), Config.MaxPillsOnGround);
+            int batch = Escalation.Grow(Config.ContinuousSpawnBatch, Config.ChaosBatchPerLevel, level);
 
-            for (int i = 0; i < missing; i++)
+            SpawnPills(Mathf.Min(target - CountPillsOnGround(), batch));
+        }
+
+        private static int CurrentLevel()
+        {
+            return Config.ChaosEscalation
+                ? Escalation.Level(Round.Duration.TotalSeconds, Config.ChaosStepSeconds, Config.ChaosMaxLevel)
+                : 0;
+        }
+
+        private static float CurrentInterval()
+        {
+            return Escalation.Shrink(Config.ContinuousSpawnIntervalSeconds, Config.ChaosIntervalPerLevel, CurrentLevel(), MinIntervalSeconds);
+        }
+
+        private void SpawnPills(int amount)
+        {
+            for (int i = 0; i < amount; i++)
             {
                 if (!spots.TryPick(IsCrowded, out Vector3 position))
                     return;
