@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.World;
 using LabApi.Features.Wrappers;
-using MapGeneration;
 using MEC;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
@@ -10,11 +10,9 @@ namespace SCP500s.API
 {
     public sealed class ContinuousSpawnService
     {
-        private const int SpotAttempts = 24;
-
         private readonly PillRegistry registry;
         private readonly LootReplacementService spawner;
-        private readonly List<SpawnSpot> spots = new List<SpawnSpot>(256);
+        private readonly LootSpots spots = new LootSpots();
         private readonly List<Vector3> pillsOnGround = new List<Vector3>(32);
 
         private CoroutineHandle loop;
@@ -37,7 +35,7 @@ namespace SCP500s.API
             if (!Config.ContinuousSpawn || Config.ContinuousSpawnTarget <= 0)
                 return;
 
-            CollectSpots();
+            spots.Collect();
 
             if (spots.Count == 0)
             {
@@ -85,7 +83,7 @@ namespace SCP500s.API
 
             for (int i = 0; i < missing; i++)
             {
-                if (!TryPickSpot(out Vector3 position))
+                if (!spots.TryPick(IsCrowded, out Vector3 position))
                     return;
 
                 PillBase pill = spawner.SpawnAt(position);
@@ -117,23 +115,6 @@ namespace SCP500s.API
             return pillsOnGround.Count;
         }
 
-        private bool TryPickSpot(out Vector3 position)
-        {
-            for (int attempt = 0; attempt < SpotAttempts; attempt++)
-            {
-                SpawnSpot spot = spots[UnityEngine.Random.Range(0, spots.Count)];
-
-                if (!IsSafe(spot.Zone) || IsCrowded(spot.Position))
-                    continue;
-
-                position = spot.Position + (Vector3.up * 0.1f);
-                return true;
-            }
-
-            position = default;
-            return false;
-        }
-
         private bool IsCrowded(Vector3 position)
         {
             float pillSpacing = Config.ContinuousSpawnSpacing * Config.ContinuousSpawnSpacing;
@@ -144,65 +125,7 @@ namespace SCP500s.API
                     return true;
             }
 
-            float playerDistance = Config.ContinuousSpawnPlayerDistance * Config.ContinuousSpawnPlayerDistance;
-
-            foreach (Player player in Player.ReadyList)
-            {
-                if (player is null || !player.IsAlive)
-                    continue;
-
-                if ((player.Position - position).sqrMagnitude < playerDistance)
-                    return true;
-            }
-
-            return false;
-        }
-
-        private void CollectSpots()
-        {
-            spots.Clear();
-
-            foreach (Pickup pickup in Pickup.List)
-            {
-                if (pickup is null || !pickup.IsSpawned)
-                    continue;
-
-                Room room = pickup.Room;
-
-                if (room is null || !IsSpawnZone(room.Zone))
-                    continue;
-
-                spots.Add(new SpawnSpot(pickup.Position, room.Zone));
-            }
-        }
-
-        private static bool IsSpawnZone(FacilityZone zone)
-        {
-            return zone == FacilityZone.LightContainment
-                || zone == FacilityZone.HeavyContainment
-                || zone == FacilityZone.Entrance
-                || zone == FacilityZone.Surface;
-        }
-
-        private static bool IsSafe(FacilityZone zone)
-        {
-            if (Warhead.IsDetonated && zone != FacilityZone.Surface)
-                return false;
-
-            return !(Decontamination.IsDecontaminating && zone == FacilityZone.LightContainment);
-        }
-
-        private readonly struct SpawnSpot
-        {
-            public SpawnSpot(Vector3 position, FacilityZone zone)
-            {
-                Position = position;
-                Zone = zone;
-            }
-
-            public Vector3 Position { get; }
-
-            public FacilityZone Zone { get; }
+            return LootSpots.IsNearLivingPlayer(position, Config.ContinuousSpawnPlayerDistance);
         }
     }
 }
