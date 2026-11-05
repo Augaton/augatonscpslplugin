@@ -22,6 +22,12 @@ jobs:
       - name: Compiler
         run: dotnet build -c Release
 
+      - name: Compiler chaque plugin seul
+        run: |
+          for project in plugins/*/*.csproj; do
+            dotnet build "$project" -c Release -v q --nologo
+          done
+
       - name: Tester
         run: dotnet test tests/AugatonLib.Tests -c Release --no-build
 

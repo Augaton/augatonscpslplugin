@@ -30,6 +30,36 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void PluginsNeverReferenceEachOther()
+        {
+            string pluginsRoot = Path.Combine(RepositoryRoot(), "plugins");
+            string[] plugins = Directory.GetDirectories(pluginsRoot).Select(Path.GetFileName).ToArray();
+
+            foreach (string plugin in plugins)
+            {
+                string folder = Path.Combine(pluginsRoot, plugin);
+
+                foreach (string project in Directory.GetFiles(folder, "*.csproj"))
+                    Assert.DoesNotContain("Reference", File.ReadAllText(project));
+
+                foreach (string source in Directory.GetFiles(folder, "*.cs", SearchOption.AllDirectories).Where(IsTrackedSource))
+                {
+                    string[] usings = File.ReadAllLines(source).Where(line => line.StartsWith("using ")).ToArray();
+
+                    foreach (string other in plugins.Where(name => name != plugin))
+                        Assert.DoesNotContain(usings, line => line.StartsWith($"using {other};") || line.StartsWith($"using {other}."));
+                }
+            }
+        }
+
+        private static bool IsTrackedSource(string path)
+        {
+            string separator = Path.DirectorySeparatorChar.ToString();
+
+            return !path.Contains($"{separator}obj{separator}") && !path.Contains($"{separator}bin{separator}");
+        }
+
+        [Fact]
         public void FindIgnoresCase()
         {
             Assert.Equal("Replacer", KnownPlugins.Find("REPLACER").AssemblyName);

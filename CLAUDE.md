@@ -106,7 +106,8 @@ au redémarrage de round : AugatonLib vit dans `dependencies/`, une demande non 
 `GenocideArbiter.Hold` retient une seule équipe le temps qu'un remplaçant arrive ; celui qui retient
 publie ensuite `BusTopics.TeamCheckRequested`. Déclarer ses capacités avec `PluginDirectory.Register(this, Capability.Scale, ...)` et
 `PluginDirectory.Unregister(this)`. Les synergies optionnelles passent par `PluginBus`, jamais par une
-référence directe entre plugins.
+référence directe entre plugins : chaque plugin doit fonctionner seul avec AugatonLib, ce qu'un test
+et la CI vérifient. Un plugin absent ne doit changer que la synergie concernée.
 
 ## Tests
 
