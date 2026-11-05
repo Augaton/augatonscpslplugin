@@ -120,6 +120,7 @@ namespace BetterCoinflipsRewritten.Effects.Bad
                    other.IsAlive &&
                    !other.IsDummy &&
                    !other.IsSCP &&
+                   !other.IsTutorial &&
                    !IsInDecontaminatedLcz(other) &&
                    other != player;
         }
