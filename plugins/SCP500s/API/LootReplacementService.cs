@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AugatonLib.Random;
 using LabApi.Features.Wrappers;
+using MEC;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 
@@ -9,6 +10,10 @@ namespace SCP500s.API
 {
     public sealed class LootReplacementService
     {
+        // Un remplacement detruit un objet, en cree un autre et allume son halo : au debut du round,
+        // 40 d'un coup enverraient une centaine de messages reseau a chaque client dans le meme tick.
+        private const int ReplacementsPerFrame = 5;
+
         private readonly PillRegistry registry;
 
         private readonly List<Pickup> candidates = new List<Pickup>(128);
@@ -16,6 +21,11 @@ namespace SCP500s.API
         private readonly Dictionary<uint, int> placedThisRound = new Dictionary<uint, int>();
 
         private PillBase randomPill;
+        private CoroutineHandle loop;
+        private bool running;
+        private int coins;
+        private int pills;
+        private int randoms;
 
         public LootReplacementService(PillRegistry registry) => this.registry = registry;
 
@@ -23,6 +33,10 @@ namespace SCP500s.API
 
         public void Reset()
         {
+            if (running)
+                Timing.KillCoroutines(loop);
+
+            running = false;
             placedThisRound.Clear();
             candidates.Clear();
             pool.Clear();
@@ -48,58 +62,76 @@ namespace SCP500s.API
 
                 Shuffle(candidates);
 
-                int limit = Config.MaxReplacementsPerRound > 0
-                    ? Config.MaxReplacementsPerRound
-                    : candidates.Count;
-
-                int coins = 0;
-                int pills = 0;
-                int randoms = 0;
-
-                for (int i = 0; i < candidates.Count && pills + coins < limit; i++)
-                {
-                    Pickup source = candidates[i];
-
-                    if (source is null || !source.IsSpawned)
-                        continue;
-
-                    if (UnityEngine.Random.Range(0f, 100f) >= Config.ReplacementChancePercent)
-                        continue;
-
-                    if (UnityEngine.Random.Range(0f, 100f) < Config.CoinSharePercent)
-                    {
-                        if (SpawnCoin(source))
-                            coins++;
-
-                        continue;
-                    }
-
-                    if (SpawnPill(source, out bool wasRandom))
-                    {
-                        pills++;
-
-                        if (wasRandom)
-                            randoms++;
-                    }
-                    else if (SpawnCoin(source))
-                    {
-                        coins++;
-                    }
-                }
-
-                candidates.Clear();
-
-                Logger.Info($"Remplacement du loot termine : {pills} pilules dont {randoms} aleatoires, et {coins} pieces placees.");
+                running = true;
+                loop = Timing.RunCoroutine(ReplaceCandidates());
             }
             catch (Exception e)
             {
                 Logger.Error($"LootReplacementService.Run: {e}");
             }
-            finally
+        }
+
+        private IEnumerator<float> ReplaceCandidates()
+        {
+            int limit = Config.MaxReplacementsPerRound > 0
+                ? Config.MaxReplacementsPerRound
+                : candidates.Count;
+
+            coins = 0;
+            pills = 0;
+            randoms = 0;
+
+            for (int i = 0; i < candidates.Count && pills + coins < limit; i++)
             {
-                candidates.Clear();
-                pool.Clear();
-                randomPill = null;
+                int before = pills + coins;
+
+                ReplaceOne(candidates[i]);
+
+                if (pills + coins > before && (pills + coins) % ReplacementsPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
+            }
+
+            running = false;
+            candidates.Clear();
+            pool.Clear();
+            randomPill = null;
+
+            Logger.Info($"Remplacement du loot termine : {pills} pilules dont {randoms} aleatoires, et {coins} pieces placees.");
+        }
+
+        private void ReplaceOne(Pickup source)
+        {
+            try
+            {
+                if (source is null || source.IsDestroyed || !source.IsSpawned)
+                    return;
+
+                if (UnityEngine.Random.Range(0f, 100f) >= Config.ReplacementChancePercent)
+                    return;
+
+                if (UnityEngine.Random.Range(0f, 100f) < Config.CoinSharePercent)
+                {
+                    if (SpawnCoin(source))
+                        coins++;
+
+                    return;
+                }
+
+                if (SpawnPill(source, out bool wasRandom))
+                {
+                    pills++;
+
+                    if (wasRandom)
+                        randoms++;
+                }
+                else if (SpawnCoin(source))
+                {
+                    coins++;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"LootReplacementService.ReplaceOne: {e}");
             }
         }
 
