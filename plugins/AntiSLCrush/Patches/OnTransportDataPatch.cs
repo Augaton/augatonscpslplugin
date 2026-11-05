@@ -21,7 +21,7 @@ namespace AntiSLCrush.Patches
 
             if (Kicked.Add(connectionId))
             {
-                Plugin.Report($"[OnTransportData] connectionId {connectionId} inconnu, deconnexion.");
+                Protections.Record("Paquets inconnus", 1, $"connectionId {connectionId} inconnu, deconnexion.");
                 Transport.active?.ServerDisconnect(connectionId);
             }
 

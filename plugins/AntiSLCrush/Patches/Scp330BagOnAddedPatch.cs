@@ -23,7 +23,7 @@ namespace AntiSLCrush.Patches
 
             if (lastCalledTime == Time.time && lastOwner == owner)
             {
-                Plugin.Report($"[Scp330Bag.OnAdded] Appel trop rapide pour {owner?.nicknameSync?.MyNick ?? "?"}, ignore.");
+                Protections.Record("Sacs SCP-330", 1, $"appel trop rapide pour {owner?.nicknameSync?.MyNick ?? "?"}, ignore.");
                 return false;
             }
 

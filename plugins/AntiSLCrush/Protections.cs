@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using AntiSLCrush.Patches;
 using HarmonyLib;
 using LabApi.Features.Console;
@@ -18,6 +19,7 @@ namespace AntiSLCrush
     {
         private static readonly Harmony Patcher = new Harmony(Plugin.PluginName);
         private static readonly List<string> Failed = new List<string>(2);
+        private static readonly Dictionary<string, int> Triggers = new Dictionary<string, int>(StringComparer.Ordinal);
 
         public static IReadOnlyList<string> Failures => Failed;
 
@@ -33,6 +35,33 @@ namespace AntiSLCrush
         }
 
         public static void Remove() => Patcher.UnpatchAll(Plugin.PluginName);
+
+        // Le premier declenchement remonte en clair : un serveur doit savoir qu'un bug du jeu a ete evite.
+        public static void Record(string protection, int amount, string detail)
+        {
+            Triggers.TryGetValue(protection, out int count);
+            Triggers[protection] = count + amount;
+
+            if (count == 0)
+                Logger.Warn($"{protection} : {detail}");
+            else
+                Plugin.Report($"{protection} : {detail}");
+        }
+
+        public static string Describe()
+        {
+            StringBuilder builder = new StringBuilder(128);
+
+            builder.AppendLine(Triggers.Count == 0 ? "  aucun declenchement" : "  declenchements :");
+
+            foreach (KeyValuePair<string, int> entry in Triggers)
+                builder.AppendLine($"    {entry.Key} : {entry.Value}");
+
+            if (Failed.Count > 0)
+                builder.AppendLine($"  protections en echec : {string.Join(", ", Failed)}");
+
+            return builder.ToString();
+        }
 
         private static void Patch(bool enabled, Type patch)
         {

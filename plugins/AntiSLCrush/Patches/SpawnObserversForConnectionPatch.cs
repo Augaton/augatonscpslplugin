@@ -35,7 +35,7 @@ namespace AntiSLCrush.Patches
             foreach (uint netId in destroyed)
                 NetworkServer.spawned.Remove(netId);
 
-            Plugin.Report($"[SpawnObservers] {destroyed.Count} objet(s) detruit(s) retire(s) de la liste reseau.");
+            Protections.Record("Objets detruits", destroyed.Count, $"{destroyed.Count} objet(s) detruit(s) retire(s) de la liste reseau.");
             ListPool<uint>.Shared.Return(destroyed);
         }
     }

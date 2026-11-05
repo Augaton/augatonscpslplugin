@@ -66,7 +66,7 @@ namespace AntiSLCrush
             }
 
             if (removed > 0)
-                Plugin.Report($"[ObserverSweep] {removed} entree(s) nulle(s) retiree(s).");
+                Protections.Record("Observateurs nuls", removed, $"{removed} entree(s) nulle(s) retiree(s).");
         }
     }
 }

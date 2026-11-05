@@ -23,7 +23,7 @@ namespace AntiSLCrush.Patches
 
             int removed = AutosyncItem.Instances.RemoveWhere(IsOrphan);
 
-            Plugin.Report($"[ReserveAmmoSync] {removed} arme(s) sans proprietaire retiree(s) : {__exception.Message}");
+            Protections.Record("Munitions de reserve", 1, $"{removed} arme(s) sans proprietaire retiree(s) : {__exception.Message}");
             return null;
         }
 
