@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
+using AugatonLib.Caching;
 using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.Scp914Events;
@@ -19,9 +20,12 @@ namespace SCP500s.API
         private const float EscapeRespawnDelay = 1.5f;
         private const float Scp914TransitDelay = 3.5f;
 
+        private const float DenialHintSeconds = 1f;
+
         private readonly List<PillBase> pills = new List<PillBase>(48);
         private readonly Dictionary<uint, PillBase> byId = new Dictionary<uint, PillBase>();
         private readonly Dictionary<string, float> lastUse = new Dictionary<string, float>();
+        private readonly CooldownTracker denialHints = new CooldownTracker();
         private readonly List<ushort> carried = new List<ushort>(8);
 
         // Un numero de serie survit au passage objet / pickup, et un ramassage detruit le pickup :
@@ -113,7 +117,11 @@ namespace SCP500s.API
             return pickup is not null && bySerial.TryGetValue(pickup.Serial, out pill);
         }
 
-        public void ClearCooldowns() => lastUse.Clear();
+        public void ClearCooldowns()
+        {
+            lastUse.Clear();
+            denialHints.Clear();
+        }
 
         private void OnUsingItem(PlayerUsingItemEventArgs ev)
         {
@@ -126,6 +134,12 @@ namespace SCP500s.API
                     return;
 
                 ev.IsAllowed = false;
+
+                // Un refus n'arme pas le limiteur du jeu : un client modifie peut insister a chaque paquet.
+                if (denialHints.IsOnCooldown(ev.Player, DenialHintSeconds, out _))
+                    return;
+
+                denialHints.Register(ev.Player);
                 Plugin.Instance.Hints.Show(ev.Player, Plugin.Instance.Translation.PillCooldown, Config.HintDuration);
             }
             catch (Exception e)

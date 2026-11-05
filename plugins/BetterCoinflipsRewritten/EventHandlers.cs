@@ -1,6 +1,7 @@
 using System;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
+using AugatonLib.Caching;
 using BetterCoinflipsRewritten.API;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
@@ -10,6 +11,9 @@ namespace BetterCoinflipsRewritten
 {
     public sealed class EventHandlers
     {
+        private const float DenialHintSeconds = 1f;
+
+        private readonly CooldownTracker denialHints = new CooldownTracker();
         private readonly Plugin plugin;
         private readonly CoinService coinService;
         private readonly CoinSpawnService coinSpawnService;
@@ -52,6 +56,12 @@ namespace BetterCoinflipsRewritten
                     out secondsRemaining))
                 {
                     ev.IsAllowed = false;
+
+                    // Un refus n'arme pas le limiteur du jeu : un client modifie peut insister a chaque paquet.
+                    if (denialHints.IsOnCooldown(ev.Player, DenialHintSeconds, out _))
+                        return;
+
+                    denialHints.Register(ev.Player);
 
                     string message =
                         plugin.Translation.CooldownMessage.Replace(
@@ -148,6 +158,7 @@ namespace BetterCoinflipsRewritten
                 API.GlobalCooldown.Clear();
                 API.Scheduler.Clear();
                 coinConsumeService.Clear();
+                denialHints.Clear();
 
                 Logger.Debug(
                     "[BetterCoinflipsRewritten] Round started. " +
@@ -192,6 +203,7 @@ namespace BetterCoinflipsRewritten
                 API.GlobalCooldown.Clear();
                 API.Scheduler.Clear();
                 coinConsumeService.Clear();
+                denialHints.Clear();
                 coinRenewalService.Stop();
 
                 Logger.Debug(
