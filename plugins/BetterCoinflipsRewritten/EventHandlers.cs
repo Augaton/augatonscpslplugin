@@ -2,6 +2,7 @@ using System;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
 using AugatonLib.Caching;
+using AugatonLib.Runtime;
 using BetterCoinflipsRewritten.API;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
@@ -176,7 +177,9 @@ namespace BetterCoinflipsRewritten
 
                         try
                         {
-                            coinSpawnService.SpawnMapCoins();
+                            if (!plugin.Config.PauseDuringGamemodes || !WorldEvents.IsPaused)
+                                coinSpawnService.SpawnMapCoins();
+
                             coinRenewalService.Start();
                         }
                         catch (Exception e)

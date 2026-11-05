@@ -466,7 +466,7 @@ namespace SCP500s
 
                 try
                 {
-                    if (Config.SpawnMode != SpawnMode.SpawnPoints)
+                    if (Config.SpawnMode != SpawnMode.SpawnPoints && !(Config.PauseDuringGamemodes && WorldEvents.IsPaused))
                         lootReplacement.Run();
 
                     continuousSpawn.Start();
