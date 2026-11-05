@@ -26,6 +26,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("AutoFFToggle", "AutoFFToggle", "tir allie auto"),
             new KnownPlugin("BetterCoinflipsRewritten", "BetterCoinflips", "pile ou face"),
             new KnownPlugin("ChaosDirector", "ChaosDirector", "niveau de chaos"),
+            new KnownPlugin("PocketCorpses", "PocketCorpses", "corps de la dimension de poche"),
             new KnownPlugin("RandomGamemode", "RandomGamemode", "modes de jeu"),
             new KnownPlugin("RealisticSizes", "RealisticSizes", "taille par joueur"),
             new KnownPlugin("RemoteKeycard", "RemoteKeycard", "ouverture a distance"),
