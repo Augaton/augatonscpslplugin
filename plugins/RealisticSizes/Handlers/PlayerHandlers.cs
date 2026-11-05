@@ -64,7 +64,7 @@ namespace RealisticSizes.Handlers
                             return;
 
                         ScaleArbiter.SetBaseline(target, scale);
-                        SizeGameplay.Apply(target, scale.y, plugin.Config);
+                        ApplyGameplay(target, scale.y);
 
                         Logger.Debug($"Taille appliquee a {target.Nickname} ({role}) : {scale}.", plugin.Config.Debug);
                     }
@@ -92,7 +92,14 @@ namespace RealisticSizes.Handlers
 
             Cancel(player.UserId);
             ScaleArbiter.SetBaseline(player, replacement.Size);
-            SizeGameplay.Apply(player, replacement.Size.y, plugin.Config);
+            ApplyGameplay(player, replacement.Size.y);
+        }
+
+        // Un mode de jeu regle lui-meme les PV et la vitesse : l'effet de gabarit les ecraserait.
+        private void ApplyGameplay(Player player, float height)
+        {
+            if (!GamemodeActive)
+                SizeGameplay.Apply(player, height, plugin.Config);
         }
 
         public void OnLeft(PlayerLeftEventArgs ev)
@@ -111,6 +118,8 @@ namespace RealisticSizes.Handlers
             }
         }
 
+        public bool GamemodeActive { get; set; }
+
         public void OnRoundStarted() => spawnCounter = 0;
 
         public void OnRoundEnded(RoundEndedEventArgs ev) => Reset();
@@ -122,6 +131,7 @@ namespace RealisticSizes.Handlers
             try
             {
                 Stop();
+                GamemodeActive = false;
                 ScaleArbiter.Clear();
             }
             catch (Exception e)

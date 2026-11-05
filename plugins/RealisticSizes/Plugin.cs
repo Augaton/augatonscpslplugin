@@ -34,6 +34,8 @@ namespace RealisticSizes
             PlayerEvents.Left += playerHandlers.OnLeft;
 
             PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, playerHandlers.OnPlayerReplaced);
+            PluginBus.Subscribe(Name, BusTopics.GamemodeStarted, _ => playerHandlers.GamemodeActive = true);
+            PluginBus.Subscribe(Name, BusTopics.GamemodeEnded, _ => playerHandlers.GamemodeActive = false);
 
             ServerEvents.RoundStarted += playerHandlers.OnRoundStarted;
             ServerEvents.RoundEnded += playerHandlers.OnRoundEnded;
