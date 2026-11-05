@@ -187,7 +187,6 @@ AugatonLib/            bibliothèque partagée
 plugins/<Nom>/         un dossier par plugin
 tests/                 tests automatisés
 tools/                 récupération des références et assemblage de l'archive
-.claude/rules/         correspondance entre les API EXILED et LabAPI
 ```
 
 `Directory.Build.props` et `Directory.Build.targets` portent toute la configuration commune : un `.csproj` de plugin ne déclare que son espace de noms et sa version.

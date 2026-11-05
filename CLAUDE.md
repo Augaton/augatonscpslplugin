@@ -2,7 +2,7 @@
 
 Plugins serveur pour **Zone-Shilari** (FR, RP). Ce dépôt regroupe AugatonLib et les plugins de la
 collection, portés depuis EXILED vers **LabAPI**, le framework officiel. Aucun plugin ne dépend plus
-d'EXILED. Le portage restant suit `.claude/rules/portage-exiled.md`.
+d'EXILED.
 
 Le serveur tourne sur une **boucle Unity mono-thread**. Tout code lourd dans un handler bloque le
 tick pour tous les joueurs. Cette contrainte prime sur toutes les autres.
