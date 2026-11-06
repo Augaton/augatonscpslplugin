@@ -21,6 +21,7 @@
     <Project Path="plugins/SCPReplacer/SCPReplacer.csproj" />
     <Project Path="plugins/ScpScaling/ScpScaling.csproj" />
     <Project Path="plugins/SiteIncidents/SiteIncidents.csproj" />
+    <Project Path="plugins/Streaks/Streaks.csproj" />
     <Project Path="plugins/SupplyDrop/SupplyDrop.csproj" />
     <Project Path="plugins/TeamGenocide/TeamGenocide.csproj" />
     <Project Path="plugins/TickGuard/TickGuard.csproj" />
