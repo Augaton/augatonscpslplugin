@@ -45,12 +45,18 @@ namespace RandomGamemode.Gamemodes
 
             for (int i = 1; i < players.Count; i++)
             {
+                if (players[i].IsDestroyed)
+                    continue;
+
                 bool isEscort = i % 2 == 1;
 
                 players[i].SetRole(isEscort ? RoleTypeId.NtfPrivate : RoleTypeId.ChaosConscript);
 
                 if (isEscort)
                     escorts.Add(players[i]);
+
+                if (i % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             KeepRoundOpen = true;

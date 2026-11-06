@@ -42,11 +42,19 @@ namespace RandomGamemode.Gamemodes
 
             seeker.SetRole(RoleTypeId.Spectator);
 
+            int changed = 0;
+
             foreach (Player hider in hiders)
             {
+                if (hider.IsDestroyed)
+                    continue;
+
                 hider.SetRole(RoleTypeId.ClassD);
                 hider.ClearInventory();
                 hider.AddItem(ItemType.Flashlight);
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             Announce(Settings.Description);

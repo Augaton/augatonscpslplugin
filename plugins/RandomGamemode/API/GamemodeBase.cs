@@ -14,6 +14,9 @@ namespace RandomGamemode.API
 {
     public abstract class GamemodeBase
     {
+        // Un changement de role coute cher au serveur : les joueurs suivants passent a la frame d'apres.
+        protected const int RoleChangesPerFrame = 5;
+
         private readonly List<CoroutineHandle> handles = new List<CoroutineHandle>(8);
         private readonly HashSet<string> boostedHealth = new HashSet<string>();
 

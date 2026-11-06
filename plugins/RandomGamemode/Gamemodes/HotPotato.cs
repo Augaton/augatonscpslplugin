@@ -31,12 +31,20 @@ namespace RandomGamemode.Gamemodes
         {
             yield return Timing.WaitForSeconds(3f);
 
+            int changed = 0;
+
             foreach (Player player in ReadyPlayers())
             {
+                if (player.IsDestroyed)
+                    continue;
+
                 player.SetRole(RoleTypeId.ClassD);
                 player.ClearInventory();
                 player.AddItem(ItemType.GunCOM15);
                 player.SetAmmo(ItemType.Ammo9x19, 200);
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             KeepRoundOpen = true;

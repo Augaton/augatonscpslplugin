@@ -21,7 +21,9 @@ namespace RandomGamemode.Gamemodes
             Door bottom = Door.Get(DoorName.Lcz173Bottom);
             Door gate = Door.Get(DoorName.Lcz173Gate);
 
-            foreach (Player player in Player.ReadyList)
+            int changed = 0;
+
+            foreach (Player player in ReadyPlayers())
             {
                 if (player is null || player.IsDestroyed)
                     continue;
@@ -41,6 +43,9 @@ namespace RandomGamemode.Gamemodes
                     if (gate is not null)
                         player.Position = gate.Position + (Vector3.up * 2f);
                 }
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             yield return Timing.WaitForSeconds(2f);

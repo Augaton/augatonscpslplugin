@@ -52,10 +52,16 @@ namespace RandomGamemode.Gamemodes
 
             for (int i = 0; i < players.Count; i++)
             {
+                if (players[i].IsDestroyed)
+                    continue;
+
                 if (i % 2 == 0)
                     guards.Add(players[i].UserId);
 
                 Deploy(players[i]);
+
+                if ((i + 1) % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             KeepRoundOpen = true;

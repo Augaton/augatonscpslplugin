@@ -35,13 +35,21 @@ namespace RandomGamemode.Gamemodes
             Player traitor = Chance.Pick(players);
             traitorUserId = traitor.UserId;
 
+            int changed = 0;
+
             foreach (Player player in players)
             {
+                if (player.IsDestroyed)
+                    continue;
+
                 player.SetRole(RoleTypeId.Scientist);
                 player.ClearInventory();
                 player.AddItem(ItemType.Flashlight);
                 player.AddItem(ItemType.GunCOM15);
                 player.SetAmmo(ItemType.Ammo9x19, Config.TraitorAmmo);
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             KeepRoundOpen = true;

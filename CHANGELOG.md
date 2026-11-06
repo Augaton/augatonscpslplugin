@@ -73,6 +73,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 
 - La voix de proximité ne fait plus tourner le codec sans auditeur, et ne part plus au-delà de la portée.
 - Le remplacement des pilules au début du round est étalé sur plusieurs frames.
+- Les modes de jeu changent les rôles par paquets de 5 par frame.
 
 ### Outillage
 

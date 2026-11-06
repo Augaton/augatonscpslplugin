@@ -44,14 +44,22 @@ namespace RandomGamemode.Gamemodes
             juggernautUserId = chosen.UserId;
             candidates.Remove(chosen);
 
+            int changed = 0;
+
             foreach (Player hunter in candidates)
             {
+                if (hunter.IsDestroyed)
+                    continue;
+
                 hunter.SetRole(RoleTypeId.NtfSergeant);
                 hunter.ClearInventory();
                 hunter.AddItem(ItemType.GunE11SR);
                 hunter.AddItem(ItemType.Medkit);
                 hunter.AddItem(ItemType.Flashlight);
                 hunter.SetAmmo(ItemType.Ammo556x45, 500);
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             chosen.SetRole(RoleTypeId.ChaosRepressor);

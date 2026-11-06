@@ -44,8 +44,18 @@ namespace RandomGamemode.Gamemodes
             scp.SetRole(ScpRoles[UnityEngine.Random.Range(0, ScpRoles.Length)]);
             candidates.Remove(scp);
 
+            int changed = 0;
+
             foreach (Player player in candidates)
+            {
+                if (player.IsDestroyed)
+                    continue;
+
                 player.SetRole(HumanRoles[UnityEngine.Random.Range(0, HumanRoles.Length)]);
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
+            }
 
             yield return Timing.WaitForSeconds(1.5f);
 

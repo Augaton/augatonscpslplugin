@@ -22,7 +22,9 @@ namespace RandomGamemode.Gamemodes
         {
             yield return Timing.WaitForSeconds(3f);
 
-            foreach (Player player in Player.ReadyList)
+            int changed = 0;
+
+            foreach (Player player in ReadyPlayers())
             {
                 if (player is null || player.IsDestroyed)
                     continue;
@@ -37,6 +39,9 @@ namespace RandomGamemode.Gamemodes
                     player.SetRole(RoleTypeId.Scientist);
                     player.ClearInventory();
                 }
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             LightArbiter.Tint(Interop.Owner, Color.blue);

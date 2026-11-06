@@ -26,12 +26,17 @@ namespace RandomGamemode.Gamemodes
 
             tiers.Clear();
 
-            foreach (Player player in Player.ReadyList)
+            int changed = 0;
+
+            foreach (Player player in ReadyPlayers())
             {
                 if (player is null || player.IsDestroyed)
                     continue;
 
                 player.SetRole(RoleTypeId.ClassD);
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             yield return Timing.WaitForSeconds(1.5f);

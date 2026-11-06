@@ -20,7 +20,9 @@ namespace RandomGamemode.Gamemodes
 
             List<Player> shrink = new List<Player>(8);
 
-            foreach (Player player in Player.ReadyList)
+            int changed = 0;
+
+            foreach (Player player in ReadyPlayers())
             {
                 if (player is null || player.IsDestroyed)
                     continue;
@@ -34,6 +36,9 @@ namespace RandomGamemode.Gamemodes
                 {
                     player.SetRole(RoleTypeId.Scp173);
                 }
+
+                if (++changed % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             yield return Timing.WaitForSeconds(1f);
