@@ -75,6 +75,7 @@ namespace SupplyDrop
 
         protected override void ValidateConfig()
         {
+            Config.MinEventGapSeconds = AtLeast("min_event_gap_seconds", Config.MinEventGapSeconds, 0f);
             Config.TrapChancePercent = AtLeast("trap_chance_percent", Config.TrapChancePercent, 0f);
             Config.TrapRange = AtLeast("trap_range", Config.TrapRange, 1f);
             Config.TrapFuseSeconds = AtLeast("trap_fuse_seconds", Config.TrapFuseSeconds, 0.5f);

@@ -15,6 +15,7 @@ Trente et un plugins et une bibliothèque partagée pour **SCP: Secret Laborator
 - [Plugins](#plugins)
 - [Plugins tiers](#plugins-tiers)
 - [Installation](#installation)
+- [Choisir ses plugins](#choisir-ses-plugins)
 - [Configuration](#configuration)
 - [Commandes](#commandes)
 - [Architecture](#architecture)
@@ -147,6 +148,10 @@ Arrêtez le serveur avant l'envoi, car écraser une DLL déjà chargée peut le 
 
 Rien n'oblige à tout prendre. Chaque plugin fonctionne seul avec ses trois dépendances obligatoires : `AugatonLib.dll` et `0Harmony.dll` dans `dependencies/`, et `HintServiceMeow.dll` dans `plugins/`. Gardez uniquement les DLL qui vous intéressent, ou téléchargez-les une par une depuis une release. Un plugin absent ne désactive que la synergie concernée. Par exemple, SupplyDrop continue de larguer sans SCP500s, simplement sans pilules.
 
+## Choisir ses plugins
+
+Les 31 plugins sont actifs une fois installés. Le guide [Profils de serveur](docs/PROFILS.md) propose trois sélections, du RP calme au chaos complet, et les réglages à ajuster.
+
 ## Configuration
 
 Les fichiers sont créés au premier démarrage, dans `LabAPI/configs/<port>/<Plugin>/` :
@@ -263,6 +268,7 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | BetterCoinflips et Scp261 sont présents | Les pièces renouvelées alimentent la machine |
 | ChaosDirector est présent | Les pilules, pièces et incidents s'accélèrent avec l'agitation du round |
 | RoundRecap est présent | Le bilan compte ce que font les autres plugins |
+| SiteIncidents et SupplyDrop sont présents | Un incident et un largage ne tombent jamais dans la même minute |
 | TickGuard est présent | Une baisse durable de TPS suspend les mêmes événements qu'un mode arène |
 | DiscordAudit est présent | Les actions tracées par chaque plugin arrivent sur Discord |
 | Scp914Recipes et SCP500s sont présents | Les recettes de SCP-914 donnent de vraies pilules |

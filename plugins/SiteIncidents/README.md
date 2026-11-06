@@ -24,6 +24,7 @@ plus aucun incident apres l'explosion de l'ogive.
 | `min_interval_seconds` | `180` | Delai minimal entre deux incidents, 30 au plus bas |
 | `max_interval_seconds` | `360` | Delai maximal entre deux incidents |
 | `min_players` | `4` | Joueurs requis |
+| `min_event_gap_seconds` | `60` | Ecart minimal avec un largage de SupplyDrop. L'incident retente 20 s plus tard |
 | `pause_during_gamemodes` | `true` | Suspend les incidents pendant un mode de type arene |
 | `interval_per_chaos_level` | `20` | Secondes retirees par niveau du Directeur du chaos, s'il est installe |
 | `blackout_weight`, `alert_weight`, `lockdown_weight` | `10` | Probabilite de chaque incident. `0` = jamais |

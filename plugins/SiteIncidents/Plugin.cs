@@ -55,6 +55,7 @@ namespace SiteIncidents
         protected override void ValidateConfig()
         {
             Config.TeslaSurgeInterval = AtLeast("tesla_surge_interval", Config.TeslaSurgeInterval, 2f);
+            Config.MinEventGapSeconds = AtLeast("min_event_gap_seconds", Config.MinEventGapSeconds, 0f);
         }
 
         // Evenement du jeu, sans la protection de LabAPI : une exception priverait les abonnes suivants.

@@ -20,6 +20,7 @@ namespace SiteIncidents
     public sealed class IncidentService
     {
         private const float MinIntervalSeconds = 30f;
+        private const float EventRetrySeconds = 20f;
         private const float GasTickSeconds = 1f;
         private const float GasEffectSeconds = 2f;
 
@@ -46,6 +47,7 @@ namespace SiteIncidents
 
         private CoroutineHandle loop;
         private bool running;
+        private bool postponed;
 
         public IncidentService(Plugin plugin) => this.plugin = plugin;
 
@@ -159,16 +161,23 @@ namespace SiteIncidents
                     Logger.Error($"IncidentService.Tick: {e}");
                 }
 
-                yield return Timing.WaitForSeconds(NextDelay());
+                yield return Timing.WaitForSeconds(postponed ? EventRetrySeconds : NextDelay());
             }
         }
 
         private void Tick()
         {
+            postponed = false;
+
             if (!Round.IsRoundInProgress || Player.Count < Config.MinPlayers)
                 return;
 
             if (Config.PauseDuringGamemodes && WorldEvents.IsPaused)
+                return;
+
+            postponed = !EventSpacing.TryClaim(Time.time, Config.MinEventGapSeconds);
+
+            if (postponed)
                 return;
 
             IncidentType? type = PickType();

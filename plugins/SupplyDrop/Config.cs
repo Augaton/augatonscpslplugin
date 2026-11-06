@@ -22,6 +22,9 @@ namespace SupplyDrop
         [Description("Intervalle en secondes du planificateur. Une seule coroutine gere tous les largages.")]
         public float SchedulerTick { get; set; } = 1f;
 
+        [Description("Secondes minimales entre deux gros evenements automatiques, incidents et largages confondus. 0 = aucune attente.")]
+        public float MinEventGapSeconds { get; set; } = 60f;
+
         [Description("Chance, en pourcentage, qu'un largage soit piege. 0 = jamais.")]
         public float TrapChancePercent { get; set; } = 15f;
 

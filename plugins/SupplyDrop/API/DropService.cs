@@ -180,6 +180,12 @@ namespace SupplyDrop.API
                         continue;
                     }
 
+                    if (!EventSpacing.TryClaim(Time.time, Config.MinEventGapSeconds))
+                    {
+                        state.NextDropAt = elapsed + Config.RetrySeconds;
+                        continue;
+                    }
+
                     state.DropsUsed++;
                     state.NextDropAt = elapsed + profile.AnnouncementLeadSeconds + profile.IntervalSeconds;
 

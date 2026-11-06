@@ -16,6 +16,9 @@ namespace SiteIncidents
         [Description("Delai maximal en secondes entre deux incidents.")]
         public float MaxIntervalSeconds { get; set; } = 360f;
 
+        [Description("Secondes minimales entre deux gros evenements automatiques, incidents et largages confondus. 0 = aucune attente.")]
+        public float MinEventGapSeconds { get; set; } = 60f;
+
         [Description("Nombre de joueurs requis pour qu'un incident se produise.")]
         public int MinPlayers { get; set; } = 4;
 

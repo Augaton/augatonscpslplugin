@@ -220,6 +220,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] `incidents trigger CameraOutage` : SCP-079 perd ses cameras, et le trigger refuse s'il est absent.
 
 **SupplyDrop**
+- [ ] Avec SiteIncidents, un largage automatique et un incident ne partent pas dans la meme minute.
 - [ ] Armes larguees chargees, y compris revolver et fusil a pompe.
 - [ ] `team_wipe_drops` fonctionne sans TeamGenocide, et une seule fois par equipe et par round.
 - [ ] Des pilules SCP500s apparaissent dans les largages, et rien ne casse sans SCP500s.
