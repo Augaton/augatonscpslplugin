@@ -34,10 +34,11 @@ namespace AugatonLib.World
 
         private static void GiveOne(Player player, ItemType type)
         {
-            if (type == ItemType.SCP500 && PluginBus.Publish(BusTopics.PillGiveRequested, Source, player) > 0)
+            if (player.IsHuman && type == ItemType.SCP500 && PluginBus.Publish(BusTopics.PillGiveRequested, Source, player) > 0)
                 return;
 
-            if (player.AddItem(type) is null)
+            // Le jeu accepte l'objet dans l'inventaire d'un SCP, qui ne pourrait jamais s'en servir.
+            if (!player.IsHuman || player.AddItem(type) is null)
                 Pickup.Create(type, player.Position, Quaternion.identity);
         }
     }
