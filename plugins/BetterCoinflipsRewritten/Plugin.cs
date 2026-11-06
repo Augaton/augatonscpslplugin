@@ -1,11 +1,11 @@
-using MapGeneration;
-using BetterCoinflipsRewritten.Effects.Bad;
 using System.Linq;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
+using BetterCoinflipsRewritten.Effects.Bad;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
+using MapGeneration;
 
 namespace BetterCoinflipsRewritten
 {
