@@ -1,0 +1,242 @@
+using System;
+using System.Collections.Generic;
+using AugatonLib.Arbitration;
+using AugatonLib.Arcade;
+using AugatonLib.Bus;
+using AugatonLib.Random;
+using AugatonLib.Runtime;
+using CustomPlayerEffects;
+using LabApi.Features.Wrappers;
+using MEC;
+using PlayerRoles.FirstPersonControl;
+using UnityEngine;
+using Logger = LabApi.Features.Console.Logger;
+
+namespace RoundMutators
+{
+    public sealed class MutatorService
+    {
+        private const float RefreshSeconds = 2f;
+
+        private static readonly MutatorType[] Types =
+        {
+            MutatorType.LowGravity,
+            MutatorType.Swift,
+            MutatorType.Tiny,
+            MutatorType.Tireless,
+        };
+
+        private readonly Plugin plugin;
+        private readonly RoundPacing pacing = new RoundPacing();
+
+        private CoroutineHandle draw;
+        private CoroutineHandle loop;
+        private bool drawScheduled;
+        private bool looping;
+
+        public MutatorService(Plugin plugin) => this.plugin = plugin;
+
+        public MutatorType? Active { get; private set; }
+
+        private Config Config => plugin.Config;
+
+        public void ScheduleDraw()
+        {
+            CancelDraw();
+
+            drawScheduled = true;
+            draw = Timing.CallDelayed(Config.StartDelaySeconds, Draw);
+        }
+
+        public void Begin(MutatorType type)
+        {
+            Stop();
+
+            Active = type;
+            looping = true;
+            loop = Timing.RunCoroutine(Refresh());
+
+            plugin.Hints.ShowAll(plugin.Translation.Announcement.Replace("%NAME%", NameOf(type)), Config.HintDuration);
+        }
+
+        public void Stop()
+        {
+            CancelDraw();
+
+            if (looping)
+                Timing.KillCoroutines(loop);
+
+            looping = false;
+
+            if (!Active.HasValue)
+                return;
+
+            MutatorType previous = Active.Value;
+
+            Active = null;
+
+            foreach (Player player in Player.ReadyList)
+                Clear(player, previous);
+
+            ScaleArbiter.ReleaseOwner(Plugin.Owner);
+        }
+
+        public void OnGamemodeStarted(BusMessage message)
+        {
+            if (Config.PauseDuringGamemodes)
+                Stop();
+        }
+
+        public string NameOf(MutatorType type)
+        {
+            switch (type)
+            {
+                case MutatorType.LowGravity: return plugin.Translation.LowGravity;
+                case MutatorType.Swift: return plugin.Translation.Swift;
+                case MutatorType.Tiny: return plugin.Translation.Tiny;
+                case MutatorType.Tireless: return plugin.Translation.Tireless;
+                default: return type.ToString();
+            }
+        }
+
+        private void Draw()
+        {
+            drawScheduled = false;
+
+            try
+            {
+                if (!Round.IsRoundInProgress || Player.Count < Config.MinPlayers)
+                    return;
+
+                if (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses)
+                    return;
+
+                if (!pacing.TryAdvance(Config.RoundsBetween) || !Chance.Roll(Config.ChancePercent))
+                    return;
+
+                int total = 0;
+
+                foreach (MutatorType type in Types)
+                    total += Math.Max(0, WeightOf(type));
+
+                if (total == 0)
+                    return;
+
+                Begin(Chance.PickWeighted(Types, WeightOf));
+                pacing.MarkUsed();
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"MutatorService.Draw: {e}");
+            }
+        }
+
+        private int WeightOf(MutatorType type)
+        {
+            switch (type)
+            {
+                case MutatorType.LowGravity: return Config.LowGravityWeight;
+                case MutatorType.Swift: return Config.SwiftWeight;
+                case MutatorType.Tiny: return Config.TinyWeight;
+                case MutatorType.Tireless: return Config.TirelessWeight;
+                default: return 0;
+            }
+        }
+
+        // Une seule boucle pour tous : elle rattrape les renforts et chaque changement de role, et passe
+        // apres RealisticSizes, qui remet les tailles a zero au changement de role.
+        private IEnumerator<float> Refresh()
+        {
+            while (Active.HasValue)
+            {
+                try
+                {
+                    foreach (Player player in Player.ReadyList)
+                        Apply(player, Active.Value);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"MutatorService.Refresh: {e}");
+                }
+
+                yield return Timing.WaitForSeconds(RefreshSeconds);
+            }
+        }
+
+        private void Apply(Player player, MutatorType type)
+        {
+            bool eligible = player.IsHuman && !player.IsTutorial;
+
+            switch (type)
+            {
+                case MutatorType.LowGravity:
+                    ApplyGravity(player, eligible);
+                    break;
+
+                case MutatorType.Swift when eligible:
+                    if (!player.TryGetEffect(out MovementBoost boost) || boost.Intensity < Config.SpeedPercent)
+                        player.EnableEffect<MovementBoost>((byte)Config.SpeedPercent);
+                    break;
+
+                case MutatorType.Tiny:
+                    ApplySize(player, eligible);
+                    break;
+
+                case MutatorType.Tireless when eligible:
+                    if (!player.HasEffect<Invigorated>())
+                        player.EnableEffect<Invigorated>();
+                    break;
+            }
+        }
+
+        // La gravite reste attachee au joueur d'un role a l'autre : un humain devenu SCP doit la perdre.
+        private void ApplyGravity(Player player, bool eligible)
+        {
+            Vector3 target = eligible
+                ? FpcGravityController.DefaultGravity * Config.GravityFactor
+                : FpcGravityController.DefaultGravity;
+
+            if (FpcGravityController.GetGravity(player.ReferenceHub) != target)
+                player.Gravity = target;
+        }
+
+        // Un autre calque passe avant : une pilule ou SCP-261 qui rapetisse un joueur ne doit pas etre ecrase.
+        private void ApplySize(Player player, bool eligible)
+        {
+            if (!eligible)
+            {
+                ScaleArbiter.Release(player, Plugin.Owner);
+                return;
+            }
+
+            if (!ScaleArbiter.HasLayer(player))
+                ScaleArbiter.Request(player, Plugin.Owner, ScaleArbiter.BaselineOf(player) * Config.SizeFactor);
+        }
+
+        private static void Clear(Player player, MutatorType type)
+        {
+            switch (type)
+            {
+                case MutatorType.LowGravity:
+                    player.Gravity = FpcGravityController.DefaultGravity;
+                    break;
+
+                case MutatorType.Swift:
+                    player.DisableEffect<MovementBoost>();
+                    break;
+
+                case MutatorType.Tireless:
+                    player.DisableEffect<Invigorated>();
+                    break;
+            }
+        }
+
+        private void CancelDraw()
+        {
+            if (drawScheduled)
+                Timing.KillCoroutines(draw);
+
+            drawScheduled = false;
+        }
+    }
+}

@@ -35,6 +35,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("RealisticSizes", "RealisticSizes", "taille par joueur"),
             new KnownPlugin("RemoteKeycard", "RemoteKeycard", "ouverture a distance"),
             new KnownPlugin("Replacer", "Replacer", "remplacement joueur"),
+            new KnownPlugin("RoundMutators", "RoundMutators", "mutateurs de round"),
             new KnownPlugin("RoundRecap", "RoundRecap", "bilan de round"),
             new KnownPlugin("SCP1162", "SCP1162", "echange d'objets"),
             new KnownPlugin("Scp261", "Scp261", "machine distributrice"),

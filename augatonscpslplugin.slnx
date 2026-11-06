@@ -13,6 +13,7 @@
     <Project Path="plugins/RealisticSizes/RealisticSizes.csproj" />
     <Project Path="plugins/RemoteKeycard/RemoteKeycard.csproj" />
     <Project Path="plugins/Replacer/Replacer.csproj" />
+    <Project Path="plugins/RoundMutators/RoundMutators.csproj" />
     <Project Path="plugins/RoundRecap/RoundRecap.csproj" />
     <Project Path="plugins/SCP1162/SCP1162.csproj" />
     <Project Path="plugins/Scp261/Scp261.csproj" />

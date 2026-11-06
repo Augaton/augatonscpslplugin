@@ -1,0 +1,64 @@
+using AugatonLib.Bus;
+using AugatonLib.Runtime;
+using LabApi.Events.Arguments.ServerEvents;
+using LabApi.Events.Handlers;
+
+namespace RoundMutators
+{
+    public sealed class Plugin : AugatonPlugin<Config, Translation>
+    {
+        public const string Owner = "RoundMutators";
+
+        private const int MaxSpeedPercent = 100;
+
+        public static Plugin Instance { get; private set; }
+
+        public MutatorService Service { get; private set; }
+
+        public override string Name => Owner;
+
+        public override string Description => "Ajoute parfois une regle legere a un round normal.";
+
+        public override string Author => "Augaton";
+
+        public override void Enable()
+        {
+            Instance = this;
+            Service = new MutatorService(this);
+
+            ServerEvents.RoundStarted += Service.ScheduleDraw;
+            ServerEvents.RoundEnded += OnRoundEnded;
+            ServerEvents.RoundRestarted += Service.Stop;
+
+            PluginBus.Subscribe(Owner, BusTopics.GamemodeStarted, Service.OnGamemodeStarted);
+
+            PluginDirectory.Register(this, Capability.Scale, Capability.Bus);
+        }
+
+        public override void Disable()
+        {
+            ServerEvents.RoundStarted -= Service.ScheduleDraw;
+            ServerEvents.RoundEnded -= OnRoundEnded;
+            ServerEvents.RoundRestarted -= Service.Stop;
+
+            Service.Stop();
+            PluginBus.UnsubscribeOwner(Owner);
+            PluginDirectory.Unregister(this);
+
+            Service = null;
+            Instance = null;
+        }
+
+        protected override void ValidateConfig()
+        {
+            Config.ChancePercent = AtLeast("chance_percent", Config.ChancePercent, 0f);
+            Config.RoundsBetween = (int)AtLeast("rounds_between", Config.RoundsBetween, 0f);
+            Config.StartDelaySeconds = AtLeast("start_delay_seconds", Config.StartDelaySeconds, 3f);
+            Config.GravityFactor = AtLeast("gravity_factor", Config.GravityFactor, 0.2f);
+            Config.SizeFactor = AtLeast("size_factor", Config.SizeFactor, 0.5f);
+            Config.SpeedPercent = System.Math.Min((int)AtLeast("speed_percent", Config.SpeedPercent, 0f), MaxSpeedPercent);
+        }
+
+        private void OnRoundEnded(RoundEndedEventArgs ev) => Service.Stop();
+    }
+}
