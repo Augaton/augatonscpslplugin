@@ -248,6 +248,10 @@ namespace BetterCoinflipsRewritten
         public string FullMagazineEffectMessage { get; set; } =
             "Votre chargeur est plein.";
 
+        [Description("Message de l'effet soin de groupe. {count} est le nombre de joueurs soignes, lanceur compris.")]
+        public string GroupHealEffectMessage { get; set; } =
+            "Une onde de soin touche {count} joueur(s) autour de vous.";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";

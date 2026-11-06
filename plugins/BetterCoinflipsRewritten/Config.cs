@@ -258,6 +258,15 @@ namespace BetterCoinflipsRewritten
         [Description("Poids de l'effet chargeur plein. Il n'est tire que si le joueur tient une arme entamee.")]
         public int FullMagazineChance { get; set; } = 6;
 
+        [Description("Poids de l'effet soin de groupe.")]
+        public int GroupHealChance { get; set; } = 5;
+
+        [Description("Vie rendue a chaque allie par le soin de groupe.")]
+        public float GroupHealAmount { get; set; } = 40f;
+
+        [Description("Portee du soin de groupe, en metres.")]
+        public float GroupHealRange { get; set; } = 8f;
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 

@@ -79,6 +79,7 @@ namespace BetterCoinflipsRewritten
         {
             Config.FacilityEffectCooldown = AtLeast("facility_effect_cooldown", Config.FacilityEffectCooldown, 1f);
             Config.CoinCooldown = AtLeast("coin_cooldown", Config.CoinCooldown, 0.5f);
+            Config.GroupHealRange = AtLeast("group_heal_range", Config.GroupHealRange, 1f);
             Config.JackpotAmount = (int)AtLeast("jackpot_amount", Config.JackpotAmount, 1f);
             Config.SecondChanceHealth = AtLeast("second_chance_health", Config.SecondChanceHealth, 1f);
 

@@ -56,6 +56,11 @@ namespace BetterCoinflipsRewritten
 
             goodEffects.Add(
                 new WeightedEffect(
+                    new GroupHealEffect(plugin.Config.GroupHealAmount, plugin.Config.GroupHealRange),
+                    plugin.Config.GroupHealChance));
+
+            goodEffects.Add(
+                new WeightedEffect(
                     new MedicalKitEffect(),
                     plugin.Config.MedicalKitChance));
 
