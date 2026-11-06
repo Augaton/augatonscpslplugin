@@ -87,13 +87,16 @@ namespace ArcadeShop
             return true;
         }
 
+        // Ecrit dans ce sens, le test ecarte aussi NaN.
+        private static bool IsPositive(float value) => value > 0f && !float.IsInfinity(value);
+
         private static bool IsInvalid(ShopPerk perk)
         {
             bool invalid = perk is null
                 || string.IsNullOrWhiteSpace(perk.Key)
                 || perk.Price < 0
-                || perk.Amount <= 0f
-                || (perk.Kind == PerkKind.Speed && perk.Seconds <= 0f);
+                || !IsPositive(perk.Amount)
+                || (perk.Kind == PerkKind.Speed && !IsPositive(perk.Seconds));
 
             if (invalid)
                 Logger.Warn($"Service de boutique ignore : \"{perk?.Key}\".");

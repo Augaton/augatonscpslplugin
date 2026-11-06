@@ -83,7 +83,16 @@ namespace WarmupLobby
             if (!IsRunning)
                 return;
 
-            NameChampion();
+            // Une erreur ici ne doit pas laisser le lobby en vie : RoleAssigner ne donnerait aucun role.
+            try
+            {
+                NameChampion();
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"NameChampion: {e}");
+            }
+
             Stop();
 
             foreach (Player player in Player.ReadyList)
