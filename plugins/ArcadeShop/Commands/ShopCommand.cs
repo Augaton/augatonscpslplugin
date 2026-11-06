@@ -45,10 +45,7 @@ namespace ArcadeShop.Commands
             }
 
             if (arguments.Count == 0)
-            {
-                response = plugin.Service.Describe(player);
-                return true;
-            }
+                return plugin.Service.TryDescribe(player, out response);
 
             return plugin.Service.TryBuy(player, arguments.At(0), out response);
         }

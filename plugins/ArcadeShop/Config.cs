@@ -27,6 +27,9 @@ namespace ArcadeShop
         [Description("Delai entre deux commandes .shop d'achat d'un meme joueur, en secondes. 1 au plus bas.")]
         public float BuyCooldownSeconds { get; set; } = 2f;
 
+        [Description("Delai entre deux affichages du catalogue d'un meme joueur, en secondes. 0.5 au plus bas.")]
+        public float CatalogCooldownSeconds { get; set; } = 1f;
+
         [Description("Objets en vente.")]
         public List<ShopItem> Items { get; set; } = new List<ShopItem>
         {

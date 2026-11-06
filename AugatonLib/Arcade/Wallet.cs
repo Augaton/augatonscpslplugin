@@ -71,12 +71,6 @@ namespace AugatonLib.Arcade
             return PurchaseResult.Done;
         }
 
-        public void Forget(string player)
-        {
-            if (!string.IsNullOrEmpty(player))
-                accounts.Remove(player);
-        }
-
         public void Clear() => accounts.Clear();
 
         private Account Find(string player)

@@ -1,5 +1,6 @@
 using System;
 using AugatonLib.Commands;
+using AugatonLib.Text;
 using CommandSystem;
 using LabApi.Features.Wrappers;
 
@@ -55,10 +56,11 @@ namespace ArcadeShop.Commands
                 return false;
 
             int gained = Plugin.Instance.Wallet.Earn(player.UserId, points);
+            string name = SafeText.Nickname(player);
 
-            Audit(sender, "ArcadeShop", $"a donne {gained} points a {player.Nickname}");
+            Audit(sender, "ArcadeShop", $"a donne {gained} points a {name}");
 
-            response = $"{player.Nickname} a maintenant {Plugin.Instance.Wallet.BalanceOf(player.UserId)} points.";
+            response = $"{name} a maintenant {Plugin.Instance.Wallet.BalanceOf(player.UserId)} points.";
             return true;
         }
     }

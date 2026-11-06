@@ -34,6 +34,8 @@ namespace ArcadeShop
 
             PluginBus.Subscribe(Name, BusTopics.ContractCompleted, Service.OnContractCompleted);
 
+            SelfCheck.Register(Name, "objets de la boutique", Service.CheckItems);
+
             PluginDirectory.Register(this, Capability.Bus);
         }
 
@@ -56,6 +58,7 @@ namespace ArcadeShop
         protected override void ValidateConfig()
         {
             Config.BuyCooldownSeconds = AtLeast("buy_cooldown_seconds", Config.BuyCooldownSeconds, 1f);
+            Config.CatalogCooldownSeconds = AtLeast("catalog_cooldown_seconds", Config.CatalogCooldownSeconds, 0.5f);
             Config.MaxBalance = (int)AtLeast("max_balance", Config.MaxBalance, 1f);
             Wallet.MaxBalance = Config.MaxBalance;
 

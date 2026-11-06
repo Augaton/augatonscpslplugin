@@ -140,23 +140,17 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
-        public void ForgetAndClearWipeTheAccounts()
+        public void ClearWipesTheAccounts()
         {
             Wallet wallet = new Wallet();
 
             wallet.Earn("a", 10);
-            wallet.Earn("b", 10);
             wallet.TryBuy("a", "soin", 5, 1);
-
-            wallet.Forget("a");
-
-            Assert.Equal(0, wallet.BalanceOf("a"));
-            Assert.Equal(0, wallet.BoughtCount("a", "soin"));
-            Assert.Equal(10, wallet.BalanceOf("b"));
 
             wallet.Clear();
 
-            Assert.Equal(0, wallet.BalanceOf("b"));
+            Assert.Equal(0, wallet.BalanceOf("a"));
+            Assert.Equal(0, wallet.BoughtCount("a", "soin"));
         }
     }
 }

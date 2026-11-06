@@ -6,6 +6,7 @@ using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Runtime;
 using AugatonLib.World;
+using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -19,6 +20,7 @@ namespace ArcadeShop
 
         private readonly Plugin plugin;
         private readonly CooldownTracker cooldowns = new CooldownTracker();
+        private readonly CooldownTracker catalogCooldowns = new CooldownTracker();
         private readonly HashSet<Generator> paidGenerators = new HashSet<Generator>();
 
         public ShopService(Plugin plugin) => this.plugin = plugin;
@@ -46,7 +48,10 @@ namespace ArcadeShop
                 if (ev.OldRole == RoleTypeId.Tutorial || ev.OldRole.GetFaction() == killer.Faction)
                     return;
 
-                Award(killer, ev.OldRole.GetTeam() == Team.SCPs ? Config.PointsPerScpKill : Config.PointsPerKill);
+                // SCP-049 peut relever des corps : un zombie paie comme un kill normal, sinon deux complices en vivraient.
+                bool isFullScp = ev.OldRole.GetTeam() == Team.SCPs && ev.OldRole != RoleTypeId.Scp0492;
+
+                Award(killer, isFullScp ? Config.PointsPerScpKill : Config.PointsPerKill);
             }
             catch (Exception e)
             {
@@ -90,14 +95,16 @@ namespace ArcadeShop
                 Award(player, Config.PointsPerContract);
         }
 
+        // Le compte reste jusqu'a la fin du round : l'effacer ici rendrait ses limites d'achat a un joueur
+        // qui quitte et revient. Reset le vide, donc il reste borne par les joueurs du round.
         public void OnLeft(PlayerLeftEventArgs ev)
         {
             try
             {
                 string userId = ev?.Player?.UserId;
 
-                Wallet.Forget(userId);
                 cooldowns.Remove(userId);
+                catalogCooldowns.Remove(userId);
             }
             catch (Exception e)
             {
@@ -109,10 +116,36 @@ namespace ArcadeShop
         {
             Wallet.Clear();
             cooldowns.Clear();
+            catalogCooldowns.Clear();
             paidGenerators.Clear();
         }
 
-        public string Describe(Player player)
+        public string CheckItems()
+        {
+            foreach (ShopItem item in Config.Items)
+            {
+                if (!InventoryItemLoader.AvailableItems.ContainsKey(item.Item))
+                    return $"objet inconnu : {item.Item}";
+            }
+
+            return null;
+        }
+
+        public bool TryDescribe(Player player, out string response)
+        {
+            if (catalogCooldowns.IsOnCooldown(player.UserId, Config.CatalogCooldownSeconds, out _))
+            {
+                response = Text.TooFast;
+                return false;
+            }
+
+            catalogCooldowns.Register(player.UserId);
+
+            response = Describe(player);
+            return true;
+        }
+
+        private string Describe(Player player)
         {
             StringBuilder builder = new StringBuilder(512);
 

@@ -1,10 +1,11 @@
 # ArcadeShop
 
 Les joueurs gagnent des points pendant le round et les depensent dans une boutique, depuis la console du jeu. Les
-points ne survivent pas au round : rien n'est stocke, et un joueur qui part perd son solde.
+points ne survivent pas au round et rien n'est stocke. Un joueur qui se reconnecte pendant le round retrouve son solde
+et ses limites d'achat : quitter ne remet rien a zero.
 
-Rapportent des points : tuer un ennemi, tuer un SCP, lancer un generateur et s'evader. Le tir allie ne rapporte
-rien, et un generateur ne paie qu'une fois, meme s'il est coupe puis relance. La boutique ferme pendant un mode de
+Rapportent des points : tuer un ennemi, tuer un SCP, lancer un generateur et s'evader. SCP-049-2 compte comme un
+ennemi ordinaire. Le tir allie ne rapporte rien, et un generateur ne paie qu'une fois, meme s'il est coupe puis relance. La boutique ferme pendant un mode de
 jeu.
 
 Seul un humain vivant et sans menottes peut acheter. Un inventaire plein laisse l'objet a ses pieds, et la recompense
@@ -30,12 +31,14 @@ Alias `.boutique`.
 | `points_per_contract` | `15` | Points par contrat rempli, si Contracts est installe |
 | `max_balance` | `500` | Solde maximal d'un joueur |
 | `buy_cooldown_seconds` | `2` | Delai entre deux achats, 1 au plus bas |
+| `catalog_cooldown_seconds` | `1` | Delai entre deux affichages du catalogue, 0.5 au plus bas |
 | `items` | 9 objets | Catalogue : `key`, `label`, `item`, `quantity`, `price`, `limit` |
 | `pause_during_gamemodes` | `true` | Ferme la boutique pendant un mode de jeu |
 | `hint_duration` | `3` | Duree des hints, en secondes |
 
 `limit` compte les achats par joueur et par round, `0` voulant dire sans limite. `quantity` compte les munitions pour
-une boite. Un objet sans `key`, sans `item` ou a prix negatif est ignore au chargement, avec un avertissement.
+une boite. Un objet sans `key`, sans `item` ou a prix negatif est ignore au chargement, avec un avertissement, et
+`collection check` signale un `item` que le jeu ne connait pas.
 
 ## Commandes staff
 
