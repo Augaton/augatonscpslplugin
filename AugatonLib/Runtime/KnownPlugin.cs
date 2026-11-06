@@ -24,6 +24,7 @@ namespace AugatonLib.Runtime
         {
             new KnownPlugin("AmbientCassie", "AmbientCassie", "annonces d'ambiance"),
             new KnownPlugin("AntiSLCrush", "AntiSLCrush", "protection anti-crash"),
+            new KnownPlugin("ArcadeShop", "ArcadeShop", "boutique de round"),
             new KnownPlugin("AutoFFToggle", "AutoFFToggle", "tir allie auto"),
             new KnownPlugin("BetterCoinflipsRewritten", "BetterCoinflips", "pile ou face"),
             new KnownPlugin("ChaosDirector", "ChaosDirector", "niveau de chaos"),

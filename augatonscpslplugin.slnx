@@ -2,6 +2,7 @@
   <Folder Name="/plugins/">
     <Project Path="plugins/AmbientCassie/AmbientCassie.csproj" />
     <Project Path="plugins/AntiSLCrush/AntiSLCrush.csproj" />
+    <Project Path="plugins/ArcadeShop/ArcadeShop.csproj" />
     <Project Path="plugins/AutoFFToggle/AutoFFToggle.csproj" />
     <Project Path="plugins/BetterCoinflipsRewritten/BetterCoinflipsRewritten.csproj" />
     <Project Path="plugins/ChaosDirector/ChaosDirector.csproj" />
