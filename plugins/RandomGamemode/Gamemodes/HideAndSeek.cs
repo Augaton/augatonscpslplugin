@@ -61,6 +61,10 @@ namespace RandomGamemode.Gamemodes
                 yield break;
 
             hunter.SetRole(Config.HideAndSeekSeekerRole);
+
+            // Les joueurs se cachent autour des cellules : depuis son point d'apparition en zone lourde,
+            // le chasseur perdrait une bonne partie de sa traque a les rejoindre.
+            MoveToSpawn(hunter, RoleTypeId.ClassD);
             Announce(Text.HideAndSeekReleased);
 
             yield return Timing.WaitForSeconds(Config.HideAndSeekHuntSeconds);
