@@ -109,7 +109,9 @@ namespace Scp261
 
         private void Flashbang(Player player)
         {
-            TimedGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeFlash, null, 2f);
+            // Sans lanceur, un flash ne touche personne si le tir allie est coupe : l'effet s'applique a part.
+            TimedGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeFlash, null, 0f);
+            player.EnableEffect<Flashed>(1, Config.FlashbangSeconds);
             Show(player, Text.Flashbang);
         }
 

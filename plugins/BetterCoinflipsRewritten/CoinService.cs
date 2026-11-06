@@ -149,7 +149,8 @@ namespace BetterCoinflipsRewritten
             badEffects.Add(
                 new WeightedEffect(
                     new TrollFlashEffect(
-                        plugin.Config.TrollFlashFuseTime),
+                        plugin.Config.TrollFlashFuseTime,
+                        plugin.Config.TrollFlashBlindSeconds),
                     plugin.Config.TrollFlashChance));
 
             badEffects.Add(

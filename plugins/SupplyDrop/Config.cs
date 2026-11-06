@@ -34,6 +34,9 @@ namespace SupplyDrop
         [Description("Secondes entre le declenchement du piege et son explosion : le joueur attentif a le temps de fuir.")]
         public float TrapFuseSeconds { get; set; } = 2f;
 
+        [Description("Duree de l'aveuglement d'un piege aveuglant, en secondes.")]
+        public float TrapFlashSeconds { get; set; } = 4f;
+
         [Description("Secondes apres lesquelles un piege intact se desamorce.")]
         public float TrapLifetimeSeconds { get; set; } = 180f;
 

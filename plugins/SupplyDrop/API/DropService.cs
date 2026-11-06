@@ -6,6 +6,7 @@ using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Spawning;
 using Cassie;
+using CustomPlayerEffects;
 using InventorySystem;
 using InventorySystem.Items;
 using InventorySystem.Items.Firearms.Attachments;
@@ -267,28 +268,45 @@ namespace SupplyDrop.API
             {
                 yield return Timing.WaitForSeconds(TrapTickSeconds);
 
-                if (!IsHumanNear(anchor))
+                Player victim = FindHumanNear(anchor);
+
+                if (victim is null)
                     continue;
 
-                ItemType grenade = Chance.Roll(50f) ? ItemType.GrenadeHE : ItemType.GrenadeFlash;
+                // Une grenade sans lanceur ne blesse personne si le tir allie est coupe : la victime en
+                // devient le lanceur. Un lanceur est immunise contre son propre flash, qui s'applique donc a part.
+                bool explosive = Chance.Roll(50f);
+                Vector3 position = anchor + (Vector3.up * 0.5f);
 
-                TimedGrenadeProjectile.SpawnActive(anchor + (Vector3.up * 0.5f), grenade, null, Config.TrapFuseSeconds);
+                if (explosive)
+                {
+                    TimedGrenadeProjectile.SpawnActive(position, ItemType.GrenadeHE, victim, Config.TrapFuseSeconds);
+                    yield break;
+                }
+
+                TimedGrenadeProjectile.SpawnActive(position, ItemType.GrenadeFlash, null, Config.TrapFuseSeconds);
+
+                yield return Timing.WaitForSeconds(Config.TrapFuseSeconds);
+
+                if (!victim.IsDestroyed && victim.IsAlive)
+                    victim.EnableEffect<Flashed>(1, Config.TrapFlashSeconds);
+
                 yield break;
             }
         }
 
         // Chemin chaud : Player.ReadyList allouerait un iterateur LINQ a chaque tick.
-        private bool IsHumanNear(Vector3 anchor)
+        private Player FindHumanNear(Vector3 anchor)
         {
             float rangeSquared = Config.TrapRange * Config.TrapRange;
 
             foreach (Player player in Player.Dictionary.Values)
             {
                 if (player.IsPlayer && player.IsHuman && !player.IsTutorial && (player.Position - anchor).sqrMagnitude <= rangeSquared)
-                    return true;
+                    return player;
             }
 
-            return false;
+            return null;
         }
 
         private int PlaceItems(DropProfile profile, Vector3? forcedPosition, Vector3 anchor, out int attempted)

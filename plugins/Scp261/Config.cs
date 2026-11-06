@@ -53,6 +53,9 @@ namespace Scp261
         [Description("Active la grenade flash. Desactivee, ce tirage donne un objet.")]
         public bool EnableFlashbang { get; set; } = true;
 
+        [Description("Duree de l'aveuglement du resultat flash, en secondes.")]
+        public float FlashbangSeconds { get; set; } = 4f;
+
         [Description("Active la flaque de tantrum. Desactivee, ce tirage donne un objet.")]
         public bool EnableTantrum { get; set; } = true;
 

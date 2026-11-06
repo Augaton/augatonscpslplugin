@@ -136,6 +136,9 @@ namespace BetterCoinflipsRewritten
         [Description("Retardement de la grenade flash, en secondes.")]
         public float TrollFlashFuseTime { get; set; } = 0.8f;
 
+        [Description("Duree de l'aveuglement de la grenade flash, en secondes.")]
+        public float TrollFlashBlindSeconds { get; set; } = 4f;
+
         [Description("Poids de l'effet qui laisse le joueur a 1 PV.")]
         public int OneHpLeftChance { get; set; } = 15;
 
