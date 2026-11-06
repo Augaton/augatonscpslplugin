@@ -7,6 +7,7 @@ using BetterCoinflipsRewritten.API;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
 using MEC;
+using PlayerStatsSystem;
 
 namespace BetterCoinflipsRewritten
 {
@@ -155,7 +156,11 @@ namespace BetterCoinflipsRewritten
         {
             try
             {
-                if (ev?.Player is null || !SecondChance.TryConsume(ev.Player))
+                // L'ogive ne frappe qu'une fois : un survivant resterait seul dans un complexe sans sortie.
+                if (ev?.Player is null || !ev.IsAllowed || ev.DamageHandler is WarheadDamageHandler)
+                    return;
+
+                if (!SecondChance.TryConsume(ev.Player))
                     return;
 
                 ev.IsAllowed = false;

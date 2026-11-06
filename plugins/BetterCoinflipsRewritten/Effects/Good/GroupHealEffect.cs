@@ -45,7 +45,7 @@ namespace BetterCoinflipsRewritten.Effects.Good
 
             foreach (Player ally in Player.ReadyList)
             {
-                if (!ally.IsAlive || ally.Team != player.Team)
+                if (!ally.IsAlive || ally.Faction != player.Faction)
                     continue;
 
                 if ((ally.Position - player.Position).sqrMagnitude > rangeSquared)
