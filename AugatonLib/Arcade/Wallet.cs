@@ -71,20 +71,19 @@ namespace AugatonLib.Arcade
             return PurchaseResult.Done;
         }
 
+        // Seul le solde part : les limites d'achat restent a leur titulaire, qui les retrouve s'il revient.
         public void Transfer(string from, string to)
         {
-            if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to) || from == to)
+            if (string.IsNullOrEmpty(to) || from == to)
                 return;
 
-            if (!accounts.TryGetValue(from, out Account account))
+            Account account = Find(from);
+
+            if (account is null)
                 return;
 
-            accounts.Remove(from);
-
-            if (accounts.ContainsKey(to))
-                Earn(to, account.Balance);
-            else
-                accounts[to] = account;
+            Earn(to, account.Balance);
+            account.Balance = 0;
         }
 
         public void Clear() => accounts.Clear();

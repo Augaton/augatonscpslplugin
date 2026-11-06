@@ -178,6 +178,21 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void ATransferLeavesPurchaseLimitsWithTheirOwner()
+        {
+            Wallet wallet = new Wallet();
+
+            wallet.Earn("a", 30);
+            wallet.TryBuy("a", "x", 10, 1);
+            wallet.Transfer("a", "b");
+
+            Assert.Equal(20, wallet.BalanceOf("b"));
+            Assert.Equal(0, wallet.BalanceOf("a"));
+            Assert.Equal(1, wallet.BoughtCount("a", "x"));
+            Assert.Equal(0, wallet.BoughtCount("b", "x"));
+        }
+
+        [Fact]
         public void ATransferToOneselfChangesNothing()
         {
             Wallet wallet = new Wallet();
