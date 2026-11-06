@@ -21,6 +21,22 @@ namespace Scp261
 
         public int Count => spawned.Count;
 
+        public string Describe()
+        {
+            if (spawned.Count == 0)
+                return "aucune";
+
+            List<string> rooms = new List<string>(spawned.Count);
+
+            foreach (GameObject machine in spawned)
+            {
+                if (machine != null)
+                    rooms.Add(Room.TryGetRoomAtPosition(machine.transform.position, out Room room) ? room.Name.ToString() : "salle inconnue");
+            }
+
+            return string.Join(", ", rooms);
+        }
+
         public void SpawnForRound()
         {
             Clear();

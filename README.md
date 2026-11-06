@@ -175,6 +175,7 @@ Disponibles dans le Remote Admin et la console du serveur. Sans argument, une co
 | `remotekeycard` | `rk` | `remotekeycard.manage` | `status` |
 | `replacer` | `rep` | `replacer.manage` | `status` |
 | `scp1162` | `1162` | `scp1162.manage` | `status`, `spawn`, `despawn` |
+| `scp261` | `261` | `scp261.manage` | `status` |
 | `scp500` | `pills` | `scp500s.give` | `list`, `give` |
 | `scpproximity` | `prox` | `scpproximitychat.manage` | `status` |
 | `scpreplacer` | `scprep` | `scpreplacer.manage` | `status` |

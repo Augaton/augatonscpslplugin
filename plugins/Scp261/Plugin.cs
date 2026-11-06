@@ -17,6 +17,10 @@ namespace Scp261
 
         private readonly CooldownTracker cooldowns = new CooldownTracker();
 
+        public static Plugin Instance { get; private set; }
+
+        internal VendingMachines Machines => machines;
+
         private VendingMachines machines;
         private VendingOutcomes outcomes;
 
@@ -28,6 +32,7 @@ namespace Scp261
 
         public override void Enable()
         {
+            Instance = this;
             machines = new VendingMachines(this);
             outcomes = new VendingOutcomes(this);
 
@@ -53,6 +58,7 @@ namespace Scp261
 
             machines = null;
             outcomes = null;
+            Instance = null;
         }
 
         protected override void ValidateConfig()

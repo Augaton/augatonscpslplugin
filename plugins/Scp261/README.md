@@ -46,3 +46,11 @@ par `ScaleArbiter`, donc il cohabite avec RealisticSizes.
 - **Traduction.** Les textes sont en francais, dans `translation.yml`, et les hints passent par
   HintServiceMeow.
 - **Collection.** Taille arbitree, cooldown par joueur, pause des modes arene, bilan de round et niveau de chaos.
+
+## Commandes
+
+| Commande | Permission | Effet |
+|---|---|---|
+| `scp261 status` | `scp261.manage` | Etat du plugin et salle de chaque machine |
+
+Alias `261`.
