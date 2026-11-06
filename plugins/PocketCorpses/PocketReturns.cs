@@ -110,6 +110,11 @@ namespace PocketCorpses
 
         private void UpdateCorpses(double now, Config config)
         {
+            // Sans plafond trouve, chaque corps retenterait un lancer de rayon par joueur, quatre fois par seconde.
+            bool searched = false;
+            bool found = false;
+            Vector3 roof = default;
+
             for (int i = corpses.Count - 1; i >= 0; i--)
             {
                 FallingCorpse corpse = corpses[i];
@@ -127,8 +132,14 @@ namespace PocketCorpses
 
                 if (corpse.Roof is null)
                 {
+                    if (!searched)
+                    {
+                        found = DropPoints.TryFindRoof(out roof);
+                        searched = true;
+                    }
+
                     // Sans joueur hors de la dimension, le corps attend : rien ne se perd.
-                    if (DropPoints.TryFindRoof(out Vector3 roof))
+                    if (found)
                         Announce(corpse, roof, now, config);
 
                     continue;
