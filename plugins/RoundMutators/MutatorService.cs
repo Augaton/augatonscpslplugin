@@ -250,6 +250,11 @@ namespace RoundMutators
                         ItemGrant.Give(player, ItemType.Flashlight);
                     break;
 
+                // Un mort perd sa lampe : il doit en recevoir une autre s'il revient par une vague.
+                case MutatorType.NightFall:
+                    equipped.Remove(player.UserId);
+                    break;
+
                 case MutatorType.SwiftScps when player.IsSCP:
                     if (!player.TryGetEffect(out MovementBoost scpBoost) || scpBoost.Intensity < Config.SwiftScpPercent)
                         player.EnableEffect<MovementBoost>((byte)Config.SwiftScpPercent);
