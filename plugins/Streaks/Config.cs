@@ -27,8 +27,8 @@ namespace Streaks
         [Description("Kills de plus qui ajoutent un objet a la prime. 0 = prime fixe.")]
         public int BountyStepKills { get; set; } = 3;
 
-        [Description("Objets de prime au plus, 1 au plus bas.")]
-        public int BountyMaxQuantity { get; set; } = 4;
+        [Description("Objets ajoutes a la prime au plus.")]
+        public int BountyMaxBonus { get; set; } = 3;
 
         [Description("Serie dont la fin est annoncee a tout le serveur, quand aucune prime ne l'annonce deja. 0 = jamais.")]
         public int AnnounceEndKills { get; set; } = 3;

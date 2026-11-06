@@ -59,7 +59,7 @@ namespace Streaks
         {
             Ladder.SetSteps(Config.Rewards);
             Config.BountyStepKills = (int)AtLeast("bounty_step_kills", Config.BountyStepKills, 0f);
-            Config.BountyMaxQuantity = (int)AtLeast("bounty_max_quantity", Config.BountyMaxQuantity, 1f);
+            Config.BountyMaxBonus = (int)AtLeast("bounty_max_bonus", Config.BountyMaxBonus, 0f);
             Config.AnnounceEndKills = (int)AtLeast("announce_end_kills", Config.AnnounceEndKills, 0f);
         }
     }

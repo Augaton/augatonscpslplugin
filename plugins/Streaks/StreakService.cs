@@ -41,7 +41,7 @@ namespace Streaks
 
                 if (counted && Config.BountyKills > 0 && ended >= Config.BountyKills)
                     ClaimBounty(killer, ev.Player, ended);
-                else if (Config.AnnounceEndKills > 0 && ended >= Config.AnnounceEndKills)
+                else if (Config.AnnounceEndKills > 0 && ended >= Config.AnnounceEndKills && !retained.ContainsKey(ev.Player.UserId))
                     AnnounceEnd(ev.Player, ended);
 
                 if (counted)
@@ -171,7 +171,7 @@ namespace Streaks
         {
             int bonus = Config.BountyStepKills > 0 ? (kills - Config.BountyKills) / Config.BountyStepKills : 0;
 
-            return Math.Min(Config.BountyQuantity + bonus, Config.BountyMaxQuantity);
+            return Config.BountyQuantity + Math.Min(bonus, Config.BountyMaxBonus);
         }
 
         private void ClaimBounty(Player killer, Player target, int kills)

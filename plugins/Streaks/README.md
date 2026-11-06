@@ -16,7 +16,7 @@ Avec SCP500s, la recompense `SCP500` est une vraie pilule. Un inventaire plein l
 | `bounty_kills` | `5` | Kills d'affilee qui mettent une prime. `0` = jamais |
 | `bounty_item`, `bounty_quantity` | `Adrenaline`, `1` | Objet donne a celui qui abat la cible |
 | `bounty_step_kills` | `3` | Kills de plus qui ajoutent un objet a la prime. `0` = prime fixe |
-| `bounty_max_quantity` | `4` | Objets de prime au plus, 1 au plus bas |
+| `bounty_max_bonus` | `3` | Objets ajoutes a la prime au plus |
 | `announce_end_kills` | `3` | Serie dont la fin est annoncee a tous, quand aucune prime ne l'annonce deja. `0` = jamais |
 | `kills_for_gamemode_win` | `2` | Kills d'avance au round suivant pour le vainqueur d'un mode de jeu. `0` = aucun |
 | `pause_during_gamemodes` | `true` | Ne compte rien pendant un mode de jeu |
