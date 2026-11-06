@@ -19,13 +19,27 @@ namespace BetterCoinflipsRewritten.Effects.Bad
             return player is not null &&
                    !player.IsDestroyed &&
                    player.IsAlive &&
-                   player.CurrentItem is FirearmItem;
+                   FindFirearm(player) is not null;
         }
 
         public void Execute(Player player)
         {
-            if (player.CurrentItem is FirearmItem firearm)
+            FirearmItem firearm = FindFirearm(player);
+
+            if (firearm is not null)
                 player.DropItem(firearm);
+        }
+
+        // Le joueur tient la piece au moment du lancer : l'arme est forcement dans l'inventaire.
+        private static FirearmItem FindFirearm(Player player)
+        {
+            foreach (Item item in player.Items)
+            {
+                if (item is FirearmItem firearm)
+                    return firearm;
+            }
+
+            return null;
         }
     }
 }

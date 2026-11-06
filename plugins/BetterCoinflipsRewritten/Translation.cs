@@ -246,7 +246,7 @@ namespace BetterCoinflipsRewritten
 
         [Description("Message de l'effet chargeur plein.")]
         public string FullMagazineEffectMessage { get; set; } =
-            "Votre chargeur est plein.";
+            "Le chargeur d'une de vos armes est plein.";
 
         [Description("Message de l'effet soin de groupe. {count} est le nombre de joueurs soignes, lanceur compris.")]
         public string GroupHealEffectMessage { get; set; } =
@@ -258,7 +258,7 @@ namespace BetterCoinflipsRewritten
 
         [Description("Message de l'effet desarmement.")]
         public string DisarmEffectMessage { get; set; } =
-            "Votre arme vous glisse des mains.";
+            "Une de vos armes tombe au sol.";
 
         [Description("Message de l'effet repere, pour le lanceur.")]
         public string SpottedEffectMessage { get; set; } =

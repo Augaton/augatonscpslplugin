@@ -255,7 +255,7 @@ namespace BetterCoinflipsRewritten
             ItemType.Radio,
         };
 
-        [Description("Poids de l'effet chargeur plein. Il n'est tire que si le joueur tient une arme entamee.")]
+        [Description("Poids de l'effet chargeur plein. Il n'est tire que si le joueur porte une arme entamee.")]
         public int FullMagazineChance { get; set; } = 6;
 
         [Description("Poids de l'effet soin de groupe.")]
@@ -270,7 +270,7 @@ namespace BetterCoinflipsRewritten
         [Description("Poids de l'effet detecteur. Il n'est tire que si un SCP est en jeu.")]
         public int DetectorChance { get; set; } = 6;
 
-        [Description("Poids de l'effet desarmement. Il n'est tire que si le joueur tient une arme.")]
+        [Description("Poids de l'effet desarmement. Il n'est tire que si le joueur porte une arme.")]
         public int DisarmChance { get; set; } = 7;
 
         [Description("Poids de l'effet repere. Il n'est tire que si un SCP est en jeu.")]

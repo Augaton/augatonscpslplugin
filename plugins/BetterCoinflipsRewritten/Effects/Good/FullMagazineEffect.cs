@@ -19,14 +19,27 @@ namespace BetterCoinflipsRewritten.Effects.Good
             return player is not null &&
                    !player.IsDestroyed &&
                    player.IsAlive &&
-                   player.CurrentItem is FirearmItem firearm &&
-                   firearm.StoredAmmo < firearm.MaxAmmo;
+                   FindEmptied(player) is not null;
         }
 
         public void Execute(Player player)
         {
-            if (player.CurrentItem is FirearmItem firearm)
+            FirearmItem firearm = FindEmptied(player);
+
+            if (firearm is not null)
                 firearm.StoredAmmo = firearm.MaxAmmo;
+        }
+
+        // Le joueur tient la piece au moment du lancer : l'arme est forcement dans l'inventaire.
+        private static FirearmItem FindEmptied(Player player)
+        {
+            foreach (Item item in player.Items)
+            {
+                if (item is FirearmItem firearm && firearm.StoredAmmo < firearm.MaxAmmo)
+                    return firearm;
+            }
+
+            return null;
         }
     }
 }

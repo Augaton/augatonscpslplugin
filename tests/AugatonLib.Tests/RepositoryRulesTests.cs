@@ -169,6 +169,35 @@ namespace AugatonLib.Tests
             Assert.Empty(undescribed);
         }
 
+        // Un effet part quand le joueur lance la piece : il tient donc toujours la piece elle-meme.
+        [Fact]
+        public void NoCoinEffectReadsTheHeldItem()
+        {
+            string effects = Path.Combine(Root(), "plugins", "BetterCoinflipsRewritten", "Effects");
+
+            List<string> offenders = SourcesOf(effects)
+                .Where(file => File.ReadAllText(file).Contains("CurrentItem"))
+                .Select(Path.GetFileName)
+                .ToList();
+
+            Assert.Empty(offenders);
+        }
+
+        // Sans entree, un mode perd ses reglages : Patate chaude n'aurait plus de tir allie.
+        [Fact]
+        public void EveryGamemodeHasItsDefaultSettings()
+        {
+            string plugin = Path.Combine(Root(), "plugins", "RandomGamemode");
+            string config = File.ReadAllText(Path.Combine(plugin, "Config.cs"));
+
+            List<string> missing = SourcesOf(Path.Combine(plugin, "Gamemodes"))
+                .Select(file => Regex.Match(File.ReadAllText(file), @"override string Key => ""(\w+)""").Groups[1].Value)
+                .Where(key => key.Length > 0 && !config.Contains($"[\"{key}\"] = new GamemodeSettings"))
+                .ToList();
+
+            Assert.Empty(missing);
+        }
+
         [Fact]
         public void NoCatchBlockIsEmpty()
         {

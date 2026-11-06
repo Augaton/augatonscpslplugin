@@ -265,9 +265,9 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] La taille donnee par une piece disparait au changement de role.
 - [ ] Spammer une piece en cooldown n'affiche qu'un message par seconde.
 - [ ] Seconde chance : la mort est annulee une seule fois, et disparait au changement de role.
-- [ ] Jackpot : 3 objets au sol. Chargeur plein : tire seulement avec une arme entamee.
+- [ ] Jackpot : 3 objets au sol. Chargeur plein : tire seulement avec une arme entamee dans l'inventaire.
 - [ ] Soin de groupe : seuls les allies a portee sont soignes. Detecteur : la distance annoncee est plausible.
-- [ ] Desarmement : l'arme tombe au sol, et l'effet n'est pas tire sans arme en main.
+- [ ] Desarmement : une arme de l'inventaire tombe au sol, et l'effet n'est pas tire sans arme.
 - [ ] Repere : les SCP recoivent le hint pendant la duree prevue, et plus du tout si le joueur meurt.
 - [ ] Fausse alerte : C.A.S.S.I.E parle, avec ses sous-titres, et `collection check` ne signale aucun mot inconnu.
 
