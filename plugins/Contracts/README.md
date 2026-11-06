@@ -3,8 +3,9 @@
 Chaque humain recoit un contrat secret en debut de round : eliminer des ennemis, activer un generateur, s'evader,
 se soigner, ou rester en vie un certain temps. Le remplir donne une recompense. Personne d'autre ne voit le contrat.
 
-Un joueur a un seul contrat par round. Un joueur revenu par une vague recoit le sien s'il n'en avait pas. Rien n'est
-stocke : tout repart de zero au round suivant, et un joueur qui part perd son contrat.
+Un joueur a un seul contrat par round, meme s'il se deconnecte puis revient. Un joueur revenu par une vague recoit le
+sien s'il n'en avait pas. Rien n'est stocke : tout repart de zero au round suivant. Le contrat d'evasion ne va qu'aux
+Classe-D et aux scientifiques, les seuls que le jeu laisse s'evader.
 
 Seuls comptent les kills d'un ennemi, ni le tir allie ni le suicide. Rien n'est distribue ni compte pendant un mode
 de jeu, ou quand TickGuard a suspendu les evenements. Avec SCP500s, la recompense `SCP500` est une vraie pilule, et

@@ -58,12 +58,6 @@ namespace AugatonLib.Arcade
             return objective.Progress >= objective.Target;
         }
 
-        public void Forget(string player)
-        {
-            if (player is not null)
-                objectives.Remove(player);
-        }
-
         public void Clear() => objectives.Clear();
     }
 }

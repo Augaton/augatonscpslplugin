@@ -191,7 +191,7 @@ namespace Contracts
 
         private void Offer(Player player)
         {
-            List<ContractOffer> available = Config.Offers.Where(offer => offer is not null && offer.Weight > 0).ToList();
+            List<ContractOffer> available = Config.Offers.Where(offer => IsAvailableTo(offer, player)).ToList();
             ContractOffer offer = Chance.PickWeighted(available, candidate => candidate.Weight);
 
             if (offer is null || !book.Assign(player.UserId, offer.Kind, offer.Target))
@@ -203,6 +203,15 @@ namespace Contracts
                 player,
                 Text.Assigned.Replace("%OBJECTIVE%", ObjectiveOf(offer.Kind, offer.Target)).Replace("%REWARD%", offer.RewardLabel),
                 Config.HintDuration);
+        }
+
+        // Le jeu ne laisse s'evader que les Classe-D et les scientifiques.
+        private static bool IsAvailableTo(ContractOffer offer, Player player)
+        {
+            if (offer is null || offer.Weight <= 0)
+                return false;
+
+            return offer.Kind != ContractKind.Escape || player.Role == RoleTypeId.ClassD || player.Role == RoleTypeId.Scientist;
         }
 
         private void Advance(Player player, ContractKind kind)

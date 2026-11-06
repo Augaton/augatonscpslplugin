@@ -83,17 +83,5 @@ namespace AugatonLib.Tests
 
             Assert.True(book.Advance("a", Kind.Kill, 5));
         }
-
-        [Fact]
-        public void ForgettingAPlayerFreesTheirSlot()
-        {
-            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
-
-            book.Assign("a", Kind.Kill, 1);
-            book.Forget("a");
-
-            Assert.False(book.Has("a"));
-            Assert.True(book.Assign("a", Kind.Escape, 1));
-        }
     }
 }
