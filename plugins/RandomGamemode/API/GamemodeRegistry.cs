@@ -235,7 +235,7 @@ namespace RandomGamemode.API
             Server.SendBroadcast(string.Format(Config.StartText, gamemode.DisplayName), Config.HeaderDuration);
 
             runScheduled = true;
-            runHandle = Timing.RunCoroutine(gamemode.Run(), Segment.FixedUpdate);
+            runHandle = Timing.RunCoroutine(Guarded(gamemode), Segment.FixedUpdate);
 
             if (gamemode.Settings.RoundTimeLimit > 0f)
             {
@@ -258,6 +258,30 @@ namespace RandomGamemode.API
             PluginBus.Publish(BusTopics.GamemodeStarted, Owner, gamemode.DisplayName);
 
             Logger.Info($"[RandomGamemode] Mode \"{gamemode.Key}\" demarre.");
+        }
+
+        // MEC journalise l'exception et arrete la coroutine, mais le mode resterait actif a moitie applique
+        // jusqu'a la fin du round : vagues coupees, lumieres, evenements suspendus.
+        private IEnumerator<float> Guarded(GamemodeBase gamemode)
+        {
+            IEnumerator<float> run = gamemode.Run();
+
+            while (true)
+            {
+                try
+                {
+                    if (!run.MoveNext())
+                        yield break;
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Mode {gamemode.Key} interrompu : {e}");
+                    End(false);
+                    yield break;
+                }
+
+                yield return run.Current;
+            }
         }
 
         public void End(bool broadcast)
