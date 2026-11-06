@@ -3,6 +3,7 @@ using AugatonLib.Arbitration;
 using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Runtime;
+using AugatonLib.World;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
@@ -120,7 +121,7 @@ namespace Scp261
 
             Item held = player.CurrentItem;
 
-            if (held is null || Config.ActivationItems is null || !Config.ActivationItems.Contains(held.Type))
+            if (held is null || SpentItems.IsSpent(held.Serial) || Config.ActivationItems is null || !Config.ActivationItems.Contains(held.Type))
             {
                 Hints.Show(player, Translation.MissingItem, Config.HintDuration);
                 return;

@@ -3,6 +3,7 @@ using AugatonLib.Caching;
 using AugatonLib.Bus;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
+using AugatonLib.World;
 using CustomPlayerEffects;
 using InventorySystem;
 using InventorySystem.Items.Firearms.Attachments;
@@ -86,7 +87,7 @@ namespace SCP1162.API
             if (!IsSpawned || !Round.IsRoundStarted || player is null || item is null)
                 return true;
 
-            if (config.PauseDuringGamemodes && WorldEvents.IsPaused)
+            if (SpentItems.IsSpent(item.Serial) || (config.PauseDuringGamemodes && WorldEvents.IsPaused))
                 return true;
 
             if (!player.IsAlive || !IsInReach(player) || IsIgnored(player, item))

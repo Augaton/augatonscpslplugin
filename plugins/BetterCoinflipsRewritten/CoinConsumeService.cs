@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using AugatonLib.World;
 using LabApi.Features.Wrappers;
 
 namespace BetterCoinflipsRewritten
@@ -6,7 +6,6 @@ namespace BetterCoinflipsRewritten
     public sealed class CoinConsumeService
     {
         private readonly Plugin plugin;
-        private readonly HashSet<ushort> spent = new HashSet<ushort>();
 
         public CoinConsumeService(Plugin plugin)
         {
@@ -20,7 +19,7 @@ namespace BetterCoinflipsRewritten
 
         public bool IsSpent(Item coin)
         {
-            return coin is not null && spent.Contains(coin.Serial);
+            return coin is not null && SpentItems.IsSpent(coin.Serial);
         }
 
         public void Schedule(Item coin)
@@ -30,19 +29,19 @@ namespace BetterCoinflipsRewritten
 
             ushort serial = coin.Serial;
 
-            spent.Add(serial);
+            SpentItems.Mark(serial);
 
             API.Scheduler.Delay(
                 plugin.Config.CoinConsumeDelay,
                 delegate { Consume(serial); });
         }
 
-        public void Clear() => spent.Clear();
+        public void Clear() => SpentItems.Clear();
 
         // Pendant le delai, la piece peut etre lachee et ramassee par un autre : seul son serial la suit.
         private void Consume(ushort serial)
         {
-            spent.Remove(serial);
+            SpentItems.Release(serial);
 
             Item carried = Item.Get(serial);
 

@@ -50,6 +50,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 
 - Sans RealisticSizes, une taille réduite revenait après la mort et restait jusqu'à la fin du round.
 - Une pièce lâchée pendant son délai de consommation survivait, et deux joueurs pouvaient l'alterner sans limite.
+- Une pièce lancée ne peut plus servir une seconde fois dans SCP-261, SCP-1162 ou SCP-914 avant de disparaître.
 - `.human` faisait perdre un rôle de SCP quand personne ne pouvait le reprendre.
 - `.human` et `.volunteer` pouvaient casser les modes de jeu fondés sur des SCP.
 - Pilules, pièces, SCP-1162, Replacer et ChaosDirector ignoraient en partie les modes arène.

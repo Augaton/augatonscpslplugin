@@ -2,6 +2,7 @@ using System;
 using AugatonLib.Bus;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
+using AugatonLib.World;
 using InventorySystem;
 using LabApi.Events.Arguments.Scp914Events;
 using LabApi.Features.Wrappers;
@@ -34,7 +35,7 @@ namespace Scp914Recipes
         {
             try
             {
-                if (ev?.Pickup is null || !ev.IsAllowed || !TryRoll(ev.Pickup.Type, ev.KnobSetting, out ItemType output))
+                if (ev?.Pickup is null || !ev.IsAllowed || SpentItems.IsSpent(ev.Pickup.Serial) || !TryRoll(ev.Pickup.Type, ev.KnobSetting, out ItemType output))
                     return;
 
                 ev.IsAllowed = false;
@@ -51,7 +52,7 @@ namespace Scp914Recipes
         {
             try
             {
-                if (ev?.Player is null || ev.Item is null || !ev.IsAllowed || !TryRoll(ev.Item.Type, ev.KnobSetting, out ItemType output))
+                if (ev?.Player is null || ev.Item is null || !ev.IsAllowed || SpentItems.IsSpent(ev.Item.Serial) || !TryRoll(ev.Item.Type, ev.KnobSetting, out ItemType output))
                     return;
 
                 ev.IsAllowed = false;
