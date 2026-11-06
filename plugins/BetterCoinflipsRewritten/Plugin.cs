@@ -93,7 +93,10 @@ namespace BetterCoinflipsRewritten
             Config.CoinCooldown = AtLeast("coin_cooldown", Config.CoinCooldown, 0.5f);
             Config.SpottedDuration = AtLeast("spotted_duration", Config.SpottedDuration, 4f);
             Config.GroupHealRange = AtLeast("group_heal_range", Config.GroupHealRange, 1f);
-            Config.JackpotAmount = (int)AtLeast("jackpot_amount", Config.JackpotAmount, 1f);
+            Config.JackpotAmount = (int)Clamp("jackpot_amount", Config.JackpotAmount, 1f, 20f);
+            Config.DiscoLightsDuration = Clamp("disco_lights_duration", Config.DiscoLightsDuration, 1f, 120f);
+            Config.CoinRenewalTarget = (int)Clamp("coin_renewal_target", Config.CoinRenewalTarget, 0f, 30f);
+            Config.CoinRenewalBatch = (int)Clamp("coin_renewal_batch", Config.CoinRenewalBatch, 1f, 10f);
             Config.SecondChanceHealth = AtLeast("second_chance_health", Config.SecondChanceHealth, 1f);
 
             Config.CoinConsumeDelay = Clamp(

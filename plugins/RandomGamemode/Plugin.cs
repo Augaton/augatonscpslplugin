@@ -19,6 +19,8 @@ namespace RandomGamemode
 {
     public sealed class Plugin : AugatonPlugin<Config, Translation>
     {
+        private const int MaxInventoryItems = 8;
+
         public override string Name => "RandomGamemode";
 
         public override string Description => "Modes de jeu speciaux tires au hasard au debut d'un round.";
@@ -127,6 +129,10 @@ namespace RandomGamemode
 
         protected override void ValidateConfig()
         {
+            Config.VoteOptions = Math.Min((int)AtLeast("vote_options", Config.VoteOptions, 2f), 9);
+            Config.PillPartyCount = Math.Min((int)AtLeast("pill_party_count", Config.PillPartyCount, 1f), MaxInventoryItems);
+            Config.CoinRoyaleCount = Math.Min((int)AtLeast("coin_royale_count", Config.CoinRoyaleCount, 1f), MaxInventoryItems);
+            Config.CustomItemRushCount = Math.Min((int)AtLeast("custom_item_rush_count", Config.CustomItemRushCount, 1f), MaxInventoryItems);
             Config.HeldRoundLimitSeconds = AtLeast("held_round_limit_seconds", Config.HeldRoundLimitSeconds, 60f);
             Config.VoteReminderSeconds = AtLeast("vote_reminder_seconds", Config.VoteReminderSeconds, 5f);
             Config.VoteCommandCooldownSeconds = AtLeast("vote_command_cooldown_seconds", Config.VoteCommandCooldownSeconds, 0.5f);
