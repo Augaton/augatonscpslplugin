@@ -84,6 +84,9 @@ namespace SpectatorVote
             if (!Round.IsRoundInProgress)
                 return "Aucun round en cours.";
 
+            if (Warhead.IsDetonated)
+                return "Plus aucun incident possible apres l'ogive.";
+
             if (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses)
                 return "Suspendu pendant un mode de jeu.";
 
