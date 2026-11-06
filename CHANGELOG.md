@@ -23,6 +23,9 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - ChaosDirector : points pour les échanges à SCP-1162.
 - SCPReplacer annonce ses reprises sur le bus : elles comptent dans le bilan, et le volontaire garde la taille du SCP parti.
 - `labapi reload configs` recharge les pilules de SCP500s.
+- `scp261 status` indique la salle de chaque machine.
+- `collection check` couvre aussi les annonces de TeamGenocide et de BetterCoinflips, les portes de La vie selon Larry et le point de largage.
+- La config de BetterCoinflips est décrite en français.
 
 ### Corrections
 
@@ -36,6 +39,8 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - L'échange de position d'une pièce pouvait viser le rôle Tutorial.
 - Après l'ogive, une pièce ou une pilule pouvait renvoyer un survivant dans le complexe détruit, sans sortie.
 - `collection check` prenait les bruitages de C.A.S.S.I.E pour des mots inconnus.
+- Un mode de jeu qui plante se termine proprement au lieu de rester actif à moitié appliqué.
+- Le rappel `.human` ne s'affiche plus pendant un mode de jeu, et les refus de `.human` se traduisent.
 
 ### Sécurité
 

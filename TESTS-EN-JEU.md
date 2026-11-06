@@ -114,6 +114,7 @@ Commencer par `chaos collection check` pendant un round : chaque `[ECHEC]` signa
 - [ ] `microdock test` donne un Micro-HID a 10 %, et `microdock status` montre sa recharge une fois pose.
 
 **Scp261**
+- [ ] `scp261 status` indique la salle de chaque machine.
 - [ ] La machine apparait dans `EzOfficeSmall`, et une piece en main permet de l'utiliser.
 - [ ] Le bloc simple recoit bien l'interaction, malgre son collider : c'est la version sans ProjectMER.
 - [ ] Avec ProjectMER et le schema d'origine, le vrai modele apparait et reagit.
@@ -173,6 +174,7 @@ Commencer par `chaos collection check` pendant un round : chaque `[ECHEC]` signa
 - [ ] Portails A et B refuses avec le retour visuel, SCP-079 au niveau 3, CASSIE sans fond sonore.
 - [ ] Mode arene : personne n'est remplace, et le Juggernaut qui se deconnecte met fin au mode normalement.
 - [ ] `.human` et `.volunteer` sont refuses pendant Cacahuetes, Larry, Mimetisme et Infection, puis remarchent au round suivant.
+- [ ] Le rappel `.human` n'apparait pas pendant un mode, et arrive normalement 1 s apres le debut d'un round classique.
 - [ ] Un joueur qui vote puis quitte le lobby ne compte plus au depouillement.
 - [ ] Cache-cache : le round ne se termine pas pendant la cachette, le chasseur arrive ensuite, et les survivants gagnent a la fin du temps.
 - [ ] Cache-cache : si le chasseur se deconnecte pendant la cachette, le round se termine proprement.
