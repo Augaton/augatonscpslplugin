@@ -8,3 +8,9 @@ out/
 .vs/
 .idea/
 .claude/
+
+# Configs de serveur : elles peuvent contenir un webhook.
+config.yml
+translation.yml
+properties.yml
+.env

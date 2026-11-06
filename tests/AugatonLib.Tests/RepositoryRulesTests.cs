@@ -42,6 +42,29 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void NoRealWebhookIsCommitted()
+        {
+            string[] ignored = { ".git", ".references", "bin", "obj", "out" };
+            string[] extensions = { ".cs", ".md", ".yml", ".yaml", ".json", ".sh", ".txt", ".csproj", ".props", ".targets" };
+            List<string> pending = new List<string> { Root() };
+            List<string> offenders = new List<string>();
+
+            while (pending.Count > 0)
+            {
+                string folder = pending[pending.Count - 1];
+                pending.RemoveAt(pending.Count - 1);
+
+                pending.AddRange(Directory.GetDirectories(folder).Where(path => !ignored.Contains(Path.GetFileName(path))));
+
+                offenders.AddRange(Directory.GetFiles(folder)
+                    .Where(file => extensions.Contains(Path.GetExtension(file)))
+                    .Where(file => Regex.IsMatch(File.ReadAllText(file), @"discord(app)?\.com/api/webhooks/\d{15,}/")));
+            }
+
+            Assert.Empty(offenders);
+        }
+
+        [Fact]
         public void EveryEventSubscriptionIsUndone()
         {
             List<string> unbalanced = new List<string>();
