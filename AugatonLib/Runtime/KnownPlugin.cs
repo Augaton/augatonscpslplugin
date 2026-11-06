@@ -41,6 +41,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("Scp914Recipes", "Scp914Recipes", "recettes SCP-914"),
             new KnownPlugin("ScpProximityChat", "ScpProximityChat", "proximite SCP"),
             new KnownPlugin("SCPReplacer", "SCPReplacer", "volontariat SCP"),
+            new KnownPlugin("ScpScaling", "ScpScaling", "PV des SCP selon les joueurs"),
             new KnownPlugin("SiteIncidents", "SiteIncidents", "incidents de site"),
             new KnownPlugin("SupplyDrop", "SupplyDrop", "largages"),
             new KnownPlugin("TeamGenocide", "TeamGenocide", "extinction d'equipe"),
