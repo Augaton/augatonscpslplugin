@@ -368,7 +368,7 @@ namespace SCP500s.API
 
             pill.Consume(player);
 
-            PluginBus.Publish(BusTopics.PillConsumed, Interop.Owner, pill.Key);
+            PluginBus.Publish(BusTopics.PillConsumed, Interop.Owner, player);
 
             Logger.Debug($"{player.Nickname} a consomme la pilule {pill.Key}.", Config.Debug);
         }

@@ -180,9 +180,6 @@ namespace Contracts
 
                 if (type == ItemType.Medkit || type == ItemType.Painkillers || type == ItemType.Adrenaline || type == ItemType.SCP500)
                     Advance(ev.Player, ContractKind.UseMedical);
-
-                if (type == ItemType.SCP500)
-                    Advance(ev.Player, ContractKind.SwallowPills);
             }
             catch (Exception e)
             {
