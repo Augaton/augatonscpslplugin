@@ -35,9 +35,14 @@ namespace AugatonLib.Text
             return null;
         }
 
-        private static bool IsSpoken(string word)
+        // Ponctuation, chiffres, reglages (pitch_0.8, jam_02) et bruitages (.g4) ne sont pas des mots.
+        public static bool IsSpoken(string word)
         {
-            return word != "." && word != "," && !char.IsDigit(word[0]) && !word.Contains("_");
+            return !string.IsNullOrEmpty(word)
+                && word[0] != '.'
+                && word[0] != ','
+                && !char.IsDigit(word[0])
+                && !word.Contains("_");
         }
     }
 }
