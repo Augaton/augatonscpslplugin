@@ -140,6 +140,36 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void EverySettingIsDescribed()
+        {
+            string[] names = { "Config.cs", "Translation.cs", "Translations.cs" };
+            List<string> undescribed = new List<string>();
+
+            foreach (string file in PluginFolders().SelectMany(SourcesOf).Where(path => names.Contains(Path.GetFileName(path))))
+            {
+                string[] lines = File.ReadAllLines(file);
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    Match setting = Regex.Match(lines[i], @"^\s*public .+ (\w+) \{ get; set; \}");
+
+                    if (!setting.Success)
+                        continue;
+
+                    bool described = false;
+
+                    for (int j = i - 1; j >= 0 && lines[j].TrimStart().StartsWith("["); j--)
+                        described |= lines[j].Contains("[Description(");
+
+                    if (!described)
+                        undescribed.Add($"{Path.GetFileName(Path.GetDirectoryName(file))}.{setting.Groups[1].Value}");
+                }
+            }
+
+            Assert.Empty(undescribed);
+        }
+
+        [Fact]
         public void NoCatchBlockIsEmpty()
         {
             List<string> offenders = PluginFolders()
