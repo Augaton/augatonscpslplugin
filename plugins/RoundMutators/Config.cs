@@ -47,6 +47,27 @@ namespace RoundMutators
         [Description("Poids du mutateur de vie. 0 = jamais.")]
         public int FragileHumansWeight { get; set; } = 10;
 
+        [Description("Poids du mutateur de vampirisme. 0 = jamais.")]
+        public int VampireWeight { get; set; } = 10;
+
+        [Description("Poids du mutateur de degats. 0 = jamais.")]
+        public int GlassCannonWeight { get; set; } = 10;
+
+        [Description("Poids du mutateur de munitions sans fin. 0 = jamais.")]
+        public int EndlessAmmoWeight { get; set; } = 10;
+
+        [Description("Poids du mutateur de regeneration. 0 = jamais.")]
+        public int RegenerationWeight { get; set; } = 10;
+
+        [Description("Vie rendue par un kill avec Vampire.")]
+        public float VampireHeal { get; set; } = 25f;
+
+        [Description("Multiplicateur des degats entre joueurs avec GlassCannon, 1 au plus bas.")]
+        public float GlassCannonFactor { get; set; } = 1.5f;
+
+        [Description("Vie rendue par seconde aux humains avec Regeneration.")]
+        public float RegenerationPerSecond { get; set; } = 1f;
+
         [Description("Part retiree de la carte avec ScarceAmmo et ScarceMedical, en pourcentage.")]
         public float ScarcePercent { get; set; } = 60f;
 

@@ -11,5 +11,9 @@ namespace RoundMutators
         ScarceMedical,
         SwiftScps,
         FragileHumans,
+        Vampire,
+        GlassCannon,
+        EndlessAmmo,
+        Regeneration,
     }
 }

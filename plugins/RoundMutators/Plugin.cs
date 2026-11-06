@@ -29,6 +29,8 @@ namespace RoundMutators
             ServerEvents.RoundStarted += Service.ScheduleDraw;
             ServerEvents.RoundEnded += OnRoundEnded;
             ServerEvents.RoundRestarted += Service.Stop;
+            PlayerEvents.Death += Service.OnDeath;
+            PlayerEvents.Hurting += Service.OnHurting;
 
             PluginBus.Subscribe(Owner, BusTopics.GamemodeStarted, Service.OnGamemodeStarted);
             PluginBus.Subscribe(Owner, BusTopics.ChaosLevelChanged, Service.OnChaosLevelChanged);
@@ -42,6 +44,8 @@ namespace RoundMutators
             ServerEvents.RoundStarted -= Service.ScheduleDraw;
             ServerEvents.RoundEnded -= OnRoundEnded;
             ServerEvents.RoundRestarted -= Service.Stop;
+            PlayerEvents.Death -= Service.OnDeath;
+            PlayerEvents.Hurting -= Service.OnHurting;
 
             Service.Stop();
             PluginBus.UnsubscribeOwner(Owner);
@@ -58,6 +62,9 @@ namespace RoundMutators
             Config.StartDelaySeconds = AtLeast("start_delay_seconds", Config.StartDelaySeconds, 3f);
             Config.GravityFactor = AtLeast("gravity_factor", Config.GravityFactor, 0.2f);
             Config.ChaosLevelForMutator = (int)AtLeast("chaos_level_for_mutator", Config.ChaosLevelForMutator, 0f);
+            Config.VampireHeal = AtLeast("vampire_heal", Config.VampireHeal, 0f);
+            Config.GlassCannonFactor = AtLeast("glass_cannon_factor", Config.GlassCannonFactor, 1f);
+            Config.RegenerationPerSecond = AtLeast("regeneration_per_second", Config.RegenerationPerSecond, 0f);
             Config.ScarcePercent = System.Math.Min(100f, AtLeast("scarce_percent", Config.ScarcePercent, 0f));
             Config.SwiftScpPercent = System.Math.Min((int)AtLeast("swift_scp_percent", Config.SwiftScpPercent, 0f), 100);
             Config.FragileHealthPercent = AtLeast("fragile_health_percent", Config.FragileHealthPercent, 10f);

@@ -33,5 +33,17 @@ namespace RoundMutators
 
         [Description("Nom du mutateur de vie.")]
         public string FragileHumans { get; set; } = "humains fragiles";
+
+        [Description("Nom du mutateur Vampire.")]
+        public string Vampire { get; set; } = "vampires";
+
+        [Description("Nom du mutateur GlassCannon.")]
+        public string GlassCannon { get; set; } = "canons de verre";
+
+        [Description("Nom du mutateur EndlessAmmo.")]
+        public string EndlessAmmo { get; set; } = "munitions sans fin";
+
+        [Description("Nom du mutateur Regeneration.")]
+        public string Regeneration { get; set; } = "regeneration";
     }
 }

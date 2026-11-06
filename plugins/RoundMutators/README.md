@@ -21,6 +21,10 @@ du round.
 | `ScarceMedical` | 60 % des soins de la carte disparaissent |
 | `SwiftScps` | 15 % de vitesse en plus pour les SCP |
 | `FragileHumans` | Vie maximale des humains a 80 % |
+| `Vampire` | Un kill rend 25 PV a celui qui le fait |
+| `GlassCannon` | Degats entre joueurs multiplies par 1,5 |
+| `EndlessAmmo` | Reserve de munitions des humains remplie jusqu'a la limite de leur gilet |
+| `Regeneration` | Les humains regagnent 1 PV par seconde |
 
 Le mutateur suit les renforts et les changements de role. `Tiny` passe par `ScaleArbiter` et cede la place a une
 pilule ou a SCP-261 qui changent la taille d'un joueur.
@@ -36,6 +40,10 @@ pilule ou a SCP-261 qui changent la taille d'un joueur.
 | `start_delay_seconds` | `10` | Delai avant le tirage, 3 au plus bas |
 | `low_gravity_weight`, `swift_weight`, `tiny_weight`, `tireless_weight` | `10` | Poids de chaque mutateur. `0` = jamais |
 | `night_fall_weight`, `scarce_ammo_weight`, `scarce_medical_weight`, `swift_scps_weight`, `fragile_humans_weight` | `10` | Idem |
+| `vampire_weight`, `glass_cannon_weight`, `endless_ammo_weight`, `regeneration_weight` | `10` | Poids des quatre derniers mutateurs. `0` = jamais |
+| `vampire_heal` | `25` | Vie rendue par un kill avec `Vampire` |
+| `glass_cannon_factor` | `1.5` | Multiplicateur de degats avec `GlassCannon`, 1 au plus bas |
+| `regeneration_per_second` | `1` | Vie rendue par seconde avec `Regeneration` |
 | `scarce_percent` | `60` | Part des objets retiree de la carte |
 | `swift_scp_percent` | `15` | Vitesse ajoutee aux SCP, 100 au plus |
 | `fragile_health_percent` | `80` | Vie maximale des humains, 10 au plus bas |

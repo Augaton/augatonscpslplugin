@@ -7,10 +7,13 @@ using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.World;
 using CustomPlayerEffects;
+using InventorySystem.Configs;
+using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Wrappers;
 using MEC;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
+using PlayerStatsSystem;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 
@@ -50,6 +53,10 @@ namespace RoundMutators
             MutatorType.ScarceMedical,
             MutatorType.SwiftScps,
             MutatorType.FragileHumans,
+            MutatorType.Vampire,
+            MutatorType.GlassCannon,
+            MutatorType.EndlessAmmo,
+            MutatorType.Regeneration,
         };
 
         private readonly Plugin plugin;
@@ -148,6 +155,35 @@ namespace RoundMutators
             BeginRandom();
         }
 
+        public void OnDeath(PlayerDeathEventArgs ev)
+        {
+            try
+            {
+                if (Active == MutatorType.Vampire && ev?.Attacker is not null && ev.Attacker != ev.Player && ev.Attacker.IsAlive)
+                    ev.Attacker.Heal(Config.VampireHeal);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"MutatorService.OnDeath: {e}");
+            }
+        }
+
+        public void OnHurting(PlayerHurtingEventArgs ev)
+        {
+            try
+            {
+                if (Active != MutatorType.GlassCannon || ev?.Attacker is null || ev.Attacker == ev.Player)
+                    return;
+
+                if (ev.DamageHandler is StandardDamageHandler handler)
+                    handler.Damage *= Config.GlassCannonFactor;
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"MutatorService.OnHurting: {e}");
+            }
+        }
+
         public void OnMutatorRequested(BusMessage message)
         {
             if (!Enum.TryParse(message.Text, true, out MutatorType type) || !Enum.IsDefined(typeof(MutatorType), type))
@@ -177,6 +213,10 @@ namespace RoundMutators
                 case MutatorType.ScarceMedical: return plugin.Translation.ScarceMedical;
                 case MutatorType.SwiftScps: return plugin.Translation.SwiftScps;
                 case MutatorType.FragileHumans: return plugin.Translation.FragileHumans;
+                case MutatorType.Vampire: return plugin.Translation.Vampire;
+                case MutatorType.GlassCannon: return plugin.Translation.GlassCannon;
+                case MutatorType.EndlessAmmo: return plugin.Translation.EndlessAmmo;
+                case MutatorType.Regeneration: return plugin.Translation.Regeneration;
                 default: return type.ToString();
             }
         }
@@ -231,6 +271,10 @@ namespace RoundMutators
                 case MutatorType.ScarceMedical: return Config.ScarceMedicalWeight;
                 case MutatorType.SwiftScps: return Config.SwiftScpsWeight;
                 case MutatorType.FragileHumans: return Config.FragileHumansWeight;
+                case MutatorType.Vampire: return Config.VampireWeight;
+                case MutatorType.GlassCannon: return Config.GlassCannonWeight;
+                case MutatorType.EndlessAmmo: return Config.EndlessAmmoWeight;
+                case MutatorType.Regeneration: return Config.RegenerationWeight;
                 default: return 0;
             }
         }
@@ -299,6 +343,26 @@ namespace RoundMutators
                 case MutatorType.FragileHumans when eligible:
                     ApplyFragility(player);
                     break;
+
+                case MutatorType.EndlessAmmo when eligible:
+                    RefillAmmo(player);
+                    break;
+
+                case MutatorType.Regeneration when eligible:
+                    player.Heal(Config.RegenerationPerSecond * RefreshSeconds);
+                    break;
+            }
+        }
+
+        // Jamais au-dela de la limite du gilet : le jeu ferait tomber l'excedent au sol a chaque changement d'armure.
+        private static void RefillAmmo(Player player)
+        {
+            foreach (ItemType type in AmmoTypes)
+            {
+                ushort limit = InventoryLimits.GetAmmoLimit(type, player.ReferenceHub);
+
+                if (player.GetAmmo(type) < limit)
+                    player.SetAmmo(type, limit);
             }
         }
 
