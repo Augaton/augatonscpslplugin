@@ -43,6 +43,9 @@ namespace ArcadeShop
         [Description("Hint du vainqueur d'un mode de jeu. %AMOUNT% est le bonus.")]
         public string WinnerBonus { get; set; } = "Victoire : +%AMOUNT% points au prochain round.";
 
+        [Description("Reponse a un soin achete en pleine forme.")]
+        public string AlreadyHealthy { get; set; } = "Vous etes deja en pleine forme.";
+
         [Description("Nom du changement de contrat dans le catalogue.")]
         public string ContractRerollLabel { get; set; } = "Changer de contrat";
 

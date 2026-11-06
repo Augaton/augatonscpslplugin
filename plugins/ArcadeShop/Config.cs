@@ -56,6 +56,14 @@ namespace ArcadeShop
             new ShopItem { Key = "pilule", Label = "Pilule SCP-500", Item = ItemType.SCP500, Price = 50, Limit = 1 },
         };
 
+        [Description("Services en vente : un effet immediat plutot qu'un objet.")]
+        public List<ShopPerk> Perks { get; set; } = new List<ShopPerk>
+        {
+            new ShopPerk { Key = "vie", Label = "Soin complet", Kind = PerkKind.Heal, Amount = 100f, Price = 25, Limit = 2 },
+            new ShopPerk { Key = "bouclier", Label = "Bouclier", Kind = PerkKind.Shield, Amount = 40f, Price = 30, Limit = 2 },
+            new ShopPerk { Key = "vitesse", Label = "Vitesse pendant 30 s", Kind = PerkKind.Speed, Amount = 10f, Seconds = 30f, Price = 20, Limit = 2 },
+        };
+
         [Description("Ferme la boutique et ne compte plus aucun point pendant un mode de jeu.")]
         public bool PauseDuringGamemodes { get; set; } = true;
 

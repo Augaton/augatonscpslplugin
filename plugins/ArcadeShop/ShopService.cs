@@ -6,11 +6,13 @@ using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Runtime;
 using AugatonLib.World;
+using CustomPlayerEffects;
 using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using PlayerRoles;
+using PlayerStatsSystem;
 
 namespace ArcadeShop
 {
@@ -181,17 +183,10 @@ namespace ArcadeShop
             builder.AppendLine(Text.CatalogHeader.Replace("%BALANCE%", Wallet.BalanceOf(player.UserId).ToString()));
 
             foreach (ShopItem item in Config.Items)
-            {
-                builder.Append(Text.CatalogLine
-                    .Replace("%KEY%", item.Key)
-                    .Replace("%LABEL%", item.Label)
-                    .Replace("%PRICE%", item.Price.ToString()));
+                AppendLine(builder, player, item.Key, item.Label, item.Price, item.Limit);
 
-                if (item.Limit > 0)
-                    builder.Append(Text.CatalogLimit.Replace("%LEFT%", Math.Max(0, item.Limit - Wallet.BoughtCount(player.UserId, item.Key)).ToString()));
-
-                builder.AppendLine();
-            }
+            foreach (ShopPerk perk in Config.Perks)
+                AppendLine(builder, player, perk.Key, perk.Label, perk.Price, perk.Limit);
 
             if (Config.ContractRerollPrice > 0 && PluginDirectory.IsRegistered(ContractsPlugin))
             {
@@ -202,6 +197,19 @@ namespace ArcadeShop
             }
 
             return builder.ToString();
+        }
+
+        private void AppendLine(StringBuilder builder, Player player, string key, string label, int price, int limit)
+        {
+            builder.Append(Text.CatalogLine
+                .Replace("%KEY%", key)
+                .Replace("%LABEL%", label)
+                .Replace("%PRICE%", price.ToString()));
+
+            if (limit > 0)
+                builder.Append(Text.CatalogLimit.Replace("%LEFT%", Math.Max(0, limit - Wallet.BoughtCount(player.UserId, key)).ToString()));
+
+            builder.AppendLine();
         }
 
         public bool TryBuy(Player player, string key, out string response)
@@ -229,6 +237,11 @@ namespace ArcadeShop
             if (IsContractReroll(key))
                 return TryRerollContract(player, out response);
 
+            ShopPerk perk = FindPerk(key);
+
+            if (perk is not null)
+                return TryBuyPerk(player, perk, out response);
+
             ShopItem item = Find(key);
 
             if (item is null)
@@ -237,12 +250,49 @@ namespace ArcadeShop
                 return false;
             }
 
-            switch (Wallet.TryBuy(player.UserId, item.Key, item.Price, item.Limit))
+            if (!TryPay(player, item.Key, item.Label, item.Price, item.Limit, out response))
+                return false;
+
+            ItemGrant.Give(player, item.Item, item.Quantity);
+            return true;
+        }
+
+        private bool TryBuyPerk(Player player, ShopPerk perk, out string response)
+        {
+            if (perk.Kind == PerkKind.Heal && player.Health >= player.MaxHealth)
+            {
+                response = Text.AlreadyHealthy;
+                return false;
+            }
+
+            if (!TryPay(player, perk.Key, perk.Label, perk.Price, perk.Limit, out response))
+                return false;
+
+            switch (perk.Kind)
+            {
+                case PerkKind.Heal:
+                    player.Heal(perk.Amount);
+                    break;
+
+                case PerkKind.Shield:
+                    player.CreateAhpProcess(perk.Amount, perk.Amount, AhpStat.DefaultDecay, AhpStat.DefaultEfficacy, 0f, false);
+                    break;
+
+                case PerkKind.Speed:
+                    player.EnableEffect<MovementBoost>((byte)Math.Min(perk.Amount, 100f), perk.Seconds);
+                    break;
+            }
+
+            return true;
+        }
+
+        private bool TryPay(Player player, string key, string label, int price, int limit, out string response)
+        {
+            switch (Wallet.TryBuy(player.UserId, key, price, limit))
             {
                 case PurchaseResult.Done:
-                    ItemGrant.Give(player, item.Item, item.Quantity);
                     response = Text.Bought
-                        .Replace("%LABEL%", item.Label)
+                        .Replace("%LABEL%", label)
                         .Replace("%BALANCE%", Wallet.BalanceOf(player.UserId).ToString());
                     return true;
 
@@ -253,7 +303,7 @@ namespace ArcadeShop
                 default:
                     response = Text.TooExpensive
                         .Replace("%BALANCE%", Wallet.BalanceOf(player.UserId).ToString())
-                        .Replace("%PRICE%", item.Price.ToString());
+                        .Replace("%PRICE%", price.ToString());
                     return false;
             }
         }
@@ -298,6 +348,20 @@ namespace ArcadeShop
             {
                 if (string.Equals(item.Key, key, StringComparison.OrdinalIgnoreCase))
                     return item;
+            }
+
+            return null;
+        }
+
+        private ShopPerk FindPerk(string key)
+        {
+            if (string.IsNullOrEmpty(key) || key.Length > MaxKeyLength)
+                return null;
+
+            foreach (ShopPerk perk in Config.Perks)
+            {
+                if (string.Equals(perk.Key, key, StringComparison.OrdinalIgnoreCase))
+                    return perk;
             }
 
             return null;

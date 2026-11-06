@@ -17,6 +17,7 @@ Seul un humain vivant et sans menottes peut acheter. Un inventaire plein laisse 
 |---|---|
 | `.shop` | Affiche le solde et le catalogue |
 | `.shop <nom>` | Achete un objet, par exemple `.shop soin` |
+| `.shop vie`, `.shop bouclier`, `.shop vitesse` | Achete un service : soin complet, bouclier ou vitesse temporaire |
 | `.shop contrat` | Echange le contrat en cours contre un autre, avec Contracts |
 
 Alias `.boutique`.
@@ -38,10 +39,12 @@ Alias `.boutique`.
 | `buy_cooldown_seconds` | `2` | Delai entre deux achats, 1 au plus bas |
 | `catalog_cooldown_seconds` | `1` | Delai entre deux affichages du catalogue, 0.5 au plus bas |
 | `items` | 9 objets | Catalogue : `key`, `label`, `item`, `quantity`, `price`, `limit` |
+| `perks` | 3 services | Effets immediats : `key`, `label`, `kind`, `amount`, `seconds`, `price`, `limit` |
 | `pause_during_gamemodes` | `true` | Ferme la boutique pendant un mode de jeu |
 | `hint_duration` | `3` | Duree des hints, en secondes |
 
-`limit` compte les achats par joueur et par round, `0` voulant dire sans limite. `quantity` compte les munitions pour
+`kind` vaut `Heal`, `Shield` ou `Speed`, et `amount` est la vie, le bouclier ou le pourcentage de vitesse. Un soin n'est
+pas vendu a un joueur en pleine forme. `limit` compte les achats par joueur et par round, `0` voulant dire sans limite. `quantity` compte les munitions pour
 une boite. Un objet sans `key`, sans `item` ou a prix negatif est ignore au chargement, avec un avertissement, et
 `collection check` signale un `item` que le jeu ne connait pas.
 

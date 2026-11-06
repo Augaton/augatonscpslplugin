@@ -72,6 +72,9 @@ namespace ArcadeShop
             }
 
             Config.Items.RemoveAll(IsInvalid);
+
+            Config.Perks ??= new List<ShopPerk>();
+            Config.Perks.RemoveAll(IsInvalid);
         }
 
         private static bool IsInvalid(ShopItem item)
@@ -81,6 +84,20 @@ namespace ArcadeShop
 
             Logger.Warn($"Objet de boutique ignore : {item?.Key ?? "sans nom"}.");
             return true;
+        }
+
+        private static bool IsInvalid(ShopPerk perk)
+        {
+            bool invalid = perk is null
+                || string.IsNullOrWhiteSpace(perk.Key)
+                || perk.Price < 0
+                || perk.Amount <= 0f
+                || (perk.Kind == PerkKind.Speed && perk.Seconds <= 0f);
+
+            if (invalid)
+                Logger.Warn($"Service de boutique ignore : \"{perk?.Key}\".");
+
+            return invalid;
         }
     }
 }
