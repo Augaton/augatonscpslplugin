@@ -232,6 +232,14 @@ namespace BetterCoinflipsRewritten
         public string CassieMockEffectMessage { get; set; } =
             "C.A.S.S.I.E. a un mot a dire sur votre compte.";
 
+        [Description("Message de l'effet seconde chance.")]
+        public string SecondChanceEffectMessage { get; set; } =
+            "Une seconde chance vous est accordee : votre prochaine mort sera annulee.";
+
+        [Description("Message affiche quand la seconde chance sauve le joueur.")]
+        public string SecondChanceUsed { get; set; } =
+            "<color=yellow>Votre seconde chance vous a sauve.</color>";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";

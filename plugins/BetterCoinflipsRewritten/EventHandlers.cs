@@ -127,6 +127,7 @@ namespace BetterCoinflipsRewritten
                     return;
 
                 coinService.RemovePlayer(ev.Player);
+                SecondChance.TryConsume(ev.Player);
                 plugin.Hints.Remove(ev.Player);
                 ScaleArbiter.Forget(ev.Player);
             }
@@ -141,10 +142,29 @@ namespace BetterCoinflipsRewritten
             try
             {
                 ScaleArbiter.Release(ev?.Player, Interop.Owner);
+                SecondChance.TryConsume(ev?.Player);
             }
             catch (Exception e)
             {
                 Logger.Error($"OnChangedRole: {e}");
+            }
+        }
+
+        // Le jeu a deja mis la vie a zero quand il demande la permission de tuer : refuser ne suffit pas.
+        public void OnDying(PlayerDyingEventArgs ev)
+        {
+            try
+            {
+                if (ev?.Player is null || !SecondChance.TryConsume(ev.Player))
+                    return;
+
+                ev.IsAllowed = false;
+                ev.Player.Health = plugin.Config.SecondChanceHealth;
+                plugin.Hints.Show(ev.Player, plugin.Translation.SecondChanceUsed, plugin.Config.EffectMessageDuration);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnDying: {e}");
             }
         }
 
@@ -160,6 +180,7 @@ namespace BetterCoinflipsRewritten
                 API.Scheduler.Clear();
                 coinConsumeService.Clear();
                 denialHints.Clear();
+                SecondChance.Clear();
 
                 Logger.Debug(
                     "[BetterCoinflipsRewritten] Round started. " +
@@ -207,6 +228,7 @@ namespace BetterCoinflipsRewritten
                 API.Scheduler.Clear();
                 coinConsumeService.Clear();
                 denialHints.Clear();
+                SecondChance.Clear();
                 coinRenewalService.Stop();
 
                 Logger.Debug(

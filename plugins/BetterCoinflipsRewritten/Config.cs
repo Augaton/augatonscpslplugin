@@ -231,6 +231,12 @@ namespace BetterCoinflipsRewritten
         [Description("Duree en secondes de la surdite et de la commotion laissees par la fausse explosion.")]
         public float FakeExplosionStunDuration { get; set; } = 5f;
 
+        [Description("Poids de l'effet seconde chance. Il annule la prochaine mort du joueur.")]
+        public int SecondChanceChance { get; set; } = 3;
+
+        [Description("Vie du joueur quand la seconde chance annule sa mort.")]
+        public float SecondChanceHealth { get; set; } = 25f;
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 

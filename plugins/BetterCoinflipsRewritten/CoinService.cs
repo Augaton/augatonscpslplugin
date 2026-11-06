@@ -41,6 +41,11 @@ namespace BetterCoinflipsRewritten
 
             goodEffects.Add(
                 new WeightedEffect(
+                    new SecondChanceEffect(),
+                    plugin.Config.SecondChanceChance));
+
+            goodEffects.Add(
+                new WeightedEffect(
                     new MedicalKitEffect(),
                     plugin.Config.MedicalKitChance));
 

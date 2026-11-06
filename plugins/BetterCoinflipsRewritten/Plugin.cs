@@ -42,6 +42,7 @@ namespace BetterCoinflipsRewritten
             PlayerEvents.FlippingCoin += eventHandlers.OnFlippingCoin;
             PlayerEvents.Left += eventHandlers.OnLeft;
             PlayerEvents.ChangedRole += eventHandlers.OnChangedRole;
+            PlayerEvents.Dying += eventHandlers.OnDying;
 
             CharacterClassManager.OnRoundStarted += eventHandlers.OnRoundStarted;
             ServerEvents.RoundRestarted += eventHandlers.OnRoundRestarted;
@@ -78,6 +79,7 @@ namespace BetterCoinflipsRewritten
         {
             Config.FacilityEffectCooldown = AtLeast("facility_effect_cooldown", Config.FacilityEffectCooldown, 1f);
             Config.CoinCooldown = AtLeast("coin_cooldown", Config.CoinCooldown, 0.5f);
+            Config.SecondChanceHealth = AtLeast("second_chance_health", Config.SecondChanceHealth, 1f);
 
             Config.CoinConsumeDelay = Clamp(
                 "coin_consume_delay",
@@ -176,6 +178,7 @@ namespace BetterCoinflipsRewritten
                 PlayerEvents.FlippingCoin -= eventHandlers.OnFlippingCoin;
                 PlayerEvents.Left -= eventHandlers.OnLeft;
                 PlayerEvents.ChangedRole -= eventHandlers.OnChangedRole;
+                PlayerEvents.Dying -= eventHandlers.OnDying;
 
                 CharacterClassManager.OnRoundStarted -= eventHandlers.OnRoundStarted;
                 ServerEvents.RoundRestarted -= eventHandlers.OnRoundRestarted;
