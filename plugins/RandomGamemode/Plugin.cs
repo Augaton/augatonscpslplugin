@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Integrations;
 using AugatonLib.Runtime;
@@ -67,6 +68,8 @@ namespace RandomGamemode
             PlayerEvents.DeactivatingGenerator += gamemodeHandlers.OnStoppingGenerator;
             PlayerEvents.InteractingDoor += gamemodeHandlers.OnInteractingDoor;
 
+            PluginBus.Subscribe(Name, BusTopics.WarmupSpawned, Registry.OnWarmupSpawned);
+
             SelfCheck.Register(Name, "salles du Roi de la salle", () => Room.Get(FacilityZone.Entrance).Any(room => room.Name != RoomName.Unnamed) ? null : "introuvables");
             SelfCheck.Register(Name, "point d'apparition des gardes", () => RoleSpawn.TryGetPosition(RoleTypeId.FacilityGuard, out _) ? null : "introuvable");
             SelfCheck.Register(Name, "portes de La vie selon Larry", () => Door.Get(DoorName.Lcz173Bottom) is null || Door.Get(DoorName.Lcz173Gate) is null ? "introuvables" : null);
@@ -106,6 +109,7 @@ namespace RandomGamemode
                 PlayerEvents.InteractingDoor -= gamemodeHandlers.OnInteractingDoor;
             }
 
+            PluginBus.UnsubscribeOwner(Name);
             Registry?.End(false);
             Hints.Clear();
 
@@ -119,6 +123,7 @@ namespace RandomGamemode
 
         protected override void ValidateConfig()
         {
+            Config.VoteReminderSeconds = AtLeast("vote_reminder_seconds", Config.VoteReminderSeconds, 5f);
             Config.VoteCommandCooldownSeconds = AtLeast("vote_command_cooldown_seconds", Config.VoteCommandCooldownSeconds, 0.5f);
 
             if (Config.GamemodeChance < 0 || Config.GamemodeChance > 100)

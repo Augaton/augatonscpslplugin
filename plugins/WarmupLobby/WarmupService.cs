@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using AugatonLib.Bus;
 using AugatonLib.Spawning;
 using LabApi.Events.Arguments.Interfaces;
 using LabApi.Events.Arguments.ObjectiveEvents;
@@ -172,6 +173,7 @@ namespace WarmupLobby
                 player.Position = position;
 
             plugin.Hints.Show(player, plugin.Translation.Spawned, Config.HintDuration);
+            PluginBus.Publish(BusTopics.WarmupSpawned, plugin.Name, player);
         }
 
         // Un joueur en echec ne doit pas priver les suivants de leur role.

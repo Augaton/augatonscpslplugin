@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
+using AugatonLib.Caching;
 using AugatonLib.FriendlyFire;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
@@ -30,6 +31,8 @@ namespace RandomGamemode.API
         private bool roundEndForced;
 
         private const string Owner = Interop.Owner;
+
+        private readonly CooldownTracker voteReminders = new CooldownTracker();
 
         public GamemodeRegistry(Plugin plugin) => this.plugin = plugin;
 
@@ -156,6 +159,18 @@ namespace RandomGamemode.API
             foreach (Player player in Player.ReadyList)
                 ShowVote(player);
         }
+
+        // Le lobby fait reapparaitre un joueur a chaque mort : sans ce delai, le rappel couvrirait son ecran.
+        public void OnWarmupSpawned(BusMessage message)
+        {
+            if (!message.TryGet(out Player player) || voteReminders.IsOnCooldown(player.UserId, plugin.Config.VoteReminderSeconds, out _))
+                return;
+
+            voteReminders.Register(player.UserId);
+            ShowVote(player);
+        }
+
+        public void ForgetVoteReminder(string userId) => voteReminders.Remove(userId);
 
         public void DeclareWinner(Player winner) => PluginBus.Publish(BusTopics.GamemodeWon, Owner, winner);
 

@@ -166,6 +166,9 @@ Avec `enable_vote`, `gamemode_chance` est tire dans le lobby. Si un mode doit av
 modes sont proposes et les joueurs votent dans la console `~` : `.votemode` liste les choix,
 `.votemode 2` vote, et `.vm` est un alias. Le mode le plus vote demarre, avec un tirage en cas
 d'egalite. Sans vote, ou si aucun choix ne peut demarrer, le tirage pondere habituel s'applique.
+
+Avec WarmupLobby, le vote est rappele a un joueur quand il apparait dans le lobby, au plus une fois toutes les
+`vote_reminder_seconds` secondes, `30` par defaut.
 `gamemode force` l'emporte toujours.
 
 ## Modes et plugins presents

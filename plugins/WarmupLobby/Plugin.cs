@@ -38,7 +38,7 @@ namespace WarmupLobby
 
             SelfCheck.Register(Name, "point d'apparition de l'arene", Service.CheckArena);
 
-            PluginDirectory.Register(this);
+            PluginDirectory.Register(this, Capability.Bus);
         }
 
         public override void Disable()

@@ -32,6 +32,7 @@ namespace RandomGamemode.Handlers
             string userId = ev?.Player?.UserId;
 
             Guard(() => registry.Vote.Retract(userId));
+            Guard(() => registry.ForgetVoteReminder(userId));
 
             if (userId is not null)
                 Dispatch((g, e) => g.OnPlayerLeft(e), userId);
