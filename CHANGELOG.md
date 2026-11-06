@@ -85,6 +85,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 
 ### À savoir pour la mise à jour
 
+- RealisticSizes démarre désormais en mode `Fun`, plus visible sur un serveur arcade. Un `config.yml` existant garde son mode.
 - Après une mise à jour du jeu, `fetch-references.sh` et la CI échouent tant que `./tools/fetch-references.sh --update` n'a pas accepté la nouvelle empreinte.
 - CorpsesFallPocketDimension et MicroHIDReturn sont remplacés : ne les gardez pas avec PocketCorpses et MicroHidDock.
 - `ScaleArbiter.Clear` devient `ResetBaselines`, et le sujet de bus `round.reset` disparaît.

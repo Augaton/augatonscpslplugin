@@ -50,7 +50,7 @@ Trente et un plugins et une bibliothèque partagée pour **SCP: Secret Laborator
 | [RandomGamemode](plugins/RandomGamemode) | 4.2.0 | 25 modes de jeu spéciaux, avec vote des joueurs |
 | [RoundMutators](plugins/RoundMutators) | 1.1.0 | Une règle légère sur certains rounds normaux |
 | [RoundRecap](plugins/RoundRecap) | 1.3.0 | Bilan de fin de round |
-| [RealisticSizes](plugins/RealisticSizes) | 5.0.1 | Taille variable par joueur, avec effets de gameplay en option |
+| [RealisticSizes](plugins/RealisticSizes) | 5.1.0 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
 | [Replacer](plugins/Replacer) | 3.1.0 | Remplace un joueur parti par un spectateur, avec son état complet |
 | [Scp261](plugins/Scp261) | 2.0.1 | Machine distributrice : une pièce contre un résultat au hasard |

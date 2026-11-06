@@ -11,7 +11,7 @@ namespace RealisticSizes
         public bool Debug { get; set; } = false;
 
         [Description("Mode actif : Roleplay (variations discretes), Fun (variations larges) ou Manual (par role).")]
-        public SizeMode ActiveMode { get; set; } = SizeMode.Roleplay;
+        public SizeMode ActiveMode { get; set; } = SizeMode.Fun;
 
         [Description("Autorise des valeurs differentes en hauteur et en largeur. Si false, la silhouette reste proportionnee.")]
         public bool AllowUnproportionalValues { get; set; } = false;

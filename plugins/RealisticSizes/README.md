@@ -11,8 +11,8 @@ Donne a chaque joueur une taille legerement differente a l'apparition.
 
 | Mode | Effet |
 |---|---|
-| `Roleplay` | Variations discretes, credibles en RP (defaut) |
-| `Fun` | Variations larges et visibles |
+| `Roleplay` | Variations discretes |
+| `Fun` | Variations larges et visibles (defaut) |
 | `Manual` | Une plage par role, definie dans `manual_ranges` |
 
 `allow_unproportional_values` autorise une largeur differente de la hauteur.
