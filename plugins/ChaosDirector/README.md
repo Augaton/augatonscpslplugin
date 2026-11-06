@@ -22,6 +22,7 @@ chacun garde sa montee en puissance au fil du temps.
 | `points_per_vending` | `1` | Points par utilisation de SCP-261 |
 | `points_per_exchange` | `1` | Points par echange a SCP-1162 |
 | `points_per_contract` | `1` | Points par contrat rempli |
+| `points_per_scp_level` | `3` | Points par niveau gagne par un SCP, avec ScpLevels |
 | `points_per_streak` | `2` | Points par palier atteint dans une serie de kills, avec Streaks |
 | `points_per_level` | `30` | Points necessaires pour un niveau |
 | `max_bonus_level` | `5` | Niveau maximal |

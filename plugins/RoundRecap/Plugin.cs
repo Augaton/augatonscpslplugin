@@ -23,6 +23,7 @@ namespace RoundRecap
         {
             counters.Subscribe(Name);
             PluginBus.Subscribe(Name, BusTopics.StreakReached, heroes.OnStreakReached);
+            PluginBus.Subscribe(Name, BusTopics.ScpLevelReached, heroes.OnScpLevelReached);
 
             ServerEvents.RoundStarted += counters.Reset;
             ServerEvents.RoundStarted += heroes.Reset;

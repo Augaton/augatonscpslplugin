@@ -158,6 +158,8 @@ namespace ScpLevels
             if (!leveled.Contains(scp))
                 leveled.Add(scp);
 
+            PluginBus.Publish(BusTopics.ScpLevelReached, plugin.Name, new ScpLevelUp(scp, Ladder.LevelOf(scp.UserId)));
+
             string text = plugin.Translation.LevelUp
                 .Replace("%ROLE%", RoleNames.Full(scp.Role))
                 .Replace("%LEVEL%", Ladder.LevelOf(scp.UserId).ToString());

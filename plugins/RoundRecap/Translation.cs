@@ -13,6 +13,9 @@ namespace RoundRecap
         [Description("Ligne du mutateur de round. %MODE% est son nom.")]
         public string Mutator { get; set; } = "Mutateur : %MODE%";
 
+        [Description("SCP le plus dangereux. %PLAYER% est son pseudo, %LEVEL% son niveau. Vide = masque.")]
+        public string TopScp { get; set; } = "SCP le plus dangereux : %PLAYER% (niveau %LEVEL%)";
+
         [Description("Meilleur tueur. %PLAYER% est son pseudo, %COUNT% son total. Vide = masque.")]
         public string BestKiller { get; set; } = "Meilleur tueur : %PLAYER% (%COUNT%)";
 
