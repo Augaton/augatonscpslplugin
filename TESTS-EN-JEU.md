@@ -142,6 +142,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Sans bulletin, rien ne se passe. Sans SiteIncidents, aucun vote ne s'ouvre et `collection check` le signale.
 
 **Contracts**
+- [ ] Avec ArcadeShop, un contrat rempli ajoute des points. Sans lui, rien ne change.
 - [ ] Chaque humain recoit un hint de contrat au debut du round, et `.contrat` le rappelle.
 - [ ] Chaque type se remplit : kills d'ennemis, generateur, evasion, soins, survie.
 - [ ] La recompense n'arrive qu'une fois, et un inventaire plein la laisse au sol.
@@ -224,6 +225,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Avec `trap_chance_percent: 100` : rien ne part tant que personne n'approche, puis une grenade part apres le delai.
 
 **RandomGamemode**
+- [ ] Un traitre ou un VIP qui se deconnecte met fin au round au lieu de le bloquer.
 - [ ] Mode arene (Gun Game, Dodgeball) : ni largage, ni pilule, ni piece n'apparait, meme au debut du round, et tout reprend ensuite.
 - [ ] Vote : le broadcast apparait dans le lobby, `.votemode` liste les choix, `.votemode 2` vote.
 - [ ] Vote : le mode le plus vote demarre, et sans vote un des modes proposes est tire au sort.

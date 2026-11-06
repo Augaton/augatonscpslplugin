@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AugatonLib.Arcade;
+using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Runtime;
 using AugatonLib.World;
@@ -81,6 +82,12 @@ namespace ArcadeShop
             {
                 Logger.Error($"OnEscaped: {e}");
             }
+        }
+
+        public void OnContractCompleted(BusMessage message)
+        {
+            if (message.TryGet(out Player player) && IsOpen)
+                Award(player, Config.PointsPerContract);
         }
 
         public void OnLeft(PlayerLeftEventArgs ev)

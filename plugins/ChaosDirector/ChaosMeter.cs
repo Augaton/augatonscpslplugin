@@ -27,6 +27,7 @@ namespace ChaosDirector
             PluginBus.Subscribe(owner, BusTopics.TeamWiped, _ => Add(Config.PointsPerTeamWipe));
             PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => Add(Config.PointsPerVending));
             PluginBus.Subscribe(owner, BusTopics.ItemExchanged, _ => Add(Config.PointsPerExchange));
+            PluginBus.Subscribe(owner, BusTopics.ContractCompleted, _ => Add(Config.PointsPerContract));
             PluginBus.Subscribe(owner, BusTopics.StreakReached, OnStreakReached);
         }
 

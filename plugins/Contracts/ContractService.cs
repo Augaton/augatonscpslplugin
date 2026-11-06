@@ -6,6 +6,7 @@ using AugatonLib.Bus;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.World;
+using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -54,6 +55,17 @@ namespace Contracts
             aliveSeconds = 0f;
             book.Clear();
             offers.Clear();
+        }
+
+        public string CheckRewards()
+        {
+            foreach (ContractOffer offer in Config.Offers)
+            {
+                if (offer is null || !InventoryItemLoader.AvailableItems.ContainsKey(offer.Reward))
+                    return $"objet inconnu : {offer?.Reward}";
+            }
+
+            return null;
         }
 
         public string Describe(Player player)

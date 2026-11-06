@@ -36,6 +36,8 @@ namespace Contracts
             PlayerEvents.UsedItem += Service.OnUsedItem;
             PlayerEvents.Left += Service.OnLeft;
 
+            SelfCheck.Register(Name, "recompenses valides", Service.CheckRewards);
+
             PluginDirectory.Register(this, Capability.Hints, Capability.Bus);
         }
 

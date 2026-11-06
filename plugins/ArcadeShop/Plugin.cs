@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using AugatonLib.Arcade;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
@@ -31,7 +32,9 @@ namespace ArcadeShop
             PlayerEvents.Left += Service.OnLeft;
             ServerEvents.RoundRestarted += Service.Reset;
 
-            PluginDirectory.Register(this);
+            PluginBus.Subscribe(Name, BusTopics.ContractCompleted, Service.OnContractCompleted);
+
+            PluginDirectory.Register(this, Capability.Bus);
         }
 
         public override void Disable()
@@ -43,6 +46,7 @@ namespace ArcadeShop
             ServerEvents.RoundRestarted -= Service.Reset;
 
             Service.Reset();
+            PluginBus.UnsubscribeOwner(Name);
             PluginDirectory.Unregister(this);
 
             Service = null;

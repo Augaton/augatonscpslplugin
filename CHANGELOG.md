@@ -28,6 +28,8 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - RoundMutators : mutateurs Nuit noire, Munitions rares, Soins rares, SCP rapides et Humains fragiles.
 - SupplyDrop : un largage peut être piégé, et une grenade part quand un humain s'en approche.
 - RoundRecap : le mutateur du round et les contrats remplis.
+- ArcadeShop et ChaosDirector : un contrat rempli rapporte des points.
+- `collection check` vérifie les récompenses des contrats et les points fixes des nouveaux modes.
 - AugatonLib : `GamemodeState` voit tous les modes de jeu, `ItemGrant` donne un objet sans qu'il se perde.
 - SiteIncidents : un autre plugin peut demander un incident par le bus.
 - ChaosDirector : points pour les paliers de série de kills.

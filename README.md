@@ -259,6 +259,7 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | Streaks et ChaosDirector sont présents | Les paliers de série font monter le chaos |
 | Streaks et RoundRecap sont présents | Le bilan nomme la meilleure série de kills |
 | Contracts et SCP500s sont présents | La récompense `SCP500` d'un contrat est une vraie pilule |
+| Contracts et ArcadeShop sont présents | Un contrat rempli rapporte des points de boutique |
 | SpectatorVote et SiteIncidents sont présents | Les spectateurs votent pour le prochain incident. Sans SiteIncidents, aucun vote ne s'ouvre |
 | ScpScaling et ScpLevels sont présents | Les PV de niveau s'ajoutent à des PV déjà adaptés au nombre de joueurs |
 | Un plugin manque | Seule la synergie concernée disparaît |

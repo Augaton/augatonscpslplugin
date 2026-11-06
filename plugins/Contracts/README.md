@@ -8,7 +8,8 @@ stocke : tout repart de zero au round suivant, et un joueur qui part perd son co
 
 Seuls comptent les kills d'un ennemi, ni le tir allie ni le suicide. Rien n'est distribue ni compte pendant un mode
 de jeu, ou quand TickGuard a suspendu les evenements. Avec SCP500s, la recompense `SCP500` est une vraie pilule, et
-un inventaire plein laisse l'objet aux pieds du joueur. RoundRecap compte les contrats remplis.
+un inventaire plein laisse l'objet aux pieds du joueur. RoundRecap compte les contrats remplis. ArcadeShop ajoute des
+points, et ChaosDirector fait monter le niveau de chaos.
 
 ## Configuration
 

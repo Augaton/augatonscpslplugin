@@ -27,6 +27,7 @@ Alias `.boutique`.
 | `points_per_scp_kill` | `40` | Points pour un SCP tue |
 | `points_per_generator` | `15` | Points pour lancer un generateur, une fois par generateur |
 | `points_per_escape` | `30` | Points pour une evasion |
+| `points_per_contract` | `15` | Points par contrat rempli, si Contracts est installe |
 | `max_balance` | `500` | Solde maximal d'un joueur |
 | `buy_cooldown_seconds` | `2` | Delai entre deux achats, 1 au plus bas |
 | `items` | 9 objets | Catalogue : `key`, `label`, `item`, `quantity`, `price`, `limit` |

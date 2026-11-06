@@ -18,6 +18,9 @@ namespace ArcadeShop
         [Description("Points pour une evasion.")]
         public int PointsPerEscape { get; set; } = 30;
 
+        [Description("Points par contrat rempli, si Contracts est installe.")]
+        public int PointsPerContract { get; set; } = 15;
+
         [Description("Solde maximal d'un joueur.")]
         public int MaxBalance { get; set; } = 500;
 
