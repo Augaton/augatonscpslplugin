@@ -1,5 +1,6 @@
 using System;
 using AugatonLib.Arbitration;
+using AugatonLib.Text;
 using AugatonLib.Commands;
 using CommandSystem;
 using LabApi.Features.Wrappers;
@@ -58,9 +59,9 @@ namespace RealisticSizes.Commands
 
             ScaleArbiter.Reset(found, Vector3.one);
             SizeGameplay.Clear(found, Plugin.Instance.Config);
-            Audit(sender, "RealisticSizes", $"a remis a zero la taille de {found.Nickname} ({found.UserId})");
+            Audit(sender, "RealisticSizes", $"a remis a zero la taille de {SafeText.Nickname(found)} ({found.UserId})");
 
-            response = $"{found.Nickname} est revenu a sa taille normale.";
+            response = $"{SafeText.Nickname(found)} est revenu a sa taille normale.";
             return true;
         }
     }

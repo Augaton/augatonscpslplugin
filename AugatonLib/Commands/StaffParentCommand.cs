@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using CommandSystem;
+using LabApi.Features.Permissions;
 using NorthwoodLib.Pools;
 
 namespace AugatonLib.Commands
@@ -11,6 +12,12 @@ namespace AugatonLib.Commands
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
+            if (!sender.HasPermissions(Permission))
+            {
+                response = $"Permission refusee. Noeud requis : {Permission}";
+                return false;
+            }
+
             StringBuilder builder = StringBuilderPool.Shared.Rent();
 
             try
