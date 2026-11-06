@@ -145,16 +145,11 @@ namespace Contracts
             }
         }
 
-        // Accepted n'est pose qu'une fois le nouveau contrat certain : celui qui vend ce changement ne debite
+        // La demande n'est acceptee qu'une fois le nouveau contrat certain : celui qui vend ce changement ne debite
         // qu'apres, et un joueur sans contrat a changer ne perd ni ses points ni son objectif.
         public void OnRerollRequested(BusMessage message)
         {
-            if (!message.TryGet(out ContractRerollRequest request) || IsPaused)
-                return;
-
-            Player player = request.Player;
-
-            if (player is null || !offers.TryGetValue(player.UserId, out ContractOffer current))
+            if (!message.TryGet(out Player player) || IsPaused || !offers.TryGetValue(player.UserId, out ContractOffer current))
                 return;
 
             ContractOffer next = Draw(player, current.Kind);
@@ -164,7 +159,7 @@ namespace Contracts
 
             offers.Remove(player.UserId);
             Assign(player, next);
-            request.Accepted = true;
+            message.Accept();
         }
 
         public void CountAction(BusMessage message, ContractKind kind)

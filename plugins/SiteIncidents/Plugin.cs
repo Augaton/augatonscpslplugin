@@ -82,8 +82,8 @@ namespace SiteIncidents
                 return;
             }
 
-            if (Round.IsRoundInProgress && !(Config.PauseDuringGamemodes && WorldEvents.IsPaused))
-                Service.Trigger(type);
+            if (Round.IsRoundInProgress && !(Config.PauseDuringGamemodes && WorldEvents.IsPaused) && Service.Trigger(type))
+                message.Accept();
         }
     }
 }

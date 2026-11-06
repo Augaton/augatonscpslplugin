@@ -63,6 +63,29 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void ARequestIsRefusedUnlessAHandlerAccepts()
+        {
+            PluginBus.Subscribe("a", "topic", _ => { });
+
+            Assert.False(PluginBus.Request("topic", "test"));
+        }
+
+        [Fact]
+        public void ARequestIsAcceptedByAnyHandler()
+        {
+            PluginBus.Subscribe("a", "topic", _ => { });
+            PluginBus.Subscribe("b", "topic", message => message.Accept());
+
+            Assert.True(PluginBus.Request("topic", "test"));
+        }
+
+        [Fact]
+        public void ARequestWithoutSubscriberIsRefused()
+        {
+            Assert.False(PluginBus.Request("topic", "test"));
+        }
+
+        [Fact]
         public void InvalidSubscriptionsAreIgnored()
         {
             PluginBus.Subscribe(null, "topic", _ => { });

@@ -278,11 +278,7 @@ namespace ArcadeShop
                 return false;
             }
 
-            ContractRerollRequest request = new ContractRerollRequest(player);
-
-            PluginBus.Publish(BusTopics.ContractRerollRequested, plugin.Name, request);
-
-            if (!request.Accepted)
+            if (!PluginBus.Request(BusTopics.ContractRerollRequested, plugin.Name, player))
             {
                 response = Text.ContractRerollRefused;
                 return false;

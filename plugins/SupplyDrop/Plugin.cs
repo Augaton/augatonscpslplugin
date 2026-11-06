@@ -179,7 +179,10 @@ namespace SupplyDrop
             if (profile is null)
                 Logger.Warn($"Largage demande inconnu : \"{message.Text}\".");
             else if (profile.IsEnabled)
+            {
                 Service.Trigger(profile, true);
+                message.Accept();
+            }
         }
 
         private void OnTeamWiped(BusMessage message)

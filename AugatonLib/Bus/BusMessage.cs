@@ -15,6 +15,10 @@ namespace AugatonLib.Bus
 
         public object Payload { get; }
 
+        public bool IsAccepted { get; private set; }
+
+        public void Accept() => IsAccepted = true;
+
         public bool TryGet<T>(out T value)
         {
             if (Payload is T typed)

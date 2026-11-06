@@ -54,6 +54,23 @@ namespace AugatonLib.Bus
 
         public static int Publish(string topic, string source, object payload = null)
         {
+            return Deliver(new BusMessage(topic, source, payload));
+        }
+
+        // Publish compte les plugins qui ont recu le message, pas ceux qui y ont donne suite : une demande qui peut
+        // etre refusee passe par ici, et le plugin qui y repond appelle BusMessage.Accept.
+        public static bool Request(string topic, string source, object payload = null)
+        {
+            BusMessage message = new BusMessage(topic, source, payload);
+
+            Deliver(message);
+            return message.IsAccepted;
+        }
+
+        private static int Deliver(BusMessage message)
+        {
+            string topic = message.Topic;
+
             if (string.IsNullOrEmpty(topic) || Subscriptions.Count == 0)
                 return 0;
 
@@ -71,7 +88,6 @@ namespace AugatonLib.Bus
             if (targets is null)
                 return 0;
 
-            BusMessage message = new BusMessage(topic, source, payload);
             int delivered = 0;
 
             foreach (Subscription subscription in targets)

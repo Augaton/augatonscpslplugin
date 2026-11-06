@@ -161,6 +161,7 @@ namespace RoundMutators
 
             Begin(type);
             pacing.MarkUsed();
+            message.Accept();
         }
 
         public string NameOf(MutatorType type)
