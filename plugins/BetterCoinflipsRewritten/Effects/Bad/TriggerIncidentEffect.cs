@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using AugatonLib.Bus;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
@@ -12,6 +11,8 @@ namespace BetterCoinflipsRewritten.Effects.Bad
         private const string CooldownKey = "trigger_incident";
         private const string TargetPlugin = "SiteIncidents";
 
+        private bool accepted;
+
         public string Name
         {
             get { return "TriggerIncident"; }
@@ -19,7 +20,12 @@ namespace BetterCoinflipsRewritten.Effects.Bad
 
         public string Message
         {
-            get { return Plugin.Instance.Translation.TriggerIncidentEffectMessage; }
+            get
+            {
+                Translation text = Plugin.Instance.Translation;
+
+                return accepted ? text.TriggerIncidentEffectMessage : text.RequestRefusedEffectMessage;
+            }
         }
 
         public bool CanApply(Player player)
@@ -30,21 +36,21 @@ namespace BetterCoinflipsRewritten.Effects.Bad
                    !player.IsDestroyed &&
                    player.IsAlive &&
                    config.CoinIncidents?.Count > 0 &&
-                   !(config.PauseDuringGamemodes && WorldEvents.IsPaused) &&
+                   !Warhead.IsDetonated &&
+                   !(config.PauseDuringGamemodes && GamemodeState.BlocksBonuses) &&
                    PluginDirectory.IsRegistered(TargetPlugin) &&
                    GlobalCooldown.IsReady(CooldownKey, config.FacilityEffectCooldown);
         }
 
+        // Le cooldown ne part qu'une fois la demande acceptee : un refus ne bloque pas le lancer suivant.
         public void Execute(Player player)
         {
             Config config = Plugin.Instance.Config;
 
-            if (!GlobalCooldown.TryConsume(CooldownKey, config.FacilityEffectCooldown))
-                return;
+            accepted = PluginBus.Request(BusTopics.IncidentRequested, Interop.Owner, Chance.Pick(config.CoinIncidents));
 
-            List<string> choices = config.CoinIncidents;
-
-            PluginBus.Publish(BusTopics.IncidentRequested, Interop.Owner, Chance.Pick(choices));
+            if (accepted)
+                GlobalCooldown.TryConsume(CooldownKey, config.FacilityEffectCooldown);
         }
     }
 }

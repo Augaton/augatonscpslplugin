@@ -249,16 +249,13 @@ namespace SpectatorVote
 
                 box.Close();
 
-                if (winner is null || !IsAvailable(winner) || (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses))
+                if (winner is null || (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses))
                     return;
 
-                if (PluginBus.Publish(TopicOf(winner.Kind), Plugin.Owner, winner.Incident) == 0)
-                {
-                    Logger.Warn("Personne n'a recu le choix des spectateurs.");
-                    return;
-                }
+                bool accepted = IsAvailable(winner) && PluginBus.Request(TopicOf(winner.Kind), Plugin.Owner, winner.Incident);
+                string result = accepted ? Text.VoteResult : Text.VoteRefused;
 
-                plugin.Hints.ShowAll(Text.VoteResult.Replace("%LABEL%", winner.Label), Config.HintDuration);
+                plugin.Hints.ShowAll(result.Replace("%LABEL%", winner.Label), Config.HintDuration);
             }
             catch (Exception e)
             {

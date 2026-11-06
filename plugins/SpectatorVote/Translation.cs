@@ -13,6 +13,9 @@ namespace SpectatorVote
         [Description("Hint du resultat, montre a tous. %LABEL% = choix gagnant.")]
         public string VoteResult { get; set; } = "Les morts ont choisi : %LABEL%";
 
+        [Description("Hint du resultat quand le choix gagnant ne peut pas s'appliquer. %LABEL% = choix gagnant.")]
+        public string VoteRefused { get; set; } = "Les morts ont choisi : %LABEL%. Rien ne se produit.";
+
         [Description("Reponse a un vote pris en compte. %LABEL% = incident choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre : %LABEL%.";
 

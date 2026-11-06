@@ -92,8 +92,8 @@ namespace SCP500s.API
                 case PillBehaviour.Census: Census(player); return;
                 case PillBehaviour.ScpRadar: ScpRadar(player); return;
                 case PillBehaviour.KeycardUpgrade: KeycardUpgrade(player, sourceKey); return;
-                case PillBehaviour.TriggerIncident: Request(BusTopics.IncidentRequested, Config.PillIncidents); return;
-                case PillBehaviour.SurpriseDrop: Request(BusTopics.DropRequested, Config.PillDropProfiles); return;
+                case PillBehaviour.TriggerIncident: Request(player, BusTopics.IncidentRequested, Config.PillIncidents); return;
+                case PillBehaviour.SurpriseDrop: Request(player, BusTopics.DropRequested, Config.PillDropProfiles); return;
             }
         }
 
@@ -101,16 +101,24 @@ namespace SCP500s.API
         {
             switch (behaviour)
             {
-                case PillBehaviour.TriggerIncident: return PluginDirectory.IsRegistered("SiteIncidents");
-                case PillBehaviour.SurpriseDrop: return PluginDirectory.IsRegistered("SupplyDrop");
+                case PillBehaviour.TriggerIncident: return !Warhead.IsDetonated && CanRequest("SiteIncidents");
+                case PillBehaviour.SurpriseDrop: return CanRequest("SupplyDrop");
                 default: return true;
             }
         }
 
-        private static void Request(string topic, List<string> choices)
+        private static bool CanRequest(string target)
         {
-            if (choices.Count > 0)
-                PluginBus.Publish(topic, Interop.Owner, Chance.Pick(choices));
+            return PluginDirectory.IsRegistered(target) && !(Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses);
+        }
+
+        // Le message de la pilule est deja affiche : un refus le remplace, pour ne pas annoncer ce qui n'arrivera pas.
+        private static void Request(Player player, string topic, List<string> choices)
+        {
+            if (choices.Count > 0 && PluginBus.Request(topic, Interop.Owner, Chance.Pick(choices)))
+                return;
+
+            PayloadExecutor.ShowMessage(player, Text.PillRequestRefused);
         }
 
         private static void AmmoRefill(Player player)

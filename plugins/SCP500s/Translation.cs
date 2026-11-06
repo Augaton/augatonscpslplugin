@@ -34,6 +34,9 @@ namespace SCP500s
         [Description("Ligne du radar pour un SCP. {role} est remplace par le SCP, {distance} par sa distance en metres.")]
         public string RadarLine { get; set; } = "{role} a {distance} m";
 
+        [Description("Message d'une pilule d'incident ou de largage quand le site refuse la demande.")]
+        public string PillRequestRefused { get; set; } = "<color=#C0C0C0>Rien ne se passe. La pilule avait un drole de gout.</color>";
+
         [Description("Message de la pilule radar quand aucun SCP n'est en vie.")]
         public string RadarEmpty { get; set; } = "<color=#FF6347>Aucune signature SCP detectee.</color>";
     }

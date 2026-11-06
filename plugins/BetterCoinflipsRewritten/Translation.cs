@@ -276,6 +276,10 @@ namespace BetterCoinflipsRewritten
         public string FalseAlarmSubtitles { get; set; } =
             "Attention. SCP detecte dans cette zone.";
 
+        [Description("Message quand le site refuse l'incident provoque ou le largage surprise.")]
+        public string RequestRefusedEffectMessage { get; set; } =
+            "La piece retombe. Rien ne se passe.";
+
         [Description("Message de l'incident provoque.")]
         public string TriggerIncidentEffectMessage { get; set; } =
             "La piece retombe mal : quelque chose se detraque sur le site.";

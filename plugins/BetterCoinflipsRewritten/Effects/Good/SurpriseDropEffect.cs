@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using AugatonLib.Bus;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
@@ -12,6 +11,8 @@ namespace BetterCoinflipsRewritten.Effects.Good
         private const string CooldownKey = "surprise_drop";
         private const string TargetPlugin = "SupplyDrop";
 
+        private bool accepted;
+
         public string Name
         {
             get { return "SurpriseDrop"; }
@@ -19,7 +20,12 @@ namespace BetterCoinflipsRewritten.Effects.Good
 
         public string Message
         {
-            get { return Plugin.Instance.Translation.SurpriseDropEffectMessage; }
+            get
+            {
+                Translation text = Plugin.Instance.Translation;
+
+                return accepted ? text.SurpriseDropEffectMessage : text.RequestRefusedEffectMessage;
+            }
         }
 
         public bool CanApply(Player player)
@@ -30,21 +36,20 @@ namespace BetterCoinflipsRewritten.Effects.Good
                    !player.IsDestroyed &&
                    player.IsAlive &&
                    config.SurpriseDropProfiles?.Count > 0 &&
-                   !(config.PauseDuringGamemodes && WorldEvents.IsPaused) &&
+                   !(config.PauseDuringGamemodes && GamemodeState.BlocksBonuses) &&
                    PluginDirectory.IsRegistered(TargetPlugin) &&
                    GlobalCooldown.IsReady(CooldownKey, config.FacilityEffectCooldown);
         }
 
+        // Le cooldown ne part qu'une fois la demande acceptee : un refus ne bloque pas le lancer suivant.
         public void Execute(Player player)
         {
             Config config = Plugin.Instance.Config;
 
-            if (!GlobalCooldown.TryConsume(CooldownKey, config.FacilityEffectCooldown))
-                return;
+            accepted = PluginBus.Request(BusTopics.DropRequested, Interop.Owner, Chance.Pick(config.SurpriseDropProfiles));
 
-            List<string> choices = config.SurpriseDropProfiles;
-
-            PluginBus.Publish(BusTopics.DropRequested, Interop.Owner, Chance.Pick(choices));
+            if (accepted)
+                GlobalCooldown.TryConsume(CooldownKey, config.FacilityEffectCooldown);
         }
     }
 }
