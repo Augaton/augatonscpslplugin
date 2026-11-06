@@ -333,28 +333,49 @@ namespace RoundMutators
                 ScaleArbiter.Request(player, Plugin.Owner, ScaleArbiter.BaselineOf(player) * Config.SizeFactor);
         }
 
-        private static void Clear(Player player, MutatorType type)
+        // Un mutateur peut s'arreter en plein round : il ne reprend que ce qu'il a pose, pas la vitesse de
+        // ScpLevels ni les PV de RealisticSizes.
+        private void Clear(Player player, MutatorType type)
         {
+            bool eligible = player.IsHuman && !player.IsTutorial;
+
             switch (type)
             {
                 case MutatorType.LowGravity:
                     player.Gravity = FpcGravityController.DefaultGravity;
                     break;
 
-                case MutatorType.Swift:
-                case MutatorType.SwiftScps:
-                    player.DisableEffect<MovementBoost>();
+                case MutatorType.Swift when eligible:
+                    ClearBoost(player, Config.SpeedPercent);
                     break;
 
-                case MutatorType.FragileHumans:
-                    if (player.IsHuman && player.RoleBase is IHealthbarRole role)
-                        player.MaxHealth = role.MaxHealth;
+                case MutatorType.SwiftScps when player.IsSCP:
+                    ClearBoost(player, Config.SwiftScpPercent);
                     break;
 
-                case MutatorType.Tireless:
+                case MutatorType.FragileHumans when eligible:
+                    ClearFragility(player);
+                    break;
+
+                case MutatorType.Tireless when eligible:
                     player.DisableEffect<Invigorated>();
                     break;
             }
+        }
+
+        private static void ClearBoost(Player player, int percent)
+        {
+            if (player.TryGetEffect(out MovementBoost boost) && boost.Intensity == percent)
+                player.DisableEffect<MovementBoost>();
+        }
+
+        private void ClearFragility(Player player)
+        {
+            if (player.RoleBase is not IHealthbarRole role)
+                return;
+
+            if (Mathf.Approximately(player.MaxHealth, role.MaxHealth * Config.FragileHealthPercent / 100f))
+                player.MaxHealth = role.MaxHealth;
         }
 
         private void CancelDraw()
