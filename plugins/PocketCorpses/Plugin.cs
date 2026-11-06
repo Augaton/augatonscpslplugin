@@ -54,35 +54,11 @@ namespace PocketCorpses
 
         protected override void ValidateConfig()
         {
-            if (Config.ReturnChance < 0f || Config.ReturnChance > 100f)
-            {
-                Logger.Warn($"return_chance {Config.ReturnChance} hors de 0-100 : valeur bornee.");
-                Config.ReturnChance = Math.Max(0f, Math.Min(100f, Config.ReturnChance));
-            }
-
-            if (Config.WarningSeconds < 0f)
-            {
-                Logger.Warn("warning_seconds negatif : valeur remise a 0.");
-                Config.WarningSeconds = 0f;
-            }
-
-            if (Config.MinDelaySeconds < Config.WarningSeconds)
-            {
-                Logger.Warn("min_delay_seconds inferieur a warning_seconds : valeur alignee.");
-                Config.MinDelaySeconds = Config.WarningSeconds;
-            }
-
-            if (Config.MaxDelaySeconds < Config.MinDelaySeconds)
-            {
-                Logger.Warn("max_delay_seconds inferieur a min_delay_seconds : valeur alignee.");
-                Config.MaxDelaySeconds = Config.MinDelaySeconds;
-            }
-
-            if (Config.SinkholeSeconds < 0f)
-            {
-                Logger.Warn("sinkhole_seconds negatif : valeur remise a 0.");
-                Config.SinkholeSeconds = 0f;
-            }
+            Config.ReturnChance = Math.Min(100f, AtLeast("return_chance", Config.ReturnChance, 0f));
+            Config.WarningSeconds = AtLeast("warning_seconds", Config.WarningSeconds, 0f);
+            Config.MinDelaySeconds = AtLeast("min_delay_seconds", Config.MinDelaySeconds, Config.WarningSeconds);
+            Config.MaxDelaySeconds = AtLeast("max_delay_seconds", Config.MaxDelaySeconds, Config.MinDelaySeconds);
+            Config.SinkholeSeconds = AtLeast("sinkhole_seconds", Config.SinkholeSeconds, 0f);
         }
 
         private void OnSpawnedRagdoll(PlayerSpawnedRagdollEventArgs ev)

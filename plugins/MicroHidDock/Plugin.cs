@@ -55,24 +55,9 @@ namespace MicroHidDock
         protected override void ValidateConfig()
         {
             Config.DockCooldownSeconds = AtLeast("dock_cooldown_seconds", Config.DockCooldownSeconds, 1f);
-
-            if (Config.DockRange < 0f)
-            {
-                Logger.Warn("dock_range negatif : valeur remise a 0.");
-                Config.DockRange = 0f;
-            }
-
-            if (Config.RechargePerSecond < 0f)
-            {
-                Logger.Warn("recharge_per_second negatif : recharge coupee.");
-                Config.RechargePerSecond = 0f;
-            }
-
-            if (Config.RechargeLimit < 0f || Config.RechargeLimit > 1f)
-            {
-                Logger.Warn($"recharge_limit {Config.RechargeLimit} hors de 0-1 : valeur bornee.");
-                Config.RechargeLimit = Math.Max(0f, Math.Min(1f, Config.RechargeLimit));
-            }
+            Config.DockRange = AtLeast("dock_range", Config.DockRange, 0f);
+            Config.RechargePerSecond = AtLeast("recharge_per_second", Config.RechargePerSecond, 0f);
+            Config.RechargeLimit = Math.Min(1f, AtLeast("recharge_limit", Config.RechargeLimit, 0f));
         }
 
         private void OnRoundRestarted()
