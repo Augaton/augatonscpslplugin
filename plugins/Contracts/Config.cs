@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using AugatonLib.Hints;
+using PlayerRoles;
 
 namespace Contracts
 {
@@ -15,6 +16,9 @@ namespace Contracts
         [Description("Cooldown de la commande .contrat par joueur, en secondes.")]
         public float CommandCooldownSeconds { get; set; } = 3f;
 
+        [Description("Roles de SCP sans contrat.")]
+        public List<RoleTypeId> ExcludedScps { get; set; } = new List<RoleTypeId> { RoleTypeId.Scp079, RoleTypeId.Scp0492 };
+
         [Description("Contrats possibles.")]
         public List<ContractOffer> Offers { get; set; } = new List<ContractOffer>
         {
@@ -27,6 +31,8 @@ namespace Contracts
             new ContractOffer { Kind = ContractKind.SwallowPills, Target = 1, Weight = 6, Reward = ItemType.Adrenaline, RewardLabel = "une adrenaline" },
             new ContractOffer { Kind = ContractKind.UseVending, Target = 1, Weight = 5, Reward = ItemType.Medkit, RewardLabel = "une trousse de soins" },
             new ContractOffer { Kind = ContractKind.ExchangeItem, Target = 2, Weight = 5, Reward = ItemType.GrenadeFlash, RewardLabel = "une grenade aveuglante" },
+            new ContractOffer { Kind = ContractKind.KillEnemies, ForScps = true, Target = 3, Reward = ItemType.None, RewardHealth = 300f, RewardLabel = "300 PV" },
+            new ContractOffer { Kind = ContractKind.Survive, ForScps = true, Target = 8, Weight = 6, Reward = ItemType.None, RewardHealth = 200f, RewardLabel = "200 PV" },
         };
 
         [Description("Duree des hints, en secondes.")]

@@ -71,6 +71,8 @@ namespace Contracts
             Config.CommandCooldownSeconds = AtLeast("command_cooldown_seconds", Config.CommandCooldownSeconds, 1f);
             Config.FirstOfferSeconds = AtLeast("first_offer_seconds", Config.FirstOfferSeconds, 5f);
 
+            Config.ExcludedScps ??= new List<PlayerRoles.RoleTypeId>();
+
             if (Config.Offers is not null)
                 return;
 

@@ -13,7 +13,13 @@ namespace Contracts
         [Description("Poids dans le tirage. 0 = jamais.")]
         public int Weight { get; set; } = 10;
 
-        [Description("Objet donne en recompense. SCP500 donne une vraie pilule si SCP500s est installe.")]
+        [Description("Contrat reserve aux SCP. Les autres vont aux humains.")]
+        public bool ForScps { get; set; }
+
+        [Description("Vie rendue en recompense, utile pour un SCP qui n'a pas d'inventaire. 0 = aucune.")]
+        public float RewardHealth { get; set; }
+
+        [Description("Objet donne en recompense. None = aucun. SCP500 donne une vraie pilule si SCP500s est installe.")]
         public ItemType Reward { get; set; } = ItemType.Medkit;
 
         [Description("Nombre d'objets de la recompense.")]

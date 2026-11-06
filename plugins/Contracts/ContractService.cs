@@ -63,7 +63,7 @@ namespace Contracts
         {
             foreach (ContractOffer offer in Config.Offers)
             {
-                if (offer is null || !InventoryItemLoader.AvailableItems.ContainsKey(offer.Reward))
+                if (offer is null || (offer.Reward != ItemType.None && !InventoryItemLoader.AvailableItems.ContainsKey(offer.Reward)))
                     return $"objet inconnu : {offer?.Reward}";
             }
 
@@ -109,7 +109,7 @@ namespace Contracts
             {
                 Player killer = ev?.Attacker;
 
-                if (killer is null || killer == ev.Player || !killer.IsHuman)
+                if (killer is null || killer == ev.Player || !IsHolder(killer))
                     return;
 
                 if (ev.OldRole != RoleTypeId.Tutorial && ev.OldRole.GetFaction() != killer.Faction)
@@ -218,7 +218,7 @@ namespace Contracts
 
             foreach (Player player in Player.ReadyList)
             {
-                if (!player.IsHuman || player.IsTutorial)
+                if (!IsHolder(player))
                     continue;
 
                 if (!book.Has(player.UserId))
@@ -258,7 +258,7 @@ namespace Contracts
         // Le jeu ne laisse s'evader que les Classe-D et les scientifiques.
         private static bool IsAvailableTo(ContractOffer offer, Player player)
         {
-            if (offer is null || offer.Weight <= 0)
+            if (offer is null || offer.Weight <= 0 || offer.ForScps != player.IsSCP)
                 return false;
 
             string source = SourcePlugin(offer.Kind);
@@ -267,6 +267,11 @@ namespace Contracts
                 return false;
 
             return offer.Kind != ContractKind.Escape || player.Role == RoleTypeId.ClassD || player.Role == RoleTypeId.Scientist;
+        }
+
+        private bool IsHolder(Player player)
+        {
+            return player.IsSCP ? !Config.ExcludedScps.Contains(player.Role) : player.IsHuman && !player.IsTutorial;
         }
 
         private static string SourcePlugin(ContractKind kind)
@@ -289,7 +294,12 @@ namespace Contracts
             if (!offers.TryGetValue(player.UserId, out ContractOffer offer))
                 return;
 
-            ItemGrant.Give(player, offer.Reward, offer.RewardQuantity);
+            if (offer.Reward != ItemType.None)
+                ItemGrant.Give(player, offer.Reward, offer.RewardQuantity);
+
+            if (offer.RewardHealth > 0f)
+                player.Heal(offer.RewardHealth);
+
             plugin.Hints.Show(player, Text.Completed.Replace("%REWARD%", offer.RewardLabel), Config.HintDuration);
             PluginBus.Publish(BusTopics.ContractCompleted, plugin.Name, player);
         }

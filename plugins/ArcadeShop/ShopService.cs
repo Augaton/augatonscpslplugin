@@ -99,7 +99,7 @@ namespace ArcadeShop
 
         public void OnContractCompleted(BusMessage message)
         {
-            if (message.TryGet(out Player player) && IsOpen)
+            if (message.TryGet(out Player player) && player.IsHuman && IsOpen)
                 Award(player, Config.PointsPerContract);
         }
 
