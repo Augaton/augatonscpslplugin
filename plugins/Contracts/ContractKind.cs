@@ -7,5 +7,9 @@ namespace Contracts
         Escape,
         UseMedical,
         Survive,
+        FlipCoins,
+        SwallowPills,
+        UseVending,
+        ExchangeItem,
     }
 }

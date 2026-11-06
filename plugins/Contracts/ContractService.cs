@@ -144,6 +144,12 @@ namespace Contracts
             }
         }
 
+        public void CountAction(BusMessage message, ContractKind kind)
+        {
+            if (message.TryGet(out Player player))
+                Advance(player, kind);
+        }
+
         public void OnUsedItem(PlayerUsedItemEventArgs ev)
         {
             try
@@ -152,6 +158,9 @@ namespace Contracts
 
                 if (type == ItemType.Medkit || type == ItemType.Painkillers || type == ItemType.Adrenaline || type == ItemType.SCP500)
                     Advance(ev.Player, ContractKind.UseMedical);
+
+                if (type == ItemType.SCP500)
+                    Advance(ev.Player, ContractKind.SwallowPills);
             }
             catch (Exception e)
             {
@@ -226,7 +235,24 @@ namespace Contracts
             if (offer is null || offer.Weight <= 0)
                 return false;
 
+            string source = SourcePlugin(offer.Kind);
+
+            if (source is not null && !PluginDirectory.IsRegistered(source))
+                return false;
+
             return offer.Kind != ContractKind.Escape || player.Role == RoleTypeId.ClassD || player.Role == RoleTypeId.Scientist;
+        }
+
+        private static string SourcePlugin(ContractKind kind)
+        {
+            switch (kind)
+            {
+                case ContractKind.FlipCoins: return "BetterCoinflipsRewritten";
+                case ContractKind.SwallowPills: return "SCP500s";
+                case ContractKind.UseVending: return "Scp261";
+                case ContractKind.ExchangeItem: return "SCP1162";
+                default: return null;
+            }
         }
 
         private void Advance(Player player, ContractKind kind)
@@ -250,6 +276,10 @@ namespace Contracts
                 case ContractKind.ActivateGenerators: return Text.ActivateGenerators.Replace("%TARGET%", target.ToString());
                 case ContractKind.Escape: return Text.Escape;
                 case ContractKind.UseMedical: return Text.UseMedical.Replace("%TARGET%", target.ToString());
+                case ContractKind.FlipCoins: return Text.FlipCoins.Replace("%TARGET%", target.ToString());
+                case ContractKind.SwallowPills: return Text.SwallowPills.Replace("%TARGET%", target.ToString());
+                case ContractKind.UseVending: return Text.UseVending.Replace("%TARGET%", target.ToString());
+                case ContractKind.ExchangeItem: return Text.ExchangeItem.Replace("%TARGET%", target.ToString());
                 default: return Text.Survive.Replace("%TARGET%", target.ToString());
             }
         }

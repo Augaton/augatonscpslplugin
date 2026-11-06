@@ -12,6 +12,11 @@ de jeu, ou quand TickGuard a suspendu les evenements. Avec SCP500s, la recompens
 un inventaire plein laisse l'objet aux pieds du joueur. RoundRecap compte les contrats remplis. ArcadeShop ajoute des
 points, et ChaosDirector fait monter le niveau de chaos.
 
+Quatre contrats ne sont proposes que si le plugin concerne est installe : lancer des pieces avec
+BetterCoinflipsRewritten, avaler une pilule avec SCP500s, utiliser SCP-261 avec Scp261, et echanger a SCP-1162 avec
+SCP1162. Un `config.yml` deja cree ne les recoit pas seul : les ajouter a `offers` avec les `kind` `FlipCoins`,
+`SwallowPills`, `UseVending` et `ExchangeItem`, ou le supprimer pour le regenerer.
+
 ## Configuration
 
 | Cle | Defaut | Role |
@@ -19,7 +24,7 @@ points, et ChaosDirector fait monter le niveau de chaos.
 | `pause_during_gamemodes` | `true` | Coupe les contrats pendant un mode de jeu |
 | `first_offer_seconds` | `15` | Delai avant les premiers contrats |
 | `command_cooldown_seconds` | `3` | Cooldown de `.contrat`, 1 au plus bas |
-| `offers` | 5 contrats | Contrats possibles : `kind`, `target`, `weight`, `reward`, `reward_quantity`, `reward_label` |
+| `offers` | 9 contrats | Contrats possibles : `kind`, `target`, `weight`, `reward`, `reward_quantity`, `reward_label` |
 | `hint_duration`, `hint_y_coordinate`, `hint_font_size` | `8`, `950`, `20` | Affichage des messages |
 
 Les textes se reglent dans `translation.yml`.

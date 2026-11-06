@@ -134,7 +134,7 @@ namespace SCP1162.API
             }
 
             Dress(granted);
-            PluginBus.Publish(BusTopics.ItemExchanged, plugin.Name, entry.Item);
+            PluginBus.Publish(BusTopics.ItemExchanged, plugin.Name, player);
             plugin.Hints.Show(player, Format(translation.ItemExchanged, action, consumed, NameOf(entry.Item)), config.HintDuration);
 
             return false;

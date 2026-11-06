@@ -23,6 +23,10 @@ namespace Contracts
             new ContractOffer { Kind = ContractKind.Escape, Target = 1, Weight = 8, Reward = ItemType.SCP500, RewardLabel = "une pilule" },
             new ContractOffer { Kind = ContractKind.UseMedical, Target = 2, Weight = 6, Reward = ItemType.Painkillers, RewardQuantity = 2, RewardLabel = "des antidouleurs" },
             new ContractOffer { Kind = ContractKind.Survive, Target = 8, Weight = 8, Reward = ItemType.ArmorCombat, RewardLabel = "une armure de combat" },
+            new ContractOffer { Kind = ContractKind.FlipCoins, Target = 3, Weight = 6, Reward = ItemType.Coin, RewardQuantity = 2, RewardLabel = "deux pieces" },
+            new ContractOffer { Kind = ContractKind.SwallowPills, Target = 1, Weight = 6, Reward = ItemType.Adrenaline, RewardLabel = "une adrenaline" },
+            new ContractOffer { Kind = ContractKind.UseVending, Target = 1, Weight = 5, Reward = ItemType.Medkit, RewardLabel = "une trousse de soins" },
+            new ContractOffer { Kind = ContractKind.ExchangeItem, Target = 2, Weight = 5, Reward = ItemType.GrenadeFlash, RewardLabel = "une grenade aveuglante" },
         };
 
         [Description("Duree des hints, en secondes.")]

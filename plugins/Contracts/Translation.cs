@@ -39,5 +39,17 @@ namespace Contracts
 
         [Description("Objectif de survivre. %TARGET% est le nombre de minutes.")]
         public string Survive { get; set; } = "Restez en vie %TARGET% minute(s).";
+
+        [Description("Objectif de lancer des pieces. %TARGET% est le nombre.")]
+        public string FlipCoins { get; set; } = "Lancez %TARGET% piece(s).";
+
+        [Description("Objectif d'avaler des pilules. %TARGET% est le nombre.")]
+        public string SwallowPills { get; set; } = "Avalez %TARGET% pilule(s).";
+
+        [Description("Objectif d'utiliser SCP-261. %TARGET% est le nombre.")]
+        public string UseVending { get; set; } = "Utilisez SCP-261 %TARGET% fois.";
+
+        [Description("Objectif d'echanger a SCP-1162. %TARGET% est le nombre.")]
+        public string ExchangeItem { get; set; } = "Echangez %TARGET% objet(s) a SCP-1162.";
     }
 }

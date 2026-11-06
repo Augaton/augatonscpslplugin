@@ -129,7 +129,7 @@ namespace Scp261
 
             player.RemoveItem(held);
             outcomes.Roll(player);
-            PluginBus.Publish(BusTopics.VendingUsed, Owner);
+            PluginBus.Publish(BusTopics.VendingUsed, Owner, player);
         }
     }
 }
