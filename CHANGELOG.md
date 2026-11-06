@@ -34,7 +34,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - SiteIncidents : un autre plugin peut demander un incident par le bus.
 - ChaosDirector : points pour les paliers de série de kills.
 - RoundRecap : meilleure série de kills.
-- `collection check` vérifie sur le vrai serveur ce que la compilation ne voit pas.
+- `collection check` vérifie sur le vrai serveur ce que la compilation ne voit pas, et son bilan part tout seul dans la console au premier round.
 - Commandes de test pour PocketCorpses et MicroHidDock.
 - SiteIncidents : fuite de gaz, surcharge des portes Tesla et coupure de caméras.
 - RandomGamemode : modes Cache-cache et Évacuation générale.

@@ -41,6 +41,17 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void FailuresListOnlyWhatFailed()
+        {
+            SelfCheck.Register(Owner, "bon", () => null);
+            SelfCheck.Register(Owner, "mauvais", () => "introuvable");
+
+            string failure = Assert.Single(SelfCheck.Failures());
+
+            Assert.Equal("tests : mauvais (introuvable)", failure);
+        }
+
+        [Fact]
         public void AnUnregisteredOwnerDisappears()
         {
             SelfCheck.Register(Owner, "ephemere", () => null);

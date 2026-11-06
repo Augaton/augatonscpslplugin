@@ -213,6 +213,8 @@ Disponibles dans le Remote Admin et la console du serveur. Sans argument, une co
 
 La sous-commande `collection` affiche l'état de toute la collection : plugins chargés, intégrations et arbitres.
 
+À chaque démarrage, le premier round écrit ce bilan dans la console : un `[collection check]` en avertissement y signale chaque problème.
+
 `collection check` vérifie sur le vrai serveur ce que la compilation ne voit pas : prefabs, salles, mots de C.A.S.S.I.E, codec et dépendances. Lancez-la pendant un round, par exemple avec `chaos collection check`.
 
 ## Architecture

@@ -5,7 +5,7 @@ points sont ceux que la compilation ne peut pas prouver. Cocher au fur et a mesu
 
 ## 1. Chargement
 
-Commencer par `chaos collection check` pendant un round : chaque `[ECHEC]` signale un probleme avant meme de jouer.
+La console resume les verifications 20 s apres le premier round. `chaos collection check` donne le detail a tout moment.
 
 - [ ] La banniere AugatonLib apparait dans la console et annonce tous les plugins installes.
 - [ ] Aucune erreur de chargement, et HintServiceMeow est detecte avec le `0Harmony.dll` de l'archive.

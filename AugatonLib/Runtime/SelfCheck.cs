@@ -66,6 +66,21 @@ namespace AugatonLib.Runtime
             return builder.ToString();
         }
 
+        public static List<string> Failures()
+        {
+            List<string> failures = new List<string>(4);
+
+            foreach (Entry entry in Entries)
+            {
+                string problem = Run(entry);
+
+                if (problem is not null)
+                    failures.Add($"{entry.Owner} : {entry.Label} ({problem})");
+            }
+
+            return failures;
+        }
+
         private static string Run(Entry entry)
         {
             try
