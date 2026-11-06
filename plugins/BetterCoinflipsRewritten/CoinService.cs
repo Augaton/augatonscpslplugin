@@ -154,6 +154,11 @@ namespace BetterCoinflipsRewritten
 
             badEffects.Add(
                 new WeightedEffect(
+                    new DisarmEffect(),
+                    plugin.Config.DisarmChance));
+
+            badEffects.Add(
+                new WeightedEffect(
                     new OneHpLeftEffect(),
                     plugin.Config.OneHpLeftChance));
 

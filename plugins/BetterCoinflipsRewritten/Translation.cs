@@ -256,6 +256,10 @@ namespace BetterCoinflipsRewritten
         public string DetectorEffectMessage { get; set; } =
             "Le SCP le plus proche est a {distance} m.";
 
+        [Description("Message de l'effet desarmement.")]
+        public string DisarmEffectMessage { get; set; } =
+            "Votre arme vous glisse des mains.";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";

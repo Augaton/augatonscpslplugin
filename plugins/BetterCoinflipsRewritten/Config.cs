@@ -270,6 +270,9 @@ namespace BetterCoinflipsRewritten
         [Description("Poids de l'effet detecteur. Il n'est tire que si un SCP est en jeu.")]
         public int DetectorChance { get; set; } = 6;
 
+        [Description("Poids de l'effet desarmement. Il n'est tire que si le joueur tient une arme.")]
+        public int DisarmChance { get; set; } = 7;
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 
