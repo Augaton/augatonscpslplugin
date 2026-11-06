@@ -247,6 +247,11 @@ namespace RandomGamemode.API
             runScheduled = true;
             runHandle = Timing.RunCoroutine(Guarded(gamemode), Segment.FixedUpdate);
 
+            // MEC joue la premiere etape ici : si elle a plante, End est deja passe. Annoncer le mode
+            // maintenant rallumerait GamemodeState pour le reste du round, sans fin de mode pour l'eteindre.
+            if (Active != gamemode)
+                return;
+
             if (gamemode.Settings.RoundTimeLimit > 0f)
             {
                 limitScheduled = true;
