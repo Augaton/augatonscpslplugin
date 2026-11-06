@@ -6,9 +6,15 @@ namespace AugatonLib.Tests
 {
     public class WorldEventsTests : IDisposable
     {
-        public WorldEventsTests() => WorldEvents.Clear();
+        public WorldEventsTests() => Reset();
 
-        public void Dispose() => WorldEvents.Clear();
+        public void Dispose() => Reset();
+
+        private static void Reset()
+        {
+            WorldEvents.Clear();
+            GamemodeState.End();
+        }
 
         [Fact]
         public void NothingIsPausedByDefault()
@@ -46,6 +52,34 @@ namespace AugatonLib.Tests
             WorldEvents.Pause(string.Empty);
 
             Assert.False(WorldEvents.IsPaused);
+        }
+
+        [Fact]
+        public void NothingBlocksBonusesByDefault()
+        {
+            Assert.False(GamemodeState.BlocksBonuses);
+        }
+
+        [Fact]
+        public void AModeWithoutPauseStillBlocksBonuses()
+        {
+            GamemodeState.Begin();
+
+            Assert.True(GamemodeState.BlocksBonuses);
+            Assert.False(WorldEvents.IsPaused);
+
+            GamemodeState.End();
+
+            Assert.False(GamemodeState.BlocksBonuses);
+        }
+
+        [Fact]
+        public void APauseWithoutModeBlocksBonuses()
+        {
+            WorldEvents.Pause("a");
+
+            Assert.True(GamemodeState.BlocksBonuses);
+            Assert.False(GamemodeState.IsActive);
         }
     }
 }

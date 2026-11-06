@@ -93,6 +93,7 @@ namespace AugatonLib.Runtime
             PlayerDeparture.Hook();
             TeamWatcher.Hook();
             ScaleArbiter.Hook();
+            GamemodeState.Hook();
             RegisterChecks();
             ServerEvents.PluginsEnabled += Banner.Print;
         }

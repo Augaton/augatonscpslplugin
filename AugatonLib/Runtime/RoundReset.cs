@@ -28,6 +28,7 @@ namespace AugatonLib.Runtime
                 DoorLockRegistry.Clear();
                 GenocideArbiter.Clear();
                 WorldEvents.Clear();
+                GamemodeState.End();
                 ChaosState.Reset();
             }
             catch (Exception e)
