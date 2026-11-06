@@ -91,7 +91,7 @@ namespace SupplyDrop.API
                         FacilityZone.HeavyContainment,
                         FacilityZone.Entrance,
                     },
-                    ScatterRadius = 1.5f,
+                    ScatterRadius = 0.5f,
                     EnableBeacon = true,
                     BeaconColor = "#FFD700",
                     BeaconDuration = 60f,

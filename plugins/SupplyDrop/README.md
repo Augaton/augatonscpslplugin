@@ -18,7 +18,8 @@ largages sont donc une source de reappro.
 
 Un profil avec `zones` tombe dans une salle au hasard de ces zones, loin des joueurs, et `%ZONE%` nomme la zone dans
 `broadcast` et `cassie_subtitles`. C'est le cas de `neutre`, ouvert a tous. Sans salle sure, par exemple apres l'ogive,
-il tombe en surface.
+il tombe en surface, comme pendant le compte a rebours de l'ogive. La zone legere n'est plus choisie dans la derniere
+minute avant sa decontamination.
 
 | Cle | Role |
 |---|---|

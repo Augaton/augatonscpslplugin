@@ -24,6 +24,8 @@ namespace SupplyDrop.API
 {
     public sealed class DropService
     {
+        private const float ReachSeconds = 60f;
+
         private const float TrapTickSeconds = 0.5f;
 
         private readonly Plugin plugin;
@@ -80,6 +82,7 @@ namespace SupplyDrop.API
         public void Start()
         {
             Stop();
+            spots.Collect();
 
             foreach (DropProfile profile in Config.Profiles)
             {
@@ -221,7 +224,7 @@ namespace SupplyDrop.API
 
             bool IsCrowded(Vector3 position) => LootSpots.IsNearLivingPlayer(position, Config.ZoneDropClearance);
 
-            if (spots.TryPick(profile.Zones, IsCrowded, out Vector3 position, out FacilityZone zone))
+            if (spots.TryPick(ReachableZones(profile), IsCrowded, out Vector3 position, out FacilityZone zone))
             {
                 zoneName = NameOf(zone);
                 return position;
@@ -229,6 +232,20 @@ namespace SupplyDrop.API
 
             zoneName = NameOf(FacilityZone.Surface);
             return null;
+        }
+
+        // Le largage tombe apres l'annonce : la zone doit encore etre accessible a ce moment-la, et un peu au-dela.
+        private static List<FacilityZone> ReachableZones(DropProfile profile)
+        {
+            List<FacilityZone> reachable = new List<FacilityZone>(profile.Zones);
+
+            if (Warhead.IsDetonationInProgress)
+                reachable.RemoveAll(zone => zone != FacilityZone.Surface);
+
+            if (SiteDanger.LightZoneClosesWithin(profile.AnnouncementLeadSeconds + ReachSeconds))
+                reachable.Remove(FacilityZone.LightContainment);
+
+            return reachable;
         }
 
         private string NameOf(FacilityZone zone)
