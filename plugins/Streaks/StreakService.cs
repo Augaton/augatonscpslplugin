@@ -72,6 +72,8 @@ namespace Streaks
                     Config.HintDuration);
             }
 
+            PluginBus.Publish(BusTopics.StreakReached, Plugin.Owner, new PlayerStreak(killer, kills, reward is not null));
+
             if (reward is null)
                 return;
 
@@ -81,8 +83,6 @@ namespace Streaks
                 killer,
                 Text.RewardEarned.Replace("%COUNT%", kills.ToString()).Replace("%REWARD%", reward.Label),
                 Config.HintDuration);
-
-            PluginBus.Publish(BusTopics.StreakReached, Plugin.Owner, new PlayerStreak(killer, kills));
         }
 
         private bool IsCounted(Player killer, PlayerDeathEventArgs ev)
