@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using System;
 using AugatonLib.Arbitration;
+using AugatonLib.Arcade;
 using AugatonLib.Bus;
 using AugatonLib.Caching;
+using AugatonLib.Random;
 using AugatonLib.Runtime;
+using AugatonLib.Text;
 using AugatonLib.World;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
@@ -17,6 +21,7 @@ namespace Scp261
         public const string Owner = "Scp261";
 
         private readonly CooldownTracker cooldowns = new CooldownTracker();
+        private readonly Jackpot jackpot = new Jackpot();
 
         public static Plugin Instance { get; private set; }
 
@@ -64,11 +69,17 @@ namespace Scp261
 
         protected override void ValidateConfig()
         {
+            Config.JackpotPrizes ??= new List<ItemType>();
+            Config.JackpotChancePercent = AtLeast("jackpot_chance_percent", Config.JackpotChancePercent, 0f);
+            Config.JackpotChancePerUse = AtLeast("jackpot_chance_per_use", Config.JackpotChancePerUse, 0f);
+            Config.JackpotUsesPerPrize = (int)AtLeast("jackpot_uses_per_prize", Config.JackpotUsesPerPrize, 1f);
+            Config.JackpotMaxPrizes = (int)AtLeast("jackpot_max_prizes", Config.JackpotMaxPrizes, 1f);
             Config.UseCooldownSeconds = AtLeast("use_cooldown_seconds", Config.UseCooldownSeconds, 0.5f);
         }
 
         private void OnRoundRestarted()
         {
+            jackpot.Clear();
             machines.Clear();
             cooldowns.Clear();
             Hints.Clear();
@@ -128,8 +139,29 @@ namespace Scp261
             }
 
             player.RemoveItem(held);
-            outcomes.Roll(player);
+
+            if (!TryJackpot(player))
+                outcomes.Roll(player);
+
             PluginBus.Publish(BusTopics.VendingUsed, Owner, player);
+        }
+
+        private bool TryJackpot(Player player)
+        {
+            jackpot.Add();
+
+            if (Config.JackpotPrizes.Count == 0 || !Chance.Roll(jackpot.ChancePercent(Config.JackpotChancePercent, Config.JackpotChancePerUse)))
+                return false;
+
+            int prizes = jackpot.Claim(Config.JackpotUsesPerPrize, Config.JackpotMaxPrizes);
+
+            for (int i = 0; i < prizes; i++)
+                ItemGrant.Give(player, Chance.Pick(Config.JackpotPrizes));
+
+            string text = Translation.Jackpot.Replace("%PLAYER%", SafeText.Nickname(player)).Replace("%COUNT%", prizes.ToString());
+
+            Server.SendBroadcast(text, Config.JackpotBroadcastDuration);
+            return true;
         }
     }
 }

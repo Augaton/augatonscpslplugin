@@ -31,6 +31,9 @@ namespace Scp261
         [Description("Hint quand le joueur n'a pas le droit d'utiliser la machine.")]
         public string Denied { get; set; } = "<b>Vous <color=red>ne pouvez pas utiliser SCP-261.</color></b>";
 
+        [Description("Annonce du jackpot. %PLAYER% est le pseudo, %COUNT% le nombre de lots.")]
+        public string Jackpot { get; set; } = "<b><color=yellow>JACKPOT !</color> %PLAYER% remporte %COUNT% lot(s) a SCP-261.</b>";
+
         [Description("Hint quand la machine est suspendue pendant un mode de jeu.")]
         public string Paused { get; set; } = "<b>La machine <color=red>est hors service.</color></b>";
     }

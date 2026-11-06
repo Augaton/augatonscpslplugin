@@ -38,6 +38,32 @@ namespace Scp261
         [Description("Delai minimal en secondes entre deux utilisations par un meme joueur.")]
         public float UseCooldownSeconds { get; set; } = 1f;
 
+        [Description("Chance de base du jackpot, en pourcentage. Avec jackpot_chance_per_use a 0, 0 coupe le jackpot.")]
+        public float JackpotChancePercent { get; set; } = 1f;
+
+        [Description("Chance ajoutee a chaque utilisation depuis le dernier jackpot, en pourcentage.")]
+        public float JackpotChancePerUse { get; set; } = 1f;
+
+        [Description("Utilisations qui ajoutent un lot au jackpot, 1 au plus bas.")]
+        public int JackpotUsesPerPrize { get; set; } = 4;
+
+        [Description("Lots d'un jackpot au plus, 1 au plus bas.")]
+        public int JackpotMaxPrizes { get; set; } = 6;
+
+        [Description("Lots possibles du jackpot.")]
+        public List<ItemType> JackpotPrizes { get; set; } = new List<ItemType>
+        {
+            ItemType.SCP500,
+            ItemType.SCP207,
+            ItemType.Adrenaline,
+            ItemType.GrenadeHE,
+            ItemType.Medkit,
+            ItemType.Coin,
+        };
+
+        [Description("Duree de l'annonce du jackpot, en secondes.")]
+        public ushort JackpotBroadcastDuration { get; set; } = 6;
+
         [Description("Rend la machine inutilisable pendant un mode de jeu de type arene.")]
         public bool PauseDuringGamemodes { get; set; } = true;
 
