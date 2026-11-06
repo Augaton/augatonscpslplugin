@@ -76,8 +76,15 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 ### Outillage
 
 - Les règles du dépôt sont vérifiées par les tests : abonnements défaits, ressources arbitrées, cooldowns bornés, en-têtes de licence.
+- `tools/check.sh` lance en local les contrôles de la CI, et la CI comme la release l'appellent.
+- `tools/new-plugin.sh` crée un plugin prêt à compiler, et `tools/deploy.sh` envoie l'archive par SFTP.
+- L'archive livre la licence de chaque plugin, chaque DLL embarque la sienne, et `SHA256SUMS` accompagne les releases.
+- `package.sh` refuse une archive incomplète, et lit les versions de ses dépendances dans les projets.
+- `fetch-references.sh` vérifie l'empreinte des assemblies du jeu, et ne remplace leur dossier qu'après réussite.
+- CI : actions épinglées par SHA, caches, délais maximum et `shellcheck`. La publication d'une release a son propre job, seul à pouvoir écrire.
 
 ### À savoir pour la mise à jour
 
+- Après une mise à jour du jeu, `fetch-references.sh` et la CI échouent tant que `./tools/fetch-references.sh --update` n'a pas accepté la nouvelle empreinte.
 - CorpsesFallPocketDimension et MicroHIDReturn sont remplacés : ne les gardez pas avec PocketCorpses et MicroHidDock.
 - `ScaleArbiter.Clear` devient `ResetBaselines`, et le sujet de bus `round.reset` disparaît.

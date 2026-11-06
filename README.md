@@ -96,7 +96,7 @@ FairScpSelection remplace le choix des SCP du jeu : sa cohabitation avec Better3
 
 ### Compiler
 
-Il faut le [SDK .NET 10](https://dot.net), ainsi que `curl` et `unzip` sous Linux.
+Il faut le [SDK .NET 10](https://dot.net), ainsi que `curl`, `unzip` et `zip` sous Linux.
 
 ```bash
 git clone https://github.com/Augaton/augatonscpslplugin.git
@@ -106,9 +106,9 @@ dotnet build -c Release
 ./tools/package.sh
 ```
 
-`fetch-references.sh` télécharge les assemblies du jeu dans `.references/`. Elles servent uniquement à la compilation et ne sont ni versionnées ni déployées. Pour compiler contre votre propre serveur, définissez plutôt `SL_REFERENCES` vers son dossier `SCPSL_Data/Managed`. FairScpSelection a besoin de `Assembly-CSharp-Publicized.dll`, présent uniquement dans `.references/` : retirez-le de la solution si vous compilez contre un serveur.
+`fetch-references.sh` télécharge les assemblies du jeu dans `.references/` et vérifie leur empreinte, conservée dans `tools/references.sha256`. Elles servent uniquement à la compilation et ne sont ni versionnées ni déployées. Après une mise à jour du jeu, le script refuse le nouveau fichier : vérifiez que le dépôt compile, puis acceptez l'empreinte avec `./tools/fetch-references.sh --update` et committez-la. Pour compiler contre votre propre serveur, définissez plutôt `SL_REFERENCES` vers son dossier `SCPSL_Data/Managed`. FairScpSelection a besoin de `Assembly-CSharp-Publicized.dll`, présent uniquement dans `.references/` : retirez-le de la solution si vous compilez contre un serveur.
 
-Les fichiers compilés arrivent dans `out/`, et `package.sh` les assemble dans `out/zone-shilari-labapi.zip`. Quand une version sera publiée, la même archive sera disponible dans [Releases](https://github.com/Augaton/augatonscpslplugin/releases).
+Les fichiers compilés arrivent dans `out/`, et `package.sh` les assemble dans `out/zone-shilari-labapi.zip`, avec la licence de chaque plugin et un fichier `out/SHA256SUMS`. Il refuse une archive incomplète, ou une DLL dont le projet a disparu. Quand une version sera publiée, la même archive sera disponible dans [Releases](https://github.com/Augaton/augatonscpslplugin/releases).
 
 ### Déployer
 
@@ -133,6 +133,15 @@ Le dossier `LabAPI` se trouve ici :
 2. Redémarrez le serveur. La console affiche une bannière AugatonLib avec les plugins enregistrés, les intégrations détectées et les éventuels conflits.
 
 Pour viser un seul serveur, remplacez `global` par son port.
+
+Sur un panel, `tools/deploy.sh` envoie l'archive par SFTP. Copiez `.env.example` en `.env`, qui n'est jamais committé, et remplissez-le. Aucun mot de passe n'y figure : `sftp` le demande, ou utilisez une clé SSH.
+
+```bash
+./tools/deploy.sh --dry-run   # affiche ce qui serait envoyé
+./tools/deploy.sh
+```
+
+Arrêtez le serveur avant l'envoi, car écraser une DLL déjà chargée peut le faire planter, puis redémarrez-le.
 
 ### Installer à la carte
 
@@ -285,19 +294,20 @@ tools/                 récupération des références et assemblage de l'archiv
 ### Compiler et tester
 
 ```bash
-dotnet build -c Release
-dotnet test tests/AugatonLib.Tests -c Release
+./tools/check.sh
 ```
+
+Ce script lance les mêmes contrôles que la CI et s'arrête au premier échec : compilation, chaque plugin seul, tests, puis `shellcheck` s'il est installé.
 
 Les tests tournent sans le jeu : ils couvrent la logique indépendante d'Unity, comme `SafeText`, `PluginBus`, l'urne de vote ou les paliers de chaos. Le reste se valide sur un serveur.
 
 ### Ajouter un plugin
 
-1. Créez `plugins/<Nom>/<Nom>.csproj`, avec seulement `RootNamespace` et `Version`.
-2. Créez une classe qui hérite de `AugatonPlugin<Config, Translation>`, ou de `AugatonPlugin<Config>` s'il n'a aucun texte.
-3. Déclarez ses capacités avec `PluginDirectory.Register`, et retirez-les dans `Disable`.
-4. Ajoutez-le au catalogue dans `AugatonLib/Runtime/KnownPlugin.cs`. Un test vérifie que chaque dossier de plugin y figure.
-5. Ajoutez le projet à `augatonscpslplugin.slnx`.
+```bash
+./tools/new-plugin.sh MonPlugin "role en quelques mots"
+```
+
+Le script crée le projet, sa licence, `Plugin.cs`, `Config.cs`, une commande staff et le README, puis l'inscrit dans `AugatonLib/Runtime/KnownPlugin.cs` et `augatonscpslplugin.slnx`. Il reste à écrire sa logique et à déclarer ses capacités dans `PluginDirectory.Register`. Passez à `AugatonPlugin<Config, Translation>` dès qu'il a des textes à traduire.
 
 Les conventions du projet sont dans [CLAUDE.md](CLAUDE.md).
 
@@ -305,8 +315,10 @@ Les conventions du projet sont dans [CLAUDE.md](CLAUDE.md).
 
 | Workflow | Déclencheur | Effet |
 |---|---|---|
-| `ci` | push sur `main`, pull request | Compile, teste, produit l'archive et cherche des secrets avec gitleaks |
-| `release` | tag `v*` | Compile, teste et publie l'archive dans une release GitHub |
+| `ci` | push sur `main`, pull request | Vérifie les scripts, lance `tools/check.sh`, produit l'archive et cherche des secrets avec gitleaks |
+| `release` | tag `v*` | Lance `tools/check.sh` sans droit d'écriture, puis un job séparé publie l'archive, les DLL et `SHA256SUMS` |
+
+Les actions sont épinglées par SHA : une montée de version se fait à la main, en changeant le SHA et son commentaire.
 
 ## Migration depuis EXILED
 

@@ -17,6 +17,7 @@ tick pour tous les joueurs. Cette contrainte prime sur toutes les autres.
 | Hints | HintServiceMeow 5.5, obligatoire, via `plugin.Hints` (`AugatonLib.Hints.HintChannel`) |
 | Build | `dotnet build -c Release` à la racine |
 | Tests | `dotnet test tests/AugatonLib.Tests -c Release` |
+| Outils | `tools/check.sh` (contrôles de la CI), `tools/new-plugin.sh`, `tools/deploy.sh` |
 | Sortie | `out/plugins/`, `out/dependencies/`, et `tools/package.sh` pour l'archive |
 
 Les DLL du jeu ne sont jamais committées. La configuration commune vit dans
