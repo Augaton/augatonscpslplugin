@@ -26,6 +26,24 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 ### Corrections
 
 - Un objet donné à un SCP tombe à ses pieds au lieu de disparaître dans un inventaire qu'il ne peut pas utiliser.
+- `autoff set` ne dure plus que jusqu'à la fin du round.
+- Les modes joués jusqu'au dernier survivant ne comptent plus les joueurs en Tutorial ni les dummies.
+
+### Sécurité
+
+- Un mode de jeu ne peut plus retenir le round indéfiniment : `held_round_limit_seconds`, 900 par défaut, y met fin, et un serveur vide libère le round.
+- Le chat de proximité limite le décodage voix à 120 paquets par seconde et par joueur.
+- Tous les bornages de config écartent `NaN`, ce que vérifie une règle de test.
+- Les quantités réglables des modes et des pièces ont une borne haute.
+- Les commandes parentes vérifient la permission avant d'afficher leur aide.
+
+### Performance
+
+- Le Roi de la salle ne laisse plus d'objets ni de corps à chaque mort.
+- Les dotations de début de mode s'étalent sur plusieurs frames.
+- La recherche de plafond de PocketCorpses ne fait plus qu'un balayage par tick.
+- Le hint de pilule est limité sur le changement d'objet.
+- Une exception ne peut plus arrêter les largages automatiques pour le reste du round.
 
 ### À savoir pour la mise à jour
 

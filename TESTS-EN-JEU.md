@@ -407,3 +407,18 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Vote `BlindScps` : les SCP sont aveugles 5 s, puis l'effet s'arrete. Vote `HealHumans` : les humains sont soignes.
 - [ ] Le bilan nomme le premier sang, et le joueur mort le plus souvent a partir de deux morts.
 - [ ] Le bilan s'affiche bien apres une annonce de fin de mode.
+
+## 6. Securite et performance
+
+**Modes de jeu**
+- [ ] Roi de la salle : aucun objet ni corps au sol apres une mort, et la dotation revient a la reapparition.
+- [ ] Roi de la salle : tous les joueurs quittent, et le round se termine ou redemarre tout seul.
+- [ ] `held_round_limit_seconds` bas et deux joueurs qui ne se battent pas en Dodgeball : le round se termine.
+- [ ] Dodgeball, Randomizer, Soiree pilules et Coin Royale a 20 joueurs et plus : pas de saccade au depart, et tout le monde recoit sa dotation.
+- [ ] Un joueur en Tutorial ne retient pas un round Dodgeball.
+
+**Autres**
+- [ ] `autoff set on`, puis redemarrage du round : le tir allie revient sous le controle du plugin.
+- [ ] Chat de proximite : un SCP qui parle normalement reste intelligible, sans coupure.
+- [ ] Alterner vite entre une pilule et un objet : le hint de la pilule s'affiche encore a une selection normale.
+- [ ] `PocketCorpses` apres l'ogive : les corps en attente ne font pas baisser les TPS.
