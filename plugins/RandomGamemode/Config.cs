@@ -120,6 +120,9 @@ namespace RandomGamemode
         [Description("Roi de la salle : couleur de la salle disputee.")]
         public string KingOfTheHillColor { get; set; } = "#FFD700";
 
+        [Description("Escorte : secondes pour faire sortir le scientifique.")]
+        public float EscortRoundSeconds { get; set; } = 420f;
+
         [Description("Vie du joueur Juggernaut.")]
         public float JuggernautHealth { get; set; } = 2500f;
 
@@ -343,6 +346,13 @@ namespace RandomGamemode
                 Weight = 8,
                 MinPlayers = 6,
                 Description = "Tenez la salle designee plus longtemps que l'autre camp.",
+                PauseRespawnWaves = true,
+            },
+            ["escort"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 6,
+                Description = "Le NTF protege le scientifique, le Chaos doit l'abattre avant sa sortie.",
                 PauseRespawnWaves = true,
             },
             ["gungame"] = new GamemodeSettings

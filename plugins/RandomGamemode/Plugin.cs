@@ -178,6 +178,7 @@ namespace RandomGamemode
             Config.HideAndSeekHideSeconds = AtLeast("hide_and_seek_hide_seconds", Config.HideAndSeekHideSeconds, 5f);
             Config.HideAndSeekHuntSeconds = AtLeast("hide_and_seek_hunt_seconds", Config.HideAndSeekHuntSeconds, 30f);
             Config.EvacuationDelaySeconds = AtLeast("evacuation_delay_seconds", Config.EvacuationDelaySeconds, 5f);
+            Config.EscortRoundSeconds = AtLeast("escort_round_seconds", Config.EscortRoundSeconds, 30f);
             Config.KingOfTheHillTarget = (int)AtLeast("king_of_the_hill_target", Config.KingOfTheHillTarget, 10f);
             Config.KingOfTheHillRespawnSeconds = AtLeast("king_of_the_hill_respawn_seconds", Config.KingOfTheHillRespawnSeconds, 1f);
             Config.TraitorRoundSeconds = AtLeast("traitor_round_seconds", Config.TraitorRoundSeconds, 30f);

@@ -94,6 +94,15 @@ namespace RandomGamemode
         [Description("Roi de la salle : victoire du Chaos.")]
         public string KingOfTheHillRaidersWon { get; set; } = "<size=30><color=green>Le Chaos tient la salle et gagne.</color></size>";
 
+        [Description("Escorte : annonce de depart. %PLAYER% est le pseudo du scientifique.")]
+        public string EscortStart { get; set; } = "<size=30><color=#3399ff>NTF : escortez %PLAYER% jusqu'a la sortie. Chaos : abattez-le.</color></size>";
+
+        [Description("Escorte : le scientifique est sorti.")]
+        public string EscortSucceeded { get; set; } = "<size=30><color=#3399ff>Le scientifique est sorti : le NTF gagne.</color></size>";
+
+        [Description("Escorte : le scientifique est mort, ou le temps est ecoule.")]
+        public string EscortFailed { get; set; } = "<size=30><color=green>Le scientifique n'est pas sorti : le Chaos gagne.</color></size>";
+
         [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }
