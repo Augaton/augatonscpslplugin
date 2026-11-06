@@ -47,6 +47,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 
 ### À savoir pour la mise à jour
 
+- Une release ne publie plus que `zone-shilari-labapi.zip` et `SHA256SUMS` : l'archive remplace les DLL téléchargées une par une.
 - `Contracts` passe de un à deux contrats par round par défaut. `max_contracts_per_round: 1` rétablit l'ancienne règle.
 - Un `config.yml` existant garde ses listes : le profil `neutre`, les nouveaux contrats, les choix de vote, les recettes, les récompenses de SCP-1162 et les services de boutique s'y ajoutent à la main, ou en le supprimant pour le régénérer.
 - Sans `tier` dans `rewards`, SCP-1162 tire comme avant dans une seule table.

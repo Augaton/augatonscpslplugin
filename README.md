@@ -146,7 +146,7 @@ Arrêtez le serveur avant l'envoi, car écraser une DLL déjà chargée peut le 
 
 ### Installer à la carte
 
-Rien n'oblige à tout prendre. Chaque plugin fonctionne seul avec ses trois dépendances obligatoires : `AugatonLib.dll` et `0Harmony.dll` dans `dependencies/`, et `HintServiceMeow.dll` dans `plugins/`. Gardez uniquement les DLL qui vous intéressent, ou téléchargez-les une par une depuis une release. Un plugin absent ne désactive que la synergie concernée. Par exemple, SupplyDrop continue de larguer sans SCP500s, simplement sans pilules.
+Rien n'oblige à tout prendre. Extrayez l'archive, puis supprimez de `plugins/global/` les plugins dont vous ne voulez pas, sans toucher à `HintServiceMeow.dll`. Chaque plugin fonctionne seul avec ses trois dépendances obligatoires : `AugatonLib.dll` et `0Harmony.dll` dans `dependencies/`, et `HintServiceMeow.dll` dans `plugins/`. Un plugin absent ne désactive que la synergie concernée. Par exemple, SupplyDrop continue de larguer sans SCP500s, simplement sans pilules.
 
 ## Choisir ses plugins
 
@@ -345,7 +345,7 @@ Les conventions du projet sont dans [CLAUDE.md](CLAUDE.md).
 | Workflow | Déclencheur | Effet |
 |---|---|---|
 | `ci` | push sur `main`, pull request | Vérifie les scripts, lance `tools/check.sh`, produit l'archive et cherche des secrets avec gitleaks |
-| `release` | tag `v*` | Lance `tools/check.sh` sans droit d'écriture, puis un job séparé publie l'archive, les DLL et `SHA256SUMS` |
+| `release` | tag `v*` | Lance `tools/check.sh` sans droit d'écriture, puis un job séparé publie l'archive et `SHA256SUMS` |
 
 Les actions sont épinglées par SHA : une montée de version se fait à la main, en changeant le SHA et son commentaire.
 

@@ -34,8 +34,6 @@ jobs:
           path: |
             out/zone-shilari-labapi.zip
             out/SHA256SUMS
-            out/plugins/*.dll
-            out/dependencies/AugatonLib.dll
           if-no-files-found: error
 
   # Seul job a pouvoir ecrire : il n'execute rien du depot, il publie ce que build a produit.
@@ -59,21 +57,19 @@ jobs:
           cat > notes.md <<'NOTES'
           ## Installation
 
-          Pour tout installer, extraire `zone-shilari-labapi.zip` dans le dossier `LabAPI` du serveur :
+          Extraire `zone-shilari-labapi.zip` dans le dossier `LabAPI` du serveur :
 
           ```
           plugins/global/*.dll
           dependencies/global/AugatonLib.dll
+          dependencies/global/0Harmony.dll
           ```
 
-          Pour une installation a la carte, telecharger seulement les plugins voulus, a placer dans
-          `plugins/global/`, ainsi que `AugatonLib.dll`, obligatoire, dans `dependencies/global/`.
+          L'archive contient tous les plugins, HintServiceMeow et Harmony : il n'y a rien d'autre a installer.
+          Pour ne garder qu'une partie des plugins, supprimer les autres de `plugins/global/`, sans toucher a
+          `HintServiceMeow.dll`.
 
-          HintServiceMeow et Harmony sont inclus dans l'archive. Pour une installation a la carte, ils
-          restent obligatoires : voir le README.
-
-          `SHA256SUMS` donne l'empreinte de chaque fichier : `sha256sum -c SHA256SUMS --ignore-missing`.
+          `SHA256SUMS` donne l'empreinte de l'archive : `sha256sum -c SHA256SUMS`.
           NOTES
           gh release create "$TAG" release/zone-shilari-labapi.zip release/SHA256SUMS \
-            release/plugins/*.dll release/dependencies/AugatonLib.dll \
             --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes-file notes.md --verify-tag --prerelease

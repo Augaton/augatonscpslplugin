@@ -81,11 +81,6 @@ done
 rm -f "$archive"
 (cd "$stage" && zip -qrX "$archive" .)
 
-# Noms sans dossier : une release publie tous ces fichiers cote a cote.
-{
-    (cd "$root/out" && sha256sum "$(basename "$archive")")
-    (cd "$root/out/plugins" && sha256sum ./*.dll)
-    (cd "$root/out/dependencies" && sha256sum AugatonLib.dll)
-} > "$root/out/SHA256SUMS"
+(cd "$root/out" && sha256sum "$(basename "$archive")") > "$root/out/SHA256SUMS"
 
 echo "Archive creee : $archive"
