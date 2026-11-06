@@ -105,6 +105,12 @@ namespace RandomGamemode
         [Description("Patate chaude : bonus de vitesse du porteur, de 0 a 255.")]
         public byte HotPotatoSpeedBoost { get; set; } = 25;
 
+        [Description("Un traitre parmi nous : munitions de chaque joueur.")]
+        public ushort TraitorAmmo { get; set; } = 36;
+
+        [Description("Un traitre parmi nous : duree de l'enquete, en secondes.")]
+        public float TraitorRoundSeconds { get; set; } = 360f;
+
         [Description("Vie du joueur Juggernaut.")]
         public float JuggernautHealth { get; set; } = 2500f;
 
@@ -312,6 +318,14 @@ namespace RandomGamemode
                 Weight = 8,
                 MinPlayers = 4,
                 Description = "Une bombe circule : tirez sur quelqu'un pour la lui passer. Le dernier survivant gagne.",
+                PauseRespawnWaves = true,
+                ForceFriendlyFire = true,
+            },
+            ["traitor"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 6,
+                Description = "Un traitre se cache parmi vous. Demasquez-le, mais chaque innocent abattu desarme son tireur.",
                 PauseRespawnWaves = true,
                 ForceFriendlyFire = true,
             },

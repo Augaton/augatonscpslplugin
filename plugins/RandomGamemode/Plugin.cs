@@ -178,6 +178,7 @@ namespace RandomGamemode
             Config.HideAndSeekHideSeconds = AtLeast("hide_and_seek_hide_seconds", Config.HideAndSeekHideSeconds, 5f);
             Config.HideAndSeekHuntSeconds = AtLeast("hide_and_seek_hunt_seconds", Config.HideAndSeekHuntSeconds, 30f);
             Config.EvacuationDelaySeconds = AtLeast("evacuation_delay_seconds", Config.EvacuationDelaySeconds, 5f);
+            Config.TraitorRoundSeconds = AtLeast("traitor_round_seconds", Config.TraitorRoundSeconds, 30f);
             Config.HotPotatoFuseSeconds = AtLeast("hot_potato_fuse_seconds", Config.HotPotatoFuseSeconds, 5f);
             Config.HotPotatoPauseSeconds = AtLeast("hot_potato_pause_seconds", Config.HotPotatoPauseSeconds, 1f);
 

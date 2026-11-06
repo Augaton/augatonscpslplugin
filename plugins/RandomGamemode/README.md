@@ -35,6 +35,7 @@ Modes de jeu speciaux tires au hasard au debut d'un round.
 | `gungame` | Gun Game | Chaque elimination ameliore votre arme |
 | `hideandseek` | Cache-cache | Les Classe-D se cachent, puis un chasseur les traque jusqu'a la fin du temps |
 | `hotpotato` | Patate chaude | Chacun son arme, et une balle passe la bombe a la cible. Quand elle explose, son porteur meurt. |
+| `traitor` | Un traitre parmi nous | Un scientifique est un tueur secret. Tuer un innocent coute son inventaire au tireur. |
 | `evacuation` | Evacuation generale | L'ogive part au bout d'une minute, verrouillee : il faut rejoindre la surface |
 
 `pillparty` et `coinroyale` s'appuient sur SCP500s et BetterCoinflips s'ils sont

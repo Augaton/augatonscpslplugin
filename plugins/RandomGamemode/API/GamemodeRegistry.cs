@@ -80,6 +80,7 @@ namespace RandomGamemode.API
             all.Add(new GunGame());
             all.Add(new HideAndSeek());
             all.Add(new Evacuation());
+            all.Add(new Traitor());
             all.Add(new HotPotato());
 
             Logger.Info($"[RandomGamemode] {all.Count} modes enregistres.");

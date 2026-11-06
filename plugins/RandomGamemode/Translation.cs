@@ -67,6 +67,21 @@ namespace RandomGamemode
         [Description("Patate chaude : le dernier survivant. %PLAYER% est son pseudo.")]
         public string HotPotatoWinner { get; set; } = "<size=30><color=green>%PLAYER% remporte la partie.</color></size>";
 
+        [Description("Un traitre parmi nous : message prive du traitre.")]
+        public string TraitorSecret { get; set; } = "<size=30><color=red>Vous etes le traitre. Eliminez-les sans vous faire prendre.</color></size>";
+
+        [Description("Un traitre parmi nous : message au tireur qui a tue un innocent.")]
+        public string TraitorWrongTarget { get; set; } = "<size=30><color=yellow>C'etait un innocent : vous perdez votre equipement.</color></size>";
+
+        [Description("Un traitre parmi nous : le traitre est tombe. %PLAYER% est son pseudo.")]
+        public string TraitorCaught { get; set; } = "<size=30><color=green>%PLAYER% etait le traitre. Les innocents gagnent.</color></size>";
+
+        [Description("Un traitre parmi nous : le traitre est le dernier en vie. %PLAYER% est son pseudo.")]
+        public string TraitorWon { get; set; } = "<size=30><color=red>%PLAYER% etait le traitre, et il a gagne.</color></size>";
+
+        [Description("Un traitre parmi nous : le temps est ecoule. %PLAYER% est le pseudo du traitre.")]
+        public string TraitorEscapedJustice { get; set; } = "<size=30><color=green>Fin de l'enquete, les survivants gagnent. %PLAYER% etait le traitre.</color></size>";
+
         [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }
