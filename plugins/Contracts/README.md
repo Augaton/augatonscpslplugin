@@ -7,8 +7,8 @@ Un joueur a un seul contrat par round, meme s'il se deconnecte puis revient. Un 
 sien s'il n'en avait pas. Rien n'est stocke : tout repart de zero au round suivant. Le contrat d'evasion ne va qu'aux
 Classe-D et aux scientifiques, les seuls que le jeu laisse s'evader.
 
-Un remplacant de Replacer ou de SCPReplacer reprend le contrat en cours du joueur parti, a la place du sien s'il ne
-l'a pas rempli. Le joueur parti ne recoit pas de nouveau contrat s'il revient dans le round.
+Un remplacant de Replacer ou de SCPReplacer qui n'a pas de contrat reprend celui en cours du joueur parti. S'il en a
+deja un, il le garde. Un joueur dont le contrat a ete repris n'en recoit pas de nouveau s'il revient dans le round.
 
 Seuls comptent les kills d'un ennemi, ni le tir allie ni le suicide. Rien n'est distribue ni compte pendant un mode
 de jeu, ou quand TickGuard a suspendu les evenements. Avec SCP500s, la recompense `SCP500` est une vraie pilule, et

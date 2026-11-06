@@ -279,7 +279,7 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | Contracts et ArcadeShop sont présents | Un contrat rempli rapporte des points de boutique |
 | SpectatorVote est présent | Les spectateurs votent pour un incident, un largage ou un mutateur, selon les plugins installés. Il faut au moins deux choix possibles |
 | ScpScaling et ScpLevels sont présents | Les PV de niveau s'ajoutent à des PV déjà adaptés au nombre de joueurs |
-| Replacer ou SCPReplacer, avec ScpLevels, ArcadeShop, Contracts ou Streaks | Le remplaçant reprend le niveau, les points, le contrat et la série du joueur parti |
+| Replacer ou SCPReplacer, avec ScpLevels, ArcadeShop, Contracts ou Streaks | Le remplaçant reprend le niveau, les points et la série du joueur parti, ainsi que son contrat s'il n'en a pas déjà un |
 | TickGuard, AntiSLCrush et DiscordAudit sont présents | Un serveur en souffrance, un exploit bloqué et les problèmes de `collection check` arrivent sur Discord |
 | RoundRecap et DiscordAudit sont présents | Le bilan de chaque round arrive sur Discord |
 | ChaosDirector et SupplyDrop sont présents | Les largages sont plus souvent piégés quand le chaos monte |

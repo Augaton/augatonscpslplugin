@@ -305,9 +305,9 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 ## 4. Synergies entre plugins
 
 **Remplacement**
-- [ ] Avec Replacer : le remplacant reprend les points, le contrat en cours et la serie du joueur parti.
-- [ ] Le remplacant recoit le hint de son nouveau contrat. S'il avait deja rempli le sien, il le garde.
-- [ ] Un joueur remplace qui revient dans le round ne recoit pas de nouveau contrat et garde ses limites d'achat.
+- [ ] Avec Replacer : le remplacant reprend les points et la serie du joueur parti.
+- [ ] Un remplacant sans contrat reprend celui du joueur parti et recoit son hint. Un remplacant qui en a deja un garde le sien.
+- [ ] Un joueur remplace qui revient dans le round garde ses limites d'achat, et ne recoit pas de nouveau contrat si le sien a ete repris.
 - [ ] `.human` : le joueur garde ses points et son contrat, et le volontaire ne recoit rien de lui.
 - [ ] Avec SCPReplacer : un SCP de niveau 2 parti, son remplacant a le meme niveau et ses effets, et la vie n'est pas donnee deux fois.
 

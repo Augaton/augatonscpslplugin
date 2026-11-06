@@ -109,31 +109,17 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
-        public void ATransferReplacesAnUnfinishedObjective()
+        public void ATransferNeverOverwritesAnExistingObjective()
         {
             ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
 
             book.Assign("a", Kind.Kill, 2);
             book.Assign("b", Kind.Escape, 1);
-
-            Assert.True(book.Transfer("a", "b"));
-            Assert.True(book.TryGet("b", out Kind kind, out _, out int target));
-            Assert.Equal(Kind.Kill, kind);
-            Assert.Equal(2, target);
-        }
-
-        [Fact]
-        public void ATransferNeverOverwritesAFinishedObjective()
-        {
-            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
-
-            book.Assign("a", Kind.Kill, 2);
-            book.Assign("b", Kind.Escape, 1);
-            book.Advance("b", Kind.Escape);
 
             Assert.False(book.Transfer("a", "b"));
             Assert.True(book.TryGet("b", out Kind kind, out _, out _));
             Assert.Equal(Kind.Escape, kind);
+            Assert.True(book.Advance("a", Kind.Kill, 2));
         }
 
         [Fact]

@@ -58,17 +58,14 @@ namespace AugatonLib.Arcade
             return objective.Progress >= objective.Target;
         }
 
-        // Le remplacant reprend l'objectif en cours, a la place du sien s'il ne l'a pas rempli. L'ancien titulaire
-        // garde une entree close : revenu dans le round, il n'en recoit pas un second.
+        // Un remplacant sans objectif reprend celui en cours du joueur parti, et un remplacant qui en a un le garde.
+        // L'ancien titulaire conserve une entree close : revenu dans le round, il n'en recoit pas un second.
         public bool Transfer(string from, string to)
         {
-            if (from is null || string.IsNullOrEmpty(to) || from == to)
+            if (from is null || string.IsNullOrEmpty(to) || objectives.ContainsKey(to))
                 return false;
 
             if (!objectives.TryGetValue(from, out Objective objective) || objective.Progress >= objective.Target)
-                return false;
-
-            if (objectives.TryGetValue(to, out Objective current) && current.Progress >= current.Target)
                 return false;
 
             objectives[to] = new Objective { Kind = objective.Kind, Target = objective.Target, Progress = objective.Progress };

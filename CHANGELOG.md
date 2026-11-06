@@ -80,7 +80,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - Gun Game et Dodgeball se terminaient dès le départ : le jeu ne voyait qu'un seul camp.
 - Le rappel `.human` ne s'affiche plus pendant un mode de jeu, et les refus de `.human` se traduisent.
 - SCP-106 ne montait presque jamais de niveau : une mort par décomposition n'a pas de tueur. Elle compte désormais pour lui.
-- Un remplaçant reprend le niveau de SCP, les points, le contrat en cours et la série du joueur parti. `.human` ne cède rien : le joueur reste en jeu.
+- Un remplaçant reprend le niveau de SCP, les points et la série du joueur parti, ainsi que son contrat en cours s'il n'en a pas déjà un. `.human` ne cède rien : le joueur reste en jeu.
 - SiteIncidents ne tire plus de panne d'éclairage quand tout le site est déjà dans le noir.
 - Les pilules par défaut ont toutes un halo de couleur distincte.
 
