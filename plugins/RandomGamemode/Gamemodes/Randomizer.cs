@@ -63,7 +63,9 @@ namespace RandomGamemode.Gamemodes
 
             IReadOnlyList<ItemType> pool = Config.RandomizerItemPool;
 
-            foreach (Player player in Player.ReadyList)
+            int served = 0;
+
+            foreach (Player player in ReadyPlayers())
             {
                 if (player is null || player.IsDestroyed || !player.IsAlive)
                     continue;
@@ -81,6 +83,9 @@ namespace RandomGamemode.Gamemodes
 
                 for (int i = 0; i < Config.RandomizerItemCount; i++)
                     player.AddItem(pool[UnityEngine.Random.Range(0, pool.Count)]);
+
+                if (++served % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             yield return Timing.WaitForSeconds(2f);

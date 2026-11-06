@@ -24,7 +24,9 @@ namespace RandomGamemode.Gamemodes
 
             yield return Timing.WaitForSeconds(1.5f);
 
-            foreach (Player player in Player.ReadyList)
+            int served = 0;
+
+            foreach (Player player in ReadyPlayers())
             {
                 if (player is null || player.IsDestroyed || !player.IsAlive || player.IsSCP)
                     continue;
@@ -35,6 +37,9 @@ namespace RandomGamemode.Gamemodes
                     player.AddItem(ItemType.Coin);
 
                 player.AddItem(ItemType.Flashlight);
+
+                if (++served % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             yield return Timing.WaitForSeconds(1f);

@@ -37,7 +37,9 @@ namespace RandomGamemode.Gamemodes
 
             yield return Timing.WaitForSeconds(1f);
 
-            foreach (Player player in Player.ReadyList)
+            int served = 0;
+
+            foreach (Player player in ReadyPlayers())
             {
                 if (player is null || player.IsDestroyed || !player.IsAlive)
                     continue;
@@ -48,6 +50,9 @@ namespace RandomGamemode.Gamemodes
                     player.AddItem(ItemType.SCP018);
 
                 MoveToSpawn(player, RoleTypeId.NtfCaptain);
+
+                if (++served % RoleChangesPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
 
             yield return Timing.WaitForSeconds(2f);
