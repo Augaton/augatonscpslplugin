@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using AugatonLib.Bus;
 using AugatonLib.Runtime;
+using AugatonLib.Text;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using PlayerRoles;
@@ -34,6 +36,8 @@ namespace TeamGenocide
 
             PluginBus.Subscribe(Name, BusTopics.TeamWiped, genocideHandlers.OnTeamWiped);
 
+            SelfCheck.Register(Name, "mots de C.A.S.S.I.E", CheckCassieWords);
+
             PluginDirectory.Register(
                 this,
                 Capability.Hints,
@@ -59,6 +63,19 @@ namespace TeamGenocide
 
             genocideHandlers = null;
             Instance = null;
+        }
+
+        private string CheckCassieWords()
+        {
+            foreach (List<Announcement> announcements in Config.Announcements.Values)
+            {
+                string unknown = CassieLines.FindUnknownWord(announcements.Select(announcement => announcement?.Cassie));
+
+                if (unknown is not null)
+                    return $"mot inconnu : {unknown}";
+            }
+
+            return null;
         }
 
         protected override void ValidateConfig()

@@ -5,6 +5,8 @@ using AugatonLib.Integrations;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
+using LabApi.Features.Enums;
+using LabApi.Features.Wrappers;
 using RandomGamemode.API;
 using RandomGamemode.Handlers;
 
@@ -58,6 +60,8 @@ namespace RandomGamemode
             PlayerEvents.DroppingItem += gamemodeHandlers.OnDroppingItem;
             PlayerEvents.DeactivatingGenerator += gamemodeHandlers.OnStoppingGenerator;
             PlayerEvents.InteractingDoor += gamemodeHandlers.OnInteractingDoor;
+
+            SelfCheck.Register(Name, "portes de La vie selon Larry", () => Door.Get(DoorName.Lcz173Bottom) is null || Door.Get(DoorName.Lcz173Gate) is null ? "introuvables" : null);
 
             PluginDirectory.Register(
                 this,

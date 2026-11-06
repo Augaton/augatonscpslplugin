@@ -1,4 +1,5 @@
 using AugatonLib.Runtime;
+using AugatonLib.Text;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -48,6 +49,8 @@ namespace BetterCoinflipsRewritten
             if (Round.IsRoundStarted)
                 API.RoomCache.Rebuild();
 
+            SelfCheck.Register(Name, "mots de C.A.S.S.I.E", CheckCassieWords);
+
             PluginDirectory.Register(
                 this,
                 Capability.Hints,
@@ -56,6 +59,13 @@ namespace BetterCoinflipsRewritten
                 Capability.Bus);
 
             Logger.Info($"[BetterCoinflipsRewritten] Coins on map: {Config.MapCoinAmount}, extra coins in loot pools: {(Config.AddBonusCoinsToLoot ? Config.BonusCoinAmount : 0)}, coin consumed on flip: {Config.ConsumeCoinOnFlip}.");
+        }
+
+        private string CheckCassieWords()
+        {
+            string unknown = CassieLines.FindUnknownWord(Config.CassieMockLines);
+
+            return unknown is null ? null : $"mot inconnu : {unknown}";
         }
 
         public override void LoadConfigs()

@@ -4,6 +4,7 @@ using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
+using LabApi.Features.Enums;
 using LabApi.Features.Wrappers;
 using PlayerRoles;
 using SupplyDrop.API;
@@ -43,6 +44,8 @@ namespace SupplyDrop
             WarheadEvents.Detonated += serverHandlers.OnWarheadDetonated;
 
             PluginBus.Subscribe(BusOwner, BusTopics.TeamWiped, OnTeamWiped);
+
+            SelfCheck.Register(Name, "point de largage en surface", () => Door.Get(DoorName.SurfaceNuke) is null ? "introuvable" : null);
 
             PluginDirectory.Register(this, Capability.Bus);
         }
