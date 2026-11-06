@@ -4,32 +4,55 @@ on:
   push:
     tags: ['v*']
 
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TAG: ${{ github.ref_name }}
-    steps:
-      - uses: actions/checkout@v7
+permissions:
+  contents: read
 
-      - uses: actions/setup-dotnet@v6
+jobs:
+  # Sans cache et sans droit d'ecriture : ce job execute du code et telecharge des dependances.
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
           dotnet-version: '10.0.x'
 
       - name: Recuperer les assemblies du jeu
         run: ./tools/fetch-references.sh
 
-      - name: Compiler
-        run: dotnet build -c Release
-
-      - name: Tester
-        run: dotnet test tests/AugatonLib.Tests -c Release --no-build
+      - name: Compiler et tester
+        run: ./tools/check.sh
 
       - name: Preparer l'archive
         run: ./tools/package.sh
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release
+          path: |
+            out/zone-shilari-labapi.zip
+            out/SHA256SUMS
+            out/plugins/*.dll
+            out/dependencies/AugatonLib.dll
+          if-no-files-found: error
+
+  # Seul job a pouvoir ecrire : il n'execute rien du depot, il publie ce que build a produit.
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release
+          path: release
 
       - name: Publier
         run: |
@@ -48,6 +71,9 @@ jobs:
 
           HintServiceMeow et Harmony sont inclus dans l'archive. Pour une installation a la carte, ils
           restent obligatoires : voir le README.
+
+          `SHA256SUMS` donne l'empreinte de chaque fichier : `sha256sum -c SHA256SUMS --ignore-missing`.
           NOTES
-          gh release create "$TAG" out/zone-shilari-labapi.zip out/plugins/*.dll out/dependencies/AugatonLib.dll \
-            --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes-file notes.md
+          gh release create "$TAG" release/zone-shilari-labapi.zip release/SHA256SUMS \
+            release/plugins/*.dll release/dependencies/AugatonLib.dll \
+            --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes-file notes.md --verify-tag
