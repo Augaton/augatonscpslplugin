@@ -60,7 +60,8 @@ namespace RoundRecap
                 if (string.IsNullOrEmpty(recap))
                     return;
 
-                Server.SendBroadcast(recap, Config.BroadcastDuration);
+                // Sans cela, l'annonce de fin d'un mode retient le bilan jusqu'au redemarrage du round.
+                Server.SendBroadcast(recap, Config.BroadcastDuration, Broadcast.BroadcastFlags.Normal, true);
                 PluginBus.Publish(BusTopics.RoundSummaryReady, Name, recap);
             }
             catch (Exception e)
