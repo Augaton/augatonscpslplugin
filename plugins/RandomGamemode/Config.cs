@@ -132,6 +132,9 @@ namespace RandomGamemode
         [Description("Zones condamnees : couleur d'une zone condamnee.")]
         public string ClosingZoneColor { get; set; } = "#FF2200";
 
+        [Description("Course aux generateurs : secondes pour tous les activer.")]
+        public float GeneratorRaceSeconds { get; set; } = 420f;
+
         [Description("Vie du joueur Juggernaut.")]
         public float JuggernautHealth { get; set; } = 2500f;
 
@@ -369,6 +372,13 @@ namespace RandomGamemode
                 Weight = 8,
                 MinPlayers = 6,
                 Description = "Les zones vont etre condamnees une par une. Rejoignez la surface.",
+                PauseRespawnWaves = true,
+            },
+            ["generatorrace"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 6,
+                Description = "Activez tous les generateurs avant la fin du temps. Chaque humain recoit une carte.",
                 PauseRespawnWaves = true,
             },
             ["gungame"] = new GamemodeSettings

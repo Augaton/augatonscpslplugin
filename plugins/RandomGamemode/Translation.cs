@@ -118,6 +118,12 @@ namespace RandomGamemode
         [Description("Zones condamnees : nom de la zone d'entree.")]
         public string ClosingZoneEntrance { get; set; } = "La zone d'entree";
 
+        [Description("Course aux generateurs : tous les generateurs tournent.")]
+        public string GeneratorRaceWon { get; set; } = "<size=30><color=green>Tous les generateurs tournent : les humains gagnent.</color></size>";
+
+        [Description("Course aux generateurs : le temps est ecoule.")]
+        public string GeneratorRaceLost { get; set; } = "<size=30><color=red>Temps ecoule : les SCP gagnent.</color></size>";
+
         [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }

@@ -5,7 +5,7 @@
 
 Modes de jeu speciaux tires au hasard au debut d'un round.
 
-## Les 19 modes
+## Les 25 modes
 
 **Portes depuis la version 2.x**
 
@@ -39,6 +39,7 @@ Modes de jeu speciaux tires au hasard au debut d'un round.
 | `kingofthehill` | Roi de la salle | Deux camps se disputent une salle de la zone d'entree, et reviennent quelques secondes apres leur mort. |
 | `escort` | Escorte | Le NTF amene un scientifique jusqu'a la sortie, et le Chaos doit l'en empecher. |
 | `closingzones` | Zones condamnees | Les zones deviennent mortelles l'une apres l'autre, et seule la surface reste sure. |
+| `generatorrace` | Course aux generateurs | Les humains doivent activer tous les generateurs avant la fin du temps. |
 | `evacuation` | Evacuation generale | L'ogive part au bout d'une minute, verrouillee : il faut rejoindre la surface |
 
 `pillparty` et `coinroyale` s'appuient sur SCP500s et BetterCoinflips s'ils sont

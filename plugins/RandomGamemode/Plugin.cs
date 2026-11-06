@@ -178,6 +178,7 @@ namespace RandomGamemode
             Config.HideAndSeekHideSeconds = AtLeast("hide_and_seek_hide_seconds", Config.HideAndSeekHideSeconds, 5f);
             Config.HideAndSeekHuntSeconds = AtLeast("hide_and_seek_hunt_seconds", Config.HideAndSeekHuntSeconds, 30f);
             Config.EvacuationDelaySeconds = AtLeast("evacuation_delay_seconds", Config.EvacuationDelaySeconds, 5f);
+            Config.GeneratorRaceSeconds = AtLeast("generator_race_seconds", Config.GeneratorRaceSeconds, 30f);
             Config.ClosingZoneSeconds = AtLeast("closing_zone_seconds", Config.ClosingZoneSeconds, 10f);
             Config.ClosingZoneDamagePercent = AtLeast("closing_zone_damage_percent", Config.ClosingZoneDamagePercent, 0.1f);
             Config.EscortRoundSeconds = AtLeast("escort_round_seconds", Config.EscortRoundSeconds, 30f);

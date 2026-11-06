@@ -80,6 +80,7 @@ namespace RandomGamemode.API
             all.Add(new GunGame());
             all.Add(new HideAndSeek());
             all.Add(new Evacuation());
+            all.Add(new GeneratorRace());
             all.Add(new ClosingZones());
             all.Add(new Escort());
             all.Add(new KingOfTheHill());
