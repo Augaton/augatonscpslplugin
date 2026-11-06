@@ -3,6 +3,10 @@
 Ajoute SCP-261, une machine distributrice. Un joueur tenant une piece peut l'utiliser pour obtenir un
 resultat au hasard.
 
+Chaque piece grossit aussi une cagnotte commune. Plus elle attend, plus le jackpot a de chances de tomber et plus il
+rapporte de lots, annonces a tout le serveur. Reglages : `jackpot_chance_percent`, `jackpot_chance_per_use`,
+`jackpot_uses_per_prize`, `jackpot_max_prizes`, `jackpot_prizes` et `jackpot_broadcast_duration`.
+
 D'apres le plugin [Scp261](https://github.com/MedveMarci/Scp261) de **MedveMarci**. Voir [NOTICE.md](NOTICE.md).
 
 | Resultat | Poids | Effet |

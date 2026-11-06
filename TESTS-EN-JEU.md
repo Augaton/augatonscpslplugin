@@ -357,3 +357,46 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Panne d'eclairage : recharge coupee pendant 20 s.
 - [ ] `ScarceAmmo` et `ScarceMedical` : chaque largage contient le bonus de sa config.
 - [ ] `trap_chance_percent: 0` : aucun piege, quel que soit le niveau de chaos.
+
+## 5. Ameliorations de plugins
+
+**Modes de jeu**
+- [ ] Dodgeball et Randomizer : le dernier debout est annonce, nomme au bilan et recompense.
+- [ ] Gun Game gagne au dernier palier : un seul vainqueur est nomme, meme si le round finit avec un survivant.
+- [ ] Deux rounds de suite avec un mode : le second n'est ni propose au vote ni tire au sort s'il etait le dernier joue.
+
+**Mutateurs**
+- [ ] `Vampire` : un kill rend 25 PV au tueur, jamais au-dela de sa vie maximale.
+- [ ] `GlassCannon` : les degats entre joueurs augmentent, pas les chutes.
+- [ ] `EndlessAmmo` : la reserve se remplit sans faire tomber de boites au sol, y compris en changeant de gilet.
+- [ ] `Regeneration` : les humains regagnent de la vie, pas les SCP.
+
+**Incidents et chaos**
+- [ ] `incidents trigger ElevatorOutage` : les ascenseurs se bloquent 20 s puis repartent, et se debloquent en fin de round.
+- [ ] Pendant l'ogive et la decontamination, l'arret des ascenseurs est refuse.
+- [ ] Le niveau de chaos maximal declenche une seule apogee par round.
+
+**Contrats et progression**
+- [ ] Un SCP recoit un contrat et sa vie remonte quand il le remplit. SCP-079 et SCP-049-2 n'en recoivent pas.
+- [ ] Un contrat rempli en amene un second apres `follow_up_delay_seconds`, et pas de troisieme.
+- [ ] `.shop contrat` sur un contrat suivant redonne un contrat suivant, pas un contrat facile.
+- [ ] Un kill de SCP-049-2 fait monter SCP-049 de niveau.
+- [ ] La prime grandit avec la serie, et la fin d'une serie sans prime est annoncee une seule fois.
+
+**Boutique et machines**
+- [ ] `.shop vie`, `.shop bouclier` et `.shop vitesse` fonctionnent, et le soin est refuse en pleine forme, sans debit.
+- [ ] Le catalogue affiche les services et leurs limites.
+- [ ] SCP-1162 : un objet de rang 2 donne une recompense de rang 2, une lampe donne une recompense courante.
+- [ ] Jackpot de SCP-261 : les lots tombent, l'annonce part, et la cagnotte repart de zero.
+- [ ] Les nouvelles recettes de SCP-914 fonctionnent posees et portees.
+
+**Largages et equipes**
+- [ ] Le profil `neutre` tombe dans une salle, l'annonce nomme la bonne zone, et la balise est visible.
+- [ ] Apres l'ogive, le profil `neutre` tombe en surface.
+- [ ] Une equipe reduite a un joueur : annonce, bouclier et objet, une seule fois par equipe et par round.
+
+**Lobby, vote et bilan**
+- [ ] `collection check` ne signale aucun mot inconnu dans les nouvelles annonces.
+- [ ] Le champion du lobby est annonce au debut du round et recoit ses points de boutique.
+- [ ] Vote `BlindScps` : les SCP sont aveugles 5 s, puis l'effet s'arrete. Vote `HealHumans` : les humains sont soignes.
+- [ ] Le bilan nomme le premier sang, et le joueur mort le plus souvent a partir de deux morts.

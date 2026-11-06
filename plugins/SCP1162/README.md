@@ -58,6 +58,11 @@ Une salle absente est signalee dans les logs et l'emplacement est ignore.
 
 ## Recompenses
 
+`item_tiers` donne un rang a chaque objet depose, et un objet absent vaut 0. L'echange tire dans les recompenses de ce
+rang, indique par `tier`, ou dans le rang inferieur le plus proche s'il est vide. Une lampe donne donc une recompense
+courante, et une carte O5 une recompense de haut rang. `ignored_items` a la priorite : par defaut, le Micro-HID reste
+refuse.
+
 `rewards` est une liste ponderee : le poids fixe la frequence relative de chaque
 objet. Un poids nul ou negatif retire l'objet du tirage sans avoir a supprimer
 la ligne.

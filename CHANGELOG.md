@@ -2,6 +2,33 @@
 
 Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce qui suit n'a encore été testé en jeu : voir [TESTS-EN-JEU.md](TESTS-EN-JEU.md).
 
+## Non publié
+
+### Ajouts
+
+- **RandomGamemode** : Dodgeball et Randomizer nomment leur dernier debout, et le dernier mode joué n'est plus retiré.
+- **RoundMutators** : quatre mutateurs, Vampire, GlassCannon, EndlessAmmo et Regeneration.
+- **SiteIncidents** : l'incident `ElevatorOutage` bloque les ascenseurs, jamais pendant l'ogive ni la décontamination.
+- **ChaosDirector** : le niveau maximal déclenche une apogée, avec un incident et un largage.
+- **Contracts** : les SCP reçoivent aussi des contrats, et un contrat rempli en amène un second, plus dur et mieux payé.
+- **ScpLevels** : les kills de SCP-049-2 comptent pour SCP-049.
+- **Streaks** : la prime grandit avec la série, et la fin d'une longue série est annoncée.
+- **ArcadeShop** : des services en vente, soin complet, bouclier et vitesse, et des points pour le champion du lobby.
+- **SCP1162** : la récompense dépend de la valeur de l'objet déposé, avec `item_tiers`.
+- **Scp261** : un jackpot progressif.
+- **Scp914Recipes** : huit recettes de plus.
+- **SupplyDrop** : le profil `neutre` tombe dans une salle au hasard et annonce sa zone.
+- **TeamGenocide** : le dernier survivant d'une équipe est annoncé et reçoit un bonus.
+- **SpectatorVote** : les morts peuvent soigner les vivants ou aveugler les SCP, sans autre plugin.
+- **WarmupLobby** : le joueur qui a le plus tué dans le lobby est nommé champion.
+- **RoundRecap** : le premier sang et le joueur mort le plus souvent apparaissent au bilan.
+
+### À savoir pour la mise à jour
+
+- `Contracts` passe de un à deux contrats par round par défaut. `max_contracts_per_round: 1` rétablit l'ancienne règle.
+- Un `config.yml` existant garde ses listes : le profil `neutre`, les nouveaux contrats, les choix de vote, les recettes, les récompenses de SCP-1162 et les services de boutique s'y ajoutent à la main, ou en le supprimant pour le régénérer.
+- Sans `tier` dans `rewards`, SCP-1162 tire comme avant dans une seule table.
+
 ## 0.1.0 - 2026-11-06 (pré-version)
 
 ### Nouveaux plugins

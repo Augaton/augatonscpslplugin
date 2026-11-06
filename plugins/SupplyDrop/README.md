@@ -12,9 +12,13 @@ un type de largage complet : contenu, horaires, positions, annonce, balise.
 Ajouter une entree avec une cle inutilisee cree un nouveau type de largage sans
 recompiler.
 
-Deux profils par defaut : `mtf` et `chaos`. Les deux embarquent **deux pieces**
+Trois profils par defaut : `mtf`, `chaos` et `neutre`. Tous embarquent **deux pieces**
 depuis la 4.3 : BetterCoinflipsRewritten detruit la piece a l'usage, les
 largages sont donc une source de reappro.
+
+Un profil avec `zones` tombe dans une salle au hasard de ces zones, loin des joueurs, et `%ZONE%` nomme la zone dans
+`broadcast` et `cassie_subtitles`. C'est le cas de `neutre`, ouvert a tous. Sans salle sure, par exemple apres l'ogive,
+il tombe en surface.
 
 | Cle | Role |
 |---|---|
