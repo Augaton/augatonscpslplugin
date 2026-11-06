@@ -18,6 +18,9 @@ Aucun son n'est joue : cela exigerait une dependance audio de plus.
 | `dock_cooldown_seconds` | `5` | Delai entre deux depots d'un meme joueur |
 | `recharge_per_second` | `0.005` | Energie rendue par seconde. `0.005` recharge tout en 200 secondes, `0` coupe la recharge |
 | `recharge_limit` | `1` | Niveau d'energie ou la recharge s'arrete, de 0 a 1 |
+| `tesla_boost_factor` | `3` | Multiplicateur de recharge pendant une surcharge Tesla de SiteIncidents, 1 au plus bas |
+| `tesla_boost_seconds` | `30` | Duree de ce bonus |
+| `blackout_pause_seconds` | `20` | Secondes sans recharge apres une panne d'eclairage de SiteIncidents |
 | `hint_duration`, `hint_y_coordinate`, `hint_font_size` | `4`, `850`, `20` | Affichage du message |
 
 Le message se regle dans `translation.yml`.

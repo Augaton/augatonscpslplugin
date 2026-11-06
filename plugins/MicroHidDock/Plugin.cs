@@ -1,4 +1,5 @@
 using System;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using InventorySystem.Items.MicroHID.Modules;
 using LabApi.Events.Arguments.PlayerEvents;
@@ -33,9 +34,11 @@ namespace MicroHidDock
             ServerEvents.RoundStarted += dock.Start;
             ServerEvents.RoundRestarted += OnRoundRestarted;
 
+            PluginBus.Subscribe(Name, BusTopics.SiteIncident, dock.OnSiteIncident);
+
             SelfCheck.Register(Name, "socle du Micro-HID", MicroDock.CheckPedestal);
 
-            PluginDirectory.Register(this, Capability.Hints);
+            PluginDirectory.Register(this, Capability.Hints, Capability.Bus);
         }
 
         public override void Disable()
@@ -46,6 +49,7 @@ namespace MicroHidDock
             ServerEvents.RoundRestarted -= OnRoundRestarted;
 
             OnRoundRestarted();
+            PluginBus.UnsubscribeOwner(Name);
             PluginDirectory.Unregister(this);
 
             dock = null;
@@ -58,6 +62,9 @@ namespace MicroHidDock
             Config.DockRange = AtLeast("dock_range", Config.DockRange, 0f);
             Config.RechargePerSecond = AtLeast("recharge_per_second", Config.RechargePerSecond, 0f);
             Config.RechargeLimit = Math.Min(1f, AtLeast("recharge_limit", Config.RechargeLimit, 0f));
+            Config.TeslaBoostFactor = AtLeast("tesla_boost_factor", Config.TeslaBoostFactor, 1f);
+            Config.TeslaBoostSeconds = AtLeast("tesla_boost_seconds", Config.TeslaBoostSeconds, 0f);
+            Config.BlackoutPauseSeconds = AtLeast("blackout_pause_seconds", Config.BlackoutPauseSeconds, 0f);
         }
 
         private void OnRoundRestarted()

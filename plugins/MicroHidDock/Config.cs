@@ -17,6 +17,15 @@ namespace MicroHidDock
         [Description("Niveau d'energie ou la recharge s'arrete, de 0 a 1.")]
         public float RechargeLimit { get; set; } = 1f;
 
+        [Description("Multiplicateur de recharge pendant une surcharge Tesla, avec SiteIncidents. 1 = sans effet.")]
+        public float TeslaBoostFactor { get; set; } = 3f;
+
+        [Description("Duree de ce bonus, en secondes.")]
+        public float TeslaBoostSeconds { get; set; } = 30f;
+
+        [Description("Secondes sans recharge apres une panne d'eclairage, avec SiteIncidents. 0 = sans effet.")]
+        public float BlackoutPauseSeconds { get; set; } = 20f;
+
         [Description("Duree des hints, en secondes.")]
         public float HintDuration { get; set; } = 4f;
 

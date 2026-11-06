@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AugatonLib.Bus;
 using AugatonLib.Caching;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -19,6 +20,8 @@ namespace MicroHidDock
 
         private CoroutineHandle loop;
         private bool running;
+        private float boostedUntil;
+        private float pausedUntil;
 
         public MicroDock(Plugin plugin)
         {
@@ -41,6 +44,16 @@ namespace MicroHidDock
             running = false;
             docked.Clear();
             cooldowns.Clear();
+            boostedUntil = 0f;
+            pausedUntil = 0f;
+        }
+
+        public void OnSiteIncident(BusMessage message)
+        {
+            if (message.Text == "TeslaSurge")
+                boostedUntil = Time.time + plugin.Config.TeslaBoostSeconds;
+            else if (message.Text == "Blackout")
+                pausedUntil = Time.time + plugin.Config.BlackoutPauseSeconds;
         }
 
         public static string CheckPedestal()
@@ -131,9 +144,19 @@ namespace MicroHidDock
             }
         }
 
+        private float CurrentRate()
+        {
+            if (Time.time < pausedUntil)
+                return 0f;
+
+            float rate = plugin.Config.RechargePerSecond;
+
+            return Time.time < boostedUntil ? rate * plugin.Config.TeslaBoostFactor : rate;
+        }
+
         private void Recharge()
         {
-            float rate = plugin.Config.RechargePerSecond;
+            float rate = CurrentRate();
             float limit = plugin.Config.RechargeLimit;
 
             for (int i = docked.Count - 1; i >= 0; i--)
