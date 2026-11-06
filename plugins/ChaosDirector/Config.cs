@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace ChaosDirector
@@ -45,6 +46,12 @@ namespace ChaosDirector
 
         [Description("Niveau de chaos maximal.")]
         public int MaxBonusLevel { get; set; } = 5;
+
+        [Description("Incidents de SiteIncidents tires quand le chaos atteint son niveau maximal. Vide = aucun.")]
+        public List<string> ApogeeIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "TeslaSurge" };
+
+        [Description("Profils de SupplyDrop tires quand le chaos atteint son niveau maximal. Vide = aucun.")]
+        public List<string> ApogeeDrops { get; set; } = new List<string> { "mtf", "chaos" };
 
         [Description("Annonce chaque nouveau niveau de chaos aux joueurs.")]
         public bool AnnounceLevels { get; set; } = true;
