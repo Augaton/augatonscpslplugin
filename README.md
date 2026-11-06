@@ -150,7 +150,7 @@ Rien n'oblige à tout prendre. Chaque plugin fonctionne seul avec ses trois dép
 
 ## Choisir ses plugins
 
-Les 31 plugins sont actifs une fois installés. Le guide [Profils de serveur](docs/PROFILS.md) propose trois sélections, du RP calme au chaos complet, et les réglages à ajuster.
+Les 31 plugins sont actifs une fois installés. Le guide [Profils de serveur](docs/PROFILS.md) propose trois sélections, du serveur calme à l'arcade complet, et les réglages à ajuster.
 
 ## Configuration
 

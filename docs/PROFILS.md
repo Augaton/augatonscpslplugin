@@ -1,6 +1,6 @@
 # Profils de serveur
 
-La collection compte 31 plugins, et ils sont tous actifs une fois installés. C'est beaucoup pour un serveur RP : certains changent le ton d'une partie. Ce guide propose trois sélections pour démarrer. Rien n'y est obligatoire, et chaque plugin fonctionne seul avec AugatonLib.
+La collection compte 31 plugins, et ils sont tous actifs une fois installés. Zone-Shilari, un serveur arcade, les utilise tous. Un serveur plus posé n'en voudra qu'une partie : ce guide propose trois sélections. Rien n'y est obligatoire, et chaque plugin fonctionne seul avec AugatonLib.
 
 ## Désactiver un plugin
 
@@ -14,11 +14,11 @@ Redémarrez ensuite le serveur. La bannière de démarrage liste les plugins act
 
 ## Les trois profils
 
-- **RP calme** : le jeu de base, en plus stable. Aucun objet ni règle ne s'ajoute à la partie.
-- **RP vivant** : le site réagit et réserve des surprises, sans casser le ton. C'est le point de départ conseillé.
-- **Chaos** : tout est actif. Idéal pour un événement, moins pour du RP suivi.
+- **Calme** : le jeu de base, en plus stable. Aucun objet ni règle ne s'ajoute à la partie. Adapté à un serveur RP.
+- **Vivant** : le site réagit et réserve des surprises, sans changer les règles du jeu.
+- **Arcade** : tout est actif. C'est le choix de Zone-Shilari.
 
-| Plugin | RP calme | RP vivant | Chaos |
+| Plugin | Calme | Vivant | Arcade |
 |---|---|---|---|
 | **Protection et confort** | | | |
 | AntiSLCrush | ✅ | ✅ | ✅ |
@@ -62,7 +62,7 @@ Redémarrez ensuite le serveur. La bannière de démarrage liste les plugins act
 
 ## Réglages à ajuster
 
-Pour un RP vivant :
+Pour un profil Vivant :
 
 | Plugin | Réglage | Conseil |
 |---|---|---|

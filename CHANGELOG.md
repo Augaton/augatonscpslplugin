@@ -30,7 +30,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - RoundRecap : le mutateur du round et les contrats remplis.
 - ArcadeShop et ChaosDirector : un contrat rempli rapporte des points.
 - SiteIncidents et SupplyDrop gardent 60 secondes d'écart entre un incident et un largage.
-- `docs/PROFILS.md` propose trois sélections de plugins, du RP calme au chaos complet.
+- `docs/PROFILS.md` propose trois sélections de plugins, du serveur calme à l'arcade complet.
 - `collection check` vérifie les récompenses des contrats et les points fixes des nouveaux modes.
 - AugatonLib : `GamemodeState` voit tous les modes de jeu, `ItemGrant` donne un objet sans qu'il se perde.
 - SiteIncidents : un autre plugin peut demander un incident par le bus.
