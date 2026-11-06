@@ -58,6 +58,28 @@ namespace AugatonLib.Arcade
             return objective.Progress >= objective.Target;
         }
 
+        public bool Transfer(string from, string to)
+        {
+            if (from is null || string.IsNullOrEmpty(to) || objectives.ContainsKey(to))
+                return false;
+
+            if (!objectives.TryGetValue(from, out Objective objective))
+                return false;
+
+            objectives.Remove(from);
+            objectives[to] = objective;
+            return true;
+        }
+
+        // Refuse sur un objectif rempli : ce joueur a deja touche sa recompense.
+        public bool Discard(string player)
+        {
+            if (player is null || !objectives.TryGetValue(player, out Objective objective))
+                return false;
+
+            return objective.Progress < objective.Target && objectives.Remove(player);
+        }
+
         public void Clear() => objectives.Clear();
     }
 }

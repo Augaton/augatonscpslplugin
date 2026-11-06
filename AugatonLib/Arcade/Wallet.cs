@@ -71,6 +71,22 @@ namespace AugatonLib.Arcade
             return PurchaseResult.Done;
         }
 
+        public void Transfer(string from, string to)
+        {
+            if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to) || from == to)
+                return;
+
+            if (!accounts.TryGetValue(from, out Account account))
+                return;
+
+            accounts.Remove(from);
+
+            if (accounts.ContainsKey(to))
+                Earn(to, account.Balance);
+            else
+                accounts[to] = account;
+        }
+
         public void Clear() => accounts.Clear();
 
         private Account Find(string player)

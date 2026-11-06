@@ -98,6 +98,13 @@ namespace AugatonLib.Arcade
             return count;
         }
 
+        // Un remplacant reprend la serie du joueur parti, sans repasser par les recompenses deja donnees.
+        public void SetKills(string player, int count)
+        {
+            if (!string.IsNullOrEmpty(player) && count > 0)
+                kills[player] = count;
+        }
+
         public void Clear() => kills.Clear();
     }
 }

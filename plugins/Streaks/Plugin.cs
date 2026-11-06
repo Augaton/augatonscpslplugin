@@ -1,3 +1,4 @@
+using AugatonLib.Bus;
 using AugatonLib.Arcade;
 using AugatonLib.Runtime;
 using LabApi.Events.Handlers;
@@ -27,6 +28,8 @@ namespace Streaks
 
             PlayerEvents.Death += Service.OnDeath;
             PlayerEvents.Left += Service.OnLeft;
+            PlayerDeparture.Departing += Service.OnDeparting;
+            PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, Service.OnPlayerReplaced);
             ServerEvents.RoundRestarted += Service.Reset;
 
             SelfCheck.Register(Name, "objets des recompenses", Service.CheckItems);
@@ -38,6 +41,8 @@ namespace Streaks
         {
             PlayerEvents.Death -= Service.OnDeath;
             PlayerEvents.Left -= Service.OnLeft;
+            PlayerDeparture.Departing -= Service.OnDeparting;
+            PluginBus.UnsubscribeOwner(Name);
             ServerEvents.RoundRestarted -= Service.Reset;
 
             Service.Reset();

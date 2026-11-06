@@ -137,5 +137,29 @@ namespace AugatonLib.Tests
             Assert.Equal(0, ladder.KillsOf("a"));
             Assert.NotNull(ladder.Add("a", out _));
         }
+
+        [Fact]
+        public void TakenOverKillsDoNotPayTheirRewardsAgain()
+        {
+            KillLadder<Step> ladder = Ladder(2, 4);
+
+            ladder.SetKills("b", 2);
+
+            Assert.Equal(1, ladder.LevelOf("b"));
+            Assert.Null(ladder.Add("b", out int count));
+            Assert.Equal(3, count);
+            Assert.NotNull(ladder.Add("b", out _));
+        }
+
+        [Fact]
+        public void SetKillsIgnoresAnEmptyStreak()
+        {
+            KillLadder<Step> ladder = Ladder(2);
+
+            ladder.SetKills("b", 0);
+            ladder.SetKills(null, 3);
+
+            Assert.Equal(0, ladder.KillsOf("b"));
+        }
     }
 }

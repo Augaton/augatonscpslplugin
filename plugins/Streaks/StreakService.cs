@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AugatonLib.Arcade;
 using AugatonLib.Bus;
 using AugatonLib.Runtime;
@@ -15,6 +16,7 @@ namespace Streaks
     public sealed class StreakService
     {
         private readonly Plugin plugin;
+        private readonly Dictionary<string, int> retained = new Dictionary<string, int>();
 
         public StreakService(Plugin plugin) => this.plugin = plugin;
 
@@ -60,7 +62,38 @@ namespace Streaks
             }
         }
 
-        public void Reset() => Ladder.Clear();
+        // Le joueur qui part est tue juste apres : sa serie se lit maintenant ou plus jamais.
+        public void OnDeparting(Player leaver)
+        {
+            try
+            {
+                int kills = Ladder.KillsOf(leaver?.UserId);
+
+                if (kills > 0)
+                    retained[leaver.UserId] = kills;
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnDeparting: {e}");
+            }
+        }
+
+        public void OnPlayerReplaced(BusMessage message)
+        {
+            if (!message.TryGet(out PlayerReplacement replacement) || replacement.ReplacedUserId is null)
+                return;
+
+            if (retained.TryGetValue(replacement.ReplacedUserId, out int kills))
+                Ladder.SetKills(replacement.Replacement?.UserId, kills);
+
+            retained.Remove(replacement.ReplacedUserId);
+        }
+
+        public void Reset()
+        {
+            Ladder.Clear();
+            retained.Clear();
+        }
 
         public string CheckItems()
         {

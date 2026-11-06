@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AugatonLib.Arcade;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
 using CustomPlayerEffects;
@@ -9,6 +10,7 @@ using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using MEC;
 using PlayerRoles;
+using PlayerStatsSystem;
 
 namespace ScpLevels
 {
@@ -19,6 +21,7 @@ namespace ScpLevels
 
         private readonly Plugin plugin;
         private readonly List<Player> leveled = new List<Player>(8);
+        private readonly Dictionary<string, int> retained = new Dictionary<string, int>();
 
         private CoroutineHandle regen;
         private bool running;
@@ -46,6 +49,7 @@ namespace ScpLevels
 
             running = false;
             leveled.Clear();
+            retained.Clear();
             Ladder.Clear();
         }
 
@@ -53,7 +57,7 @@ namespace ScpLevels
         {
             try
             {
-                Player scp = ev?.Attacker;
+                Player scp = ev?.Attacker ?? FindPocketKiller(ev);
 
                 if (scp is null || ev.Player is null || scp == ev.Player || !scp.IsSCP || !Round.IsRoundInProgress)
                     return;
@@ -100,6 +104,48 @@ namespace ScpLevels
             }
         }
 
+        // Le joueur qui part est tue juste apres : sa serie se lit maintenant ou plus jamais.
+        public void OnDeparting(Player leaver)
+        {
+            try
+            {
+                int kills = Ladder.KillsOf(leaver?.UserId);
+
+                if (kills > 0)
+                    retained[leaver.UserId] = kills;
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnDeparting: {e}");
+            }
+        }
+
+        public void OnPlayerReplaced(BusMessage message)
+        {
+            if (!message.TryGet(out PlayerReplacement replacement) || replacement.ReplacedUserId is null)
+                return;
+
+            if (!retained.TryGetValue(replacement.ReplacedUserId, out int kills))
+                return;
+
+            retained.Remove(replacement.ReplacedUserId);
+
+            Player scp = replacement.Replacement;
+
+            if (scp is null || scp.IsDestroyed || !scp.IsSCP)
+                return;
+
+            Ladder.SetKills(scp.UserId, kills);
+
+            int level = Ladder.LevelOf(scp.UserId);
+
+            for (int i = 0; i < level; i++)
+                Apply(scp, Ladder.Steps[i], replacement.HealthCarried);
+
+            if (level > 0 && !leveled.Contains(scp))
+                leveled.Add(scp);
+        }
+
         public void AddKill(Player scp)
         {
             ScpLevel level = Ladder.Add(scp.UserId, out _);
@@ -107,7 +153,7 @@ namespace ScpLevels
             if (level is null)
                 return;
 
-            Apply(scp, level);
+            Apply(scp, level, false);
 
             if (!leveled.Contains(scp))
                 leveled.Add(scp);
@@ -122,9 +168,24 @@ namespace ScpLevels
                 plugin.Hints.Show(scp, text, Config.HintDuration);
         }
 
-        private static void Apply(Player scp, ScpLevel level)
+        // La decomposition n'a pas de tueur : sans cela, SCP-106 ne monterait presque jamais de niveau.
+        private static Player FindPocketKiller(PlayerDeathEventArgs ev)
         {
-            if (level.BonusHealth > 0f)
+            if (ev?.DamageHandler is not UniversalDamageHandler handler || handler.TranslationId != DeathTranslations.PocketDecay.Id)
+                return null;
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (player.Role == RoleTypeId.Scp106)
+                    return player;
+            }
+
+            return null;
+        }
+
+        private static void Apply(Player scp, ScpLevel level, bool healthCarried)
+        {
+            if (level.BonusHealth > 0f && !healthCarried)
             {
                 scp.MaxHealth += level.BonusHealth;
                 scp.Heal(level.BonusHealth);

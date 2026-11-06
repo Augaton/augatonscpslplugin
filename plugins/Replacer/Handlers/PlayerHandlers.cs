@@ -123,6 +123,7 @@ namespace Replacer.Handlers
         {
             PlayerSnapshot snapshot = new PlayerSnapshot
             {
+                UserId = player.UserId,
                 Nickname = player.Nickname,
                 Role = player.Role,
                 Position = player.Position,
@@ -226,7 +227,7 @@ namespace Replacer.Handlers
 
                     Announce(target, snapshot);
 
-                    PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, new PlayerReplacement(target, snapshot.Size));
+                    PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, new PlayerReplacement(target, snapshot.Size, snapshot.UserId, plugin.Config.TransferHealth));
 
                     Logger.Info($"{target.Nickname} ({target.UserId}) remplace {snapshot.Nickname} en tant que {snapshot.Role}.");
                 }

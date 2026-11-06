@@ -1,3 +1,4 @@
+using AugatonLib.Bus;
 using AugatonLib.Arcade;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
@@ -27,11 +28,13 @@ namespace ScpLevels
             PlayerEvents.Death += Service.OnDeath;
             PlayerEvents.ChangedRole += Service.OnChangedRole;
             PlayerEvents.Left += Service.OnLeft;
+            PlayerDeparture.Departing += Service.OnDeparting;
+            PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, Service.OnPlayerReplaced);
             ServerEvents.RoundStarted += Service.Start;
             ServerEvents.RoundEnded += OnRoundEnded;
             ServerEvents.RoundRestarted += Service.Stop;
 
-            PluginDirectory.Register(this);
+            PluginDirectory.Register(this, Capability.Bus);
         }
 
         public override void Disable()
@@ -39,6 +42,8 @@ namespace ScpLevels
             PlayerEvents.Death -= Service.OnDeath;
             PlayerEvents.ChangedRole -= Service.OnChangedRole;
             PlayerEvents.Left -= Service.OnLeft;
+            PlayerDeparture.Departing -= Service.OnDeparting;
+            PluginBus.UnsubscribeOwner(Name);
             ServerEvents.RoundStarted -= Service.Start;
             ServerEvents.RoundEnded -= OnRoundEnded;
             ServerEvents.RoundRestarted -= Service.Stop;

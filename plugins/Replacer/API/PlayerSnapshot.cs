@@ -7,6 +7,8 @@ namespace Replacer.API
 {
     public sealed class PlayerSnapshot
     {
+        public string UserId { get; set; }
+
         public string Nickname { get; set; }
 
         public RoleTypeId Role { get; set; }

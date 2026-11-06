@@ -33,6 +33,7 @@ namespace ArcadeShop
             ServerEvents.RoundRestarted += Service.Reset;
 
             PluginBus.Subscribe(Name, BusTopics.ContractCompleted, Service.OnContractCompleted);
+            PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, Service.OnPlayerReplaced);
 
             SelfCheck.Register(Name, "objets de la boutique", Service.CheckItems);
 

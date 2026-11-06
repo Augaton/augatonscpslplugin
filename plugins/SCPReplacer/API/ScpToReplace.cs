@@ -13,6 +13,8 @@ namespace SCPReplacer.API
 
         public Vector3 Size { get; set; } = Vector3.one;
 
+        public string DepartedUserId { get; set; }
+
         public List<string> Volunteers { get; } = new List<string>(8);
 
         public CoroutineHandle LotteryTimeout { get; set; }

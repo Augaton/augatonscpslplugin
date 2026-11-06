@@ -89,6 +89,12 @@ namespace ArcadeShop
             }
         }
 
+        public void OnPlayerReplaced(BusMessage message)
+        {
+            if (message.TryGet(out PlayerReplacement replacement))
+                Wallet.Transfer(replacement.ReplacedUserId, replacement.Replacement?.UserId);
+        }
+
         public void OnContractCompleted(BusMessage message)
         {
             if (message.TryGet(out Player player) && IsOpen)

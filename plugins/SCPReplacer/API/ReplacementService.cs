@@ -155,6 +155,7 @@ namespace SCPReplacer.API
                 Name = scpNumber,
                 Role = role,
                 Size = ScaleArbiter.BaselineOf(scpPlayer),
+                DepartedUserId = scpPlayer.UserId,
             });
 
             Logger.Info($"SCP-{scpNumber} ({scpPlayer.Nickname}) est remplacable apres {elapsedSeconds:0}s de round.");
@@ -268,7 +269,7 @@ namespace SCPReplacer.API
             winner.DisableAllEffects();
             winner.SetRole(entry.Role, RoleChangeReason.LateJoin, RoleSpawnFlags.All);
 
-            PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, new PlayerReplacement(winner, entry.Size));
+            PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, new PlayerReplacement(winner, entry.Size, entry.DepartedUserId, false));
 
             foreach (Player player in Player.ReadyList)
             {

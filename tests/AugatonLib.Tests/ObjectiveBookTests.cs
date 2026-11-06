@@ -83,5 +83,44 @@ namespace AugatonLib.Tests
 
             Assert.True(book.Advance("a", Kind.Kill, 5));
         }
+
+        [Fact]
+        public void AnObjectiveFollowsItsReplacementWithItsProgress()
+        {
+            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
+
+            book.Assign("a", Kind.Kill, 2);
+            book.Advance("a", Kind.Kill);
+
+            Assert.True(book.Transfer("a", "b"));
+            Assert.False(book.Has("a"));
+            Assert.True(book.Advance("b", Kind.Kill));
+        }
+
+        [Fact]
+        public void ATransferNeverOverwritesAnExistingObjective()
+        {
+            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
+
+            book.Assign("a", Kind.Kill, 2);
+            book.Assign("b", Kind.Escape, 1);
+
+            Assert.False(book.Transfer("a", "b"));
+            Assert.True(book.Has("a"));
+        }
+
+        [Fact]
+        public void OnlyAnUnfinishedObjectiveCanBeDiscarded()
+        {
+            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
+
+            book.Assign("a", Kind.Kill, 1);
+            book.Assign("b", Kind.Kill, 1);
+            book.Advance("b", Kind.Kill);
+
+            Assert.True(book.Discard("a"));
+            Assert.False(book.Discard("b"));
+            Assert.False(book.Discard("c"));
+        }
     }
 }

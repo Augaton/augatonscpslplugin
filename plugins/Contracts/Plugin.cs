@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using AugatonLib.Caching;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
@@ -34,6 +35,7 @@ namespace Contracts
             PlayerEvents.Escaped += Service.OnEscaped;
             PlayerEvents.ActivatedGenerator += Service.OnActivatedGenerator;
             PlayerEvents.UsedItem += Service.OnUsedItem;
+            PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, Service.OnPlayerReplaced);
 
             SelfCheck.Register(Name, "recompenses valides", Service.CheckRewards);
 
@@ -49,6 +51,7 @@ namespace Contracts
             PlayerEvents.Escaped -= Service.OnEscaped;
             PlayerEvents.ActivatedGenerator -= Service.OnActivatedGenerator;
             PlayerEvents.UsedItem -= Service.OnUsedItem;
+            PluginBus.UnsubscribeOwner(Name);
 
             OnRoundRestarted();
             PluginDirectory.Unregister(this);

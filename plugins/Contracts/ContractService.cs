@@ -87,6 +87,21 @@ namespace Contracts
                 .Replace("%REWARD%", offer.RewardLabel);
         }
 
+        public void OnPlayerReplaced(BusMessage message)
+        {
+            if (!message.TryGet(out PlayerReplacement replacement) || replacement.Replacement is null)
+                return;
+
+            string from = replacement.ReplacedUserId;
+            string to = replacement.Replacement.UserId;
+
+            if (!book.Transfer(from, to) || !offers.TryGetValue(from, out ContractOffer offer))
+                return;
+
+            offers.Remove(from);
+            offers[to] = offer;
+        }
+
         public void OnDeath(PlayerDeathEventArgs ev)
         {
             try

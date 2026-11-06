@@ -152,5 +152,40 @@ namespace AugatonLib.Tests
             Assert.Equal(0, wallet.BalanceOf("a"));
             Assert.Equal(0, wallet.BoughtCount("a", "soin"));
         }
+
+        [Fact]
+        public void ABalanceFollowsItsReplacement()
+        {
+            Wallet wallet = new Wallet();
+
+            wallet.Earn("a", 30);
+            wallet.Transfer("a", "b");
+
+            Assert.Equal(0, wallet.BalanceOf("a"));
+            Assert.Equal(30, wallet.BalanceOf("b"));
+        }
+
+        [Fact]
+        public void ATransferAddsToAnExistingBalance()
+        {
+            Wallet wallet = new Wallet();
+
+            wallet.Earn("a", 30);
+            wallet.Earn("b", 5);
+            wallet.Transfer("a", "b");
+
+            Assert.Equal(35, wallet.BalanceOf("b"));
+        }
+
+        [Fact]
+        public void ATransferToOneselfChangesNothing()
+        {
+            Wallet wallet = new Wallet();
+
+            wallet.Earn("a", 30);
+            wallet.Transfer("a", "a");
+
+            Assert.Equal(30, wallet.BalanceOf("a"));
+        }
     }
 }
