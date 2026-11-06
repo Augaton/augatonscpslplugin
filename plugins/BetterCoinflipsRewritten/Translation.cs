@@ -240,6 +240,10 @@ namespace BetterCoinflipsRewritten
         public string SecondChanceUsed { get; set; } =
             "<color=yellow>Votre seconde chance vous a sauve.</color>";
 
+        [Description("Message de l'effet jackpot.")]
+        public string JackpotEffectMessage { get; set; } =
+            "Jackpot ! Des objets tombent a vos pieds.";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";

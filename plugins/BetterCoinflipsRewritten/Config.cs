@@ -237,6 +237,24 @@ namespace BetterCoinflipsRewritten
         [Description("Vie du joueur quand la seconde chance annule sa mort.")]
         public float SecondChanceHealth { get; set; } = 25f;
 
+        [Description("Poids de l'effet jackpot.")]
+        public int JackpotChance { get; set; } = 4;
+
+        [Description("Nombre d'objets du jackpot.")]
+        public int JackpotAmount { get; set; } = 3;
+
+        [Description("Objets possibles du jackpot. Eviter Coin : DoubleCoin est le seul effet qui rend des pieces.")]
+        public List<ItemType> JackpotItems { get; set; } = new List<ItemType>
+        {
+            ItemType.Adrenaline,
+            ItemType.Painkillers,
+            ItemType.Medkit,
+            ItemType.GrenadeFlash,
+            ItemType.KeycardGuard,
+            ItemType.Flashlight,
+            ItemType.Radio,
+        };
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 

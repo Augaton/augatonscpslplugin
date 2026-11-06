@@ -46,6 +46,11 @@ namespace BetterCoinflipsRewritten
 
             goodEffects.Add(
                 new WeightedEffect(
+                    new JackpotEffect(plugin.Config.JackpotItems, plugin.Config.JackpotAmount),
+                    plugin.Config.JackpotChance));
+
+            goodEffects.Add(
+                new WeightedEffect(
                     new MedicalKitEffect(),
                     plugin.Config.MedicalKitChance));
 
