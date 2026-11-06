@@ -74,6 +74,52 @@ namespace SCP1162
             new RewardEntry { Item = ItemType.KeycardZoneManager, Weight = 1 },
             new RewardEntry { Item = ItemType.KeycardResearchCoordinator, Weight = 1 },
             new RewardEntry { Item = ItemType.SCP500, Weight = 1 },
+            new RewardEntry { Item = ItemType.ArmorCombat, Weight = 10, Tier = 1 },
+            new RewardEntry { Item = ItemType.GunCrossvec, Weight = 10, Tier = 1 },
+            new RewardEntry { Item = ItemType.GunFSP9, Weight = 10, Tier = 1 },
+            new RewardEntry { Item = ItemType.GrenadeHE, Weight = 8, Tier = 1 },
+            new RewardEntry { Item = ItemType.KeycardZoneManager, Weight = 8, Tier = 1 },
+            new RewardEntry { Item = ItemType.KeycardContainmentEngineer, Weight = 6, Tier = 1 },
+            new RewardEntry { Item = ItemType.SCP207, Weight = 6, Tier = 1 },
+            new RewardEntry { Item = ItemType.SCP500, Weight = 4, Tier = 1 },
+            new RewardEntry { Item = ItemType.GunE11SR, Weight = 10, Tier = 2 },
+            new RewardEntry { Item = ItemType.ArmorHeavy, Weight = 8, Tier = 2 },
+            new RewardEntry { Item = ItemType.KeycardMTFOperative, Weight = 8, Tier = 2 },
+            new RewardEntry { Item = ItemType.SCP500, Weight = 8, Tier = 2 },
+            new RewardEntry { Item = ItemType.SCP207, Weight = 8, Tier = 2 },
+            new RewardEntry { Item = ItemType.GrenadeHE, Weight = 6, Tier = 2 },
+            new RewardEntry { Item = ItemType.KeycardFacilityManager, Weight = 4, Tier = 2 },
+            new RewardEntry { Item = ItemType.SCP268, Weight = 4, Tier = 2 },
+        };
+
+        [Description("Rang de chaque objet depose. Un objet absent vaut 0, et un rang sans recompense retombe sur le rang inferieur.")]
+        public Dictionary<ItemType, int> ItemTiers { get; set; } = new Dictionary<ItemType, int>
+        {
+            [ItemType.GunCrossvec] = 1,
+            [ItemType.GunFSP9] = 1,
+            [ItemType.GunRevolver] = 1,
+            [ItemType.GunShotgun] = 1,
+            [ItemType.GunAK] = 1,
+            [ItemType.GunE11SR] = 1,
+            [ItemType.ArmorCombat] = 1,
+            [ItemType.ArmorHeavy] = 1,
+            [ItemType.GrenadeHE] = 1,
+            [ItemType.KeycardZoneManager] = 1,
+            [ItemType.KeycardMTFPrivate] = 1,
+            [ItemType.KeycardContainmentEngineer] = 1,
+            [ItemType.KeycardMTFOperative] = 1,
+            [ItemType.SCP207] = 1,
+            [ItemType.SCP500] = 1,
+            [ItemType.MicroHID] = 2,
+            [ItemType.Jailbird] = 2,
+            [ItemType.ParticleDisruptor] = 2,
+            [ItemType.GunLogicer] = 2,
+            [ItemType.GunFRMG0] = 2,
+            [ItemType.KeycardMTFCaptain] = 2,
+            [ItemType.KeycardFacilityManager] = 2,
+            [ItemType.KeycardChaosInsurgency] = 2,
+            [ItemType.KeycardO5] = 2,
+            [ItemType.SCP268] = 2,
         };
 
         [Description("Noms affiches aux joueurs. Un objet absent de cette liste garde son nom technique.")]
@@ -183,6 +229,7 @@ namespace SCP1162
             }
 
             SpawnCount = (int)Clamp(SpawnCount, 1f, Locations.Count, nameof(SpawnCount));
+            ItemTiers ??= new Dictionary<ItemType, int>();
 
             if (Rewards is null || Rewards.Count == 0)
             {

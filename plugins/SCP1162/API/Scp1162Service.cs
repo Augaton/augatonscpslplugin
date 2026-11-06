@@ -120,7 +120,7 @@ namespace SCP1162.API
                 return false;
             }
 
-            RewardEntry entry = Chance.PickWeighted(config.Rewards, reward => reward is null ? 0 : reward.Weight);
+            RewardEntry entry = Chance.PickWeighted(RewardsFor(item.Type), reward => reward is null ? 0 : reward.Weight);
 
             if (entry is null || !InventoryItemLoader.AvailableItems.ContainsKey(entry.Item) || !TryRemove(player, item))
                 return true;
@@ -195,6 +195,13 @@ namespace SCP1162.API
             }
 
             return candidates.Count == 0 ? null : candidates[Random.Range(0, candidates.Count)];
+        }
+
+        private List<RewardEntry> RewardsFor(ItemType deposited)
+        {
+            config.ItemTiers.TryGetValue(deposited, out int tier);
+
+            return TierPool.Closest(config.Rewards, reward => reward?.Tier ?? 0, tier);
         }
 
         private bool IsInReach(Player player)
