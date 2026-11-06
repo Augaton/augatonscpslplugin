@@ -52,6 +52,9 @@ namespace RandomGamemode.API
         // Vrai quand le mode decide seul de la fin du round : le jeu la declarerait des qu'un camp reste seul.
         protected bool KeepRoundOpen { get; set; }
 
+        // Vrai pour un mode en chacun pour soi : le jeu n'y voit qu'un camp, et terminerait le round d'office.
+        protected virtual bool PlaysToLastStanding => false;
+
         public virtual bool CanStart(int playerCount) => true;
 
         public virtual bool HumansOnly => false;
@@ -110,9 +113,11 @@ namespace RandomGamemode.API
         {
         }
 
+        // CanEnd et non RoundEnding.IsAllowed : annuler RoundEnding laisse RoundSummary.IsRoundEnded a vrai,
+        // ce qui ferait passer le round pour termine aupres de tous les plugins.
         public virtual void OnEndingRound(RoundEndingConditionsCheckEventArgs ev)
         {
-            if (ev is not null && KeepRoundOpen)
+            if (ev is not null && (KeepRoundOpen || (PlaysToLastStanding && CountAlive() > 1)))
                 ev.CanEnd = false;
         }
 

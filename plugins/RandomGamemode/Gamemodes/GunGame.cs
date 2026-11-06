@@ -14,6 +14,8 @@ namespace RandomGamemode.Gamemodes
 
         public override string Key => "gungame";
 
+        protected override bool PlaysToLastStanding => true;
+
         public override string DisplayName => "Gun Game";
 
         public override bool CanStart(int playerCount) => Config.GunGameLadder.Count > 0;

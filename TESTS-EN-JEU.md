@@ -240,7 +240,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Dodgeball : balle x3 visible, explosion 1 s apres le premier rebond, cote lanceur compris.
 - [ ] Fin forcee : la limite de temps de `bluescreen` et la victoire a GunGame terminent le round
       en moins de 3 s, meme avec plusieurs camps en vie.
-- [ ] Randomiseur : pas de fin avec 2 survivants ou plus d'une meme equipe.
+- [ ] Randomiseur, Gun Game et Dodgeball : pas de fin avec 2 survivants ou plus d'une meme equipe.
 - [ ] Vagues de respawn retablies au round suivant et apres `gamemode stop`.
 - [ ] Portails A et B refuses avec le retour visuel, SCP-079 au niveau 3, CASSIE sans fond sonore.
 - [ ] Mode arene : personne n'est remplace, et le Juggernaut qui se deconnecte met fin au mode normalement.

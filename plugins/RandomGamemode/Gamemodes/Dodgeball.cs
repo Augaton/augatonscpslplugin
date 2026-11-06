@@ -21,6 +21,8 @@ namespace RandomGamemode.Gamemodes
 
         public override string Key => "dodgeball";
 
+        protected override bool PlaysToLastStanding => true;
+
         public override string DisplayName => "Balle au prisonnier";
 
         public override bool HumansOnly => true;

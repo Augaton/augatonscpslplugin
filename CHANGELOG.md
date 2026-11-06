@@ -62,6 +62,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - Après l'ogive, une pièce ou une pilule pouvait renvoyer un survivant dans le complexe détruit, sans sortie.
 - `collection check` prenait les bruitages de C.A.S.S.I.E pour des mots inconnus.
 - Un mode de jeu qui plante se termine proprement au lieu de rester actif à moitié appliqué.
+- Gun Game et Dodgeball se terminaient dès le départ : le jeu ne voyait qu'un seul camp.
 - Le rappel `.human` ne s'affiche plus pendant un mode de jeu, et les refus de `.human` se traduisent.
 
 ### Sécurité

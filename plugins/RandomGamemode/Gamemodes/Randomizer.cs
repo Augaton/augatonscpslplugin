@@ -23,6 +23,8 @@ namespace RandomGamemode.Gamemodes
 
         public override string Key => "randomizer";
 
+        protected override bool PlaysToLastStanding => true;
+
         public override string DisplayName => "Randomiseur";
 
         public override IEnumerator<float> Run()
@@ -83,25 +85,6 @@ namespace RandomGamemode.Gamemodes
 
             yield return Timing.WaitForSeconds(2f);
             Announce(Settings.Description);
-        }
-
-        // CanEnd et non RoundEnding.IsAllowed : annuler RoundEnding laisse RoundSummary.IsRoundEnded a vrai,
-        // ce qui ferait passer le round pour termine aupres de tous les plugins.
-        public override void OnEndingRound(RoundEndingConditionsCheckEventArgs ev)
-        {
-            if (ev is null)
-                return;
-
-            int alive = 0;
-
-            foreach (Player player in Player.ReadyList)
-            {
-                if (player is not null && player.IsAlive)
-                    alive++;
-            }
-
-            if (alive > 1)
-                ev.CanEnd = false;
         }
     }
 }
