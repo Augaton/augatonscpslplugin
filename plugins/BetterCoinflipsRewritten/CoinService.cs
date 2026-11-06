@@ -159,6 +159,11 @@ namespace BetterCoinflipsRewritten
 
             badEffects.Add(
                 new WeightedEffect(
+                    new SpottedEffect(plugin.Config.SpottedDuration),
+                    plugin.Config.SpottedChance));
+
+            badEffects.Add(
+                new WeightedEffect(
                     new OneHpLeftEffect(),
                     plugin.Config.OneHpLeftChance));
 

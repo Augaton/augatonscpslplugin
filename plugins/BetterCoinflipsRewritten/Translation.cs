@@ -260,6 +260,14 @@ namespace BetterCoinflipsRewritten
         public string DisarmEffectMessage { get; set; } =
             "Votre arme vous glisse des mains.";
 
+        [Description("Message de l'effet repere, pour le lanceur.")]
+        public string SpottedEffectMessage { get; set; } =
+            "Les SCP savent ou vous etes.";
+
+        [Description("Hint des SCP. {player} est le pseudo du joueur repere, {distance} sa distance en metres.")]
+        public string SpottedScpHint { get; set; } =
+            "<color=red>Proie reperee : {player} a {distance} m</color>";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";
