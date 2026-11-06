@@ -49,6 +49,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("SupplyDrop", "SupplyDrop", "largages"),
             new KnownPlugin("TeamGenocide", "TeamGenocide", "extinction d'equipe"),
             new KnownPlugin("TickGuard", "TickGuard", "surveillance des TPS"),
+            new KnownPlugin("WarmupLobby", "WarmupLobby", "echauffement du lobby"),
         };
 
         public static IReadOnlyList<KnownPlugin> All => Catalog;
