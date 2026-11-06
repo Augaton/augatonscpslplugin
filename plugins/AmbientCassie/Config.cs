@@ -16,6 +16,12 @@ namespace AmbientCassie
         [Description("Secondes de round a partir desquelles les annonces Late remplacent les annonces Early.")]
         public float LateRoundSeconds { get; set; } = 600f;
 
+        [Description("Niveau du Directeur du chaos qui fait aussi passer aux annonces Late. 0 = jamais.")]
+        public int ChaosLevelForLate { get; set; } = 2;
+
+        [Description("Secondes minimales entre deux annonces de reaction, Mutator et ScpLevel, 30 au plus bas.")]
+        public float ReactionCooldownSeconds { get; set; } = 120f;
+
         [Description("Joueurs requis pour une annonce.")]
         public int MinPlayers { get; set; } = 4;
 

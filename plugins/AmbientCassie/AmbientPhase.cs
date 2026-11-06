@@ -5,5 +5,7 @@ namespace AmbientCassie
         Any,
         Early,
         Late,
+        Mutator,
+        ScpLevel,
     }
 }

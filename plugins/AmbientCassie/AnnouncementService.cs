@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AugatonLib.Chaos;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
@@ -18,6 +19,7 @@ namespace AmbientCassie
 
         private CoroutineHandle loop;
         private bool running;
+        private float nextReaction;
 
         public AnnouncementService(Plugin plugin) => this.plugin = plugin;
 
@@ -37,6 +39,7 @@ namespace AmbientCassie
                 Timing.KillCoroutines(loop);
 
             running = false;
+            nextReaction = 0f;
         }
 
         public string CheckCassieWords()
@@ -46,10 +49,27 @@ namespace AmbientCassie
             return unknown is null ? null : $"mot inconnu : {unknown}";
         }
 
-        public bool Announce()
-        {
-            AmbientLine line = Pick();
+        public bool Announce() => Play(Pick(CurrentPhase(), true));
 
+        // Une reaction cede la place comme les autres annonces, et ne revient pas a chaque niveau gagne.
+        public void React(AmbientPhase phase)
+        {
+            try
+            {
+                if (!running || Time.time < nextReaction || !CanSpeak())
+                    return;
+
+                if (Play(Pick(phase, false)))
+                    nextReaction = Time.time + Config.ReactionCooldownSeconds;
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"AnnouncementService.React: {e}");
+            }
+        }
+
+        private static bool Play(AmbientLine line)
+        {
             if (line is null)
                 return false;
 
@@ -79,22 +99,30 @@ namespace AmbientCassie
         // Une annonce d'ambiance cede toujours la place : a un compte a rebours, a une autre annonce, a un mode.
         private void Tick()
         {
-            if (!Round.IsRoundInProgress || Player.Count < Config.MinPlayers || Announcer.IsSpeaking)
-                return;
-
-            if (Warhead.IsDetonationInProgress || Warhead.IsDetonated)
-                return;
-
-            if (Config.PauseDuringGamemodes && WorldEvents.IsPaused)
-                return;
-
-            Announce();
+            if (CanSpeak())
+                Announce();
         }
 
-        private AmbientLine Pick()
+        private bool CanSpeak()
         {
-            AmbientPhase phase = Round.Duration.TotalSeconds >= Config.LateRoundSeconds ? AmbientPhase.Late : AmbientPhase.Early;
+            if (!Round.IsRoundInProgress || Player.Count < Config.MinPlayers || Announcer.IsSpeaking)
+                return false;
 
+            if (Warhead.IsDetonationInProgress || Warhead.IsDetonated)
+                return false;
+
+            return !(Config.PauseDuringGamemodes && WorldEvents.IsPaused);
+        }
+
+        private AmbientPhase CurrentPhase()
+        {
+            bool chaotic = Config.ChaosLevelForLate > 0 && ChaosState.BonusLevel >= Config.ChaosLevelForLate;
+
+            return chaotic || Round.Duration.TotalSeconds >= Config.LateRoundSeconds ? AmbientPhase.Late : AmbientPhase.Early;
+        }
+
+        private AmbientLine Pick(AmbientPhase phase, bool withAny)
+        {
             eligible.Clear();
 
             foreach (AmbientLine line in plugin.Translation.Lines)
@@ -102,7 +130,7 @@ namespace AmbientCassie
                 if (line is null || string.IsNullOrEmpty(line.Cassie) || line.Weight <= 0)
                     continue;
 
-                if (line.Phase == AmbientPhase.Any || line.Phase == phase)
+                if (line.Phase == phase || (withAny && line.Phase == AmbientPhase.Any))
                     eligible.Add(line);
             }
 

@@ -14,12 +14,18 @@ de TeamGenocide ni un incident de SiteIncidents.
 | `first_announcement_seconds` | `240` | Delai avant la premiere annonce |
 | `min_interval_seconds`, `max_interval_seconds` | `300`, `600` | Delai entre deux annonces, 60 au plus bas |
 | `late_round_seconds` | `600` | A partir de la, les annonces `Late` remplacent les annonces `Early` |
+| `chaos_level_for_late` | `2` | Niveau du Directeur du chaos qui fait aussi passer aux annonces `Late`. `0` = jamais |
+| `reaction_cooldown_seconds` | `120` | Ecart minimal entre deux reactions, 30 au plus bas |
 | `min_players` | `4` | Joueurs requis |
 | `pause_during_gamemodes` | `true` | Suspend les annonces pendant un mode arene |
 
 Les annonces se reglent dans `translation.yml`, chacune avec `cassie`, `subtitles`, `phase` (`Any`, `Early`
 ou `Late`) et `weight`. C.A.S.S.I.E ne connait qu'une liste de mots : `collection check` signale un mot
 inconnu.
+
+Deux phases repondent a un evenement au lieu du temps : `Mutator` quand un mutateur de round demarre, et
+`ScpLevel` quand un SCP monte de niveau. Un `translation.yml` deja cree ne les recoit pas seul : ajouter
+ces annonces a la main, ou le supprimer pour le regenerer.
 
 ## Commandes
 

@@ -32,6 +32,18 @@ namespace AmbientCassie
             },
             new AmbientLine
             {
+                Cassie = "attention . facility status unknown",
+                Subtitles = "Attention. Conditions anormales detectees sur le site.",
+                Phase = AmbientPhase.Mutator,
+            },
+            new AmbientLine
+            {
+                Cassie = "danger . containment status unknown",
+                Subtitles = "Danger. Une anomalie gagne en puissance.",
+                Phase = AmbientPhase.ScpLevel,
+            },
+            new AmbientLine
+            {
                 Cassie = "danger . facility status unknown",
                 Subtitles = "Danger. Situation du site incertaine. Evacuation recommandee.",
                 Phase = AmbientPhase.Late,

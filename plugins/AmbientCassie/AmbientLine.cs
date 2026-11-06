@@ -10,7 +10,7 @@ namespace AmbientCassie
         [Description("Sous-titres affiches aux joueurs.")]
         public string Subtitles { get; set; } = string.Empty;
 
-        [Description("Moment du round : Any, Early ou Late.")]
+        [Description("Moment du round : Any, Early ou Late. Mutator et ScpLevel repondent a un evenement.")]
         public AmbientPhase Phase { get; set; } = AmbientPhase.Any;
 
         [Description("Poids dans le tirage.")]
