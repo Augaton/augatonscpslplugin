@@ -158,8 +158,16 @@ namespace SCP500s.API
         {
             try
             {
-                if (ev?.Player is not null && ev.UsableItem is not null)
-                    Consume(ev.Player, ev.UsableItem.Serial);
+                if (ev?.Player is null || ev.UsableItem is null)
+                    return;
+
+                ushort serial = ev.UsableItem.Serial;
+
+                // Une SCP-500 que le butin n'a pas remplacee reste une pilule avalee, pour les contrats et le bilan.
+                if (ev.UsableItem.Type == ItemType.SCP500 && !bySerial.ContainsKey(serial))
+                    PluginBus.Publish(BusTopics.PillConsumed, Interop.Owner, ev.Player);
+                else
+                    Consume(ev.Player, serial);
             }
             catch (Exception e)
             {
