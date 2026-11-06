@@ -72,6 +72,9 @@ namespace Contracts
             Config.FirstOfferSeconds = AtLeast("first_offer_seconds", Config.FirstOfferSeconds, 5f);
 
             Config.ExcludedScps ??= new List<PlayerRoles.RoleTypeId>();
+            Config.FollowUpOffers ??= new List<ContractOffer>();
+            Config.MaxContractsPerRound = (int)AtLeast("max_contracts_per_round", Config.MaxContractsPerRound, 1f);
+            Config.FollowUpDelaySeconds = AtLeast("follow_up_delay_seconds", Config.FollowUpDelaySeconds, 5f);
 
             if (Config.Offers is not null)
                 return;

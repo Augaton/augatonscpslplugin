@@ -19,6 +19,23 @@ namespace Contracts
         [Description("Roles de SCP sans contrat.")]
         public List<RoleTypeId> ExcludedScps { get; set; } = new List<RoleTypeId> { RoleTypeId.Scp079, RoleTypeId.Scp0492 };
 
+        [Description("Contrats remplis au plus par joueur et par round, 1 au plus bas. 1 = pas de contrat suivant.")]
+        public int MaxContractsPerRound { get; set; } = 2;
+
+        [Description("Secondes entre un contrat rempli et le suivant, 5 au plus bas.")]
+        public float FollowUpDelaySeconds { get; set; } = 20f;
+
+        [Description("Contrats suivants, plus durs et mieux payes.")]
+        public List<ContractOffer> FollowUpOffers { get; set; } = new List<ContractOffer>
+        {
+            new ContractOffer { Kind = ContractKind.KillEnemies, Target = 4, Reward = ItemType.GrenadeHE, RewardQuantity = 2, RewardLabel = "deux grenades" },
+            new ContractOffer { Kind = ContractKind.ActivateGenerators, Target = 2, Weight = 6, Reward = ItemType.ArmorCombat, RewardLabel = "une armure de combat" },
+            new ContractOffer { Kind = ContractKind.Survive, Target = 12, Weight = 8, Reward = ItemType.SCP500, RewardLabel = "une pilule" },
+            new ContractOffer { Kind = ContractKind.FlipCoins, Target = 5, Weight = 6, Reward = ItemType.SCP207, RewardLabel = "un SCP-207" },
+            new ContractOffer { Kind = ContractKind.KillEnemies, ForScps = true, Target = 5, Reward = ItemType.None, RewardHealth = 500f, RewardLabel = "500 PV" },
+            new ContractOffer { Kind = ContractKind.Survive, ForScps = true, Target = 14, Weight = 6, Reward = ItemType.None, RewardHealth = 400f, RewardLabel = "400 PV" },
+        };
+
         [Description("Contrats possibles.")]
         public List<ContractOffer> Offers { get; set; } = new List<ContractOffer>
         {

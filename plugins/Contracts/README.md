@@ -5,7 +5,8 @@ se soigner, ou rester en vie un certain temps. Le remplir donne une recompense. 
 Les SCP en recoivent aussi : eliminer des humains ou tenir un certain temps, contre de la vie. SCP-079 et SCP-049-2
 n'en ont pas.
 
-Un joueur a un seul contrat par round, meme s'il se deconnecte puis revient. Un joueur revenu par une vague recoit le
+Un contrat rempli en amene un autre, plus dur et mieux paye, jusqu'a `max_contracts_per_round` par joueur et par round.
+Quitter le serveur et revenir ne donne pas de contrat de plus. Un joueur revenu par une vague recoit le
 sien s'il n'en avait pas. Rien n'est stocke : tout repart de zero au round suivant. Le contrat d'evasion ne va qu'aux
 Classe-D et aux scientifiques, les seuls que le jeu laisse s'evader.
 
@@ -30,6 +31,9 @@ SCP1162. Un `config.yml` deja cree ne les recoit pas seul : les ajouter a `offer
 | `first_offer_seconds` | `15` | Delai avant les premiers contrats |
 | `command_cooldown_seconds` | `3` | Cooldown de `.contrat`, 1 au plus bas |
 | `excluded_scps` | SCP-079, SCP-049-2 | Roles de SCP sans contrat |
+| `max_contracts_per_round` | `2` | Contrats remplis au plus par joueur et par round. `1` = pas de contrat suivant |
+| `follow_up_delay_seconds` | `20` | Delai entre un contrat rempli et le suivant, 5 au plus bas |
+| `follow_up_offers` | 6 contrats | Contrats suivants, au meme format que `offers` |
 | `offers` | 11 contrats | Contrats possibles : `kind`, `for_scps`, `target`, `weight`, `reward`, `reward_quantity`, `reward_health`, `reward_label` |
 | `hint_duration`, `hint_y_coordinate`, `hint_font_size` | `8`, `950`, `20` | Affichage des messages |
 

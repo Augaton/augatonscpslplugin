@@ -136,6 +136,24 @@ namespace AugatonLib.Tests
         }
 
         [Fact]
+        public void OnlyAFinishedObjectiveCanBeRenewed()
+        {
+            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
+
+            book.Assign("a", Kind.Kill, 2);
+            Assert.False(book.Renew("a", Kind.Escape, 1));
+            Assert.False(book.Renew("b", Kind.Escape, 1));
+
+            book.Advance("a", Kind.Kill, 2);
+
+            Assert.True(book.Renew("a", Kind.Escape, 3));
+            Assert.True(book.TryGet("a", out Kind kind, out int progress, out int target));
+            Assert.Equal(Kind.Escape, kind);
+            Assert.Equal(0, progress);
+            Assert.Equal(3, target);
+        }
+
+        [Fact]
         public void OnlyAnUnfinishedObjectiveCanBeDiscarded()
         {
             ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();

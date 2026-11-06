@@ -73,6 +73,21 @@ namespace AugatonLib.Arcade
             return true;
         }
 
+        // Remplace un objectif rempli par le suivant. Celui en cours reste : un joueur n'en mene qu'un a la fois.
+        public bool Renew(string player, TKind kind, int target)
+        {
+            if (player is null || target <= 0 || !objectives.TryGetValue(player, out Objective objective))
+                return false;
+
+            if (objective.Progress < objective.Target)
+                return false;
+
+            objective.Kind = kind;
+            objective.Target = target;
+            objective.Progress = 0;
+            return true;
+        }
+
         // Refuse sur un objectif rempli : ce joueur a deja touche sa recompense.
         public bool Discard(string player)
         {

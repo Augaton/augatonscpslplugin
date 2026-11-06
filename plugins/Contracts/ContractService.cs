@@ -25,6 +25,8 @@ namespace Contracts
         // Stop vide ces deux tables, donc elles restent bornees par les joueurs du round.
         private readonly ObjectiveBook<ContractKind> book = new ObjectiveBook<ContractKind>();
         private readonly Dictionary<string, ContractOffer> offers = new Dictionary<string, ContractOffer>();
+        private readonly Dictionary<string, int> completed = new Dictionary<string, int>();
+        private readonly Dictionary<string, float> followUps = new Dictionary<string, float>();
 
         private CoroutineHandle loop;
         private bool running;
@@ -57,11 +59,13 @@ namespace Contracts
             aliveSeconds = 0f;
             book.Clear();
             offers.Clear();
+            completed.Clear();
+            followUps.Clear();
         }
 
         public string CheckRewards()
         {
-            foreach (ContractOffer offer in Config.Offers)
+            foreach (ContractOffer offer in Config.Offers.Concat(Config.FollowUpOffers))
             {
                 if (offer is null || (offer.Reward != ItemType.None && !InventoryItemLoader.AvailableItems.ContainsKey(offer.Reward)))
                     return $"objet inconnu : {offer?.Reward}";
@@ -152,7 +156,7 @@ namespace Contracts
             if (!message.TryGet(out Player player) || IsPaused || !offers.TryGetValue(player.UserId, out ContractOffer current))
                 return;
 
-            ContractOffer next = Draw(player, current.Kind);
+            ContractOffer next = Draw(completed.ContainsKey(player.UserId) ? Config.FollowUpOffers : Config.Offers, player, current.Kind);
 
             if (next is null || !book.Discard(player.UserId))
                 return;
@@ -223,16 +227,39 @@ namespace Contracts
 
                 if (!book.Has(player.UserId))
                     Offer(player);
+                else if (IsFollowUpDue(player.UserId))
+                    OfferFollowUp(player);
                 else if (minutePassed)
                     Advance(player, ContractKind.Survive);
             }
         }
 
-        private void Offer(Player player) => Assign(player, Draw(player, null));
+        private void Offer(Player player) => Assign(player, Draw(Config.Offers, player, null));
 
-        private ContractOffer Draw(Player player, ContractKind? excluded)
+        private bool IsFollowUpDue(string userId)
         {
-            List<ContractOffer> available = Config.Offers.Where(offer => IsAvailableTo(offer, player) && offer.Kind != excluded).ToList();
+            return followUps.TryGetValue(userId, out float due) && UnityEngine.Time.time >= due;
+        }
+
+        private void OfferFollowUp(Player player)
+        {
+            followUps.Remove(player.UserId);
+
+            if (!offers.TryGetValue(player.UserId, out ContractOffer done))
+                return;
+
+            ContractOffer next = Draw(Config.FollowUpOffers, player, done.Kind);
+
+            if (next is null || !book.Renew(player.UserId, next.Kind, next.Target))
+                return;
+
+            offers[player.UserId] = next;
+            ShowContract(player, next);
+        }
+
+        private ContractOffer Draw(List<ContractOffer> pool, Player player, ContractKind? excluded)
+        {
+            List<ContractOffer> available = pool.Where(offer => IsAvailableTo(offer, player) && offer.Kind != excluded).ToList();
 
             return Chance.PickWeighted(available, candidate => candidate.Weight);
         }
@@ -302,6 +329,16 @@ namespace Contracts
 
             plugin.Hints.Show(player, Text.Completed.Replace("%REWARD%", offer.RewardLabel), Config.HintDuration);
             PluginBus.Publish(BusTopics.ContractCompleted, plugin.Name, player);
+            ScheduleFollowUp(player.UserId);
+        }
+
+        private void ScheduleFollowUp(string userId)
+        {
+            completed.TryGetValue(userId, out int count);
+            completed[userId] = ++count;
+
+            if (count < Config.MaxContractsPerRound)
+                followUps[userId] = UnityEngine.Time.time + Config.FollowUpDelaySeconds;
         }
 
         private string ObjectiveOf(ContractKind kind, int target)
