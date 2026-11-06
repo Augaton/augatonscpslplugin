@@ -239,8 +239,10 @@ choisi dans une liste fermee :
 | `ScpRadar` | Liste les SCP en vie et leur distance (`radar_max_entries`) |
 | `KeycardUpgrade` | Remplace la meilleure carte d'acces par la suivante de `keycard_upgrade_path` |
 
-`TriggerIncident` et `SurpriseDrop` ne sont pas tirees en remplacement du butin sans SiteIncidents ou SupplyDrop. Placees
-sur un point d'apparition, elles se consomment alors sans effet.
+`TriggerIncident` et `SurpriseDrop` ne sont pas tirees en remplacement du butin sans SiteIncidents ou SupplyDrop, ni
+pendant un mode de jeu. `TriggerIncident` ne l'est plus apres l'ogive. Si le plugin vise refuse la demande, par exemple
+parce qu'un profil de largage est coupe, le joueur lit que rien ne se passe. Tous joueurs confondus, ces deux pilules
+sont espacees de `site_request_cooldown_seconds`.
 
 Mettre `is_enabled: false` sur une entree la desinscrit completement : ni
 enregistrement, ni spawn.
@@ -313,6 +315,7 @@ l'auteur et la cible.
 | Cle | Defaut | Role |
 |---|---|---|
 | `pill_cooldown_seconds` | `3` | Anti-chainage par joueur : pendant ce delai la prise est bloquee, la pilule reste en inventaire |
+| `site_request_cooldown_seconds` | `60` | Ecart minimal entre deux incidents ou largages demandes par des pilules, tous joueurs confondus, 1 au plus bas |
 | `allow_scp_usage` | `false` | Les SCP ne consomment pas de pilules |
 | `allow_scp_targets` | `false` | Les SCP ne sont cibles ni par swap, ni par summon, ni par contagion |
 | `ignored_roles` | Tutorial, Overwatch, Filmmaker | Ni consommation ni ciblage |

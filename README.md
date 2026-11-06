@@ -268,7 +268,7 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | BetterCoinflips et Scp261 sont présents | Les pièces renouvelées alimentent la machine |
 | ChaosDirector est présent | Les pilules, pièces et incidents s'accélèrent avec l'agitation du round |
 | RoundRecap est présent | Le bilan compte ce que font les autres plugins |
-| SiteIncidents et SupplyDrop sont présents | Un incident et un largage ne tombent jamais dans la même minute |
+| SiteIncidents et SupplyDrop sont présents | Un incident et un largage automatiques ne tombent jamais dans la même minute |
 | TickGuard est présent | Une baisse durable de TPS suspend les mêmes événements qu'un mode arène |
 | DiscordAudit est présent | Les actions tracées par chaque plugin arrivent sur Discord |
 | Scp914Recipes et SCP500s sont présents | Les recettes de SCP-914 donnent de vraies pilules |

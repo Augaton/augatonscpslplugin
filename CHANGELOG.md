@@ -59,6 +59,8 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - Pièces et pilules gagnent l'incident provoqué et le largage surprise.
 - MicroHidDock réagit aux incidents : une surcharge Tesla accélère la recharge, une panne la coupe.
 - SupplyDrop compense un peu les mutateurs Munitions rares et Soins rares.
+- `PluginBus.Request` dit si une demande a été acceptée : le vote, les pièces et les pilules n'annoncent plus ce qui n'arrive pas.
+- `site_request_cooldown_seconds` espace les incidents et les largages demandés par des pilules, tous joueurs confondus.
 
 ### Corrections
 
@@ -78,7 +80,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - Gun Game et Dodgeball se terminaient dès le départ : le jeu ne voyait qu'un seul camp.
 - Le rappel `.human` ne s'affiche plus pendant un mode de jeu, et les refus de `.human` se traduisent.
 - SCP-106 ne montait presque jamais de niveau : une mort par décomposition n'a pas de tueur. Elle compte désormais pour lui.
-- Un remplaçant reprend le niveau de SCP, les points, le contrat et la série du joueur parti.
+- Un remplaçant reprend le niveau de SCP, les points, le contrat en cours et la série du joueur parti. `.human` ne cède rien : le joueur reste en jeu.
 - SiteIncidents ne tire plus de panne d'éclairage quand tout le site est déjà dans le noir.
 - Les pilules par défaut ont toutes un halo de couleur distincte.
 
@@ -112,4 +114,5 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - CorpsesFallPocketDimension et MicroHIDReturn sont remplacés : ne les gardez pas avec PocketCorpses et MicroHidDock.
 - `ScaleArbiter.Clear` devient `ResetBaselines`, et le sujet de bus `round.reset` disparaît.
 - Le message de bus `round.mutator.started` porte désormais un `RoundMutatorInfo`. `PillConsumed`, `VendingUsed` et `ItemExchanged` portent le joueur.
+- Une SCP-500 non remplacée compte désormais comme une pilule pour les contrats, le bilan, le chaos et le renouvellement.
 - Un `config.yml` existant garde ses listes : les nouveaux contrats de Contracts et les nouveaux choix de SpectatorVote s'y ajoutent à la main. Un `translation.yml` existant d'AmbientCassie ne reçoit pas les annonces `Mutator` et `ScpLevel`. Les nouvelles pilules, elles, sont ajoutées toutes seules.

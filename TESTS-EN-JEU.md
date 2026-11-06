@@ -305,7 +305,10 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 ## 4. Synergies entre plugins
 
 **Remplacement**
-- [ ] Avec Replacer : le remplacant reprend les points, le contrat et la serie du joueur parti.
+- [ ] Avec Replacer : le remplacant reprend les points, le contrat en cours et la serie du joueur parti.
+- [ ] Le remplacant recoit le hint de son nouveau contrat. S'il avait deja rempli le sien, il le garde.
+- [ ] Un joueur remplace qui revient dans le round ne recoit pas de nouveau contrat et garde ses limites d'achat.
+- [ ] `.human` : le joueur garde ses points et son contrat, et le volontaire ne recoit rien de lui.
 - [ ] Avec SCPReplacer : un SCP de niveau 2 parti, son remplacant a le meme niveau et ses effets, et la vie n'est pas donnee deux fois.
 
 **Discord**
@@ -324,6 +327,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 **Contrats et boutique**
 - [ ] Les quatre nouveaux contrats avancent : piece lancee, pilule avalee, SCP-261 utilise, echange a SCP-1162.
 - [ ] Une pilule rengainee apres activation compte, une pilule refusee par le cooldown ne compte pas.
+- [ ] Une SCP-500 non remplacee fait avancer le contrat et compte au bilan.
 - [ ] Sans le plugin concerne, le contrat n'est jamais propose.
 - [ ] `.shop contrat` : le contrat change, le type differe, et les points partent une seule fois.
 - [ ] `.shop contrat` sans contrat, ou contrat deja rempli : aucun point debite.
@@ -343,6 +347,10 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Incident provoque et largage surprise, en piece et en pilule.
 - [ ] Ces effets ne sortent pas pendant un mode de jeu, ni sans le plugin cible.
 - [ ] `facility_effect_cooldown` espace bien ces effets de piece.
+- [ ] Deux pilules d'incident ou de largage a moins de `site_request_cooldown_seconds` : la seconde dit que rien ne se passe.
+- [ ] Apres l'ogive, plus d'incident par piece ni par pilule.
+- [ ] Soiree pilules : ni pilule d'incident, ni pilule de largage.
+- [ ] Profil de largage `is_enabled: false` : le vote annonce que rien ne se produit, et la piece aussi, sans consommer son cooldown.
 
 **Micro-HID et largages**
 - [ ] Surcharge Tesla : recharge trois fois plus rapide pendant 30 s, puis retour a la normale.

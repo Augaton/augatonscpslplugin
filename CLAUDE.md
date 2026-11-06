@@ -115,7 +115,9 @@ au redémarrage de round : AugatonLib vit dans `dependencies/`, une demande non 
 publie ensuite `BusTopics.TeamCheckRequested`. Déclarer ses capacités avec `PluginDirectory.Register(this, Capability.Scale, ...)` et
 `PluginDirectory.Unregister(this)`. Les synergies optionnelles passent par `PluginBus`, jamais par une
 référence directe entre plugins : chaque plugin doit fonctionner seul avec AugatonLib, ce qu'un test
-et la CI vérifient. Un plugin absent ne doit changer que la synergie concernée.
+et la CI vérifient. Un plugin absent ne doit changer que la synergie concernée. Une demande qui peut être
+refusée passe par `PluginBus.Request`, et celui qui y donne suite appelle `message.Accept()` : `Publish`
+compte les abonnés, pas les acceptations.
 
 Un plugin qui agit sur le monde ou sur les rôles respecte `WorldEvents.IsPaused`, posé par les modes
 arène, avec une clé `pause_during_gamemodes`. Tous les modes ne posent pas cette pause : pour les voir

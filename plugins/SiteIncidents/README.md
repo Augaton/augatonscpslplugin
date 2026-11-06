@@ -49,5 +49,7 @@ Alias `inc`. Chaque declenchement manuel est trace.
 
 ## Bus
 
-Un autre plugin peut demander un incident en publiant son nom sur `BusTopics.IncidentRequested`, comme le fait
-SpectatorVote. Un nom inconnu produit un avertissement, et rien ne se passe hors d'un round ou pendant une pause.
+Un autre plugin peut demander un incident en passant son nom a `PluginBus.Request` sur
+`BusTopics.IncidentRequested`, comme le font SpectatorVote, les pieces et les pilules. La reponse dit si l'incident a
+bien lieu. Un nom inconnu produit un avertissement, et la demande est refusee hors d'un round, pendant une pause, ou
+apres l'ogive.
