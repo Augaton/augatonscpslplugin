@@ -13,6 +13,9 @@ namespace RoundRecap
         [Description("Meilleur tueur. %PLAYER% est son pseudo, %COUNT% son total. Vide = masque.")]
         public string BestKiller { get; set; } = "Meilleur tueur : %PLAYER% (%COUNT%)";
 
+        [Description("Meilleure serie de kills, avec Streaks. %PLAYER% est le pseudo, %COUNT% la serie. Vide = masque.")]
+        public string BestStreak { get; set; } = "Meilleure serie : %PLAYER% (%COUNT%)";
+
         [Description("Premiere evasion. %PLAYER% est le pseudo, %TIME% le moment du round. Vide = masque.")]
         public string FirstEscape { get; set; } = "Premiere evasion : %PLAYER% (%TIME%)";
 

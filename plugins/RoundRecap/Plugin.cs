@@ -22,6 +22,7 @@ namespace RoundRecap
         public override void Enable()
         {
             counters.Subscribe(Name);
+            PluginBus.Subscribe(Name, BusTopics.StreakReached, heroes.OnStreakReached);
 
             ServerEvents.RoundStarted += counters.Reset;
             ServerEvents.RoundStarted += heroes.Reset;

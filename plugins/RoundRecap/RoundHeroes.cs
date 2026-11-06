@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using AugatonLib.Text;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
@@ -16,17 +17,32 @@ namespace RoundRecap
             public int Kills { get; set; }
         }
 
+        private const int MinShownStreak = 2;
+
         private readonly Dictionary<string, Tally> kills = new Dictionary<string, Tally>();
         private readonly Dictionary<string, TimeSpan> aliveSince = new Dictionary<string, TimeSpan>();
 
         private string firstEscapee;
         private TimeSpan firstEscapeTime;
+        private string bestStreaker;
+        private int bestStreak;
 
         public void Reset()
         {
             kills.Clear();
             aliveSince.Clear();
             firstEscapee = null;
+            bestStreaker = null;
+            bestStreak = 0;
+        }
+
+        public void OnStreakReached(BusMessage message)
+        {
+            if (!message.TryGet(out PlayerStreak streak) || streak.Kills < MinShownStreak || streak.Kills <= bestStreak)
+                return;
+
+            bestStreak = streak.Kills;
+            bestStreaker = SafeText.Nickname(streak.Player);
         }
 
         public void OnDeath(PlayerDeathEventArgs ev)
@@ -104,12 +120,15 @@ namespace RoundRecap
 
         public List<string> Describe(Translation text)
         {
-            List<string> lines = new List<string>(3);
+            List<string> lines = new List<string>(4);
 
             Tally best = BestKiller();
 
             if (best is not null && !string.IsNullOrEmpty(text.BestKiller))
                 lines.Add(text.BestKiller.Replace("%PLAYER%", best.Name).Replace("%COUNT%", best.Kills.ToString()));
+
+            if (bestStreaker is not null && !string.IsNullOrEmpty(text.BestStreak))
+                lines.Add(text.BestStreak.Replace("%PLAYER%", bestStreaker).Replace("%COUNT%", bestStreak.ToString()));
 
             if (firstEscapee is not null && !string.IsNullOrEmpty(text.FirstEscape))
                 lines.Add(text.FirstEscape.Replace("%PLAYER%", firstEscapee).Replace("%TIME%", firstEscapeTime.ToString(@"m\:ss")));
