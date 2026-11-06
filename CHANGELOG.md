@@ -2,7 +2,7 @@
 
 Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce qui suit n'a encore été testé en jeu : voir [TESTS-EN-JEU.md](TESTS-EN-JEU.md).
 
-## Non publié
+## 0.1.0 - 2026-11-06 (pré-version)
 
 ### Nouveaux plugins
 
