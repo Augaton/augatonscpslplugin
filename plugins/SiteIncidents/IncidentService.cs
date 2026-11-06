@@ -6,6 +6,7 @@ using AugatonLib.Chaos;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
+using AugatonLib.World;
 using CustomPlayerEffects;
 using Interactables.Interobjects.DoorUtils;
 using LabApi.Features.Wrappers;
@@ -23,6 +24,7 @@ namespace SiteIncidents
         private const float EventRetrySeconds = 20f;
         private const float GasTickSeconds = 1f;
         private const float GasEffectSeconds = 2f;
+        private const float EvacuationSeconds = 60f;
 
         private static readonly FacilityZone[] Zones =
         {
@@ -264,22 +266,32 @@ namespace SiteIncidents
 
         // Isolation est un drapeau distinct d'AdminCommand : lever ce verrou ne touche pas aux portes
         // bloquees par le staff, et les portes deja verrouillees sont de toute facon ignorees.
-        // Bloquer les ascenseurs pendant l'ogive ou la decontamination condamnerait ceux qui fuient.
-        private static bool ElevatorsCanStop() => !Warhead.IsDetonationInProgress && !Decontamination.IsDecontaminating;
+        // Bloquer les ascenseurs pendant l'ogive ou juste avant la decontamination condamnerait ceux qui fuient.
+        private bool ElevatorsCanStop()
+        {
+            return !Warhead.IsDetonationInProgress && !SiteDanger.LightZoneClosesWithin(Config.ElevatorOutageDuration + EvacuationSeconds);
+        }
 
         private void LockElevators()
         {
-            Elevator.LockAll();
+            SetElevatorLock(true);
             elevatorsLocked = true;
             timers.Add(Timing.CallDelayed(Config.ElevatorOutageDuration, UnlockElevators));
         }
 
-        private void UnlockElevators()
+        public void UnlockElevators()
         {
             if (elevatorsLocked)
-                Elevator.UnlockAll();
+                SetElevatorLock(false);
 
             elevatorsLocked = false;
+        }
+
+        // Le panneau refuse tout verrou, et NoPower reste distinct du verrou que le staff pose et leve lui-meme.
+        private static void SetElevatorLock(bool locked)
+        {
+            foreach (Elevator elevator in Elevator.List)
+                elevator.Base.ServerLockAllDoors(DoorLockReason.NoPower, locked);
         }
 
         private void StartLockdown(FacilityZone zone)

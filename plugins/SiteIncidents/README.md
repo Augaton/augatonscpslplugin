@@ -32,7 +32,7 @@ plus aucun incident apres l'explosion de l'ogive.
 | `alert_color` | `#FF0000` | Couleur de l'alerte |
 | `lockdown_doors` | `10` | Portes bloquees dans la zone |
 | `elevator_outage_weight` | `6` | Probabilite de l'arret des ascenseurs. `0` = jamais |
-| `elevator_outage_duration` | `20` | Duree de l'arret, 5 au plus bas. Il n'a jamais lieu pendant l'ogive ni la decontamination |
+| `elevator_outage_duration` | `20` | Duree de l'arret, 5 au plus bas. Il n'a pas lieu pendant l'ogive ni dans la derniere minute avant la decontamination, et l'ogive le leve |
 | `gas_leak_weight`, `tesla_surge_weight`, `camera_outage_weight` | `6` | Probabilite de chaque nouvel incident. `0` = jamais |
 | `gas_leak_duration`, `tesla_surge_duration`, `camera_outage_duration` | `20`, `15`, `15` | Durees en secondes |
 | `gas_leak_color` | `#33FF66` | Couleur de la salle touchee |

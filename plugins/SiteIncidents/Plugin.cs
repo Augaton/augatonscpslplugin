@@ -2,6 +2,7 @@ using System;
 using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
+using LabApi.Events.Arguments.WarheadEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -30,6 +31,7 @@ namespace SiteIncidents
             CharacterClassManager.OnRoundStarted += OnRoundStarted;
             ServerEvents.RoundEnded += OnRoundEnded;
             ServerEvents.RoundRestarted += Service.Stop;
+            WarheadEvents.Started += OnWarheadStarted;
 
             PluginBus.Subscribe(Owner, BusTopics.IncidentRequested, OnIncidentRequested);
 
@@ -43,6 +45,7 @@ namespace SiteIncidents
             CharacterClassManager.OnRoundStarted -= OnRoundStarted;
             ServerEvents.RoundEnded -= OnRoundEnded;
             ServerEvents.RoundRestarted -= Service.Stop;
+            WarheadEvents.Started -= OnWarheadStarted;
 
             Service.Stop();
             PluginBus.UnsubscribeOwner(Owner);
@@ -73,6 +76,8 @@ namespace SiteIncidents
         }
 
         private void OnRoundEnded(RoundEndedEventArgs ev) => Service.Stop();
+
+        private void OnWarheadStarted(WarheadStartedEventArgs ev) => Service.UnlockElevators();
 
         // Le nom vient de la config d'un autre plugin : il peut etre faux.
         private void OnIncidentRequested(BusMessage message)
