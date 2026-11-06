@@ -21,6 +21,8 @@ namespace Contracts
         private const float SecondsPerMinute = 60f;
 
         private readonly Plugin plugin;
+        // Rien n'est retire au depart d'un joueur : quitter et revenir lui rendrait un contrat et sa recompense.
+        // Stop vide ces deux tables, donc elles restent bornees par les joueurs du round.
         private readonly ObjectiveBook<ContractKind> book = new ObjectiveBook<ContractKind>();
         private readonly Dictionary<string, ContractOffer> offers = new Dictionary<string, ContractOffer>();
 
@@ -139,24 +141,6 @@ namespace Contracts
             catch (Exception e)
             {
                 Logger.Error($"OnUsedItem: {e}");
-            }
-        }
-
-        public void OnLeft(PlayerLeftEventArgs ev)
-        {
-            try
-            {
-                string userId = ev?.Player?.UserId;
-
-                if (userId is null)
-                    return;
-
-                book.Forget(userId);
-                offers.Remove(userId);
-            }
-            catch (Exception e)
-            {
-                Logger.Error($"OnLeft: {e}");
             }
         }
 

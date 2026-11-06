@@ -34,7 +34,6 @@ namespace Contracts
             PlayerEvents.Escaped += Service.OnEscaped;
             PlayerEvents.ActivatedGenerator += Service.OnActivatedGenerator;
             PlayerEvents.UsedItem += Service.OnUsedItem;
-            PlayerEvents.Left += Service.OnLeft;
 
             SelfCheck.Register(Name, "recompenses valides", Service.CheckRewards);
 
@@ -50,7 +49,6 @@ namespace Contracts
             PlayerEvents.Escaped -= Service.OnEscaped;
             PlayerEvents.ActivatedGenerator -= Service.OnActivatedGenerator;
             PlayerEvents.UsedItem -= Service.OnUsedItem;
-            PlayerEvents.Left -= Service.OnLeft;
 
             OnRoundRestarted();
             PluginDirectory.Unregister(this);
