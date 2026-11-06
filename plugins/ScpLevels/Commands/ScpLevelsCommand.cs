@@ -1,5 +1,6 @@
 using System;
 using AugatonLib.Commands;
+using AugatonLib.Text;
 using CommandSystem;
 using LabApi.Features.Wrappers;
 
@@ -53,16 +54,18 @@ namespace ScpLevels.Commands
             if (!TryFindPlayer(arguments.At(0), out Player player, out response))
                 return false;
 
+            string name = SafeText.Nickname(player);
+
             if (!player.IsSCP)
             {
-                response = $"{player.Nickname} n'est pas un SCP.";
+                response = $"{name} n'est pas un SCP.";
                 return false;
             }
 
             Plugin.Instance.Service.AddKill(player);
-            Audit(sender, "ScpLevels", $"a ajoute un kill a {player.Nickname}");
+            Audit(sender, "ScpLevels", $"a ajoute un kill a {name}");
 
-            response = $"{player.Nickname} : {Plugin.Instance.Ladder.KillsOf(player.UserId)} kill(s), niveau {Plugin.Instance.Ladder.LevelOf(player.UserId)}.";
+            response = $"{name} : {Plugin.Instance.Ladder.KillsOf(player.UserId)} kill(s), niveau {Plugin.Instance.Ladder.LevelOf(player.UserId)}.";
             return true;
         }
     }

@@ -29,6 +29,8 @@ namespace Streaks
             PlayerEvents.Left += Service.OnLeft;
             ServerEvents.RoundRestarted += Service.Reset;
 
+            SelfCheck.Register(Name, "objets des recompenses", Service.CheckItems);
+
             PluginDirectory.Register(this, Capability.Bus);
         }
 

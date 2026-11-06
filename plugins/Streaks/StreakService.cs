@@ -4,6 +4,7 @@ using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
 using AugatonLib.World;
+using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -60,6 +61,20 @@ namespace Streaks
         }
 
         public void Reset() => Ladder.Clear();
+
+        public string CheckItems()
+        {
+            if (!InventoryItemLoader.AvailableItems.ContainsKey(Config.BountyItem))
+                return $"objet inconnu : {Config.BountyItem}";
+
+            foreach (StreakReward reward in Ladder.Steps)
+            {
+                if (!InventoryItemLoader.AvailableItems.ContainsKey(reward.Item))
+                    return $"objet inconnu : {reward.Item}";
+            }
+
+            return null;
+        }
 
         public void RegisterKill(Player killer)
         {

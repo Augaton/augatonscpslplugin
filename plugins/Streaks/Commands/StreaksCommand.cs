@@ -1,5 +1,6 @@
 using System;
 using AugatonLib.Commands;
+using AugatonLib.Text;
 using CommandSystem;
 using LabApi.Features.Wrappers;
 
@@ -52,10 +53,12 @@ namespace Streaks.Commands
             if (!TryFindPlayer(arguments.At(0), out Player player, out response))
                 return false;
 
-            Plugin.Instance.Service.RegisterKill(player);
-            Audit(sender, "Streaks", $"a ajoute un kill a {player.Nickname}");
+            string name = SafeText.Nickname(player);
 
-            response = $"{player.Nickname} : {Plugin.Instance.Ladder.KillsOf(player.UserId)} kill(s) d'affilee.";
+            Plugin.Instance.Service.RegisterKill(player);
+            Audit(sender, "Streaks", $"a ajoute un kill a {name}");
+
+            response = $"{name} : {Plugin.Instance.Ladder.KillsOf(player.UserId)} kill(s) d'affilee.";
             return true;
         }
     }
