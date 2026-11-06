@@ -89,6 +89,11 @@ namespace AugatonLib.Arbitration
                 : Vector3.one;
         }
 
+        public static bool HasLayer(Player player)
+        {
+            return TryKey(player, out string userId) && States.TryGetValue(userId, out State state) && state.Layers.Count > 0;
+        }
+
         public static void Request(Player player, string owner, Vector3 scale)
         {
             if (string.IsNullOrEmpty(owner) || !TryKey(player, out string userId))
