@@ -1,6 +1,6 @@
 # CLAUDE.md — Plugins LabAPI (SCP: Secret Laboratory)
 
-Plugins serveur pour **Zone-Shilari** (FR, RP). Ce dépôt regroupe AugatonLib et les plugins de la
+Plugins serveur pour **Zone-Shilari** (FR, arcade). Ce dépôt regroupe AugatonLib et les plugins de la
 collection, portés depuis EXILED vers **LabAPI**, le framework officiel. Aucun plugin ne dépend plus
 d'EXILED.
 

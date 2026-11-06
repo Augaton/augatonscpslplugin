@@ -41,7 +41,7 @@ namespace AugatonLib.Runtime
                 Capability.Scale,
                 "RealisticSizes",
                 new[] { "SCP500s", "BetterCoinflipsRewritten", "RandomGamemode", "Scp261" },
-                "les tailles RP seront ecrasees par les effets"),
+                "les tailles seront ecrasees par les effets"),
             new Pairing(
                 Capability.DoorLock,
                 "RemoteKeycard",

@@ -1,6 +1,6 @@
 # AmbientCassie
 
-C.A.S.S.I.E parle de temps en temps pendant le round, pour nourrir l'ambiance RP : rappels au personnel,
+C.A.S.S.I.E parle de temps en temps pendant le round, pour nourrir l'ambiance : rappels au personnel,
 verifications des systemes, puis messages plus inquietants quand le round s'etire.
 
 Une annonce d'ambiance cede toujours la place. Elle n'est pas jouee si C.A.S.S.I.E parle deja, pendant le
