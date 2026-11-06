@@ -131,7 +131,8 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] `.shop` affiche solde et catalogue. Un kill ennemi rapporte des points, avec un hint.
 - [ ] `.shop soin` debite et donne l'objet. Sans assez de points, rien n'est debite.
 - [ ] `.shop munitions` ajoute des munitions a la reserve, sans objet dans l'inventaire.
-- [ ] La limite par objet tient sur le round. Deux achats trop rapides : le second est refuse.
+- [ ] La limite par objet tient sur le round, meme apres avoir quitte et rejoint le serveur. Deux achats trop rapides : le second est refuse.
+- [ ] Tuer un SCP-049-2 rapporte le prix d'un kill normal, pas celui d'un SCP.
 - [ ] Allumer, couper et rallumer un generateur ne paie qu'une fois.
 - [ ] Spectateur, SCP, Tutorial ou joueur menotte ne peuvent rien acheter. Boutique fermee pendant un mode de jeu.
 - [ ] Le solde repart de zero au round suivant.
