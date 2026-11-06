@@ -255,6 +255,9 @@ namespace BetterCoinflipsRewritten
             ItemType.Radio,
         };
 
+        [Description("Poids de l'effet chargeur plein. Il n'est tire que si le joueur tient une arme entamee.")]
+        public int FullMagazineChance { get; set; } = 6;
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 

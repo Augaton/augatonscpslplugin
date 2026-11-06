@@ -51,6 +51,11 @@ namespace BetterCoinflipsRewritten
 
             goodEffects.Add(
                 new WeightedEffect(
+                    new FullMagazineEffect(),
+                    plugin.Config.FullMagazineChance));
+
+            goodEffects.Add(
+                new WeightedEffect(
                     new MedicalKitEffect(),
                     plugin.Config.MedicalKitChance));
 

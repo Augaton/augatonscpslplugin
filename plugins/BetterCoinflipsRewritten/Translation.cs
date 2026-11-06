@@ -244,6 +244,10 @@ namespace BetterCoinflipsRewritten
         public string JackpotEffectMessage { get; set; } =
             "Jackpot ! Des objets tombent a vos pieds.";
 
+        [Description("Message de l'effet chargeur plein.")]
+        public string FullMagazineEffectMessage { get; set; } =
+            "Votre chargeur est plein.";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";
