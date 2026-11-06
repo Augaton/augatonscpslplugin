@@ -9,6 +9,14 @@ que portent les joueurs. Quand une recette echoue a son jet, la machine agit nor
 | `Coin` | `VeryFine` | `Medkit` | 50 % |
 | `Painkillers` | `Rough` | `Coin` | 100 % |
 | `Medkit` | `Rough` | `Coin` | 100 % |
+| `Adrenaline` | `Rough` | `Coin` | 100 % |
+| `Painkillers` | `Fine` | `Medkit` | 50 % |
+| `Medkit` | `VeryFine` | `SCP500` | 15 % |
+| `GrenadeFlash` | `Fine` | `GrenadeHE` | 50 % |
+| `GrenadeHE` | `VeryFine` | `SCP018` | 25 % |
+| `ArmorLight` | `Fine` | `ArmorCombat` | 50 % |
+| `ArmorCombat` | `VeryFine` | `ArmorHeavy` | 25 % |
+| `SCP207` | `VeryFine` | `AntiSCP207` | 50 % |
 
 Le plugin fonctionne seul. Avec SCP500s, une sortie `SCP500` donne une vraie pilule ; sans lui, une SCP-500
 ordinaire. Avec BetterCoinflips, les pieces obtenues sont des pieces normales.
