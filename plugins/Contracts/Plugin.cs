@@ -36,6 +36,7 @@ namespace Contracts
             PlayerEvents.ActivatedGenerator += Service.OnActivatedGenerator;
             PlayerEvents.UsedItem += Service.OnUsedItem;
             PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, Service.OnPlayerReplaced);
+            PluginBus.Subscribe(Name, BusTopics.ContractRerollRequested, Service.OnRerollRequested);
             PluginBus.Subscribe(Name, BusTopics.CoinFlipped, message => Service.CountAction(message, ContractKind.FlipCoins));
             PluginBus.Subscribe(Name, BusTopics.VendingUsed, message => Service.CountAction(message, ContractKind.UseVending));
             PluginBus.Subscribe(Name, BusTopics.ItemExchanged, message => Service.CountAction(message, ContractKind.ExchangeItem));

@@ -39,5 +39,14 @@ namespace ArcadeShop
 
         [Description("Reponse quand la limite d'achat de l'objet est atteinte.")]
         public string LimitReached { get; set; } = "Limite d'achat atteinte pour ce round.";
+
+        [Description("Nom du changement de contrat dans le catalogue.")]
+        public string ContractRerollLabel { get; set; } = "Changer de contrat";
+
+        [Description("Confirmation du changement de contrat. %BALANCE% est le solde restant.")]
+        public string ContractRerolled { get; set; } = "Contrat change. Il vous reste %BALANCE% points.";
+
+        [Description("Reponse sans contrat en cours a changer.")]
+        public string ContractRerollRefused { get; set; } = "Vous n'avez aucun contrat en cours a changer.";
     }
 }

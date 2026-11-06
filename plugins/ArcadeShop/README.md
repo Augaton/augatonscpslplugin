@@ -17,6 +17,7 @@ Seul un humain vivant et sans menottes peut acheter. Un inventaire plein laisse 
 |---|---|
 | `.shop` | Affiche le solde et le catalogue |
 | `.shop <nom>` | Achete un objet, par exemple `.shop soin` |
+| `.shop contrat` | Echange le contrat en cours contre un autre, avec Contracts |
 
 Alias `.boutique`.
 
@@ -29,6 +30,9 @@ Alias `.boutique`.
 | `points_per_generator` | `15` | Points pour lancer un generateur, une fois par generateur |
 | `points_per_escape` | `30` | Points pour une evasion |
 | `points_per_contract` | `15` | Points par contrat rempli, si Contracts est installe |
+| `points_per_streak` | `10` | Points par palier d'une serie de kills, si Streaks est installe |
+| `contract_reroll_key` | `contrat` | Nom d'achat du changement de contrat, si Contracts est installe |
+| `contract_reroll_price` | `25` | Prix du changement de contrat. `0` = pas en vente |
 | `max_balance` | `500` | Solde maximal d'un joueur |
 | `buy_cooldown_seconds` | `2` | Delai entre deux achats, 1 au plus bas |
 | `catalog_cooldown_seconds` | `1` | Delai entre deux affichages du catalogue, 0.5 au plus bas |

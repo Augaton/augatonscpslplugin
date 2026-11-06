@@ -42,6 +42,8 @@ namespace AugatonLib.Bus
 
         public const string ScpLevelReached = "scp.level.reached";
 
+        public const string ContractRerollRequested = "contract.reroll.requested";
+
         public const string StreakReached = "streak.reached";
 
         public const string IncidentRequested = "incident.requested";

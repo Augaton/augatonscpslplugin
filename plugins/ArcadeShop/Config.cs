@@ -21,6 +21,15 @@ namespace ArcadeShop
         [Description("Points par contrat rempli, si Contracts est installe.")]
         public int PointsPerContract { get; set; } = 15;
 
+        [Description("Points par palier atteint dans une serie de kills, si Streaks est installe.")]
+        public int PointsPerStreak { get; set; } = 10;
+
+        [Description("Nom d'achat du changement de contrat, si Contracts est installe.")]
+        public string ContractRerollKey { get; set; } = "contrat";
+
+        [Description("Prix du changement de contrat. 0 = pas en vente.")]
+        public int ContractRerollPrice { get; set; } = 25;
+
         [Description("Solde maximal d'un joueur.")]
         public int MaxBalance { get; set; } = 500;
 

@@ -144,6 +144,28 @@ namespace Contracts
             }
         }
 
+        // Accepted n'est pose qu'une fois le nouveau contrat certain : celui qui vend ce changement ne debite
+        // qu'apres, et un joueur sans contrat a changer ne perd ni ses points ni son objectif.
+        public void OnRerollRequested(BusMessage message)
+        {
+            if (!message.TryGet(out ContractRerollRequest request) || IsPaused)
+                return;
+
+            Player player = request.Player;
+
+            if (player is null || !offers.TryGetValue(player.UserId, out ContractOffer current))
+                return;
+
+            ContractOffer next = Draw(player, current.Kind);
+
+            if (next is null || !book.Discard(player.UserId))
+                return;
+
+            offers.Remove(player.UserId);
+            Assign(player, next);
+            request.Accepted = true;
+        }
+
         public void CountAction(BusMessage message, ContractKind kind)
         {
             if (message.TryGet(out Player player))
@@ -213,11 +235,17 @@ namespace Contracts
             }
         }
 
-        private void Offer(Player player)
-        {
-            List<ContractOffer> available = Config.Offers.Where(offer => IsAvailableTo(offer, player)).ToList();
-            ContractOffer offer = Chance.PickWeighted(available, candidate => candidate.Weight);
+        private void Offer(Player player) => Assign(player, Draw(player, null));
 
+        private ContractOffer Draw(Player player, ContractKind? excluded)
+        {
+            List<ContractOffer> available = Config.Offers.Where(offer => IsAvailableTo(offer, player) && offer.Kind != excluded).ToList();
+
+            return Chance.PickWeighted(available, candidate => candidate.Weight);
+        }
+
+        private void Assign(Player player, ContractOffer offer)
+        {
             if (offer is null || !book.Assign(player.UserId, offer.Kind, offer.Target))
                 return;
 

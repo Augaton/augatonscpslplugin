@@ -17,6 +17,7 @@ namespace ArcadeShop
     public sealed class ShopService
     {
         private const int MaxKeyLength = 32;
+        private const string ContractsPlugin = "Contracts";
 
         private readonly Plugin plugin;
         private readonly CooldownTracker cooldowns = new CooldownTracker();
@@ -101,6 +102,12 @@ namespace ArcadeShop
                 Award(player, Config.PointsPerContract);
         }
 
+        public void OnStreakReached(BusMessage message)
+        {
+            if (message.TryGet(out PlayerStreak streak) && streak.IsMilestone && IsOpen)
+                Award(streak.Player, Config.PointsPerStreak);
+        }
+
         // Le compte reste jusqu'a la fin du round : l'effacer ici rendrait ses limites d'achat a un joueur
         // qui quitte et revient. Reset le vide, donc il reste borne par les joueurs du round.
         public void OnLeft(PlayerLeftEventArgs ev)
@@ -170,6 +177,14 @@ namespace ArcadeShop
                 builder.AppendLine();
             }
 
+            if (Config.ContractRerollPrice > 0 && PluginDirectory.IsRegistered(ContractsPlugin))
+            {
+                builder.AppendLine(Text.CatalogLine
+                    .Replace("%KEY%", Config.ContractRerollKey)
+                    .Replace("%LABEL%", Text.ContractRerollLabel)
+                    .Replace("%PRICE%", Config.ContractRerollPrice.ToString()));
+            }
+
             return builder.ToString();
         }
 
@@ -194,6 +209,9 @@ namespace ArcadeShop
             }
 
             cooldowns.Register(player.UserId);
+
+            if (IsContractReroll(key))
+                return TryRerollContract(player, out response);
 
             ShopItem item = Find(key);
 
@@ -222,6 +240,41 @@ namespace ArcadeShop
                         .Replace("%PRICE%", item.Price.ToString());
                     return false;
             }
+        }
+
+        private bool IsContractReroll(string key)
+        {
+            if (string.IsNullOrEmpty(key) || Config.ContractRerollPrice <= 0)
+                return false;
+
+            return string.Equals(key, Config.ContractRerollKey, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool TryRerollContract(Player player, out string response)
+        {
+            int price = Config.ContractRerollPrice;
+
+            if (Wallet.BalanceOf(player.UserId) < price)
+            {
+                response = Text.TooExpensive
+                    .Replace("%BALANCE%", Wallet.BalanceOf(player.UserId).ToString())
+                    .Replace("%PRICE%", price.ToString());
+                return false;
+            }
+
+            ContractRerollRequest request = new ContractRerollRequest(player);
+
+            PluginBus.Publish(BusTopics.ContractRerollRequested, plugin.Name, request);
+
+            if (!request.Accepted)
+            {
+                response = Text.ContractRerollRefused;
+                return false;
+            }
+
+            Wallet.TryBuy(player.UserId, Config.ContractRerollKey, price, 0);
+            response = Text.ContractRerolled.Replace("%BALANCE%", Wallet.BalanceOf(player.UserId).ToString());
+            return true;
         }
 
         private ShopItem Find(string key)
