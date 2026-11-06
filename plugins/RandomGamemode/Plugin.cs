@@ -55,6 +55,8 @@ namespace RandomGamemode
             PlayerEvents.Joined += gamemodeHandlers.OnJoined;
             PlayerEvents.Left += gamemodeHandlers.OnLeft;
             PlayerEvents.Death += gamemodeHandlers.OnPlayerDied;
+            PlayerEvents.Hurting += gamemodeHandlers.OnPlayerHurting;
+            PlayerEvents.Escaped += gamemodeHandlers.OnPlayerEscaped;
             PlayerEvents.ChangedRole += gamemodeHandlers.OnPlayerSpawned;
             PlayerEvents.ThrewProjectile += gamemodeHandlers.OnThrownProjectile;
             PlayerEvents.DroppingItem += gamemodeHandlers.OnDroppingItem;
@@ -89,6 +91,8 @@ namespace RandomGamemode
                 PlayerEvents.Joined -= gamemodeHandlers.OnJoined;
                 PlayerEvents.Left -= gamemodeHandlers.OnLeft;
                 PlayerEvents.Death -= gamemodeHandlers.OnPlayerDied;
+                PlayerEvents.Hurting -= gamemodeHandlers.OnPlayerHurting;
+                PlayerEvents.Escaped -= gamemodeHandlers.OnPlayerEscaped;
                 PlayerEvents.ChangedRole -= gamemodeHandlers.OnPlayerSpawned;
                 PlayerEvents.ThrewProjectile -= gamemodeHandlers.OnThrownProjectile;
                 PlayerEvents.DroppingItem -= gamemodeHandlers.OnDroppingItem;

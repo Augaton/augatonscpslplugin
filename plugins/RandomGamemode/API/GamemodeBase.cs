@@ -31,7 +31,10 @@ namespace RandomGamemode.API
                 if (entries.TryGetValue(Key, out GamemodeSettings settings) && settings is not null)
                     return settings;
 
-                settings = new GamemodeSettings { Description = DisplayName };
+                // Un config.yml plus ancien que le mode ne le connait pas : il herite de ses vrais reglages.
+                if (!new Config().Gamemodes.TryGetValue(Key, out settings))
+                    settings = new GamemodeSettings { Description = DisplayName };
+
                 entries[Key] = settings;
                 return settings;
             }
@@ -42,6 +45,9 @@ namespace RandomGamemode.API
         protected static Translation Text => Plugin.Instance.Translation;
 
         protected static UncomplicatedBridge Bridge => Plugin.Instance.Bridge;
+
+        // Vrai quand le mode decide seul de la fin du round : le jeu la declarerait des qu'un camp reste seul.
+        protected bool KeepRoundOpen { get; set; }
 
         public virtual bool CanStart(int playerCount) => true;
 
@@ -54,6 +60,14 @@ namespace RandomGamemode.API
         public abstract IEnumerator<float> Run();
 
         public virtual void Stop()
+        {
+        }
+
+        public virtual void OnPlayerHurting(PlayerHurtingEventArgs ev)
+        {
+        }
+
+        public virtual void OnPlayerEscaped(PlayerEscapedEventArgs ev)
         {
         }
 
@@ -91,6 +105,8 @@ namespace RandomGamemode.API
 
         public virtual void OnEndingRound(RoundEndingConditionsCheckEventArgs ev)
         {
+            if (ev is not null && KeepRoundOpen)
+                ev.CanEnd = false;
         }
 
         protected void ConvertScpsToHumans()
@@ -147,6 +163,8 @@ namespace RandomGamemode.API
 
         internal void KillTrackedCoroutines()
         {
+            KeepRoundOpen = false;
+
             foreach (CoroutineHandle handle in handles)
                 Timing.KillCoroutines(handle);
 
@@ -173,6 +191,38 @@ namespace RandomGamemode.API
             }
 
             boostedHealth.Clear();
+        }
+
+        protected static List<Player> ReadyPlayers()
+        {
+            List<Player> players = new List<Player>(32);
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (player is not null && !player.IsDestroyed)
+                    players.Add(player);
+            }
+
+            return players;
+        }
+
+        protected static int CountAlive()
+        {
+            int alive = 0;
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (player is not null && player.IsAlive)
+                    alive++;
+            }
+
+            return alive;
+        }
+
+        protected static void EndRound(string message)
+        {
+            Announce(message);
+            Plugin.Instance.Registry.ForceRoundEnd();
         }
 
         protected static void MoveToSpawn(Player player, RoleTypeId role)

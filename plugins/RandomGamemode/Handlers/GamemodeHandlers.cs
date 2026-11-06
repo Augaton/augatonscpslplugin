@@ -39,6 +39,10 @@ namespace RandomGamemode.Handlers
             Dispatch((g, e) => g.OnPlayerSpawned(e), ev);
         }
 
+        public void OnPlayerHurting(PlayerHurtingEventArgs ev) => Dispatch((g, e) => g.OnPlayerHurting(e), ev);
+
+        public void OnPlayerEscaped(PlayerEscapedEventArgs ev) => Dispatch((g, e) => g.OnPlayerEscaped(e), ev);
+
         public void OnThrownProjectile(PlayerThrewProjectileEventArgs ev) => Dispatch((g, e) => g.OnThrownProjectile(e), ev);
 
         public void OnDroppingItem(PlayerDroppingItemEventArgs ev) => Dispatch((g, e) => g.OnDroppingItem(e), ev);

@@ -72,5 +72,4 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 ### À savoir pour la mise à jour
 
 - CorpsesFallPocketDimension et MicroHIDReturn sont remplacés : ne les gardez pas avec PocketCorpses et MicroHidDock.
-- Les deux nouveaux modes n'ont pas leurs réglages par défaut dans un `config.yml` existant : ajoutez-les, ou régénérez le fichier.
 - `ScaleArbiter.Clear` devient `ResetBaselines`, et le sujet de bus `round.reset` disparaît.
