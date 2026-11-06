@@ -95,6 +95,60 @@ Commencer par `chaos collection check` pendant un round : chaque `[ECHEC]` signa
 - [ ] `ambient play` se fait entendre avec ses sous-titres, et `collection check` ne signale aucun mot inconnu.
 - [ ] Aucune annonce ne coupe une autre annonce, ni le compte a rebours de l'ogive.
 
+**WarmupLobby**
+
+A tester en premier : un defaut ici priverait des joueurs de role.
+
+- [ ] Monter `lobby_waiting_time` a 60. Avec deux joueurs, chacun apparait au meme endroit, dans deux camps ennemis, et ils peuvent se battre.
+- [ ] Un mort revient en quelques secondes, dans le camp le moins nombreux.
+- [ ] Au lancement, **tout le monde recoit un role normal du round**, SCP compris, et personne ne reste spectateur ni dans son role d'echauffement.
+- [ ] L'inventaire de l'echauffement ne survit pas, les corps ont disparu, et le bilan de fin de round ne compte pas ses morts.
+- [ ] Pendant l'echauffement : portes, ascenseurs, ramassage et lacher d'objets sont refuses, et un mort ne laisse rien au sol.
+- [ ] `first_role` egal a `second_role` : avertissement au chargement et valeurs par defaut remises.
+- [ ] `collection check` valide le point d'apparition de l'arene.
+
+**ScpScaling**
+- [ ] `scpscaling status` affiche le facteur attendu : 16 joueurs donnent 1.00.
+- [ ] Un SCP apparait avec PV pleins et multiplies, barre de vie correcte cote client. SCP-079 et SCP-049-2 ne changent pas.
+- [ ] Un SCP repris par Replacer garde les PV du joueur parti. Un mode de jeu a base de SCP garde ses propres PV.
+
+**Streaks**
+- [ ] `streaks add <joueur>` jusqu'a 3 : la trousse arrive, et le hint s'affiche. A 5 : prime annoncee a tous.
+- [ ] Une grenade, un inventaire plein : l'objet tombe aux pieds du joueur. `SCP500` donne une vraie pilule avec SCP500s.
+- [ ] Mourir remet la serie a zero. Tuer un joueur mis a prix donne la prime au chasseur et l'annonce a tous.
+- [ ] Le tir allie et le suicide ne comptent pas. Rien ne compte pendant un mode de jeu, Gun Game compris.
+- [ ] La meilleure serie apparait dans le bilan.
+
+**ScpLevels**
+- [ ] `scplevels add <joueur>` sur un SCP : au niveau 1, les PV max montent et sont soignes, et le hint est vu par tous.
+- [ ] La vitesse augmente vraiment, y compris pour SCP-173 et SCP-096. A verifier, ces roles ont leurs propres mouvements.
+- [ ] La regeneration agit au niveau 2 et s'arrete aux PV max.
+- [ ] Changer de role retire les niveaux, sans laisser ni vitesse ni PV.
+- [ ] Equilibrage : les niveaux par defaut sont un point de depart.
+
+**ArcadeShop**
+- [ ] `.shop` affiche solde et catalogue. Un kill ennemi rapporte des points, avec un hint.
+- [ ] `.shop soin` debite et donne l'objet. Sans assez de points, rien n'est debite.
+- [ ] `.shop munitions` ajoute des munitions a la reserve, sans objet dans l'inventaire.
+- [ ] La limite par objet tient sur le round. Deux achats trop rapides : le second est refuse.
+- [ ] Allumer, couper et rallumer un generateur ne paie qu'une fois.
+- [ ] Spectateur, SCP, Tutorial ou joueur menotte ne peuvent rien acheter. Boutique fermee pendant un mode de jeu.
+- [ ] Le solde repart de zero au round suivant.
+
+**SpectatorVote**
+- [ ] Mort, `spectatorvote open` : le hint liste les choix, seuls les spectateurs le voient.
+- [ ] `.vi 2` enregistre le vote, et on peut en changer. Un joueur vivant est refuse, comme `.vi 99` ou `.vi abc`.
+- [ ] A la fin du vote, le resultat s'affiche et l'incident part avec son annonce de C.A.S.S.I.E.
+- [ ] Sans bulletin, rien ne se passe. Sans SiteIncidents, aucun vote ne s'ouvre et `collection check` le signale.
+
+**RoundMutators**
+- [ ] `mutators force LowGravity` : les humains sautent plus haut, les SCP non, et `mutators stop` remet tout a la normale.
+- [ ] La gravite retombe aussi pour un humain devenu SCP-049-2, et pour un joueur mort.
+- [ ] `Swift`, `Tiny` et `Tireless` agissent, et un renfort arrive avec le mutateur en moins de 3 secondes.
+- [ ] Une pilule qui rapetisse garde son effet avec `Tiny`.
+- [ ] Un mode de jeu force retire le mutateur, et aucun mutateur ne part pendant un mode.
+- [ ] Sur plusieurs rounds, jamais deux mutateurs de suite : le plugin reste discret.
+
 **PocketCorpses**
 - [ ] Un joueur meurt dans la dimension de poche : son corps retombe du plafond, au-dessus d'un joueur vivant.
 - [ ] Le corps tombe vraiment : il ne reste pas fige au plafond, et garde son nom et sa cause de mort.

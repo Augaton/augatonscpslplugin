@@ -12,9 +12,20 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - **DiscordAudit** : envoie les actions du staff vers un webhook Discord.
 - **Scp914Recipes** : recettes de SCP-914 réglables en config.
 - **AmbientCassie** : annonces d'ambiance de C.A.S.S.I.E pendant le round.
+- **ScpScaling** : les PV des SCP suivent le nombre de joueurs.
+- **Streaks** : séries de kills récompensées, et primes sur les meilleurs joueurs.
+- **ScpLevels** : les SCP montent de niveau en tuant.
+- **ArcadeShop** : des points gagnés pendant le round, à dépenser avec `.shop`.
+- **WarmupLobby** : les joueurs se battent en attendant le round.
+- **SpectatorVote** : les morts votent pour le prochain incident avec `.vi`.
+- **RoundMutators** : une règle légère sur certains rounds normaux.
 
 ### Ajouts
 
+- AugatonLib : `GamemodeState` voit tous les modes de jeu, `ItemGrant` donne un objet sans qu'il se perde.
+- SiteIncidents : un autre plugin peut demander un incident par le bus.
+- ChaosDirector : points pour les paliers de série de kills.
+- RoundRecap : meilleure série de kills.
 - `collection check` vérifie sur le vrai serveur ce que la compilation ne voit pas.
 - Commandes de test pour PocketCorpses et MicroHidDock.
 - SiteIncidents : fuite de gaz, surcharge des portes Tesla et coupure de caméras.

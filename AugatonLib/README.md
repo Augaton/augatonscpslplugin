@@ -40,10 +40,16 @@ Il doit etre mis a jour en meme temps que les plugins qui en dependent.
 | `World.Mice` | Apparition des souris, avec controle du type |
 | `World.Tantrums` | Flaque de SCP-173 visible par les clients |
 | `World.LootSpots` | Emplacements de loot surs, pour faire reapparaitre des objets pendant le round |
+| `World.ItemGrant` | Donne un objet sans qu'il se perde : munitions en reserve, vraie pilule avec SCP500s, au sol si l'inventaire est plein |
+| `Arcade.KillLadder` | Compte les kills par joueur et dit quand il atteint un palier |
+| `Arcade.Wallet` | Points de round par joueur, achats limites, jamais de solde negatif |
+| `Arcade.ScpHealthScale` | Facteur de PV d'un SCP selon le nombre de joueurs |
+| `Arcade.RoundPacing` | Garde des rounds normaux entre deux evenements rares |
 | `Chaos.Escalation` | Paliers qui montent avec la duree du round |
 | `Chaos.ChaosState` | Paliers bonus poses par ChaosDirector, a zero sans lui |
 | `Runtime.TeamWatcher` | Detecte l'extinction d'une equipe et la publie sur le bus |
 | `Runtime.WorldEvents` | Suspend les apparitions automatiques pendant un mode de type arene |
+| `Runtime.GamemodeState` | Drapeau commun a tous les modes de jeu, poses ou non en pause. `BlocksBonuses` dit si un bonus d'arcade doit s'effacer |
 | `Voting.BallotBox` | Urne : un vote par joueur, modifiable, avec egalites |
 | `Text.RoleNames` | Nom complet d'un role |
 | `Text.CassieLines` | Trouve le mot d'une annonce que C.A.S.S.I.E ne connait pas |

@@ -45,3 +45,8 @@ Les annonces et les noms de zones se reglent dans `translation.yml`.
 | `incidents trigger <type>` | `siteincidents.manage` | Declenche `Blackout`, `Alert`, `Lockdown`, `GasLeak`, `TeslaSurge` ou `CameraOutage` |
 
 Alias `inc`. Chaque declenchement manuel est trace.
+
+## Bus
+
+Un autre plugin peut demander un incident en publiant son nom sur `BusTopics.IncidentRequested`, comme le fait
+SpectatorVote. Un nom inconnu produit un avertissement, et rien ne se passe hors d'un round ou pendant une pause.

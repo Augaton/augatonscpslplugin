@@ -118,8 +118,8 @@ et la CI vérifient. Un plugin absent ne doit changer que la synergie concernée
 
 Un plugin qui agit sur le monde ou sur les rôles respecte `WorldEvents.IsPaused`, posé par les modes
 arène, avec une clé `pause_during_gamemodes`. Tous les modes ne posent pas cette pause : pour les voir
-tous, écouter `GamemodeStarted` et `GamemodeEnded`, et remettre le drapeau à zéro en fin de round, jamais
-au début, où il partirait sur le même événement que le mode.
+tous, lire `GamemodeState.IsActive`, ou `GamemodeState.BlocksBonuses` qui couvre aussi la pause. Ce drapeau
+retombe en fin de round, jamais au début, où il partirait sur le même événement que le mode.
 
 ## Tests
 
