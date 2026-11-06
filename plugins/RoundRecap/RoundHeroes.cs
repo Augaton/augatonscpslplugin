@@ -14,15 +14,18 @@ namespace RoundRecap
         {
             public string Name { get; set; }
 
-            public int Kills { get; set; }
+            public int Total { get; set; }
         }
 
         private const int MinShownStreak = 2;
+        private const int MinShownDeaths = 2;
 
         private readonly Dictionary<string, Tally> kills = new Dictionary<string, Tally>();
+        private readonly Dictionary<string, Tally> deaths = new Dictionary<string, Tally>();
         private readonly Dictionary<string, TimeSpan> aliveSince = new Dictionary<string, TimeSpan>();
 
         private string firstEscapee;
+        private string firstBlood;
         private string gamemodeWinner;
         private string topScp;
         private int topScpLevel;
@@ -33,6 +36,8 @@ namespace RoundRecap
         public void Reset()
         {
             kills.Clear();
+            deaths.Clear();
+            firstBlood = null;
             aliveSince.Clear();
             firstEscapee = null;
             gamemodeWinner = null;
@@ -70,19 +75,15 @@ namespace RoundRecap
         {
             try
             {
+                Count(deaths, ev?.Player);
+
                 Player killer = ev?.Attacker;
 
                 if (killer is null || killer == ev.Player || string.IsNullOrEmpty(killer.UserId))
                     return;
 
-                if (!kills.TryGetValue(killer.UserId, out Tally tally))
-                {
-                    tally = new Tally();
-                    kills[killer.UserId] = tally;
-                }
-
-                tally.Name = SafeText.Nickname(killer);
-                tally.Kills++;
+                firstBlood ??= SafeText.Nickname(killer);
+                Count(kills, killer);
             }
             catch (Exception e)
             {
@@ -143,10 +144,18 @@ namespace RoundRecap
         {
             List<string> lines = new List<string>(4);
 
-            Tally best = BestKiller();
+            if (firstBlood is not null && !string.IsNullOrEmpty(text.FirstBlood))
+                lines.Add(text.FirstBlood.Replace("%PLAYER%", firstBlood));
+
+            Tally best = Best(kills);
 
             if (best is not null && !string.IsNullOrEmpty(text.BestKiller))
-                lines.Add(text.BestKiller.Replace("%PLAYER%", best.Name).Replace("%COUNT%", best.Kills.ToString()));
+                lines.Add(text.BestKiller.Replace("%PLAYER%", best.Name).Replace("%COUNT%", best.Total.ToString()));
+
+            Tally unluckiest = Best(deaths);
+
+            if (unluckiest?.Total >= MinShownDeaths && !string.IsNullOrEmpty(text.MostDeaths))
+                lines.Add(text.MostDeaths.Replace("%PLAYER%", unluckiest.Name).Replace("%COUNT%", unluckiest.Total.ToString()));
 
             if (bestStreaker is not null && !string.IsNullOrEmpty(text.BestStreak))
                 lines.Add(text.BestStreak.Replace("%PLAYER%", bestStreaker).Replace("%COUNT%", bestStreak.ToString()));
@@ -168,13 +177,28 @@ namespace RoundRecap
             return lines;
         }
 
-        private Tally BestKiller()
+        private static void Count(Dictionary<string, Tally> tallies, Player player)
+        {
+            if (string.IsNullOrEmpty(player?.UserId))
+                return;
+
+            if (!tallies.TryGetValue(player.UserId, out Tally tally))
+            {
+                tally = new Tally();
+                tallies[player.UserId] = tally;
+            }
+
+            tally.Name = SafeText.Nickname(player);
+            tally.Total++;
+        }
+
+        private static Tally Best(Dictionary<string, Tally> tallies)
         {
             Tally best = null;
 
-            foreach (Tally tally in kills.Values)
+            foreach (Tally tally in tallies.Values)
             {
-                if (best is null || tally.Kills > best.Kills)
+                if (best is null || tally.Total > best.Total)
                     best = tally;
             }
 

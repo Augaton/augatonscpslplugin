@@ -6,7 +6,8 @@ lancees, largages, remplacements, incidents de site, echanges a SCP-1162 et equi
 Il nomme aussi le meilleur tueur, la meilleure serie de kills avec Streaks, la premiere evasion et l'humain en vie depuis le plus longtemps. Les
 pseudos passent par `SafeText` : un joueur ne peut pas glisser de mise en forme dans le bilan.
 
-Il nomme aussi le vainqueur d'un mode de jeu et le SCP le plus dangereux, avec ScpLevels. Avec DiscordAudit, le bilan
+Il nomme aussi le premier sang, le joueur mort le plus souvent, le vainqueur d'un mode de jeu et le SCP le plus
+dangereux, avec ScpLevels. Avec DiscordAudit, le bilan
 part aussi sur le salon du webhook.
 
 Le plugin ecoute le bus d'AugatonLib et ne depend d'aucun autre plugin. Une ligne dont le total vaut

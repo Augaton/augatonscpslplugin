@@ -19,6 +19,12 @@ namespace RoundRecap
         [Description("SCP le plus dangereux. %PLAYER% est son pseudo, %LEVEL% son niveau. Vide = masque.")]
         public string TopScp { get; set; } = "SCP le plus dangereux : %PLAYER% (niveau %LEVEL%)";
 
+        [Description("Premier kill du round. %PLAYER% est le tueur. Vide = masque.")]
+        public string FirstBlood { get; set; } = "Premier sang : %PLAYER%";
+
+        [Description("Joueur mort le plus souvent, au moins deux fois. %PLAYER% est son pseudo, %COUNT% son total. Vide = masque.")]
+        public string MostDeaths { get; set; } = "Mort le plus souvent : %PLAYER% (%COUNT%)";
+
         [Description("Meilleur tueur. %PLAYER% est son pseudo, %COUNT% son total. Vide = masque.")]
         public string BestKiller { get; set; } = "Meilleur tueur : %PLAYER% (%COUNT%)";
 
