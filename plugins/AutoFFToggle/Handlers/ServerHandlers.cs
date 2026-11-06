@@ -68,6 +68,9 @@ namespace AutoFFToggle.Handlers
             {
                 KillPendingEnable();
 
+                // AugatonLib survit au round : un forcage staff oublie resterait pose sur tous les suivants.
+                FriendlyFireArbiter.Release(ManualOwner);
+
                 if (plugin.Config.RestoreOnRoundRestart)
                     FriendlyFireArbiter.Release(Owner);
             }

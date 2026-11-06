@@ -50,7 +50,7 @@ collection.
 | Commande | Permission | Effet |
 |---|---|---|
 | `autoff status` | `autofftoggle.manage` | Etat du tir allie et liste des demandeurs |
-| `autoff set <on\|off\|auto>` | `autofftoggle.manage` | Force le tir allie ou rend la main au plugin |
+| `autoff set <on\|off\|auto>` | `autofftoggle.manage` | Force le tir allie jusqu'a la fin du round, ou rend la main au plugin |
 
 Alias `ff`.
 
