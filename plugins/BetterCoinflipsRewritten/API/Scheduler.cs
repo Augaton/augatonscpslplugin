@@ -45,7 +45,7 @@ namespace BetterCoinflipsRewritten.API
             catch (Exception exception)
             {
                 Logger.Error(
-                    "[BetterCoinflipsRewritten] Scheduled action failed: " +
+                    "[BetterCoinflipsRewritten] Action differee en echec : " +
                     exception);
             }
         }

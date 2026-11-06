@@ -69,9 +69,9 @@ namespace BetterCoinflipsRewritten
                         continue;
 
                     Logger.Debug(
-                        "[BetterCoinflipsRewritten] Replaced " +
+                        "[BetterCoinflipsRewritten] Remplace " +
                         oldPickup.Type +
-                        " with a coin in room " +
+                        " par une piece dans la salle " +
                         GetRoomName(oldPickup) +
                         ".",
                         plugin.Config.Debug);
@@ -82,17 +82,17 @@ namespace BetterCoinflipsRewritten
                 catch (Exception exception)
                 {
                     Logger.Error(
-                        "[BetterCoinflipsRewritten] Failed to spawn a coin: " +
+                        "[BetterCoinflipsRewritten] Piece impossible a poser : " +
                         exception);
                 }
             }
 
             Logger.Info(
-                "[BetterCoinflipsRewritten] Spawned " +
+                "[BetterCoinflipsRewritten] Pose " +
                 spawnedCoins +
                 "/" +
                 requestedAmount +
-                " coins across the map.");
+                " pieces sur la carte.");
         }
 
         private void AddBonusCoins()
@@ -111,8 +111,8 @@ namespace BetterCoinflipsRewritten
             if (sourceItems is null || sourceItems.Count == 0)
             {
                 Logger.Warn(
-                    "[BetterCoinflipsRewritten] bonus_coin_source_items is " +
-                    "empty, no extra coin will be added to the loot pools.");
+                    "[BetterCoinflipsRewritten] bonus_coin_source_items est " +
+                    "vide : aucune piece en plus dans le loot.");
 
                 return;
             }
@@ -137,8 +137,8 @@ namespace BetterCoinflipsRewritten
             if (anchors.Count == 0)
             {
                 Logger.Warn(
-                    "[BetterCoinflipsRewritten] No pickup matching " +
-                    "bonus_coin_source_items was found on the map.");
+                    "[BetterCoinflipsRewritten] Aucun objet de " +
+                    "bonus_coin_source_items trouve sur la carte.");
 
                 return;
             }
@@ -172,8 +172,8 @@ namespace BetterCoinflipsRewritten
                 catch (Exception exception)
                 {
                     Logger.Error(
-                        "[BetterCoinflipsRewritten] Failed to add a bonus " +
-                        "coin: " +
+                        "[BetterCoinflipsRewritten] Piece bonus impossible " +
+                        "a ajouter : " +
                         exception);
 
                     continue;
@@ -183,20 +183,20 @@ namespace BetterCoinflipsRewritten
                 spawnedCoins++;
 
                 Logger.Debug(
-                    "[BetterCoinflipsRewritten] Added a coin next to a " +
+                    "[BetterCoinflipsRewritten] Piece ajoutee a cote de " +
                     anchor.Type +
-                    " in room " +
+                    " dans la salle " +
                     GetRoomName(anchor) +
                     ".",
                     plugin.Config.Debug);
             }
 
             Logger.Info(
-                "[BetterCoinflipsRewritten] Added " +
+                "[BetterCoinflipsRewritten] Ajoute " +
                 spawnedCoins +
                 "/" +
                 requestedAmount +
-                " extra coins to the loot pools.");
+                " pieces en plus au loot.");
         }
 
         // Cette surcharge de Pickup.Create fait deja le spawn reseau : un Spawn() de plus ferait
@@ -206,7 +206,7 @@ namespace BetterCoinflipsRewritten
             if (Pickup.Create(ItemType.Coin, position, rotation) is not null)
                 return true;
 
-            Logger.Error("[BetterCoinflipsRewritten] The game refused to create a coin pickup.");
+            Logger.Error("[BetterCoinflipsRewritten] Le jeu a refuse de creer une piece.");
             return false;
         }
 

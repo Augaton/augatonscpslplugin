@@ -70,7 +70,7 @@ namespace BetterCoinflipsRewritten
                 Capability.Light,
                 Capability.Bus);
 
-            Logger.Info($"[BetterCoinflipsRewritten] Coins on map: {Config.MapCoinAmount}, extra coins in loot pools: {(Config.AddBonusCoinsToLoot ? Config.BonusCoinAmount : 0)}, coin consumed on flip: {Config.ConsumeCoinOnFlip}.");
+            Logger.Info($"[BetterCoinflipsRewritten] Pieces sur la carte : {Config.MapCoinAmount}, en plus dans le loot : {(Config.AddBonusCoinsToLoot ? Config.BonusCoinAmount : 0)}, coin consumed on flip: {Config.ConsumeCoinOnFlip}.");
         }
 
         private string CheckCassieWords()
@@ -143,8 +143,8 @@ namespace BetterCoinflipsRewritten
                  Config.BonusCoinSourceItems.Count == 0))
             {
                 Logger.Warn(
-                    "[BetterCoinflipsRewritten] bonus_coin_source_items is " +
-                    "empty, no extra coin will reach the loot pools.");
+                    "[BetterCoinflipsRewritten] bonus_coin_source_items est " +
+                    "vide : aucune piece en plus dans le loot.");
             }
 
             if (!Config.ConsumeCoinOnFlip)
@@ -154,9 +154,9 @@ namespace BetterCoinflipsRewritten
                 return;
 
             Logger.Warn(
-                "[BetterCoinflipsRewritten] Coins are consumed on flip but " +
-                "no coin is placed on the map. Only the vanilla loot table " +
-                "will provide them.");
+                "[BetterCoinflipsRewritten] Les pieces sont consommees au lancer, " +
+                "mais aucune n'est posee sur la carte : seul le loot du jeu " +
+                "en fournira.");
         }
 
         private static float Clamp(
@@ -175,11 +175,11 @@ namespace BetterCoinflipsRewritten
                 name +
                 " (" +
                 value.ToString("0.##") +
-                ") is out of the " +
+                ") hors de la plage " +
                 minimum.ToString("0.##") +
                 "-" +
                 maximum.ToString("0.##") +
-                " range, clamped to " +
+                ", ramene a " +
                 clamped.ToString("0.##") +
                 ".");
 

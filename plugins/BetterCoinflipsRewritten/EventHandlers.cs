@@ -77,10 +77,10 @@ namespace BetterCoinflipsRewritten
                     Logger.Debug(
                         "[BetterCoinflipsRewritten] " +
                         ev.Player.Nickname +
-                        " attempted to flip a coin during cooldown. " +
-                        "Remaining: " +
+                        " a tente un lancer pendant le cooldown. " +
+                        "Reste : " +
                         secondsRemaining.ToString("0.0") +
-                        " seconds.",
+                        " secondes.",
                         plugin.Config.Debug);
 
                     return;
@@ -95,9 +95,9 @@ namespace BetterCoinflipsRewritten
                 coinService.SetCooldown(ev.Player);
 
                 Logger.Debug(
-                    "[BetterCoinflipsRewritten] Coin flip detected for " +
+                    "[BetterCoinflipsRewritten] Lancer detecte pour " +
                     ev.Player.Nickname +
-                    ". IsTails: " +
+                    ". Pile : " +
                     ev.IsTails +
                     ".",
                     plugin.Config.Debug);
@@ -183,8 +183,8 @@ namespace BetterCoinflipsRewritten
                 SecondChance.Clear();
 
                 Logger.Debug(
-                    "[BetterCoinflipsRewritten] Round started. " +
-                    "Player data has been cleared.",
+                    "[BetterCoinflipsRewritten] Debut de round : " +
+                    "donnees des joueurs effacees.",
                     plugin.Config.Debug);
 
                 KillPendingSpawn();
@@ -232,7 +232,7 @@ namespace BetterCoinflipsRewritten
                 coinRenewalService.Stop();
 
                 Logger.Debug(
-                    "[BetterCoinflipsRewritten] Round is restarting.",
+                    "[BetterCoinflipsRewritten] Redemarrage du round.",
                     plugin.Config.Debug);
             }
             catch (Exception e)

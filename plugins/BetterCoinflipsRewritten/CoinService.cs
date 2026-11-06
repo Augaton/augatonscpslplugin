@@ -257,24 +257,24 @@ namespace BetterCoinflipsRewritten
                     plugin.Config.FakeExplosionChance));
 
             Logger.Info(
-                "[BetterCoinflipsRewritten] Registered " +
+                "[BetterCoinflipsRewritten] Enregistre : " +
                 goodEffects.Count +
-                " positive effects and " +
+                " effets positifs et " +
                 badEffects.Count +
-                " negative effects.");
+                " effets negatifs.");
 
             if (TotalWeight(goodEffects) <= 0)
             {
                 Logger.Warn(
-                    "[BetterCoinflipsRewritten] Every positive effect has a " +
-                    "weight of 0, heads will never trigger an effect.");
+                    "[BetterCoinflipsRewritten] Tous les effets positifs ont un " +
+                    "poids de 0 : face ne declenchera aucun effet.");
             }
 
             if (TotalWeight(badEffects) <= 0)
             {
                 Logger.Warn(
-                    "[BetterCoinflipsRewritten] Every negative effect has a " +
-                    "weight of 0, tails will never trigger an effect.");
+                    "[BetterCoinflipsRewritten] Tous les effets negatifs ont un " +
+                    "poids de 0 : pile ne declenchera aucun effet.");
             }
         }
 
@@ -401,8 +401,8 @@ namespace BetterCoinflipsRewritten
             if (selectedEffect is null)
             {
                 Logger.Warn(
-                    "[BetterCoinflipsRewritten] No available effect was " +
-                    "found for " +
+                    "[BetterCoinflipsRewritten] Aucun effet disponible " +
+                    "pour " +
                     player.Nickname +
                     ".");
 
@@ -459,9 +459,9 @@ namespace BetterCoinflipsRewritten
                     Logger.Info(
                         "[BetterCoinflipsRewritten] " +
                         player.Nickname +
-                        " (" + player.UserId + ") flipped " +
-                        (isTails ? "tails" : "heads") +
-                        ". Effect: " +
+                        " (" + player.UserId + ") a lance : " +
+                        (isTails ? "pile" : "face") +
+                        ". Effet : " +
                         selectedEffect.Name +
                         ".");
                 }
@@ -469,7 +469,7 @@ namespace BetterCoinflipsRewritten
             catch (Exception exception)
             {
                 Logger.Error(
-                    "[BetterCoinflipsRewritten] Error while executing effect " +
+                    "[BetterCoinflipsRewritten] Erreur dans l'effet " +
                     selectedEffect.Name +
                     ": " +
                     exception);

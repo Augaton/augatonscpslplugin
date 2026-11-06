@@ -36,7 +36,7 @@ namespace BetterCoinflipsRewritten
 
             if (spots.Count == 0)
             {
-                Logger.Warn("[BetterCoinflipsRewritten] No loot spot found, coins will not renew this round.");
+                Logger.Warn("[BetterCoinflipsRewritten] Aucun emplacement de loot : pas de renouvellement des pieces ce round.");
                 return;
             }
 
