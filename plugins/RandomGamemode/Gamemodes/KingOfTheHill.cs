@@ -97,6 +97,20 @@ namespace RandomGamemode.Gamemodes
             guards.Clear();
         }
 
+        // Ce mode fait reapparaitre sans fin : chaque mort laisserait sinon une dotation complete et un corps au sol,
+        // autant d'objets reseau que rien ne retire.
+        public override void OnPlayerDying(PlayerDyingEventArgs ev)
+        {
+            if (KeepRoundOpen)
+                ev?.Player?.ClearInventory();
+        }
+
+        public override void OnSpawningRagdoll(PlayerSpawningRagdollEventArgs ev)
+        {
+            if (KeepRoundOpen && ev is not null)
+                ev.IsAllowed = false;
+        }
+
         public override void OnPlayerDied(PlayerDeathEventArgs ev)
         {
             string userId = ev?.Player?.UserId;

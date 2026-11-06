@@ -38,6 +38,10 @@ namespace RandomGamemode.Handlers
                 Dispatch((g, e) => g.OnPlayerLeft(e), userId);
         }
 
+        public void OnPlayerDying(PlayerDyingEventArgs ev) => Dispatch((g, e) => g.OnPlayerDying(e), ev);
+
+        public void OnSpawningRagdoll(PlayerSpawningRagdollEventArgs ev) => Dispatch((g, e) => g.OnSpawningRagdoll(e), ev);
+
         public void OnPlayerDied(PlayerDeathEventArgs ev) => Dispatch((g, e) => g.OnPlayerDied(e), ev);
 
         // ChangedRole et non Spawned : Spawned ignore les roles sans point d'apparition, comme SCP-079,

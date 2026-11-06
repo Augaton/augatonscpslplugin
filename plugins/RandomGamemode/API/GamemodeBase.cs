@@ -82,6 +82,14 @@ namespace RandomGamemode.API
         {
         }
 
+        public virtual void OnPlayerDying(PlayerDyingEventArgs ev)
+        {
+        }
+
+        public virtual void OnSpawningRagdoll(PlayerSpawningRagdollEventArgs ev)
+        {
+        }
+
         public virtual void OnPlayerDied(PlayerDeathEventArgs ev)
         {
         }
