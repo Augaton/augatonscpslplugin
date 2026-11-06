@@ -57,13 +57,34 @@ namespace DiscordAudit
 
         public void OnStaffAction(BusMessage message)
         {
-            if (!IsConfigured || !message.TryGet(out StaffAction action))
+            if (message.TryGet(out StaffAction action))
+                Enqueue(action.ToString());
+        }
+
+        public void OnStaffAlert(BusMessage message)
+        {
+            if (plugin.Config.SendAlerts && message.Text is not null)
+                Enqueue($"ALERTE [{message.Source}] {message.Text}");
+        }
+
+        public void OnRoundSummary(BusMessage message)
+        {
+            if (!plugin.Config.SendRoundRecap)
+                return;
+
+            foreach (string line in DiscordMessage.StripTags(message.Text).Split('\n'))
+                Enqueue(line);
+        }
+
+        private void Enqueue(string line)
+        {
+            if (!IsConfigured)
                 return;
 
             if (pending.Count >= plugin.Config.MaxQueuedLines)
                 pending.Dequeue();
 
-            pending.Enqueue(action.ToString());
+            pending.Enqueue(line);
         }
 
         private IEnumerator<float> Loop()

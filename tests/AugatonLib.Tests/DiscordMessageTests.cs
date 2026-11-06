@@ -87,5 +87,15 @@ namespace AugatonLib.Tests
 
             Assert.True(content.Length <= 2000);
         }
+
+        [Theory]
+        [InlineData("<size=30><color=yellow>Bilan</color></size>", "Bilan")]
+        [InlineData("sans balise", "sans balise")]
+        [InlineData("", "")]
+        [InlineData(null, "")]
+        public void TagsAreRemovedForDiscord(string text, string expected)
+        {
+            Assert.Equal(expected, DiscordMessage.StripTags(text));
+        }
     }
 }

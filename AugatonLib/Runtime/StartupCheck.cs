@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
 using MEC;
@@ -10,6 +11,7 @@ namespace AugatonLib.Runtime
     {
         // Les machines et les anomalies se posent quelques secondes apres le debut du round.
         private const float DelaySeconds = 20f;
+        private const string Source = "collection check";
 
         private static bool hooked;
         private static bool scheduled;
@@ -39,7 +41,10 @@ namespace AugatonLib.Runtime
                 List<string> failures = SelfCheck.Failures();
 
                 foreach (string failure in failures)
+                {
                     Logger.Warn($"[collection check] {failure}");
+                    PluginBus.Publish(BusTopics.StaffAlert, Source, failure);
+                }
 
                 Logger.Info($"[collection check] {failures.Count} probleme(s). Detail : <plugin> collection check.");
             }

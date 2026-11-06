@@ -3,6 +3,7 @@
 // Licensed under the ui_2506 Non-Commercial License.
 // See LICENSE.md in this folder for full license terms.
 
+using AugatonLib.Bus;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -43,9 +44,14 @@ namespace AntiSLCrush
             Triggers[protection] = count + amount;
 
             if (count == 0)
+            {
                 Logger.Warn($"{protection} : {detail}");
+                PluginBus.Publish(BusTopics.StaffAlert, Plugin.PluginName, $"{protection} : {detail}");
+            }
             else
+            {
                 Plugin.Report($"{protection} : {detail}");
+            }
         }
 
         public static string Describe()

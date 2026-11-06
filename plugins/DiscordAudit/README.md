@@ -23,6 +23,8 @@ fois avant d'etre abandonnee.
 | Cle | Defaut | Role |
 |---|---|---|
 | `webhook_url` | vide | Adresse du webhook. Vide = aucun envoi |
+| `send_alerts` | `true` | Envoie les alertes : TPS bas et retour a la normale, exploit bloque par AntiSLCrush, probleme de `collection check` au demarrage |
+| `send_round_recap` | `true` | Envoie le bilan de chaque round, si RoundRecap est installe |
 | `send_interval_seconds` | `5` | Secondes entre deux envois, 2 au plus bas |
 | `max_queued_lines` | `200` | Actions gardees en attente. Au-dela, les plus anciennes sont perdues |
 

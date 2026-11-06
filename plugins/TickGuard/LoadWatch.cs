@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -66,10 +67,12 @@ namespace TickGuard
             {
                 WorldEvents.Resume(Plugin.Owner);
                 Logger.Info($"TPS revenus a {tps:0}.");
+                PluginBus.Publish(BusTopics.StaffAlert, Plugin.Owner, $"TPS revenus a {tps:0}.");
                 return;
             }
 
             Logger.Warn($"Serveur en souffrance : {tps:0} TPS.");
+            PluginBus.Publish(BusTopics.StaffAlert, Plugin.Owner, $"Serveur en souffrance : {tps:0} TPS.");
 
             if (config.PauseWorldEvents)
                 WorldEvents.Pause(Plugin.Owner);

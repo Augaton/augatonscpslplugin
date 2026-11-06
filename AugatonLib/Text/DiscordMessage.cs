@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AugatonLib.Text
 {
@@ -10,6 +11,8 @@ namespace AugatonLib.Text
         public const int MaxContentLength = 1900;
 
         private const string CodeFence = "```";
+
+        private static readonly Regex Tags = new Regex("<[^>]*>", RegexOptions.Compiled);
 
         private static readonly string[] Hosts =
         {
@@ -25,6 +28,11 @@ namespace AugatonLib.Text
                 && uri.Scheme == Uri.UriSchemeHttps
                 && Array.IndexOf(Hosts, uri.Host.ToLowerInvariant()) >= 0
                 && uri.AbsolutePath.StartsWith("/api/webhooks/", StringComparison.Ordinal);
+        }
+
+        public static string StripTags(string text)
+        {
+            return string.IsNullOrEmpty(text) ? string.Empty : Tags.Replace(text, string.Empty);
         }
 
         public static List<string> TakeBatch(Queue<string> pending, int maxLength)

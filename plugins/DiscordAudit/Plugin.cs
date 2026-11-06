@@ -26,6 +26,8 @@ namespace DiscordAudit
             // Pas de demarrage ici : aucune tache reseau ne doit partir pendant Enable.
             ServerEvents.WaitingForPlayers += Sender.Start;
             PluginBus.Subscribe(Name, BusTopics.StaffAction, Sender.OnStaffAction);
+            PluginBus.Subscribe(Name, BusTopics.StaffAlert, Sender.OnStaffAlert);
+            PluginBus.Subscribe(Name, BusTopics.RoundSummaryReady, Sender.OnRoundSummary);
 
             SelfCheck.Register(Name, "adresse du webhook", CheckAddress);
 

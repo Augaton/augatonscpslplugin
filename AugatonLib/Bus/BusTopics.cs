@@ -34,6 +34,14 @@ namespace AugatonLib.Bus
 
         public const string ContractCompleted = "contract.completed";
 
+        public const string StaffAlert = "staff.alert";
+
+        public const string RoundSummaryReady = "round.summary.ready";
+
+        public const string ChaosLevelChanged = "chaos.level.changed";
+
+        public const string ScpLevelReached = "scp.level.reached";
+
         public const string StreakReached = "streak.reached";
 
         public const string IncidentRequested = "incident.requested";

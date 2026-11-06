@@ -55,8 +55,11 @@ namespace RoundRecap
             {
                 string recap = counters.Describe(Translation, heroes.Describe(Translation));
 
-                if (!string.IsNullOrEmpty(recap))
-                    Server.SendBroadcast(recap, Config.BroadcastDuration);
+                if (string.IsNullOrEmpty(recap))
+                    return;
+
+                Server.SendBroadcast(recap, Config.BroadcastDuration);
+                PluginBus.Publish(BusTopics.RoundSummaryReady, Name, recap);
             }
             catch (Exception e)
             {
