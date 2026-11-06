@@ -5,9 +5,11 @@ using AugatonLib.Arcade;
 using AugatonLib.Bus;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
+using AugatonLib.World;
 using CustomPlayerEffects;
 using LabApi.Features.Wrappers;
 using MEC;
+using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
@@ -17,6 +19,25 @@ namespace RoundMutators
     public sealed class MutatorService
     {
         private const float RefreshSeconds = 2f;
+        private const float DarknessSeconds = 30f;
+        private const float DarknessRefreshSeconds = 20f;
+        private const int RemovalsPerFrame = 10;
+
+        private static readonly ItemType[] AmmoTypes =
+        {
+            ItemType.Ammo9x19,
+            ItemType.Ammo556x45,
+            ItemType.Ammo762x39,
+            ItemType.Ammo44cal,
+            ItemType.Ammo12gauge,
+        };
+
+        private static readonly ItemType[] MedicalTypes =
+        {
+            ItemType.Medkit,
+            ItemType.Painkillers,
+            ItemType.Adrenaline,
+        };
 
         private static readonly MutatorType[] Types =
         {
@@ -24,15 +45,24 @@ namespace RoundMutators
             MutatorType.Swift,
             MutatorType.Tiny,
             MutatorType.Tireless,
+            MutatorType.NightFall,
+            MutatorType.ScarceAmmo,
+            MutatorType.ScarceMedical,
+            MutatorType.SwiftScps,
+            MutatorType.FragileHumans,
         };
 
         private readonly Plugin plugin;
         private readonly RoundPacing pacing = new RoundPacing();
+        private readonly HashSet<string> equipped = new HashSet<string>();
 
         private CoroutineHandle draw;
         private CoroutineHandle loop;
+        private CoroutineHandle thinning;
         private bool drawScheduled;
         private bool looping;
+        private bool thinningOut;
+        private float nextDarkness;
 
         public MutatorService(Plugin plugin) => this.plugin = plugin;
 
@@ -56,6 +86,14 @@ namespace RoundMutators
             looping = true;
             loop = Timing.RunCoroutine(Refresh());
 
+            if (type == MutatorType.ScarceAmmo || type == MutatorType.ScarceMedical)
+            {
+                thinningOut = true;
+                thinning = Timing.RunCoroutine(ThinOut(type == MutatorType.ScarceAmmo ? AmmoTypes : MedicalTypes));
+            }
+
+            PluginBus.Publish(BusTopics.RoundMutatorStarted, Plugin.Owner, NameOf(type));
+
             plugin.Hints.ShowAll(plugin.Translation.Announcement.Replace("%NAME%", NameOf(type)), Config.HintDuration);
         }
 
@@ -68,6 +106,13 @@ namespace RoundMutators
 
             looping = false;
 
+            if (thinningOut)
+                Timing.KillCoroutines(thinning);
+
+            thinningOut = false;
+            nextDarkness = 0f;
+            equipped.Clear();
+
             if (!Active.HasValue)
                 return;
 
@@ -79,6 +124,7 @@ namespace RoundMutators
                 Clear(player, previous);
 
             ScaleArbiter.ReleaseOwner(Plugin.Owner);
+            LightArbiter.ReleaseOwner(Plugin.Owner);
         }
 
         public void OnGamemodeStarted(BusMessage message)
@@ -95,6 +141,11 @@ namespace RoundMutators
                 case MutatorType.Swift: return plugin.Translation.Swift;
                 case MutatorType.Tiny: return plugin.Translation.Tiny;
                 case MutatorType.Tireless: return plugin.Translation.Tireless;
+                case MutatorType.NightFall: return plugin.Translation.NightFall;
+                case MutatorType.ScarceAmmo: return plugin.Translation.ScarceAmmo;
+                case MutatorType.ScarceMedical: return plugin.Translation.ScarceMedical;
+                case MutatorType.SwiftScps: return plugin.Translation.SwiftScps;
+                case MutatorType.FragileHumans: return plugin.Translation.FragileHumans;
                 default: return type.ToString();
             }
         }
@@ -139,6 +190,11 @@ namespace RoundMutators
                 case MutatorType.Swift: return Config.SwiftWeight;
                 case MutatorType.Tiny: return Config.TinyWeight;
                 case MutatorType.Tireless: return Config.TirelessWeight;
+                case MutatorType.NightFall: return Config.NightFallWeight;
+                case MutatorType.ScarceAmmo: return Config.ScarceAmmoWeight;
+                case MutatorType.ScarceMedical: return Config.ScarceMedicalWeight;
+                case MutatorType.SwiftScps: return Config.SwiftScpsWeight;
+                case MutatorType.FragileHumans: return Config.FragileHumansWeight;
                 default: return 0;
             }
         }
@@ -151,6 +207,8 @@ namespace RoundMutators
             {
                 try
                 {
+                    KeepDark();
+
                     foreach (Player player in Player.ReadyList)
                         Apply(player, Active.Value);
                 }
@@ -186,6 +244,68 @@ namespace RoundMutators
                     if (!player.HasEffect<Invigorated>())
                         player.EnableEffect<Invigorated>();
                     break;
+
+                case MutatorType.NightFall when eligible:
+                    if (equipped.Add(player.UserId))
+                        ItemGrant.Give(player, ItemType.Flashlight);
+                    break;
+
+                case MutatorType.SwiftScps when player.IsSCP:
+                    if (!player.TryGetEffect(out MovementBoost scpBoost) || scpBoost.Intensity < Config.SwiftScpPercent)
+                        player.EnableEffect<MovementBoost>((byte)Config.SwiftScpPercent);
+                    break;
+
+                case MutatorType.FragileHumans when eligible:
+                    ApplyFragility(player);
+                    break;
+            }
+        }
+
+        // Refait a chaque tour : le jeu rend sa vie normale a tout joueur qui change de role.
+        private void ApplyFragility(Player player)
+        {
+            if (player.RoleBase is not IHealthbarRole role)
+                return;
+
+            float limit = role.MaxHealth * Config.FragileHealthPercent / 100f;
+
+            if (player.MaxHealth <= limit)
+                return;
+
+            player.MaxHealth = limit;
+            player.Health = Mathf.Min(player.Health, limit);
+        }
+
+        private void KeepDark()
+        {
+            if (Active != MutatorType.NightFall || Time.time < nextDarkness)
+                return;
+
+            nextDarkness = Time.time + DarknessRefreshSeconds;
+            LightArbiter.Blackout(Plugin.Owner, DarknessSeconds, LightArbiter.AllZones);
+        }
+
+        private IEnumerator<float> ThinOut(ItemType[] types)
+        {
+            List<Pickup> targets = new List<Pickup>(64);
+
+            foreach (Pickup pickup in Pickup.List)
+            {
+                if (pickup is not null && Array.IndexOf(types, pickup.Type) >= 0)
+                    targets.Add(pickup);
+            }
+
+            Chance.Shuffle(targets);
+
+            int count = Mathf.RoundToInt(targets.Count * Config.ScarcePercent / 100f);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (!targets[i].IsDestroyed)
+                    targets[i].Destroy();
+
+                if ((i + 1) % RemovalsPerFrame == 0)
+                    yield return Timing.WaitForOneFrame;
             }
         }
 
@@ -222,7 +342,13 @@ namespace RoundMutators
                     break;
 
                 case MutatorType.Swift:
+                case MutatorType.SwiftScps:
                     player.DisableEffect<MovementBoost>();
+                    break;
+
+                case MutatorType.FragileHumans:
+                    if (player.IsHuman && player.RoleBase is IHealthbarRole role)
+                        player.MaxHealth = role.MaxHealth;
                     break;
 
                 case MutatorType.Tireless:

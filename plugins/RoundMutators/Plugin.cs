@@ -32,7 +32,7 @@ namespace RoundMutators
 
             PluginBus.Subscribe(Owner, BusTopics.GamemodeStarted, Service.OnGamemodeStarted);
 
-            PluginDirectory.Register(this, Capability.Scale, Capability.Bus);
+            PluginDirectory.Register(this, Capability.Scale, Capability.Light, Capability.Bus);
         }
 
         public override void Disable()
@@ -55,6 +55,9 @@ namespace RoundMutators
             Config.RoundsBetween = (int)AtLeast("rounds_between", Config.RoundsBetween, 0f);
             Config.StartDelaySeconds = AtLeast("start_delay_seconds", Config.StartDelaySeconds, 3f);
             Config.GravityFactor = AtLeast("gravity_factor", Config.GravityFactor, 0.2f);
+            Config.ScarcePercent = System.Math.Min(100f, AtLeast("scarce_percent", Config.ScarcePercent, 0f));
+            Config.SwiftScpPercent = System.Math.Min((int)AtLeast("swift_scp_percent", Config.SwiftScpPercent, 0f), 100);
+            Config.FragileHealthPercent = AtLeast("fragile_health_percent", Config.FragileHealthPercent, 10f);
             Config.SizeFactor = AtLeast("size_factor", Config.SizeFactor, 0.5f);
             Config.SpeedPercent = System.Math.Min((int)AtLeast("speed_percent", Config.SpeedPercent, 0f), MaxSpeedPercent);
         }

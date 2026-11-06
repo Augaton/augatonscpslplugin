@@ -29,6 +29,30 @@ namespace RoundMutators
         [Description("Poids du mutateur d'endurance. 0 = jamais.")]
         public int TirelessWeight { get; set; } = 10;
 
+        [Description("Poids du mutateur d'obscurite. 0 = jamais.")]
+        public int NightFallWeight { get; set; } = 10;
+
+        [Description("Poids du mutateur de munitions. 0 = jamais.")]
+        public int ScarceAmmoWeight { get; set; } = 10;
+
+        [Description("Poids du mutateur de soins. 0 = jamais.")]
+        public int ScarceMedicalWeight { get; set; } = 10;
+
+        [Description("Poids du mutateur de vitesse des SCP. 0 = jamais.")]
+        public int SwiftScpsWeight { get; set; } = 10;
+
+        [Description("Poids du mutateur de vie. 0 = jamais.")]
+        public int FragileHumansWeight { get; set; } = 10;
+
+        [Description("Part retiree de la carte avec ScarceAmmo et ScarceMedical, en pourcentage.")]
+        public float ScarcePercent { get; set; } = 60f;
+
+        [Description("Vitesse ajoutee aux SCP avec SwiftScps, en pourcentage, 100 au plus.")]
+        public int SwiftScpPercent { get; set; } = 15;
+
+        [Description("Vie maximale des humains avec FragileHumans, en pourcentage de la normale.")]
+        public float FragileHealthPercent { get; set; } = 80f;
+
         [Description("Gravite des humains avec LowGravity. 0.8 = 80 % de la normale, 0.2 au plus bas.")]
         public float GravityFactor { get; set; } = 0.8f;
 

@@ -6,5 +6,10 @@ namespace RoundMutators
         Swift,
         Tiny,
         Tireless,
+        NightFall,
+        ScarceAmmo,
+        ScarceMedical,
+        SwiftScps,
+        FragileHumans,
     }
 }
