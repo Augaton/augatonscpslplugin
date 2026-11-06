@@ -367,13 +367,14 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 
 **Mutateurs**
 - [ ] `Vampire` : un kill rend 25 PV au tueur, jamais au-dela de sa vie maximale.
-- [ ] `GlassCannon` : les degats entre joueurs augmentent, pas les chutes.
-- [ ] `EndlessAmmo` : la reserve se remplit sans faire tomber de boites au sol, y compris en changeant de gilet.
+- [ ] `GlassCannon` : les degats entre joueurs augmentent, pas les chutes, et SCP-173 tue toujours d'un coup.
+- [ ] `EndlessAmmo` : la reserve se remplit, jeter des munitions est refuse, et rien ne tombe au sol, ni a la mort ni en changeant de gilet.
 - [ ] `Regeneration` : les humains regagnent de la vie, pas les SCP.
 
 **Incidents et chaos**
 - [ ] `incidents trigger ElevatorOutage` : les ascenseurs se bloquent 20 s puis repartent, et se debloquent en fin de round.
-- [ ] Pendant l'ogive et la decontamination, l'arret des ascenseurs est refuse.
+- [ ] Pendant l'ogive et dans la derniere minute avant la decontamination, l'arret des ascenseurs est refuse.
+- [ ] L'ogive leve un arret en cours, et la fin d'un arret laisse en place un ascenseur verrouille par le staff.
 - [ ] Le niveau de chaos maximal declenche une seule apogee par round.
 
 **Contrats et progression**
@@ -381,7 +382,10 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Un contrat rempli en amene un second apres `follow_up_delay_seconds`, et pas de troisieme.
 - [ ] `.shop contrat` sur un contrat suivant redonne un contrat suivant, pas un contrat facile.
 - [ ] Un kill de SCP-049-2 fait monter SCP-049 de niveau.
+- [ ] Une mort dans la dimension de poche fait avancer le contrat de SCP-106.
+- [ ] Relancer le meme generateur ne fait pas avancer un contrat, et un second generateur le fait.
 - [ ] La prime grandit avec la serie, et la fin d'une serie sans prime est annoncee une seule fois.
+- [ ] Un joueur qui se deconnecte ne declenche pas l'annonce de fin de serie.
 
 **Boutique et machines**
 - [ ] `.shop vie`, `.shop bouclier` et `.shop vitesse` fonctionnent, et le soin est refuse en pleine forme, sans debit.
@@ -392,7 +396,9 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 
 **Largages et equipes**
 - [ ] Le profil `neutre` tombe dans une salle, l'annonce nomme la bonne zone, et la balise est visible.
-- [ ] Apres l'ogive, le profil `neutre` tombe en surface.
+- [ ] Apres l'ogive et pendant son compte a rebours, le profil `neutre` tombe en surface.
+- [ ] Juste avant la decontamination, le profil `neutre` evite la zone legere.
+- [ ] Le butin du profil `neutre` reste atteignable : ni dans un mur, ni dans un casier ferme.
 - [ ] Une equipe reduite a un joueur : annonce, bouclier et objet, une seule fois par equipe et par round.
 
 **Lobby, vote et bilan**
@@ -400,3 +406,4 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Le champion du lobby est annonce au debut du round et recoit ses points de boutique.
 - [ ] Vote `BlindScps` : les SCP sont aveugles 5 s, puis l'effet s'arrete. Vote `HealHumans` : les humains sont soignes.
 - [ ] Le bilan nomme le premier sang, et le joueur mort le plus souvent a partir de deux morts.
+- [ ] Le bilan s'affiche bien apres une annonce de fin de mode.

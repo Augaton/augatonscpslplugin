@@ -8,7 +8,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 
 - **RandomGamemode** : Dodgeball et Randomizer nomment leur dernier debout, et le dernier mode joué n'est plus retiré.
 - **RoundMutators** : quatre mutateurs, Vampire, GlassCannon, EndlessAmmo et Regeneration.
-- **SiteIncidents** : l'incident `ElevatorOutage` bloque les ascenseurs, jamais pendant l'ogive ni la décontamination.
+- **SiteIncidents** : l'incident `ElevatorOutage` bloque les ascenseurs, jamais pendant l'ogive ni dans la dernière minute avant la décontamination.
 - **ChaosDirector** : le niveau maximal déclenche une apogée, avec un incident et un largage.
 - **Contracts** : les SCP reçoivent aussi des contrats, et un contrat rempli en amène un second, plus dur et mieux payé.
 - **ScpLevels** : les kills de SCP-049-2 comptent pour SCP-049.
@@ -21,7 +21,11 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - **TeamGenocide** : le dernier survivant d'une équipe est annoncé et reçoit un bonus.
 - **SpectatorVote** : les morts peuvent soigner les vivants ou aveugler les SCP, sans autre plugin.
 - **WarmupLobby** : le joueur qui a le plus tué dans le lobby est nommé champion.
-- **RoundRecap** : le premier sang et le joueur mort le plus souvent apparaissent au bilan.
+- **RoundRecap** : le premier sang et le joueur mort le plus souvent apparaissent au bilan, et le bilan passe avant les annonces de fin de mode.
+
+### Corrections
+
+- Un objet donné à un SCP tombe à ses pieds au lieu de disparaître dans un inventaire qu'il ne peut pas utiliser.
 
 ### À savoir pour la mise à jour
 
