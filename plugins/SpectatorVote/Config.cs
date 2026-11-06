@@ -38,7 +38,15 @@ namespace SpectatorVote
             new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "neutre", Label = "Largage neutre" },
             new IncidentOption { Kind = VoteOptionKind.Mutator, Incident = "SwiftScps", Label = "SCP acceleres" },
             new IncidentOption { Kind = VoteOptionKind.Mutator, Incident = "NightFall", Label = "Nuit noire" },
+            new IncidentOption { Kind = VoteOptionKind.Blessing, Incident = "HealHumans", Label = "Soigner les vivants" },
+            new IncidentOption { Kind = VoteOptionKind.Blessing, Incident = "BlindScps", Label = "Aveugler les SCP" },
         };
+
+        [Description("Vie rendue aux humains par le choix HealHumans.")]
+        public float BlessingHeal { get; set; } = 30f;
+
+        [Description("Duree de l'aveuglement des SCP par le choix BlindScps, en secondes, de 1 a 25.")]
+        public float BlessingBlindSeconds { get; set; } = 5f;
 
         [Description("Suspend les votes pendant un mode de jeu.")]
         public bool PauseDuringGamemodes { get; set; } = true;

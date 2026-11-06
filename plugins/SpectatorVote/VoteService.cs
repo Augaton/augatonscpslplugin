@@ -6,6 +6,7 @@ using AugatonLib.Caching;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Voting;
+using CustomPlayerEffects;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
@@ -215,7 +216,7 @@ namespace SpectatorVote
             if (option.Kind == VoteOptionKind.Mutator && mutatorRunning)
                 return false;
 
-            return PluginDirectory.IsRegistered(PluginOf(option.Kind));
+            return option.Kind == VoteOptionKind.Blessing || PluginDirectory.IsRegistered(PluginOf(option.Kind));
         }
 
         private static string PluginOf(VoteOptionKind kind)
@@ -238,6 +239,36 @@ namespace SpectatorVote
             }
         }
 
+        private bool Apply(IncidentOption option)
+        {
+            if (option.Kind == VoteOptionKind.Blessing)
+                return Bless(option.Incident);
+
+            return PluginBus.Request(TopicOf(option.Kind), Plugin.Owner, option.Incident);
+        }
+
+        private bool Bless(string name)
+        {
+            if (!Enum.TryParse(name, true, out BlessingType blessing) || !Enum.IsDefined(typeof(BlessingType), blessing))
+            {
+                Logger.Warn($"Choix de vote inconnu : {name}.");
+                return false;
+            }
+
+            // Flashed fixe sa duree sur son intensite, a raison d'un dixieme de seconde par cran.
+            byte blindness = (byte)Math.Round(Config.BlessingBlindSeconds * 10f);
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (blessing == BlessingType.HealHumans && player.IsHuman && !player.IsTutorial)
+                    player.Heal(Config.BlessingHeal);
+                else if (blessing == BlessingType.BlindScps && player.IsSCP)
+                    player.EnableEffect<Flashed>(blindness);
+            }
+
+            return true;
+        }
+
         private void Close()
         {
             closingScheduled = false;
@@ -252,7 +283,7 @@ namespace SpectatorVote
                 if (winner is null || (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses))
                     return;
 
-                bool accepted = IsAvailable(winner) && PluginBus.Request(TopicOf(winner.Kind), Plugin.Owner, winner.Incident);
+                bool accepted = IsAvailable(winner) && Apply(winner);
                 string result = accepted ? Text.VoteResult : Text.VoteRefused;
 
                 plugin.Hints.ShowAll(result.Replace("%LABEL%", winner.Label), Config.HintDuration);

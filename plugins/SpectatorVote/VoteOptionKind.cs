@@ -5,5 +5,6 @@ namespace SpectatorVote
         Incident,
         SupplyDrop,
         Mutator,
+        Blessing,
     }
 }

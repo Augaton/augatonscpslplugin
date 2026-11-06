@@ -55,6 +55,8 @@ namespace SpectatorVote
 
         protected override void ValidateConfig()
         {
+            Config.BlessingHeal = AtLeast("blessing_heal", Config.BlessingHeal, 0f);
+            Config.BlessingBlindSeconds = System.Math.Min(25f, AtLeast("blessing_blind_seconds", Config.BlessingBlindSeconds, 1f));
             Config.FirstVoteSeconds = AtLeast("first_vote_seconds", Config.FirstVoteSeconds, 0f);
             Config.VoteDurationSeconds = AtLeast("vote_duration_seconds", Config.VoteDurationSeconds, 10f);
             Config.VoteIntervalSeconds = AtLeast("vote_interval_seconds", Config.VoteIntervalSeconds, Config.VoteDurationSeconds + 30f);
