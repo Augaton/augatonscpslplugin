@@ -185,6 +185,7 @@ Commencer par `chaos collection check` pendant un round : chaque `[ECHEC]` signa
 - [ ] La souris apparait, la flaque de tantrum est visible et tache.
 - [ ] Les annonces CASSIE gardent leurs sous-titres, les grenades respectent leur fuse.
 - [ ] `labapi reload configs` applique les nouveaux poids et durees des effets.
+- [ ] Apres l'ogive, aucune piece ni pilule ne teleporte un survivant dans le complexe.
 - [ ] Des pieces reapparaissent pendant le round, jamais pres d'un joueur, et leur nombre monte.
 - [ ] Lancer, lacher : la piece ramassee par un autre disparait de son inventaire, et il ne peut pas la relancer avant.
 - [ ] La taille donnee par une piece disparait au changement de role.

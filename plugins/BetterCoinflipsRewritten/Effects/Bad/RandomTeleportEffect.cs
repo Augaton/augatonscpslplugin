@@ -37,6 +37,7 @@ namespace BetterCoinflipsRewritten.Effects.Bad
             return player is not null &&
                    !player.IsDestroyed &&
                    player.IsAlive &&
+                   !Warhead.IsDetonated &&
                    RoomCache.Count > 0;
         }
 

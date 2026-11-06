@@ -34,11 +34,15 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - SCP-261 pouvait consommer une pièce sans rien donner.
 - Le bulletin d'un joueur parti comptait encore au vote.
 - L'échange de position d'une pièce pouvait viser le rôle Tutorial.
+- Après l'ogive, une pièce ou une pilule pouvait renvoyer un survivant dans le complexe détruit, sans sortie.
+- `collection check` prenait les bruitages de C.A.S.S.I.E pour des mots inconnus.
 
 ### Sécurité
 
 - Les cooldowns des actions de joueurs ne peuvent plus être mis à zéro par la config.
 - Les messages de refus d'une pièce ou d'une pilule sont limités à un par seconde.
+- La CI n'a plus que le droit de lecture sur le dépôt et vérifie l'empreinte de gitleaks.
+- Un test et le `.gitignore` empêchent de publier une adresse de webhook.
 
 ### Performance
 
