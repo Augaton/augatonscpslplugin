@@ -201,7 +201,7 @@ namespace AugatonLib.Arbitration
 
         private static Vector3 Sanitize(Vector3 scale)
         {
-            if (scale.x <= 0f || scale.y <= 0f || scale.z <= 0f)
+            if (!(scale.x > 0f && scale.y > 0f && scale.z > 0f))
                 return Vector3.one;
 
             return scale;

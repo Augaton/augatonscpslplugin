@@ -150,7 +150,7 @@ namespace RandomGamemode
                 Config.Gamemodes = new Config().Gamemodes;
             }
 
-            if (Config.BlackoutDuration < 5f)
+            if (!(Config.BlackoutDuration >= 5f))
             {
                 Logger.Warn($"BlackoutDuration ({Config.BlackoutDuration}) trop bas, remis a 60.");
                 Config.BlackoutDuration = 60f;
@@ -199,7 +199,7 @@ namespace RandomGamemode
             Config.HotPotatoFuseSeconds = AtLeast("hot_potato_fuse_seconds", Config.HotPotatoFuseSeconds, 5f);
             Config.HotPotatoPauseSeconds = AtLeast("hot_potato_pause_seconds", Config.HotPotatoPauseSeconds, 1f);
 
-            if (Config.JuggernautHealth < 1f)
+            if (!(Config.JuggernautHealth >= 1f))
             {
                 Logger.Warn($"JuggernautHealth ({Config.JuggernautHealth}) trop bas, remis a 2500.");
                 Config.JuggernautHealth = 2500f;

@@ -67,13 +67,13 @@ namespace RealisticSizes
 
         protected override void ValidateConfig()
         {
-            if (Config.ApplyDelay < 0f)
+            if (!(Config.ApplyDelay >= 0f))
             {
                 Logger.Warn($"ApplyDelay ({Config.ApplyDelay}) negatif, remis a 0.4.");
                 Config.ApplyDelay = 0.4f;
             }
 
-            if (Config.SpreadStep < 0f)
+            if (!(Config.SpreadStep >= 0f))
             {
                 Logger.Warn($"SpreadStep ({Config.SpreadStep}) negatif, remis a 0.");
                 Config.SpreadStep = 0f;
@@ -114,20 +114,20 @@ namespace RealisticSizes
             if (range is null)
                 return;
 
-            if (range.MinHeight <= 0f || range.MinWidth <= 0f)
+            if (!(range.MinHeight > 0f && range.MinWidth > 0f))
             {
-                Logger.Warn($"{name} contient une valeur minimale nulle ou negative, remise a 0.5.");
-                range.MinHeight = Math.Max(0.5f, range.MinHeight);
-                range.MinWidth = Math.Max(0.5f, range.MinWidth);
+                Logger.Warn($"{name} contient une valeur minimale invalide, remise a 0.5.");
+                range.MinHeight = range.MinHeight >= 0.5f ? range.MinHeight : 0.5f;
+                range.MinWidth = range.MinWidth >= 0.5f ? range.MinWidth : 0.5f;
             }
 
-            if (range.MaxHeight < range.MinHeight)
+            if (!(range.MaxHeight >= range.MinHeight))
             {
                 Logger.Warn($"{name} : MaxHeight inferieur a MinHeight, aligne sur MinHeight.");
                 range.MaxHeight = range.MinHeight;
             }
 
-            if (range.MaxWidth < range.MinWidth)
+            if (!(range.MaxWidth >= range.MinWidth))
             {
                 Logger.Warn($"{name} : MaxWidth inferieur a MinWidth, aligne sur MinWidth.");
                 range.MaxWidth = range.MinWidth;

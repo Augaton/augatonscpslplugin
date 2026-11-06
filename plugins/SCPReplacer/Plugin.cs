@@ -77,19 +77,19 @@ namespace SCPReplacer
 
         protected override void ValidateConfig()
         {
-            if (Config.RequiredHealthPercentage < 0f || Config.RequiredHealthPercentage > 100f)
+            if (!(Config.RequiredHealthPercentage >= 0f && Config.RequiredHealthPercentage <= 100f))
             {
                 Logger.Warn($"RequiredHealthPercentage ({Config.RequiredHealthPercentage}) hors bornes, remis a 95.");
                 Config.RequiredHealthPercentage = 95f;
             }
 
-            if (Config.LotteryPeriodSeconds <= 0f)
+            if (!(Config.LotteryPeriodSeconds > 0f))
             {
                 Logger.Warn($"LotteryPeriodSeconds ({Config.LotteryPeriodSeconds}) invalide, remis a 10.");
                 Config.LotteryPeriodSeconds = 10f;
             }
 
-            if (Config.ReplaceCutoff < Config.QuitCutoff)
+            if (!(Config.ReplaceCutoff >= Config.QuitCutoff))
             {
                 Logger.Warn($"ReplaceCutoff ({Config.ReplaceCutoff}) est inferieur a QuitCutoff ({Config.QuitCutoff}), aligne sur QuitCutoff.");
                 Config.ReplaceCutoff = Config.QuitCutoff;

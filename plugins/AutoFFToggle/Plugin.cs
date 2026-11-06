@@ -63,7 +63,7 @@ namespace AutoFFToggle
 
         protected override void ValidateConfig()
         {
-            if (Config.EnableDelay < 0f)
+            if (!(Config.EnableDelay >= 0f))
             {
                 Logger.Warn($"EnableDelay ({Config.EnableDelay}) negatif, remis a 0.");
                 Config.EnableDelay = 0f;

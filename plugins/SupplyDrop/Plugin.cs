@@ -90,13 +90,13 @@ namespace SupplyDrop
                 Config.MinPlayers = 0;
             }
 
-            if (Config.RetrySeconds < 5f)
+            if (!(Config.RetrySeconds >= 5f))
             {
                 Logger.Warn($"RetrySeconds ({Config.RetrySeconds}) trop bas, remis a 60.");
                 Config.RetrySeconds = 60f;
             }
 
-            if (Config.SchedulerTick < 0.5f)
+            if (!(Config.SchedulerTick >= 0.5f))
             {
                 Logger.Warn($"SchedulerTick ({Config.SchedulerTick}) trop bas, remis a 1.");
                 Config.SchedulerTick = 1f;
@@ -108,7 +108,7 @@ namespace SupplyDrop
                 Config.MaxItemsPerDrop = 60;
             }
 
-            if (Config.SpawnHeightOffset < 0f || Config.SpawnHeightOffset > 10f)
+            if (!(Config.SpawnHeightOffset >= 0f && Config.SpawnHeightOffset <= 10f))
             {
                 Logger.Warn($"SpawnHeightOffset ({Config.SpawnHeightOffset}) hors plage, remis a 0.5.");
                 Config.SpawnHeightOffset = 0.5f;
@@ -147,25 +147,25 @@ namespace SupplyDrop
                     continue;
                 }
 
-                if (profile.IntervalSeconds < 30f)
+                if (!(profile.IntervalSeconds >= 30f))
                 {
                     Logger.Warn($"IntervalSeconds du profil \"{profile.Key}\" ({profile.IntervalSeconds}) trop bas, remis a 30.");
                     profile.IntervalSeconds = 30f;
                 }
 
-                if (profile.FirstDropSeconds < 0f)
+                if (!(profile.FirstDropSeconds >= 0f))
                 {
                     Logger.Warn($"FirstDropSeconds du profil \"{profile.Key}\" negatif, remis a 0.");
                     profile.FirstDropSeconds = 0f;
                 }
 
-                if (profile.AnnouncementLeadSeconds < 0f)
+                if (!(profile.AnnouncementLeadSeconds >= 0f))
                 {
                     Logger.Warn($"AnnouncementLeadSeconds du profil \"{profile.Key}\" negatif, remis a 0.");
                     profile.AnnouncementLeadSeconds = 0f;
                 }
 
-                if (profile.ScatterRadius < 0f)
+                if (!(profile.ScatterRadius >= 0f))
                     profile.ScatterRadius = 0f;
             }
         }

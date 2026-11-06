@@ -86,7 +86,7 @@ namespace Replacer
         {
             Config.CommandCooldownSeconds = AtLeast("command_cooldown_seconds", Config.CommandCooldownSeconds, 1f);
 
-            if (Config.ReplacementDelay < 0f)
+            if (!(Config.ReplacementDelay >= 0f))
             {
                 Logger.Warn($"ReplacementDelay ({Config.ReplacementDelay}) est negatif, remis a 0.4.");
                 Config.ReplacementDelay = 0.4f;
@@ -98,13 +98,13 @@ namespace Replacer
                 Config.MinimumPlayers = 1;
             }
 
-            if (Config.PerPlayerCooldownSeconds < 0f)
+            if (!(Config.PerPlayerCooldownSeconds >= 0f))
             {
                 Logger.Warn($"PerPlayerCooldownSeconds ({Config.PerPlayerCooldownSeconds}) est negatif, remis a 0.");
                 Config.PerPlayerCooldownSeconds = 0f;
             }
 
-            if (Config.PendingRoleSeconds < 0f)
+            if (!(Config.PendingRoleSeconds >= 0f))
             {
                 Logger.Warn($"PendingRoleSeconds ({Config.PendingRoleSeconds}) est negatif, remis a 0.");
                 Config.PendingRoleSeconds = 0f;

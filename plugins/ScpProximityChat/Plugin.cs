@@ -72,13 +72,13 @@ namespace ScpProximityChat
             if (Config.ScpRoles.Count == 0)
                 Logger.Warn("Aucun role SCP valide dans ScpRoles, le chat de proximite ne sera jamais activable.");
 
-            if (Config.MaxVolume <= 0f)
+            if (!(Config.MaxVolume > 0f))
             {
                 Logger.Warn($"MaxVolume ({Config.MaxVolume}) invalide, remis a 25.");
                 Config.MaxVolume = 25f;
             }
 
-            if (Config.Volume <= 0f)
+            if (!(Config.Volume > 0f))
             {
                 Logger.Warn($"Volume ({Config.Volume}) invalide, remis a 1.");
                 Config.Volume = 1f;
@@ -87,13 +87,13 @@ namespace ScpProximityChat
             if (Config.Volume > Config.MaxVolume)
                 Logger.Warn($"Volume ({Config.Volume}) depasse MaxVolume ({Config.MaxVolume}), il sera borne.");
 
-            if (Config.MinDistance < 0f)
+            if (!(Config.MinDistance >= 0f))
             {
                 Logger.Warn($"MinDistance ({Config.MinDistance}) negatif, remis a 0.");
                 Config.MinDistance = 0f;
             }
 
-            if (Config.MaxDistance <= Config.MinDistance)
+            if (!(Config.MaxDistance > Config.MinDistance))
             {
                 Logger.Warn($"MaxDistance ({Config.MaxDistance}) doit etre superieur a MinDistance ({Config.MinDistance}), remis a MinDistance + 10.");
                 Config.MaxDistance = Config.MinDistance + 10f;

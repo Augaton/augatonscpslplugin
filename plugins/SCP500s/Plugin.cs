@@ -242,7 +242,7 @@ namespace SCP500s
                 Config.RandomPillKey = "chaos";
             }
 
-            if (Config.ChaosGoodWeight < 0f || Config.ChaosBadWeight < 0f || Config.ChaosNeutralWeight < 0f)
+            if (!(Config.ChaosGoodWeight >= 0f && Config.ChaosBadWeight >= 0f && Config.ChaosNeutralWeight >= 0f))
             {
                 Logger.Warn("Un poids de categorie de la pilule aleatoire est negatif, les trois sont remis a 33.");
                 Config.ChaosGoodWeight = 33f;
@@ -250,25 +250,25 @@ namespace SCP500s
                 Config.ChaosNeutralWeight = 33f;
             }
 
-            if (Config.HintDuration <= 0f)
+            if (!(Config.HintDuration > 0f))
             {
                 Logger.Warn($"HintDuration ({Config.HintDuration}) invalide, remis a 5.");
                 Config.HintDuration = 5f;
             }
 
-            if (Config.RakunScale <= 0f || Config.RakunScale > 1f)
+            if (!(Config.RakunScale > 0f && Config.RakunScale <= 1f))
             {
                 Logger.Warn($"RakunScale ({Config.RakunScale}) hors bornes, remis a 0.5.");
                 Config.RakunScale = 0.5f;
             }
 
-            if (Config.GiantScale < 1f || Config.GiantScale > 3f)
+            if (!(Config.GiantScale >= 1f && Config.GiantScale <= 3f))
             {
                 Logger.Warn($"GiantScale ({Config.GiantScale}) hors bornes, remis a 1.4.");
                 Config.GiantScale = 1.4f;
             }
 
-            if (Config.MaxEffectDuration <= 0f)
+            if (!(Config.MaxEffectDuration > 0f))
             {
                 Logger.Warn($"MaxEffectDuration ({Config.MaxEffectDuration}) invalide, remis a 300.");
                 Config.MaxEffectDuration = 300f;
@@ -286,19 +286,19 @@ namespace SCP500s
                 Config.MaxInventorySlots = 8;
             }
 
-            if (Config.PillCooldownSeconds < 0f)
+            if (!(Config.PillCooldownSeconds >= 0f))
             {
                 Logger.Warn($"PillCooldownSeconds ({Config.PillCooldownSeconds}) negatif, remis a 0.");
                 Config.PillCooldownSeconds = 0f;
             }
 
-            if (Config.SpawnDelaySeconds < 0f)
+            if (!(Config.SpawnDelaySeconds >= 0f))
             {
                 Logger.Warn($"SpawnDelaySeconds ({Config.SpawnDelaySeconds}) negatif, remis a 0.");
                 Config.SpawnDelaySeconds = 0f;
             }
 
-            if (Config.HintYCoordinate < 0f || Config.HintYCoordinate > 1080f)
+            if (!(Config.HintYCoordinate >= 0f && Config.HintYCoordinate <= 1080f))
             {
                 Logger.Warn($"HintYCoordinate ({Config.HintYCoordinate}) hors de l'ecran, remis a 700.");
                 Config.HintYCoordinate = 700f;
@@ -310,7 +310,7 @@ namespace SCP500s
                 Config.HintFontSize = 20;
             }
 
-            if (Config.ContinuousSpawnIntervalSeconds < 30f)
+            if (!(Config.ContinuousSpawnIntervalSeconds >= 30f))
             {
                 Logger.Warn($"ContinuousSpawnIntervalSeconds ({Config.ContinuousSpawnIntervalSeconds}) trop bas, remis a 30.");
                 Config.ContinuousSpawnIntervalSeconds = 30f;
@@ -332,13 +332,13 @@ namespace SCP500s
                 Config.ContinuousSpawnBatch = 1;
             }
 
-            if (Config.ContinuousSpawnPlayerDistance < 0f)
+            if (!(Config.ContinuousSpawnPlayerDistance >= 0f))
             {
                 Logger.Warn($"ContinuousSpawnPlayerDistance ({Config.ContinuousSpawnPlayerDistance}) negatif, remis a 0.");
                 Config.ContinuousSpawnPlayerDistance = 0f;
             }
 
-            if (Config.ContinuousSpawnSpacing < 0f)
+            if (!(Config.ContinuousSpawnSpacing >= 0f))
             {
                 Logger.Warn($"ContinuousSpawnSpacing ({Config.ContinuousSpawnSpacing}) negatif, remis a 0.");
                 Config.ContinuousSpawnSpacing = 0f;
@@ -350,7 +350,7 @@ namespace SCP500s
                 Config.RadarMaxEntries = 1;
             }
 
-            if (Config.ContagionRadius <= 0f)
+            if (!(Config.ContagionRadius > 0f))
             {
                 Logger.Warn($"ContagionRadius ({Config.ContagionRadius}) invalide, remis a 12.");
                 Config.ContagionRadius = 12f;

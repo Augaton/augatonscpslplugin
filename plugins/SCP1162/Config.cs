@@ -255,7 +255,7 @@ namespace SCP1162
             if (value >= min && value <= max)
                 return value;
 
-            float clamped = Mathf.Clamp(value, min, max);
+            float clamped = float.IsNaN(value) ? min : Mathf.Clamp(value, min, max);
             Logger.Warn($"SCP1162: {name} = {value} hors bornes [{min}, {max}], ramene a {clamped}.");
 
             return clamped;

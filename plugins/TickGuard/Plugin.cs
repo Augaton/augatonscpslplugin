@@ -46,7 +46,7 @@ namespace TickGuard
             Config.CheckSeconds = AtLeast("check_seconds", Config.CheckSeconds, 1f);
             Config.ChecksBeforeAlert = (int)AtLeast("checks_before_alert", Config.ChecksBeforeAlert, 1f);
 
-            if (Config.RecoveryTps <= Config.MinTps)
+            if (!(Config.RecoveryTps > Config.MinTps))
             {
                 Logger.Warn("recovery_tps doit depasser min_tps : valeur alignee.");
                 Config.RecoveryTps = Config.MinTps + 5f;

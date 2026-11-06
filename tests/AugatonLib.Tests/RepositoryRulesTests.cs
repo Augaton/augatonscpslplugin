@@ -170,6 +170,22 @@ namespace AugatonLib.Tests
         }
 
         // Un effet part quand le joueur lance la piece : il tient donc toujours la piece elle-meme.
+        // NaN echappe a tout test "x < min" : seul un test ecrit dans l'autre sens l'ecarte, comme AtLeast.
+        [Fact]
+        public void ConfigBoundsAlsoRejectNaN()
+        {
+            Regex weakBound = new Regex(@"if \((Config|profile|range)\.\w+ <=? [\w.]*[\d.]+f");
+
+            List<string> offenders = PluginFolders()
+                .Select(folder => Path.Combine(folder, "Plugin.cs"))
+                .Where(File.Exists)
+                .Where(file => weakBound.IsMatch(File.ReadAllText(file)))
+                .Select(file => Path.GetFileName(Path.GetDirectoryName(file)))
+                .ToList();
+
+            Assert.Empty(offenders);
+        }
+
         [Fact]
         public void EveryBusTopicIsPublishedAndHeard()
         {

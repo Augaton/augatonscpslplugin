@@ -83,7 +83,7 @@ namespace TeamGenocide
         {
             Config.LastSurvivorTeams ??= new List<Team>();
 
-            if (Config.ActivationDelay < 0f)
+            if (!(Config.ActivationDelay >= 0f))
             {
                 Logger.Warn($"ActivationDelay ({Config.ActivationDelay}) negatif, remis a 0.");
                 Config.ActivationDelay = 0f;
