@@ -10,6 +10,9 @@ namespace RoundRecap
         [Description("Ligne du mode de jeu du round. %MODE% est son nom.")]
         public string Gamemode { get; set; } = "Mode : %MODE%";
 
+        [Description("Ligne du mutateur de round. %MODE% est son nom.")]
+        public string Mutator { get; set; } = "Mutateur : %MODE%";
+
         [Description("Meilleur tueur. %PLAYER% est son pseudo, %COUNT% son total. Vide = masque.")]
         public string BestKiller { get; set; } = "Meilleur tueur : %PLAYER% (%COUNT%)";
 

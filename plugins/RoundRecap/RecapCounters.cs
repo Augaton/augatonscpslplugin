@@ -16,6 +16,7 @@ namespace RoundRecap
         private int vendings;
         private int exchanges;
         private string gamemode;
+        private string mutator;
 
         public void Subscribe(string owner)
         {
@@ -28,6 +29,7 @@ namespace RoundRecap
             PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => vendings++);
             PluginBus.Subscribe(owner, BusTopics.ItemExchanged, _ => exchanges++);
             PluginBus.Subscribe(owner, BusTopics.GamemodeStarted, OnGamemodeStarted);
+            PluginBus.Subscribe(owner, BusTopics.RoundMutatorStarted, OnMutatorStarted);
         }
 
         public void Reset()
@@ -41,6 +43,7 @@ namespace RoundRecap
             vendings = 0;
             exchanges = 0;
             gamemode = null;
+            mutator = null;
         }
 
         public string Describe(Translation text, List<string> heroes)
@@ -49,6 +52,9 @@ namespace RoundRecap
 
             if (!string.IsNullOrEmpty(gamemode) && !string.IsNullOrEmpty(text.Gamemode))
                 lines.Add(text.Gamemode.Replace("%MODE%", gamemode));
+
+            if (!string.IsNullOrEmpty(mutator) && !string.IsNullOrEmpty(text.Mutator))
+                lines.Add(text.Mutator.Replace("%MODE%", mutator));
 
             Add(lines, text.Deaths, Round.TotalDeaths);
             Add(lines, text.Escapes, Round.EscapedClassD + Round.EscapedScientists);
@@ -79,6 +85,12 @@ namespace RoundRecap
         {
             if (message.TryGet(out string name))
                 gamemode = name;
+        }
+
+        private void OnMutatorStarted(BusMessage message)
+        {
+            if (message.TryGet(out string name))
+                mutator = name;
         }
 
         private static void Add(List<string> lines, string template, int count)
