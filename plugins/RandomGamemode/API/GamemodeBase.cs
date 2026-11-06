@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AugatonLib.Arbitration;
 using AugatonLib.Integrations;
 using AugatonLib.Spawning;
+using AugatonLib.Text;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Wrappers;
@@ -117,8 +118,28 @@ namespace RandomGamemode.API
         // ce qui ferait passer le round pour termine aupres de tous les plugins.
         public virtual void OnEndingRound(RoundEndingConditionsCheckEventArgs ev)
         {
-            if (ev is not null && (KeepRoundOpen || (PlaysToLastStanding && CountAlive() > 1)))
+            if (ev is null)
+                return;
+
+            if (KeepRoundOpen || (PlaysToLastStanding && CountAlive() > 1))
                 ev.CanEnd = false;
+            else if (PlaysToLastStanding && ev.CanEnd)
+                NameLastStanding();
+        }
+
+        // Le jeu termine seul un round a un survivant : aucun mode ne le nomme, et il peut deja avoir un vainqueur.
+        private static void NameLastStanding()
+        {
+            foreach (Player player in Player.ReadyList)
+            {
+                if (player is null || !player.IsAlive)
+                    continue;
+
+                if (Plugin.Instance.Registry.DeclareWinner(player))
+                    Announce(Text.LastStandingWinner.Replace("%PLAYER%", SafeText.Nickname(player)));
+
+                return;
+            }
         }
 
         protected void ConvertScpsToHumans()

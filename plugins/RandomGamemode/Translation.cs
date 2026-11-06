@@ -34,6 +34,9 @@ namespace RandomGamemode
         [Description("Broadcast a la mort du Juggernaut. %PLAYER% est remplace par son pseudo.")]
         public string JuggernautDefeated { get; set; } = "<size=30><color=green>Le Juggernaut %PLAYER% est tombe.</color></size>";
 
+        [Description("Dernier joueur en vie d'un mode comme Dodgeball ou Randomizer. %PLAYER% est son pseudo.")]
+        public string LastStandingWinner { get; set; } = "<size=30><color=green>%PLAYER% est le dernier debout.</color></size>";
+
         [Description("Broadcast du vainqueur du Gun Game. %PLAYER% est remplace par son pseudo.")]
         public string GunGameWinner { get; set; } = "<size=35><color=yellow>%PLAYER% a termine le Gun Game.</color></size>";
 

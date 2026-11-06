@@ -34,6 +34,8 @@ namespace RandomGamemode.API
 
         private readonly CooldownTracker voteReminders = new CooldownTracker();
 
+        private bool winnerDeclared;
+
         public GamemodeRegistry(Plugin plugin) => this.plugin = plugin;
 
         private Config Config => plugin.Config;
@@ -172,7 +174,15 @@ namespace RandomGamemode.API
 
         public void ForgetVoteReminder(string userId) => voteReminders.Remove(userId);
 
-        public void DeclareWinner(Player winner) => PluginBus.Publish(BusTopics.GamemodeWon, Owner, winner);
+        public bool DeclareWinner(Player winner)
+        {
+            if (winner is null || winnerDeclared)
+                return false;
+
+            winnerDeclared = true;
+            PluginBus.Publish(BusTopics.GamemodeWon, Owner, winner);
+            return true;
+        }
 
         public void ShowVote(Player player)
         {
@@ -236,6 +246,7 @@ namespace RandomGamemode.API
                 return;
 
             Active = gamemode;
+            winnerDeclared = false;
 
             // Avant la premiere etape du mode, qui part des RunCoroutine et change souvent les roles :
             // GamemodeStarted arriverait trop tard pour un plugin qui reagit a ces changements.
