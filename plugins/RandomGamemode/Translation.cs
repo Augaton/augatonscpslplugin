@@ -61,6 +61,12 @@ namespace RandomGamemode
         [Description("Cache-cache : les survivants ont tenu.")]
         public string HideAndSeekSurvived { get; set; } = "<size=30><color=green>Les survivants ont tenu jusqu'au bout.</color></size>";
 
+        [Description("Patate chaude : nouveau porteur de la bombe. %PLAYER% est son pseudo.")]
+        public string HotPotatoCarrier { get; set; } = "<size=30><color=orange>%PLAYER% a la bombe !</color></size>";
+
+        [Description("Patate chaude : le dernier survivant. %PLAYER% est son pseudo.")]
+        public string HotPotatoWinner { get; set; } = "<size=30><color=green>%PLAYER% remporte la partie.</color></size>";
+
         [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }

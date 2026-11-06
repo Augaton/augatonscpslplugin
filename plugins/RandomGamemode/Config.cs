@@ -96,6 +96,15 @@ namespace RandomGamemode
         [Description("Evacuation : secondes avant le depart de l'ogive.")]
         public float EvacuationDelaySeconds { get; set; } = 60f;
 
+        [Description("Patate chaude : secondes avant l'explosion de la bombe.")]
+        public float HotPotatoFuseSeconds { get; set; } = 25f;
+
+        [Description("Patate chaude : pause entre deux bombes, en secondes.")]
+        public float HotPotatoPauseSeconds { get; set; } = 5f;
+
+        [Description("Patate chaude : bonus de vitesse du porteur, de 0 a 255.")]
+        public byte HotPotatoSpeedBoost { get; set; } = 25;
+
         [Description("Vie du joueur Juggernaut.")]
         public float JuggernautHealth { get; set; } = 2500f;
 
@@ -297,6 +306,14 @@ namespace RandomGamemode
                 MinPlayers = 6,
                 Description = "L'ogive va partir, et rien ne l'arretera. Rejoignez la surface.",
                 PauseRespawnWaves = true,
+            },
+            ["hotpotato"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 4,
+                Description = "Une bombe circule : tirez sur quelqu'un pour la lui passer. Le dernier survivant gagne.",
+                PauseRespawnWaves = true,
+                ForceFriendlyFire = true,
             },
             ["gungame"] = new GamemodeSettings
             {

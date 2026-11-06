@@ -34,6 +34,7 @@ Modes de jeu speciaux tires au hasard au debut d'un round.
 | `blackout` | Panne generale | Obscurite permanente, lampes distribuees |
 | `gungame` | Gun Game | Chaque elimination ameliore votre arme |
 | `hideandseek` | Cache-cache | Les Classe-D se cachent, puis un chasseur les traque jusqu'a la fin du temps |
+| `hotpotato` | Patate chaude | Chacun son arme, et une balle passe la bombe a la cible. Quand elle explose, son porteur meurt. |
 | `evacuation` | Evacuation generale | L'ogive part au bout d'une minute, verrouillee : il faut rejoindre la surface |
 
 `pillparty` et `coinroyale` s'appuient sur SCP500s et BetterCoinflips s'ils sont
