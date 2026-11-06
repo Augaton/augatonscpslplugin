@@ -36,7 +36,7 @@ Trente et un plugins et une bibliothèque partagée pour **SCP: Secret Laborator
 
 | Plugin | Version | Rôle |
 |---|---|---|
-| [AugatonLib](AugatonLib) | 2.3.0 | Bibliothèque partagée, **obligatoire** |
+| [AugatonLib](AugatonLib) | 2.4.0 | Bibliothèque partagée, **obligatoire** |
 | [AmbientCassie](plugins/AmbientCassie) | 1.0.0 | Annonces d'ambiance de C.A.S.S.I.E pendant le round |
 | [AntiSLCrush](plugins/AntiSLCrush) | 4.0.0 | Protège le serveur contre des bugs du jeu. **Licence non commerciale** |
 | [ArcadeShop](plugins/ArcadeShop) | 1.0.0 | Des points gagnés pendant le round, à dépenser dans une boutique |
