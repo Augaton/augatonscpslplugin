@@ -32,6 +32,9 @@ namespace WarmupLobby
             PlayerEvents.SearchingPickup += Service.OnSearchingPickup;
             PlayerEvents.InteractingDoor += Service.OnInteractingDoor;
             PlayerEvents.InteractingElevator += Service.OnInteractingElevator;
+            PlayerEvents.InteractingLocker += Service.OnInteractingLocker;
+            PlayerEvents.Cuffing += Service.OnCuffing;
+            ObjectiveEvents.Completing += Service.OnObjectiveCompleting;
 
             SelfCheck.Register(Name, "point d'apparition de l'arene", Service.CheckArena);
 
@@ -50,6 +53,9 @@ namespace WarmupLobby
             PlayerEvents.SearchingPickup -= Service.OnSearchingPickup;
             PlayerEvents.InteractingDoor -= Service.OnInteractingDoor;
             PlayerEvents.InteractingElevator -= Service.OnInteractingElevator;
+            PlayerEvents.InteractingLocker -= Service.OnInteractingLocker;
+            PlayerEvents.Cuffing -= Service.OnCuffing;
+            ObjectiveEvents.Completing -= Service.OnObjectiveCompleting;
 
             Service.Stop();
             PluginDirectory.Unregister(this);

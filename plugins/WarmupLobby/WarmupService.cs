@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using AugatonLib.Spawning;
 using LabApi.Events.Arguments.Interfaces;
+using LabApi.Events.Arguments.ObjectiveEvents;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Wrappers;
 using MEC;
@@ -95,6 +96,15 @@ namespace WarmupLobby
 
         public void OnInteractingElevator(PlayerInteractingElevatorEventArgs ev) => Deny(ev);
 
+        public void OnInteractingLocker(PlayerInteractingLockerEventArgs ev) => Deny(ev);
+
+        // Un joueur menotte lache tout sans passer par DroppingItem : ses objets resteraient au vrai round.
+        public void OnCuffing(PlayerCuffingEventArgs ev) => Deny(ev);
+
+        // Le jeu paie les objectifs sans regarder si le round a commence : chaque kill avancerait la vague
+        // du camp et lui donnerait de l'influence pour le vrai round.
+        public void OnObjectiveCompleting(ObjectiveCompletingBaseEventArgs ev) => Deny(ev);
+
         private void Deny(ICancellableEvent ev)
         {
             if (IsRunning && ev is not null)
@@ -177,7 +187,7 @@ namespace WarmupLobby
             }
             catch (Exception e)
             {
-                Logger.Error($"Finish ({player.Nickname}): {e}");
+                Logger.Error($"Finish ({player.UserId}): {e}");
             }
         }
 

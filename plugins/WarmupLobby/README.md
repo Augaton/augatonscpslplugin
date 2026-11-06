@@ -7,12 +7,16 @@ Au lancement, chacun repasse spectateur juste avant que le jeu attribue les role
 sans trace de l'echauffement. Les corps sont retires et le compteur de morts repart de zero.
 
 L'echauffement ne touche pas a la carte : pendant ce temps, les joueurs ne peuvent ni lacher ou lancer d'objet, ni
-ramasser, ni utiliser une porte ou un ascenseur. Un mort ne laisse rien au sol.
+ramasser, ni menotter, ni utiliser une porte, un casier ou un ascenseur. Un mort ne laisse rien au sol. Ses kills ne
+rapportent ni influence ni temps de vague au vrai round.
 
 ## Reglage du serveur
 
 La duree du lobby vient du jeu : `lobby_waiting_time` dans `config_gameplay.txt`, 20 secondes par defaut. Augmentez-la
 si l'echauffement vous semble trop court. L'echauffement ne prolonge pas le lobby.
+
+Gardez-la sous `afk_time`, 90 secondes par defaut : le jeu expulse aussi pendant le lobby un joueur vivant qui ne bouge
+pas.
 
 ## Configuration
 

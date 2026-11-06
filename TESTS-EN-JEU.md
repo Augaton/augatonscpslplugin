@@ -103,7 +103,8 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Un mort revient en quelques secondes, dans le camp le moins nombreux.
 - [ ] Au lancement, **tout le monde recoit un role normal du round**, SCP compris, et personne ne reste spectateur ni dans son role d'echauffement.
 - [ ] L'inventaire de l'echauffement ne survit pas, les corps ont disparu, et le bilan de fin de round ne compte pas ses morts.
-- [ ] Pendant l'echauffement : portes, ascenseurs, ramassage et lacher d'objets sont refuses, et un mort ne laisse rien au sol.
+- [ ] Pendant l'echauffement : portes, casiers, ascenseurs, menottes, ramassage et lacher d'objets sont refuses, et un mort ne laisse rien au sol.
+- [ ] Apres plusieurs kills pendant l'echauffement, aucun bandeau d'objectif n'apparait, et la premiere vague arrive a l'heure habituelle.
 - [ ] `first_role` egal a `second_role` : avertissement au chargement et valeurs par defaut remises.
 - [ ] `collection check` valide le point d'apparition de l'arene.
 
