@@ -1,3 +1,6 @@
+using MapGeneration;
+using BetterCoinflipsRewritten.Effects.Bad;
+using System.Linq;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
 using LabApi.Events.Handlers;
@@ -8,6 +11,14 @@ namespace BetterCoinflipsRewritten
 {
     public sealed class Plugin : AugatonPlugin<Config, Translation>
     {
+        private static readonly FacilityZone[] FalseAlarmZones =
+        {
+            FacilityZone.LightContainment,
+            FacilityZone.HeavyContainment,
+            FacilityZone.Entrance,
+            FacilityZone.Surface,
+        };
+
         public override string Name => "BetterCoinflipsRewritten";
 
         public override string Description => "Pile ou face : la piece declenche un effet benefique ou nefaste.";
@@ -64,7 +75,8 @@ namespace BetterCoinflipsRewritten
 
         private string CheckCassieWords()
         {
-            string unknown = CassieLines.FindUnknownWord(Config.CassieMockLines);
+            string unknown = CassieLines.FindUnknownWord(Config.CassieMockLines)
+                ?? CassieLines.FindUnknownWord(FalseAlarmZones.Select(FalseAlarmEffect.CassieLine));
 
             return unknown is null ? null : $"mot inconnu : {unknown}";
         }

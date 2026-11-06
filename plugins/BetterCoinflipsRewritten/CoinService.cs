@@ -164,6 +164,11 @@ namespace BetterCoinflipsRewritten
 
             badEffects.Add(
                 new WeightedEffect(
+                    new FalseAlarmEffect(),
+                    plugin.Config.FalseAlarmChance));
+
+            badEffects.Add(
+                new WeightedEffect(
                     new OneHpLeftEffect(),
                     plugin.Config.OneHpLeftChance));
 

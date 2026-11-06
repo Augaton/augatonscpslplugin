@@ -70,7 +70,8 @@ sinon un tirage sur trois ne ferait rien onze mois par an.
 
 Carte d'acces, medkit, teleportation a l'evasion, soin, vie maximale, SCP-268,
 Logicer a une balle, SCP-2176, bonbon rose, changement de taille, bouclier
-temporaire, fantome, montee d'adrenaline, piece dedoublee.
+temporaire, fantome, montee d'adrenaline, piece dedoublee, seconde chance, jackpot,
+chargeur plein, soin de groupe, detecteur de SCP.
 
 ### Pile
 
@@ -79,7 +80,10 @@ inventaire vide, grenade instantanee, teleportation aleatoire, ivresse, trip
 arc-en-ciel, amnesie, projection en l'air, echange de position avec un autre
 joueur, fausse detonation d'ogive, tantrum SCP-173, petrification, lumieres en
 mode discotheque, invasion de souris, annonce C.A.S.S.I.E. moqueuse, fausse
-explosion.
+explosion, desarmement, position revelee aux SCP, fausse alerte C.A.S.S.I.E.
+
+Un effet qui n'a pas de sens sur le moment n'est pas tire : pas de chargeur plein sans arme entamee, pas de
+detecteur sans SCP. La seconde chance ne vaut que pour le role en cours.
 
 `disco_lights`, `mice_invasion` et `cassie_mock` touchent tout le serveur : ils
 passent par `facility_effect_cooldown`, comme `lights_out`.

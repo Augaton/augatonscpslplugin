@@ -279,6 +279,9 @@ namespace BetterCoinflipsRewritten
         [Description("Duree pendant laquelle les SCP suivent le joueur repere, en secondes.")]
         public float SpottedDuration { get; set; } = 20f;
 
+        [Description("Poids de l'effet fausse alerte. Il touche tout le site et passe donc par facility_effect_cooldown.")]
+        public int FalseAlarmChance { get; set; } = 5;
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 

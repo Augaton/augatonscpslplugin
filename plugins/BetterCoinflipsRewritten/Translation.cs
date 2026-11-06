@@ -268,6 +268,14 @@ namespace BetterCoinflipsRewritten
         public string SpottedScpHint { get; set; } =
             "<color=red>Proie reperee : {player} a {distance} m</color>";
 
+        [Description("Message de l'effet fausse alerte, pour le lanceur.")]
+        public string FalseAlarmEffectMessage { get; set; } =
+            "C.A.S.S.I.E. vient de sonner une fausse alerte.";
+
+        [Description("Sous-titres de la fausse alerte.")]
+        public string FalseAlarmSubtitles { get; set; } =
+            "Attention. SCP detecte dans cette zone.";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";
