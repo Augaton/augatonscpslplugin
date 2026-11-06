@@ -1,3 +1,4 @@
+using MapGeneration;
 using System.Collections.Generic;
 using PlayerRoles;
 
@@ -69,6 +70,40 @@ namespace SupplyDrop.API
                         new DropItem { Item = ItemType.Adrenaline, Quantity = 1, Chance = 100 },
                         new DropItem { Item = ItemType.Coin, Quantity = 2, Chance = 100 },
                         new DropItem { Item = ItemType.KeycardO5, Quantity = 1, Chance = 10 },
+                    },
+                },
+                new DropProfile
+                {
+                    Key = "neutre",
+                    DisplayName = "Largage neutre",
+                    Broadcast = "<size=35><i><color=#FFD700>Un largage</color> tombe : %ZONE%. Premier arrive, premier servi.</i></size>",
+                    BroadcastDuration = 10,
+                    CassieAnnouncement = "attention . supply drop incoming",
+                    CassieSubtitles = "Largage de ravitaillement en approche : %ZONE%",
+                    FirstDropSeconds = 420f,
+                    IntervalSeconds = 480f,
+                    AnnouncementLeadSeconds = 20f,
+                    MaxDropsPerRound = 3,
+                    FallbackRole = RoleTypeId.NtfPrivate,
+                    Zones = new List<FacilityZone>
+                    {
+                        FacilityZone.LightContainment,
+                        FacilityZone.HeavyContainment,
+                        FacilityZone.Entrance,
+                    },
+                    ScatterRadius = 1.5f,
+                    EnableBeacon = true,
+                    BeaconColor = "#FFD700",
+                    BeaconDuration = 60f,
+                    Items = new List<DropItem>
+                    {
+                        new DropItem { Item = ItemType.GunCrossvec, Quantity = 1, Chance = 100 },
+                        new DropItem { Item = ItemType.Ammo9x19, Quantity = 2, Chance = 100 },
+                        new DropItem { Item = ItemType.Medkit, Quantity = 2, Chance = 100 },
+                        new DropItem { Item = ItemType.GrenadeHE, Quantity = 1, Chance = 50 },
+                        new DropItem { Item = ItemType.ArmorCombat, Quantity = 1, Chance = 50 },
+                        new DropItem { Item = ItemType.Coin, Quantity = 2, Chance = 100 },
+                        new DropItem { Item = ItemType.KeycardMTFOperative, Quantity = 1, Chance = 25 },
                     },
                 },
             };

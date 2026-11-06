@@ -202,7 +202,7 @@ namespace SCP500s
         public List<string> PillIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "GasLeak", "TeslaSurge", "ElevatorOutage" };
 
         [Description("Profils de SupplyDrop que la pilule de largage peut appeler.")]
-        public List<string> PillDropProfiles { get; set; } = new List<string> { "mtf", "chaos" };
+        public List<string> PillDropProfiles { get; set; } = new List<string> { "mtf", "chaos", "neutre" };
 
         [Description("Secondes minimales entre deux incidents ou largages demandes par des pilules, tous joueurs confondus, 1 au plus bas.")]
         public float SiteRequestCooldownSeconds { get; set; } = 60f;

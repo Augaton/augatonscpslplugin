@@ -6,6 +6,7 @@ using AugatonLib.Chaos;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Spawning;
+using AugatonLib.World;
 using Cassie;
 using CustomPlayerEffects;
 using InventorySystem;
@@ -26,6 +27,7 @@ namespace SupplyDrop.API
         private const float TrapTickSeconds = 0.5f;
 
         private readonly Plugin plugin;
+        private readonly LootSpots spots = new LootSpots();
         private readonly Dictionary<string, DropState> states = new Dictionary<string, DropState>();
         private readonly List<CoroutineHandle> pending = new List<CoroutineHandle>(8);
         private readonly List<LightSourceToy> beacons = new List<LightSourceToy>(4);
@@ -103,6 +105,7 @@ namespace SupplyDrop.API
         public void Stop()
         {
             activeMutator = null;
+            spots.Clear();
             generatorsActivated = 0;
             wipedTeams.Clear();
             if (running)
@@ -138,13 +141,18 @@ namespace SupplyDrop.API
             if (profile is null)
                 return;
 
+            string zone = string.Empty;
+
+            if (forcedPosition is null && profile.Zones?.Count > 0)
+                forcedPosition = PickZoneSpot(profile, out zone);
+
             if (!announce)
             {
                 Deliver(profile, forcedPosition);
                 return;
             }
 
-            Announce(profile);
+            Announce(profile, zone);
 
             if (profile.AnnouncementLeadSeconds <= 0f)
             {
@@ -204,12 +212,44 @@ namespace SupplyDrop.API
             }
         }
 
-        private static void Announce(DropProfile profile)
+        // Choisie des l'annonce : les joueurs doivent savoir ou courir. Sans salle sure, apres l'ogive par exemple,
+        // le largage retombe sur son point en surface.
+        private Vector3? PickZoneSpot(DropProfile profile, out string zoneName)
+        {
+            if (spots.Count == 0)
+                spots.Collect();
+
+            bool IsCrowded(Vector3 position) => LootSpots.IsNearLivingPlayer(position, Config.ZoneDropClearance);
+
+            if (spots.TryPick(profile.Zones, IsCrowded, out Vector3 position, out FacilityZone zone))
+            {
+                zoneName = NameOf(zone);
+                return position;
+            }
+
+            zoneName = NameOf(FacilityZone.Surface);
+            return null;
+        }
+
+        private string NameOf(FacilityZone zone)
+        {
+            Translation text = plugin.Translation;
+
+            switch (zone)
+            {
+                case FacilityZone.LightContainment: return text.ZoneLight;
+                case FacilityZone.HeavyContainment: return text.ZoneHeavy;
+                case FacilityZone.Entrance: return text.ZoneEntrance;
+                default: return text.ZoneSurface;
+            }
+        }
+
+        private static void Announce(DropProfile profile, string zone)
         {
             try
             {
                 if (!string.IsNullOrEmpty(profile.Broadcast))
-                    Server.SendBroadcast(profile.Broadcast, profile.BroadcastDuration);
+                    Server.SendBroadcast(profile.Broadcast.Replace("%ZONE%", zone), profile.BroadcastDuration);
 
                 if (string.IsNullOrEmpty(profile.CassieAnnouncement))
                     return;
@@ -217,7 +257,7 @@ namespace SupplyDrop.API
                 if (string.IsNullOrEmpty(profile.CassieSubtitles))
                     Announcer.Message(new CassieTtsPayload(profile.CassieAnnouncement, false, false), 0f, 0f);
                 else
-                    Announcer.Message(profile.CassieAnnouncement, profile.CassieSubtitles, false, 0f, 0f);
+                    Announcer.Message(profile.CassieAnnouncement, profile.CassieSubtitles.Replace("%ZONE%", zone), false, 0f, 0f);
             }
             catch (Exception e)
             {

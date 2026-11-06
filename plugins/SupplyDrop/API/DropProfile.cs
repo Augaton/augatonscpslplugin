@@ -1,3 +1,4 @@
+using MapGeneration;
 using System.Collections.Generic;
 using System.ComponentModel;
 using PlayerRoles;
@@ -84,6 +85,9 @@ namespace SupplyDrop.API
 
         [Description("Declenche ce largage au debut de la decontamination de la zone legere.")]
         public bool DecontaminationTrigger { get; set; } = false;
+
+        [Description("Zones ou tombe ce largage, dans une salle au hasard. Vide = en surface, au point de son camp. %ZONE% dans l'annonce et les sous-titres nomme la zone.")]
+        public List<FacilityZone> Zones { get; set; } = new List<FacilityZone>();
 
         [Description("Declenche ce largage a l'explosion de l'ogive Alpha.")]
         public bool WarheadTrigger { get; set; } = false;

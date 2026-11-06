@@ -77,6 +77,7 @@ namespace SupplyDrop
 
         protected override void ValidateConfig()
         {
+            Config.ZoneDropClearance = AtLeast("zone_drop_clearance", Config.ZoneDropClearance, 0f);
             Config.TrapChancePerChaosLevel = AtLeast("trap_chance_per_chaos_level", Config.TrapChancePerChaosLevel, 0f);
             Config.MinEventGapSeconds = AtLeast("min_event_gap_seconds", Config.MinEventGapSeconds, 0f);
             Config.TrapChancePercent = AtLeast("trap_chance_percent", Config.TrapChancePercent, 0f);

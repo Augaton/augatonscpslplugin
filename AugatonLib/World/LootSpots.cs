@@ -38,21 +38,28 @@ namespace AugatonLib.World
 
         public bool TryPick(Func<Vector3, bool> isUnavailable, out Vector3 position)
         {
+            return TryPick(null, isUnavailable, out position, out _);
+        }
+
+        public bool TryPick(List<FacilityZone> zones, Func<Vector3, bool> isUnavailable, out Vector3 position, out FacilityZone zone)
+        {
             if (spots.Count > 0)
             {
                 for (int attempt = 0; attempt < Attempts; attempt++)
                 {
                     LootSpot spot = spots[UnityEngine.Random.Range(0, spots.Count)];
 
-                    if (!IsSafe(spot.Zone) || isUnavailable(spot.Position))
+                    if (!IsSafe(spot.Zone) || (zones is not null && !zones.Contains(spot.Zone)) || isUnavailable(spot.Position))
                         continue;
 
                     position = spot.Position + (Vector3.up * 0.1f);
+                    zone = spot.Zone;
                     return true;
                 }
             }
 
             position = default;
+            zone = FacilityZone.None;
             return false;
         }
 

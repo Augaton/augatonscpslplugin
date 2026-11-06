@@ -15,5 +15,17 @@ namespace SupplyDrop
 
         [Description("Reponse quand aucun profil de largage n'est configure.")]
         public string NoProfile { get; set; } = "Aucun profil de largage configure.";
+
+        [Description("Nom de la zone de confinement legere dans %ZONE%.")]
+        public string ZoneLight { get; set; } = "zone de confinement legere";
+
+        [Description("Nom de la zone de confinement lourde dans %ZONE%.")]
+        public string ZoneHeavy { get; set; } = "zone de confinement lourde";
+
+        [Description("Nom de la zone d'entree dans %ZONE%.")]
+        public string ZoneEntrance { get; set; } = "zone d'entree";
+
+        [Description("Nom de la surface dans %ZONE%.")]
+        public string ZoneSurface { get; set; } = "surface";
     }
 }

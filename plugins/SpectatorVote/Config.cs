@@ -35,6 +35,7 @@ namespace SpectatorVote
             new IncidentOption { Incident = "ElevatorOutage", Label = "Ascenseurs hors service" },
             new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "mtf", Label = "Largage MTF" },
             new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "chaos", Label = "Largage du Chaos" },
+            new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "neutre", Label = "Largage neutre" },
             new IncidentOption { Kind = VoteOptionKind.Mutator, Incident = "SwiftScps", Label = "SCP acceleres" },
             new IncidentOption { Kind = VoteOptionKind.Mutator, Incident = "NightFall", Label = "Nuit noire" },
         };

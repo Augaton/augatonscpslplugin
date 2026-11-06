@@ -27,7 +27,7 @@ chacun garde sa montee en puissance au fil du temps.
 | `points_per_level` | `30` | Points necessaires pour un niveau |
 | `max_bonus_level` | `5` | Niveau maximal |
 | `apogee_incidents` | 4 incidents | Incidents tires au niveau maximal, une fois par round, avec SiteIncidents |
-| `apogee_drops` | `mtf`, `chaos` | Largages tires au niveau maximal, une fois par round, avec SupplyDrop |
+| `apogee_drops` | `mtf`, `chaos`, `neutre` | Largages tires au niveau maximal, une fois par round, avec SupplyDrop |
 | `announce_levels` | `true` | Annonce chaque nouveau niveau |
 | `broadcast_duration` | `4` | Duree de l'annonce, en secondes |
 

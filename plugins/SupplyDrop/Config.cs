@@ -37,6 +37,9 @@ namespace SupplyDrop
         [Description("Objets ajoutes a chaque largage pendant le mutateur ScarceMedical de RoundMutators.")]
         public List<ItemType> ScarceMedicalBonus { get; set; } = new List<ItemType> { ItemType.Medkit, ItemType.Medkit, ItemType.Painkillers };
 
+        [Description("Distance minimale en metres entre un largage de zone et le joueur vivant le plus proche.")]
+        public float ZoneDropClearance { get; set; } = 8f;
+
         [Description("Distance en metres a laquelle un humain declenche le piege.")]
         public float TrapRange { get; set; } = 4f;
 

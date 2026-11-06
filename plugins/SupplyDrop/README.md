@@ -76,6 +76,7 @@ Un largage sur sept environ est piege par defaut : une grenade, explosive ou ave
 | `trap_chance_per_chaos_level` | `5` | Chance ajoutee par niveau du Directeur du chaos |
 | `scarce_ammo_bonus` | 3 boites | Objets ajoutes a chaque largage pendant le mutateur `ScarceAmmo` |
 | `scarce_medical_bonus` | 2 trousses, 1 antidouleur | Objets ajoutes pendant le mutateur `ScarceMedical` |
+| `zone_drop_clearance` | `8` | Distance minimale entre un largage de zone et le joueur vivant le plus proche |
 | `trap_range` | `4` | Distance en metres qui declenche le piege |
 | `trap_fuse_seconds` | `2` | Delai avant l'explosion |
 | `trap_flash_seconds` | `4` | Duree de l'aveuglement |

@@ -295,7 +295,7 @@ namespace BetterCoinflipsRewritten
         public int SurpriseDropChance { get; set; } = 3;
 
         [Description("Profils de largage que cet effet peut appeler.")]
-        public List<string> SurpriseDropProfiles { get; set; } = new List<string> { "mtf", "chaos" };
+        public List<string> SurpriseDropProfiles { get; set; } = new List<string> { "mtf", "chaos", "neutre" };
 
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
