@@ -167,6 +167,9 @@ modes sont proposes et les joueurs votent dans la console `~` : `.votemode` list
 `.votemode 2` vote, et `.vm` est un alias. Le mode le plus vote demarre, avec un tirage en cas
 d'egalite. Sans vote, ou si aucun choix ne peut demarrer, le tirage pondere habituel s'applique.
 
+Le dernier mode joue n'est ni propose au vote ni retire au sort, sauf s'il est le seul possible. `gamemode force`
+reste libre.
+
 Avec WarmupLobby, le vote est rappele a un joueur quand il apparait dans le lobby, au plus une fois toutes les
 `vote_reminder_seconds` secondes, `30` par defaut.
 `gamemode force` l'emporte toujours.

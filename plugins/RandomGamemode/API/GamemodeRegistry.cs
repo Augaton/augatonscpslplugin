@@ -35,6 +35,7 @@ namespace RandomGamemode.API
         private readonly CooldownTracker voteReminders = new CooldownTracker();
 
         private bool winnerDeclared;
+        private string lastPlayed;
 
         public GamemodeRegistry(Plugin plugin) => this.plugin = plugin;
 
@@ -206,6 +207,10 @@ namespace RandomGamemode.API
         private List<GamemodeBase> DrawVoteOptions()
         {
             List<GamemodeBase> remaining = all.FindAll(gamemode => gamemode.Settings.IsEnabled && gamemode.Settings.Weight > 0 && gamemode.CanStart(int.MaxValue));
+
+            if (remaining.Count > 1)
+                remaining.RemoveAll(gamemode => gamemode.Key == lastPlayed);
+
             List<GamemodeBase> drawn = new List<GamemodeBase>(Config.VoteOptions);
 
             while (drawn.Count < Config.VoteOptions && remaining.Count > 0)
@@ -217,6 +222,12 @@ namespace RandomGamemode.API
             }
 
             return drawn;
+        }
+
+        // Le seul mode jouable reste permis : sans cela, un serveur a un seul mode actif n'en aurait plus aucun.
+        private bool HasAlternative(int players)
+        {
+            return all.Exists(gamemode => gamemode.Key != lastPlayed && CanRun(gamemode, players));
         }
 
         private static bool CanRun(GamemodeBase gamemode, int players)
@@ -247,6 +258,7 @@ namespace RandomGamemode.API
 
             Active = gamemode;
             winnerDeclared = false;
+            lastPlayed = gamemode.Key;
 
             // Avant la premiere etape du mode, qui part des RunCoroutine et change souvent les roles :
             // GamemodeStarted arriverait trop tard pour un plugin qui reagit a ces changements.
@@ -414,7 +426,7 @@ namespace RandomGamemode.API
 
             foreach (GamemodeBase gamemode in all)
             {
-                if (!CanRun(gamemode, players))
+                if (!CanRun(gamemode, players) || (gamemode.Key == lastPlayed && HasAlternative(players)))
                     continue;
 
                 pool.Add(gamemode);
