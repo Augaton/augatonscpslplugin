@@ -253,7 +253,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Patate chaude : une balle passe la bombe et ne blesse pas, le porteur meurt a la fin du compte a rebours, et le dernier survivant gagne.
 - [ ] Un traitre parmi nous : seul le traitre recoit le message prive, tuer un innocent vide l'inventaire du tireur, et la fin du traitre termine le round.
 - [ ] Roi de la salle : la salle s'eclaire en jaune, le score monte seulement pour le camp majoritaire, et les morts reviennent.
-- [ ] Escorte : les escortes demarrent avec le scientifique, sa sortie fait gagner le NTF, sa mort fait gagner le Chaos.
+- [ ] Escorte : les escortes demarrent avec le scientifique, sa sortie fait gagner le NTF, sa mort ou sa sortie menottee fait gagner le Chaos.
 - [ ] Zones condamnees : les zones passent au rouge dans l'ordre, y rester tue, et la surface reste sure.
 - [ ] Course aux generateurs : la victoire tombe au troisieme generateur, et la fin du temps fait gagner les SCP.
 - [ ] Un config.yml ancien donne bien aux nouveaux modes leurs reglages par defaut, tir allie compris pour Patate chaude.

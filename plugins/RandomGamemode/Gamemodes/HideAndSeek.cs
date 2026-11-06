@@ -31,7 +31,10 @@ namespace RandomGamemode.Gamemodes
             }
 
             if (hiders.Count < 2)
+            {
+                Abort();
                 yield break;
+            }
 
             Player seeker = hiders[UnityEngine.Random.Range(0, hiders.Count)];
             seekerUserId = seeker.UserId;

@@ -21,10 +21,11 @@ namespace RandomGamemode.Gamemodes
 
             yield return Timing.WaitForSeconds(Config.EvacuationDelaySeconds);
 
-            if (Warhead.IsDetonated || Warhead.IsDetonationInProgress)
+            if (Warhead.IsDetonated)
                 yield break;
 
-            Warhead.Start();
+            if (!Warhead.IsDetonationInProgress)
+                Warhead.Start();
 
             // Apres le depart et non avant : le jeu refuse de lancer une ogive verrouillee.
             Warhead.IsLocked = true;

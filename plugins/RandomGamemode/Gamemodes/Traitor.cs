@@ -30,7 +30,10 @@ namespace RandomGamemode.Gamemodes
             List<Player> players = ReadyPlayers();
 
             if (players.Count < 3)
+            {
+                Abort();
                 yield break;
+            }
 
             Player traitor = Chance.Pick(players);
             traitorUserId = traitor.UserId;
@@ -55,7 +58,7 @@ namespace RandomGamemode.Gamemodes
             }
 
             Announce(Settings.Description);
-            traitor.SendBroadcast(Text.TraitorSecret, 10);
+            traitor.SendBroadcast(Text.TraitorSecret, 10, Broadcast.BroadcastFlags.Normal, true);
 
             yield return Timing.WaitForSeconds(Config.TraitorRoundSeconds);
 
@@ -90,8 +93,13 @@ namespace RandomGamemode.Gamemodes
 
         public override void OnPlayerLeft(string userId)
         {
-            if (KeepRoundOpen && userId == traitorUserId)
+            if (!KeepRoundOpen)
+                return;
+
+            if (userId == traitorUserId)
                 EndRound(Text.TraitorLeft);
+            else if (CountAlive() <= 1)
+                EndRound(Text.TraitorWon.Replace("%PLAYER%", TraitorName()));
         }
 
         private string TraitorName()

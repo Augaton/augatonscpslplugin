@@ -40,7 +40,10 @@ namespace RandomGamemode.Gamemodes
             hill = PickHill();
 
             if (hill is null)
+            {
+                Abort();
                 yield break;
+            }
 
             if (!ColorUtility.TryParseHtmlString(Config.KingOfTheHillColor, out Color color))
                 color = Color.yellow;

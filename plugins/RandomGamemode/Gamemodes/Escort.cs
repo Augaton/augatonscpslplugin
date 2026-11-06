@@ -31,7 +31,10 @@ namespace RandomGamemode.Gamemodes
             List<Player> players = ReadyPlayers();
 
             if (players.Count < 3)
+            {
+                Abort();
                 yield break;
+            }
 
             KeepRoundOpen = true;
             Chance.Shuffle(players);
@@ -62,9 +65,6 @@ namespace RandomGamemode.Gamemodes
 
             Announce(Text.EscortStart.Replace("%PLAYER%", SafeText.Nickname(vip)));
 
-            // Le jeu place le scientifique apres SetRole : sa position n'est juste qu'un instant plus tard.
-            yield return Timing.WaitForSeconds(1f);
-
             foreach (Player escort in escorts)
             {
                 if (!escort.IsDestroyed && !vip.IsDestroyed)
@@ -92,8 +92,11 @@ namespace RandomGamemode.Gamemodes
 
         public override void OnPlayerEscaped(PlayerEscapedEventArgs ev)
         {
-            if (ev?.Player is not null && KeepRoundOpen && ev.Player.UserId == vipUserId)
-                EndRound(Text.EscortSucceeded);
+            if (ev?.Player is null || !KeepRoundOpen || ev.Player.UserId != vipUserId)
+                return;
+
+            // Menotte, le scientifique s'evade au profit de ceux qui l'ont capture.
+            EndRound(ev.EscapeScenarioType == Escape.EscapeScenarioType.Scientist ? Text.EscortSucceeded : Text.EscortFailed);
         }
     }
 }

@@ -109,7 +109,7 @@ namespace RandomGamemode.Gamemodes
             passAllowedAt = Time.time + PassImmunitySeconds;
 
             player.EnableEffect<MovementBoost>(Config.HotPotatoSpeedBoost);
-            Announce(Text.HotPotatoCarrier.Replace("%PLAYER%", SafeText.Nickname(player)), 4);
+            Announce(Text.HotPotatoCarrier.Replace("%PLAYER%", SafeText.Nickname(player)), 4, true);
         }
 
         private void Explode()

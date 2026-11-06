@@ -255,12 +255,15 @@ namespace RandomGamemode.API
             LightArbiter.Restore(Interop.Owner);
         }
 
-        protected static void Announce(string message, ushort duration = 15)
+        protected static void Announce(string message, ushort duration = 15, bool replacePrevious = false)
         {
             if (string.IsNullOrEmpty(message))
                 return;
 
-            Server.SendBroadcast(message, duration);
+            Server.SendBroadcast(message, duration, Broadcast.BroadcastFlags.Normal, replacePrevious);
         }
+
+        // Sans cela, un mode sans joueurs assez nombreux resterait actif : vagues et evenements coupes.
+        protected static void Abort() => Plugin.Instance.Registry.End(false);
     }
 }
