@@ -2,6 +2,7 @@ bin/
 obj/
 out/
 .references/
+.references.*/
 *.dll
 *.pdb
 *.user
