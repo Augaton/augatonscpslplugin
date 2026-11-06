@@ -211,7 +211,7 @@ namespace SiteIncidents
         {
             switch (type)
             {
-                case IncidentType.Blackout: return Config.BlackoutWeight;
+                case IncidentType.Blackout: return IsSiteDark() ? 0 : Config.BlackoutWeight;
                 case IncidentType.Alert: return Config.AlertWeight;
                 case IncidentType.Lockdown: return Config.LockdownWeight;
                 case IncidentType.GasLeak: return Config.GasLeakWeight;
@@ -368,6 +368,17 @@ namespace SiteIncidents
             }
 
             return found;
+        }
+
+        private static bool IsSiteDark()
+        {
+            foreach (FacilityZone zone in Zones)
+            {
+                if (!LightArbiter.IsBlackedOut(zone))
+                    return false;
+            }
+
+            return true;
         }
 
         private static bool HasScp079()
