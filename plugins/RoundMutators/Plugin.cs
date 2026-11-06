@@ -31,6 +31,7 @@ namespace RoundMutators
             ServerEvents.RoundRestarted += Service.Stop;
             PlayerEvents.Death += Service.OnDeath;
             PlayerEvents.Hurting += Service.OnHurting;
+            PlayerEvents.DroppingAmmo += Service.OnDroppingAmmo;
 
             PluginBus.Subscribe(Owner, BusTopics.GamemodeStarted, Service.OnGamemodeStarted);
             PluginBus.Subscribe(Owner, BusTopics.ChaosLevelChanged, Service.OnChaosLevelChanged);
@@ -46,6 +47,7 @@ namespace RoundMutators
             ServerEvents.RoundRestarted -= Service.Stop;
             PlayerEvents.Death -= Service.OnDeath;
             PlayerEvents.Hurting -= Service.OnHurting;
+            PlayerEvents.DroppingAmmo -= Service.OnDroppingAmmo;
 
             Service.Stop();
             PluginBus.UnsubscribeOwner(Owner);
@@ -64,6 +66,7 @@ namespace RoundMutators
             Config.ChaosLevelForMutator = (int)AtLeast("chaos_level_for_mutator", Config.ChaosLevelForMutator, 0f);
             Config.VampireHeal = AtLeast("vampire_heal", Config.VampireHeal, 0f);
             Config.GlassCannonFactor = AtLeast("glass_cannon_factor", Config.GlassCannonFactor, 1f);
+            Config.EndlessAmmoCap = System.Math.Min((int)AtLeast("endless_ammo_cap", Config.EndlessAmmoCap, 1f), 1000);
             Config.RegenerationPerSecond = AtLeast("regeneration_per_second", Config.RegenerationPerSecond, 0f);
             Config.ScarcePercent = System.Math.Min(100f, AtLeast("scarce_percent", Config.ScarcePercent, 0f));
             Config.SwiftScpPercent = System.Math.Min((int)AtLeast("swift_scp_percent", Config.SwiftScpPercent, 0f), 100);

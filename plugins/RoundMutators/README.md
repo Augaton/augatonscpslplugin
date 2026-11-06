@@ -23,7 +23,7 @@ du round.
 | `FragileHumans` | Vie maximale des humains a 80 % |
 | `Vampire` | Un kill rend 25 PV a celui qui le fait |
 | `GlassCannon` | Degats entre joueurs multiplies par 1,5 |
-| `EndlessAmmo` | Reserve de munitions des humains remplie jusqu'a la limite de leur gilet |
+| `EndlessAmmo` | Reserve de munitions des humains remplie jusqu'a la limite de leur gilet, et plus aucune munition au sol |
 | `Regeneration` | Les humains regagnent 1 PV par seconde |
 
 Le mutateur suit les renforts et les changements de role. `Tiny` passe par `ScaleArbiter` et cede la place a une
@@ -43,6 +43,7 @@ pilule ou a SCP-261 qui changent la taille d'un joueur.
 | `vampire_weight`, `glass_cannon_weight`, `endless_ammo_weight`, `regeneration_weight` | `10` | Poids des quatre derniers mutateurs. `0` = jamais |
 | `vampire_heal` | `25` | Vie rendue par un kill avec `Vampire` |
 | `glass_cannon_factor` | `1.5` | Multiplicateur de degats avec `GlassCannon`, 1 au plus bas |
+| `endless_ammo_cap` | `300` | Reserve maximale par type de munition avec `EndlessAmmo`, de 1 a 1000 |
 | `regeneration_per_second` | `1` | Vie rendue par seconde avec `Regeneration` |
 | `scarce_percent` | `60` | Part des objets retiree de la carte |
 | `swift_scp_percent` | `15` | Vitesse ajoutee aux SCP, 100 au plus |

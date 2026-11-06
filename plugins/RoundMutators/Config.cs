@@ -65,6 +65,9 @@ namespace RoundMutators
         [Description("Multiplicateur des degats entre joueurs avec GlassCannon, 1 au plus bas.")]
         public float GlassCannonFactor { get; set; } = 1.5f;
 
+        [Description("Reserve maximale par type de munition avec EndlessAmmo, sous la limite du gilet, de 1 a 1000.")]
+        public int EndlessAmmoCap { get; set; } = 300;
+
         [Description("Vie rendue par seconde aux humains avec Regeneration.")]
         public float RegenerationPerSecond { get; set; } = 1f;
 

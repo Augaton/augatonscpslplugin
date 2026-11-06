@@ -175,13 +175,21 @@ namespace RoundMutators
                 if (Active != MutatorType.GlassCannon || ev?.Attacker is null || ev.Attacker == ev.Player)
                     return;
 
-                if (ev.DamageHandler is StandardDamageHandler handler)
+                // -1 veut dire mort immediate : le multiplier ferait de ce coup un coup sans effet.
+                if (ev.DamageHandler is StandardDamageHandler handler && handler.Damage > 0f)
                     handler.Damage *= Config.GlassCannonFactor;
             }
             catch (Exception e)
             {
                 Logger.Error($"MutatorService.OnHurting: {e}");
             }
+        }
+
+        // Sans ce refus, une reserve gratuite ferait de chaque joueur une source infinie d'objets au sol.
+        public void OnDroppingAmmo(PlayerDroppingAmmoEventArgs ev)
+        {
+            if (Active == MutatorType.EndlessAmmo && ev is not null)
+                ev.IsAllowed = false;
         }
 
         public void OnMutatorRequested(BusMessage message)
@@ -354,12 +362,12 @@ namespace RoundMutators
             }
         }
 
-        // Jamais au-dela de la limite du gilet : le jeu ferait tomber l'excedent au sol a chaque changement d'armure.
-        private static void RefillAmmo(Player player)
+        // La limite du jeu peut valoir 65535 quand le serveur coupe les limites de munitions.
+        private void RefillAmmo(Player player)
         {
             foreach (ItemType type in AmmoTypes)
             {
-                ushort limit = InventoryLimits.GetAmmoLimit(type, player.ReferenceHub);
+                ushort limit = (ushort)Mathf.Min(InventoryLimits.GetAmmoLimit(type, player.ReferenceHub), Config.EndlessAmmoCap);
 
                 if (player.GetAmmo(type) < limit)
                     player.SetAmmo(type, limit);
