@@ -10,7 +10,10 @@ namespace Streaks
         [Description("Hint general quand un joueur est mis a prix. %PLAYER% = joueur, %COUNT% = kills.")]
         public string BountyPlaced { get; set; } = "Prime sur %PLAYER% : %COUNT% kills d'affilee !";
 
-        [Description("Hint general quand une prime est encaissee. %KILLER% = chasseur, %PLAYER% = cible.")]
+        [Description("Fin d'une longue serie. %PLAYER% est le joueur, %COUNT% ses kills.")]
+        public string StreakEnded { get; set; } = "La serie de %COUNT% kills de %PLAYER% s'arrete.";
+
+        [Description("Prime encaissee. %KILLER% est le tueur, %PLAYER% la cible.")]
         public string BountyClaimed { get; set; } = "%KILLER% a abattu %PLAYER% et empoche la prime !";
     }
 }

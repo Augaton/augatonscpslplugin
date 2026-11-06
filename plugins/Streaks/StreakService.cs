@@ -37,14 +37,15 @@ namespace Streaks
 
                 int ended = Ladder.Forget(ev.Player.UserId);
                 Player killer = ev.Attacker;
+                bool counted = IsCounted(killer, ev);
 
-                if (!IsCounted(killer, ev))
-                    return;
+                if (counted && Config.BountyKills > 0 && ended >= Config.BountyKills)
+                    ClaimBounty(killer, ev.Player, ended);
+                else if (Config.AnnounceEndKills > 0 && ended >= Config.AnnounceEndKills)
+                    AnnounceEnd(ev.Player, ended);
 
-                if (Config.BountyKills > 0 && ended >= Config.BountyKills)
-                    ClaimBounty(killer, ev.Player);
-
-                RegisterKill(killer);
+                if (counted)
+                    RegisterKill(killer);
             }
             catch (Exception e)
             {
@@ -159,9 +160,23 @@ namespace Streaks
             return ev.OldRole != RoleTypeId.Tutorial && ev.OldRole.GetFaction() != killer.Faction;
         }
 
-        private void ClaimBounty(Player killer, Player target)
+        private void AnnounceEnd(Player player, int kills)
         {
-            ItemGrant.Give(killer, Config.BountyItem, Config.BountyQuantity);
+            plugin.Hints.ShowAll(
+                Text.StreakEnded.Replace("%PLAYER%", SafeText.Nickname(player)).Replace("%COUNT%", kills.ToString()),
+                Config.HintDuration);
+        }
+
+        private int BountyQuantityFor(int kills)
+        {
+            int bonus = Config.BountyStepKills > 0 ? (kills - Config.BountyKills) / Config.BountyStepKills : 0;
+
+            return Math.Min(Config.BountyQuantity + bonus, Config.BountyMaxQuantity);
+        }
+
+        private void ClaimBounty(Player killer, Player target, int kills)
+        {
+            ItemGrant.Give(killer, Config.BountyItem, BountyQuantityFor(kills));
 
             plugin.Hints.ShowAll(
                 Text.BountyClaimed.Replace("%KILLER%", SafeText.Nickname(killer)).Replace("%PLAYER%", SafeText.Nickname(target)),

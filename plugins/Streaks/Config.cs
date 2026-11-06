@@ -24,6 +24,15 @@ namespace Streaks
         [Description("Nombre d'objets de la prime, ou de munitions pour une boite.")]
         public int BountyQuantity { get; set; } = 1;
 
+        [Description("Kills de plus qui ajoutent un objet a la prime. 0 = prime fixe.")]
+        public int BountyStepKills { get; set; } = 3;
+
+        [Description("Objets de prime au plus, 1 au plus bas.")]
+        public int BountyMaxQuantity { get; set; } = 4;
+
+        [Description("Serie dont la fin est annoncee a tout le serveur, quand aucune prime ne l'annonce deja. 0 = jamais.")]
+        public int AnnounceEndKills { get; set; } = 3;
+
         [Description("Kills d'avance au round suivant pour le vainqueur d'un mode de jeu. 0 = aucun.")]
         public int KillsForGamemodeWin { get; set; } = 2;
 

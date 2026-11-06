@@ -55,6 +55,12 @@ namespace Streaks
             Instance = null;
         }
 
-        protected override void ValidateConfig() => Ladder.SetSteps(Config.Rewards);
+        protected override void ValidateConfig()
+        {
+            Ladder.SetSteps(Config.Rewards);
+            Config.BountyStepKills = (int)AtLeast("bounty_step_kills", Config.BountyStepKills, 0f);
+            Config.BountyMaxQuantity = (int)AtLeast("bounty_max_quantity", Config.BountyMaxQuantity, 1f);
+            Config.AnnounceEndKills = (int)AtLeast("announce_end_kills", Config.AnnounceEndKills, 0f);
+        }
     }
 }
