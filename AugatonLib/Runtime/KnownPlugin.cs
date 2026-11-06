@@ -28,6 +28,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("AutoFFToggle", "AutoFFToggle", "tir allie auto"),
             new KnownPlugin("BetterCoinflipsRewritten", "BetterCoinflips", "pile ou face"),
             new KnownPlugin("ChaosDirector", "ChaosDirector", "niveau de chaos"),
+            new KnownPlugin("Contracts", "Contracts", "contrats secrets"),
             new KnownPlugin("DiscordAudit", "DiscordAudit", "journal staff Discord"),
             new KnownPlugin("MicroHidDock", "MicroHidDock", "socle du Micro-HID"),
             new KnownPlugin("PocketCorpses", "PocketCorpses", "corps de la dimension de poche"),
