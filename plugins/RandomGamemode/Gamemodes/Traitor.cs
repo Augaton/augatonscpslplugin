@@ -79,6 +79,12 @@ namespace RandomGamemode.Gamemodes
                 EndRound(Text.TraitorWon.Replace("%PLAYER%", TraitorName()));
         }
 
+        public override void OnPlayerLeft(string userId)
+        {
+            if (KeepRoundOpen && userId == traitorUserId)
+                EndRound(Text.TraitorLeft);
+        }
+
         private string TraitorName()
         {
             Player traitor = Player.Get(traitorUserId);

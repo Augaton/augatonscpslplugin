@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Wrappers;
 using MEC;
 using PlayerRoles;
@@ -10,7 +9,6 @@ namespace RandomGamemode.Gamemodes
     public sealed class HideAndSeek : GamemodeBase
     {
         private string seekerUserId;
-        private bool hiding;
 
         public override string Key => "hideandseek";
 
@@ -38,7 +36,9 @@ namespace RandomGamemode.Gamemodes
             Player seeker = hiders[UnityEngine.Random.Range(0, hiders.Count)];
             seekerUserId = seeker.UserId;
             hiders.Remove(seeker);
-            hiding = true;
+
+            // Pendant la cachette, seuls des Classe-D vivent : le jeu croirait le round termine.
+            KeepRoundOpen = true;
 
             seeker.SetRole(RoleTypeId.Spectator);
 
@@ -53,7 +53,7 @@ namespace RandomGamemode.Gamemodes
 
             yield return Timing.WaitForSeconds(Config.HideAndSeekHideSeconds);
 
-            hiding = false;
+            KeepRoundOpen = false;
 
             Player hunter = Player.Get(seekerUserId);
 
@@ -73,17 +73,6 @@ namespace RandomGamemode.Gamemodes
             Plugin.Instance.Registry.ForceRoundEnd();
         }
 
-        public override void Stop()
-        {
-            hiding = false;
-            seekerUserId = null;
-        }
-
-        // Pendant la cachette, seuls des Classe-D vivent : le jeu croirait le round termine.
-        public override void OnEndingRound(RoundEndingConditionsCheckEventArgs ev)
-        {
-            if (ev is not null && hiding)
-                ev.CanEnd = false;
-        }
+        public override void Stop() => seekerUserId = null;
     }
 }

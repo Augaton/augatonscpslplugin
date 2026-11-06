@@ -1,3 +1,7 @@
+using PlayerRoles;
+using MapGeneration;
+using AugatonLib.Spawning;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using AugatonLib.Caching;
@@ -63,6 +67,8 @@ namespace RandomGamemode
             PlayerEvents.DeactivatingGenerator += gamemodeHandlers.OnStoppingGenerator;
             PlayerEvents.InteractingDoor += gamemodeHandlers.OnInteractingDoor;
 
+            SelfCheck.Register(Name, "salles du Roi de la salle", () => Room.Get(FacilityZone.Entrance).Any(room => room.Name != RoomName.Unnamed) ? null : "introuvables");
+            SelfCheck.Register(Name, "point d'apparition des gardes", () => RoleSpawn.TryGetPosition(RoleTypeId.FacilityGuard, out _) ? null : "introuvable");
             SelfCheck.Register(Name, "portes de La vie selon Larry", () => Door.Get(DoorName.Lcz173Bottom) is null || Door.Get(DoorName.Lcz173Gate) is null ? "introuvables" : null);
 
             PluginDirectory.Register(

@@ -50,9 +50,10 @@ namespace RandomGamemode.Gamemodes
 
                 if (alive.Count <= 1)
                 {
-                    EndRound(alive.Count == 1
-                        ? Text.HotPotatoWinner.Replace("%PLAYER%", SafeText.Nickname(alive[0]))
-                        : Settings.Description);
+                    if (alive.Count == 1)
+                        Announce(Text.HotPotatoWinner.Replace("%PLAYER%", SafeText.Nickname(alive[0])));
+
+                    Plugin.Instance.Registry.ForceRoundEnd();
                     yield break;
                 }
 
@@ -60,7 +61,9 @@ namespace RandomGamemode.Gamemodes
 
                 yield return Timing.WaitForSeconds(Config.HotPotatoFuseSeconds);
 
-                Explode();
+                // Les autres ont pu quitter le serveur : le dernier ne doit pas sauter sur sa victoire.
+                if (CountAlive() > 1)
+                    Explode();
 
                 yield return Timing.WaitForSeconds(Config.HotPotatoPauseSeconds);
             }

@@ -3,6 +3,7 @@ using AugatonLib.Arbitration;
 using LabApi.Features.Wrappers;
 using MapGeneration;
 using MEC;
+using PlayerRoles.FirstPersonControl;
 using RandomGamemode.API;
 using UnityEngine;
 
@@ -81,7 +82,7 @@ namespace RandomGamemode.Gamemodes
         {
             foreach (Player player in Player.ReadyList)
             {
-                if (player.IsAlive && condemned.Contains(player.Zone))
+                if (player.RoleBase is IFpcRole && player.IsAlive && !player.IsTutorial && condemned.Contains(player.Zone))
                     player.Damage(player.MaxHealth * Config.ClosingZoneDamagePercent / 100f, Text.ClosingZoneDeath);
             }
         }

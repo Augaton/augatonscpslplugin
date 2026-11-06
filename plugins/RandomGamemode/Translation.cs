@@ -79,6 +79,9 @@ namespace RandomGamemode
         [Description("Un traitre parmi nous : le traitre est le dernier en vie. %PLAYER% est son pseudo.")]
         public string TraitorWon { get; set; } = "<size=30><color=red>%PLAYER% etait le traitre, et il a gagne.</color></size>";
 
+        [Description("Un traitre parmi nous : le traitre a quitte le serveur.")]
+        public string TraitorLeft { get; set; } = "<size=30><color=yellow>Le traitre a fui le serveur. Les innocents gagnent.</color></size>";
+
         [Description("Un traitre parmi nous : le temps est ecoule. %PLAYER% est le pseudo du traitre.")]
         public string TraitorEscapedJustice { get; set; } = "<size=30><color=green>Fin de l'enquete, les survivants gagnent. %PLAYER% etait le traitre.</color></size>";
 

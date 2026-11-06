@@ -71,6 +71,10 @@ namespace RandomGamemode.API
         {
         }
 
+        public virtual void OnPlayerLeft(string userId)
+        {
+        }
+
         public virtual void OnPlayerDied(PlayerDeathEventArgs ev)
         {
         }

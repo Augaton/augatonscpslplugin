@@ -278,7 +278,7 @@ namespace SupplyDrop.API
 
             foreach (Player player in Player.Dictionary.Values)
             {
-                if (player.IsPlayer && player.IsHuman && (player.Position - anchor).sqrMagnitude <= rangeSquared)
+                if (player.IsPlayer && player.IsHuman && !player.IsTutorial && (player.Position - anchor).sqrMagnitude <= rangeSquared)
                     return true;
             }
 

@@ -27,7 +27,15 @@ namespace RandomGamemode.Handlers
 
         public void OnJoined(PlayerJoinedEventArgs ev) => Guard(() => registry.ShowVote(ev?.Player));
 
-        public void OnLeft(PlayerLeftEventArgs ev) => Guard(() => registry.Vote.Retract(ev?.Player?.UserId));
+        public void OnLeft(PlayerLeftEventArgs ev)
+        {
+            string userId = ev?.Player?.UserId;
+
+            Guard(() => registry.Vote.Retract(userId));
+
+            if (userId is not null)
+                Dispatch((g, e) => g.OnPlayerLeft(e), userId);
+        }
 
         public void OnPlayerDied(PlayerDeathEventArgs ev) => Dispatch((g, e) => g.OnPlayerDied(e), ev);
 

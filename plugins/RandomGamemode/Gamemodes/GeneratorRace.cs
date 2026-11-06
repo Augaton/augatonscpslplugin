@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AugatonLib.World;
 using LabApi.Features.Wrappers;
 using MEC;
 using RandomGamemode.API;
@@ -21,7 +22,7 @@ namespace RandomGamemode.Gamemodes
             foreach (Player player in ReadyPlayers())
             {
                 if (player.IsHuman)
-                    player.AddItem(ItemType.KeycardMTFCaptain);
+                    ItemGrant.Give(player, ItemType.KeycardMTFCaptain);
             }
 
             Announce(Settings.Description);
