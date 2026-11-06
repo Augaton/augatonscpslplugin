@@ -123,6 +123,15 @@ namespace RandomGamemode
         [Description("Escorte : secondes pour faire sortir le scientifique.")]
         public float EscortRoundSeconds { get; set; } = 420f;
 
+        [Description("Zones condamnees : secondes entre deux zones.")]
+        public float ClosingZoneSeconds { get; set; } = 120f;
+
+        [Description("Zones condamnees : part de la vie maximale perdue par seconde dans une zone condamnee, en pourcentage.")]
+        public float ClosingZoneDamagePercent { get; set; } = 3f;
+
+        [Description("Zones condamnees : couleur d'une zone condamnee.")]
+        public string ClosingZoneColor { get; set; } = "#FF2200";
+
         [Description("Vie du joueur Juggernaut.")]
         public float JuggernautHealth { get; set; } = 2500f;
 
@@ -353,6 +362,13 @@ namespace RandomGamemode
                 Weight = 8,
                 MinPlayers = 6,
                 Description = "Le NTF protege le scientifique, le Chaos doit l'abattre avant sa sortie.",
+                PauseRespawnWaves = true,
+            },
+            ["closingzones"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 6,
+                Description = "Les zones vont etre condamnees une par une. Rejoignez la surface.",
                 PauseRespawnWaves = true,
             },
             ["gungame"] = new GamemodeSettings

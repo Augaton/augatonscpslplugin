@@ -103,6 +103,21 @@ namespace RandomGamemode
         [Description("Escorte : le scientifique est mort, ou le temps est ecoule.")]
         public string EscortFailed { get; set; } = "<size=30><color=green>Le scientifique n'est pas sorti : le Chaos gagne.</color></size>";
 
+        [Description("Zones condamnees : annonce d'une zone. %ZONE% est son nom.")]
+        public string ClosingZoneCondemned { get; set; } = "<size=30><color=red>%ZONE% est condamnee. Partez immediatement.</color></size>";
+
+        [Description("Zones condamnees : cause de mort.")]
+        public string ClosingZoneDeath { get; set; } = "Zone condamnee";
+
+        [Description("Zones condamnees : nom de la zone legere.")]
+        public string ClosingZoneLight { get; set; } = "La zone de confinement legere";
+
+        [Description("Zones condamnees : nom de la zone lourde.")]
+        public string ClosingZoneHeavy { get; set; } = "La zone de confinement lourde";
+
+        [Description("Zones condamnees : nom de la zone d'entree.")]
+        public string ClosingZoneEntrance { get; set; } = "La zone d'entree";
+
         [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }
