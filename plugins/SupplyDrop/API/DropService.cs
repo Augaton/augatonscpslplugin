@@ -176,42 +176,54 @@ namespace SupplyDrop.API
             {
                 yield return Timing.WaitForSeconds(tick);
 
-                if (!Round.IsRoundInProgress || IsPaused)
+                try
+                {
+                    CheckSchedule();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"DropService.Schedule: {e}");
+                }
+            }
+        }
+
+        private void CheckSchedule()
+        {
+            if (!Round.IsRoundInProgress || IsPaused)
+                return;
+
+            float elapsed = (float)Round.Duration.TotalSeconds;
+
+            foreach (DropProfile profile in Config.Profiles)
+            {
+                if (profile is null || !profile.IsEnabled || string.IsNullOrEmpty(profile.Key))
                     continue;
 
-                float elapsed = (float)Round.Duration.TotalSeconds;
+                if (!states.TryGetValue(profile.Key, out DropState state))
+                    continue;
 
-                foreach (DropProfile profile in Config.Profiles)
+                if (elapsed < state.NextDropAt)
+                    continue;
+
+                if (profile.MaxDropsPerRound > 0 && state.DropsUsed >= profile.MaxDropsPerRound)
+                    continue;
+
+                if (Player.Count < Config.MinPlayers)
                 {
-                    if (profile is null || !profile.IsEnabled || string.IsNullOrEmpty(profile.Key))
-                        continue;
-
-                    if (!states.TryGetValue(profile.Key, out DropState state))
-                        continue;
-
-                    if (elapsed < state.NextDropAt)
-                        continue;
-
-                    if (profile.MaxDropsPerRound > 0 && state.DropsUsed >= profile.MaxDropsPerRound)
-                        continue;
-
-                    if (Player.Count < Config.MinPlayers)
-                    {
-                        state.NextDropAt = elapsed + Config.RetrySeconds;
-                        continue;
-                    }
-
-                    if (!EventSpacing.TryClaim(Time.time, Config.MinEventGapSeconds))
-                    {
-                        state.NextDropAt = elapsed + Config.RetrySeconds;
-                        continue;
-                    }
-
-                    state.DropsUsed++;
-                    state.NextDropAt = elapsed + profile.AnnouncementLeadSeconds + profile.IntervalSeconds;
-
-                    Trigger(profile, true);
+                    state.NextDropAt = elapsed + Config.RetrySeconds;
+                    continue;
                 }
+
+                if (!EventSpacing.TryClaim(Time.time, Config.MinEventGapSeconds))
+                {
+                    state.NextDropAt = elapsed + Config.RetrySeconds;
+                    continue;
+                }
+
+                state.DropsUsed++;
+                state.NextDropAt = elapsed + profile.AnnouncementLeadSeconds + profile.IntervalSeconds;
+
+                Trigger(profile, true);
             }
         }
 
