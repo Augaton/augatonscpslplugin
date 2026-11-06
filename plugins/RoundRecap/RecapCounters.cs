@@ -15,6 +15,7 @@ namespace RoundRecap
         private int wipes;
         private int vendings;
         private int exchanges;
+        private int contracts;
         private string gamemode;
         private string mutator;
 
@@ -28,6 +29,7 @@ namespace RoundRecap
             PluginBus.Subscribe(owner, BusTopics.TeamWiped, _ => wipes++);
             PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => vendings++);
             PluginBus.Subscribe(owner, BusTopics.ItemExchanged, _ => exchanges++);
+            PluginBus.Subscribe(owner, BusTopics.ContractCompleted, _ => contracts++);
             PluginBus.Subscribe(owner, BusTopics.GamemodeStarted, OnGamemodeStarted);
             PluginBus.Subscribe(owner, BusTopics.RoundMutatorStarted, OnMutatorStarted);
         }
@@ -42,6 +44,7 @@ namespace RoundRecap
             wipes = 0;
             vendings = 0;
             exchanges = 0;
+            contracts = 0;
             gamemode = null;
             mutator = null;
         }
@@ -65,6 +68,7 @@ namespace RoundRecap
             Add(lines, text.Incidents, incidents);
             Add(lines, text.Vendings, vendings);
             Add(lines, text.Exchanges, exchanges);
+            Add(lines, text.Contracts, contracts);
             Add(lines, text.Wipes, wipes);
 
             if (lines.Count == 0 && heroes.Count == 0)

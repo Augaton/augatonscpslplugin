@@ -52,6 +52,9 @@ namespace RoundRecap
         [Description("Ligne des echanges a SCP-1162.")]
         public string Exchanges { get; set; } = "%COUNT% echange(s) a SCP-1162";
 
+        [Description("Ligne des contrats remplis.")]
+        public string Contracts { get; set; } = "%COUNT% contrat(s) rempli(s)";
+
         [Description("Ligne des equipes eliminees.")]
         public string Wipes { get; set; } = "%COUNT% equipe(s) eliminee(s)";
     }

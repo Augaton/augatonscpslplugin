@@ -1,0 +1,237 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using AugatonLib.Arcade;
+using AugatonLib.Bus;
+using AugatonLib.Random;
+using AugatonLib.Runtime;
+using AugatonLib.World;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Features.Wrappers;
+using MEC;
+using PlayerRoles;
+using Logger = LabApi.Features.Console.Logger;
+
+namespace Contracts
+{
+    public sealed class ContractService
+    {
+        private const float TickSeconds = 5f;
+        private const float SecondsPerMinute = 60f;
+
+        private readonly Plugin plugin;
+        private readonly ObjectiveBook<ContractKind> book = new ObjectiveBook<ContractKind>();
+        private readonly Dictionary<string, ContractOffer> offers = new Dictionary<string, ContractOffer>();
+
+        private CoroutineHandle loop;
+        private bool running;
+        private float aliveSeconds;
+
+        public ContractService(Plugin plugin) => this.plugin = plugin;
+
+        public int ActiveCount => offers.Count;
+
+        private Config Config => plugin.Config;
+
+        private Translation Text => plugin.Translation;
+
+        private bool IsPaused => Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses;
+
+        public void Start()
+        {
+            Stop();
+
+            running = true;
+            loop = Timing.RunCoroutine(Loop());
+        }
+
+        public void Stop()
+        {
+            if (running)
+                Timing.KillCoroutines(loop);
+
+            running = false;
+            aliveSeconds = 0f;
+            book.Clear();
+            offers.Clear();
+        }
+
+        public string Describe(Player player)
+        {
+            string userId = player.UserId;
+
+            if (!book.TryGet(userId, out ContractKind kind, out int progress, out int target) || !offers.TryGetValue(userId, out ContractOffer offer))
+                return Text.NoContract;
+
+            if (progress >= target)
+                return Text.AlreadyDone;
+
+            return Text.Status
+                .Replace("%OBJECTIVE%", ObjectiveOf(kind, target))
+                .Replace("%PROGRESS%", progress.ToString())
+                .Replace("%TARGET%", target.ToString())
+                .Replace("%REWARD%", offer.RewardLabel);
+        }
+
+        public void OnDeath(PlayerDeathEventArgs ev)
+        {
+            try
+            {
+                Player killer = ev?.Attacker;
+
+                if (killer is null || killer == ev.Player || !killer.IsHuman)
+                    return;
+
+                if (ev.OldRole != RoleTypeId.Tutorial && ev.OldRole.GetFaction() != killer.Faction)
+                    Advance(killer, ContractKind.KillEnemies);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnDeath: {e}");
+            }
+        }
+
+        public void OnEscaped(PlayerEscapedEventArgs ev)
+        {
+            try
+            {
+                Advance(ev?.Player, ContractKind.Escape);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnEscaped: {e}");
+            }
+        }
+
+        public void OnActivatedGenerator(PlayerActivatedGeneratorEventArgs ev)
+        {
+            try
+            {
+                Advance(ev?.Player, ContractKind.ActivateGenerators);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnActivatedGenerator: {e}");
+            }
+        }
+
+        public void OnUsedItem(PlayerUsedItemEventArgs ev)
+        {
+            try
+            {
+                ItemType? type = ev?.UsableItem?.Type;
+
+                if (type == ItemType.Medkit || type == ItemType.Painkillers || type == ItemType.Adrenaline || type == ItemType.SCP500)
+                    Advance(ev.Player, ContractKind.UseMedical);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnUsedItem: {e}");
+            }
+        }
+
+        public void OnLeft(PlayerLeftEventArgs ev)
+        {
+            try
+            {
+                string userId = ev?.Player?.UserId;
+
+                if (userId is null)
+                    return;
+
+                book.Forget(userId);
+                offers.Remove(userId);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnLeft: {e}");
+            }
+        }
+
+        private IEnumerator<float> Loop()
+        {
+            yield return Timing.WaitForSeconds(Config.FirstOfferSeconds);
+
+            while (true)
+            {
+                try
+                {
+                    Tick();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"ContractService: {e}");
+                }
+
+                yield return Timing.WaitForSeconds(TickSeconds);
+            }
+        }
+
+        // Une boucle plutot que ChangedRole : les roles du debut de round arrivent avant le depart d'un mode,
+        // et un joueur revenu par une vague recoit ainsi son contrat comme les autres.
+        private void Tick()
+        {
+            if (IsPaused)
+                return;
+
+            aliveSeconds += TickSeconds;
+
+            bool minutePassed = aliveSeconds >= SecondsPerMinute;
+
+            if (minutePassed)
+                aliveSeconds = 0f;
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (!player.IsHuman || player.IsTutorial)
+                    continue;
+
+                if (!book.Has(player.UserId))
+                    Offer(player);
+                else if (minutePassed)
+                    Advance(player, ContractKind.Survive);
+            }
+        }
+
+        private void Offer(Player player)
+        {
+            List<ContractOffer> available = Config.Offers.Where(offer => offer is not null && offer.Weight > 0).ToList();
+            ContractOffer offer = Chance.PickWeighted(available, candidate => candidate.Weight);
+
+            if (offer is null || !book.Assign(player.UserId, offer.Kind, offer.Target))
+                return;
+
+            offers[player.UserId] = offer;
+
+            plugin.Hints.Show(
+                player,
+                Text.Assigned.Replace("%OBJECTIVE%", ObjectiveOf(offer.Kind, offer.Target)).Replace("%REWARD%", offer.RewardLabel),
+                Config.HintDuration);
+        }
+
+        private void Advance(Player player, ContractKind kind)
+        {
+            if (player is null || IsPaused || !book.Advance(player.UserId, kind))
+                return;
+
+            if (!offers.TryGetValue(player.UserId, out ContractOffer offer))
+                return;
+
+            ItemGrant.Give(player, offer.Reward, offer.RewardQuantity);
+            plugin.Hints.Show(player, Text.Completed.Replace("%REWARD%", offer.RewardLabel), Config.HintDuration);
+            PluginBus.Publish(BusTopics.ContractCompleted, plugin.Name, player);
+        }
+
+        private string ObjectiveOf(ContractKind kind, int target)
+        {
+            switch (kind)
+            {
+                case ContractKind.KillEnemies: return Text.KillEnemies.Replace("%TARGET%", target.ToString());
+                case ContractKind.ActivateGenerators: return Text.ActivateGenerators.Replace("%TARGET%", target.ToString());
+                case ContractKind.Escape: return Text.Escape;
+                case ContractKind.UseMedical: return Text.UseMedical.Replace("%TARGET%", target.ToString());
+                default: return Text.Survive.Replace("%TARGET%", target.ToString());
+            }
+        }
+    }
+}
