@@ -259,7 +259,7 @@ namespace SupplyDrop.API
 
                 PluginBus.Publish(BusTopics.SupplyDropped, Plugin.BusOwner, profile.Key);
 
-                if (Chance.Roll(Config.TrapChancePercent + (Config.TrapChancePerChaosLevel * ChaosState.BonusLevel)))
+                if (Config.TrapChancePercent > 0 && Chance.Roll(Config.TrapChancePercent + (Config.TrapChancePerChaosLevel * ChaosState.BonusLevel)))
                     pending.Add(Timing.RunCoroutine(WatchTrap(anchor)));
 
                 if (Config.LogDrops)

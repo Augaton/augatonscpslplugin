@@ -171,6 +171,34 @@ namespace AugatonLib.Tests
 
         // Un effet part quand le joueur lance la piece : il tient donc toujours la piece elle-meme.
         [Fact]
+        public void EveryBusTopicIsPublishedAndHeard()
+        {
+            string root = Root();
+            string topicsFile = Path.Combine(root, "AugatonLib", "Bus", "BusTopics.cs");
+
+            string code = string.Concat(
+                SourcesOf(Path.Combine(root, "plugins"))
+                    .Concat(SourcesOf(Path.Combine(root, "AugatonLib")))
+                    .Where(file => file != topicsFile)
+                    .Select(File.ReadAllText));
+
+            List<string> offenders = Regex.Matches(File.ReadAllText(topicsFile), @"public const string (\w+) =")
+                .Select(match => match.Groups[1].Value)
+                .Where(topic => !IsPublishedAndHeard(code, topic))
+                .ToList();
+
+            Assert.Empty(offenders);
+        }
+
+        private static bool IsPublishedAndHeard(string code, string topic)
+        {
+            int references = Regex.Matches(code, $@"BusTopics\.{topic}\b").Count;
+            int subscriptions = Regex.Matches(code, $@"Subscribe\([^;\n]*BusTopics\.{topic}\b").Count;
+
+            return subscriptions > 0 && references > subscriptions;
+        }
+
+        [Fact]
         public void NoCoinEffectReadsTheHeldItem()
         {
             string effects = Path.Combine(Root(), "plugins", "BetterCoinflipsRewritten", "Effects");
