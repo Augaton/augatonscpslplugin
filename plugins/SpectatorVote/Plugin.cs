@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.Handlers;
@@ -30,7 +31,9 @@ namespace SpectatorVote
             ServerEvents.RoundRestarted += Service.Stop;
             PlayerEvents.Left += Service.OnLeft;
 
-            SelfCheck.Register(Name, "SiteIncidents charge", () => PluginDirectory.IsRegistered("SiteIncidents") ? null : "absent : aucun vote ne s'ouvrira");
+            PluginBus.Subscribe(Name, BusTopics.RoundMutatorStarted, Service.OnMutatorStarted);
+
+            SelfCheck.Register(Name, "choix du vote disponibles", Service.CheckOptions);
 
             PluginDirectory.Register(this, Capability.Bus);
         }
@@ -43,6 +46,7 @@ namespace SpectatorVote
             PlayerEvents.Left -= Service.OnLeft;
 
             Service.Stop();
+            PluginBus.UnsubscribeOwner(Name);
             PluginDirectory.Unregister(this);
 
             Service = null;

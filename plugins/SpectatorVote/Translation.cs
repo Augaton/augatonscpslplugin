@@ -5,12 +5,12 @@ namespace SpectatorVote
     public sealed class Translation
     {
         [Description("Hint d'ouverture, montre aux spectateurs. %SECONDS% = duree, %OPTIONS% = lignes de choix.")]
-        public string VoteOpened { get; set; } = "Les morts votent pour le prochain incident (%SECONDS% s) :\n%OPTIONS%";
+        public string VoteOpened { get; set; } = "Les morts votent pour la suite du round (%SECONDS% s) :\n%OPTIONS%";
 
         [Description("Ligne de choix. %NUMBER% = numero, %LABEL% = incident.")]
         public string OptionLine { get; set; } = ".vi %NUMBER% : %LABEL%";
 
-        [Description("Hint du resultat, montre a tous. %LABEL% = incident choisi.")]
+        [Description("Hint du resultat, montre a tous. %LABEL% = choix gagnant.")]
         public string VoteResult { get; set; } = "Les morts ont choisi : %LABEL%";
 
         [Description("Reponse a un vote pris en compte. %LABEL% = incident choisi.")]

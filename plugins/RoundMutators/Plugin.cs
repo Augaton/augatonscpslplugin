@@ -32,6 +32,7 @@ namespace RoundMutators
 
             PluginBus.Subscribe(Owner, BusTopics.GamemodeStarted, Service.OnGamemodeStarted);
             PluginBus.Subscribe(Owner, BusTopics.ChaosLevelChanged, Service.OnChaosLevelChanged);
+            PluginBus.Subscribe(Owner, BusTopics.MutatorRequested, Service.OnMutatorRequested);
 
             PluginDirectory.Register(this, Capability.Scale, Capability.Light, Capability.Bus);
         }

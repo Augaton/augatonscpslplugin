@@ -44,6 +44,7 @@ namespace SupplyDrop
             WarheadEvents.Detonated += serverHandlers.OnWarheadDetonated;
 
             PluginBus.Subscribe(BusOwner, BusTopics.TeamWiped, OnTeamWiped);
+            PluginBus.Subscribe(BusOwner, BusTopics.DropRequested, OnDropRequested);
 
             SelfCheck.Register(Name, "point de largage en surface", () => Door.Get(DoorName.SurfaceNuke) is null ? "introuvable" : null);
 
@@ -165,6 +166,19 @@ namespace SupplyDrop
                 if (profile.ScatterRadius < 0f)
                     profile.ScatterRadius = 0f;
             }
+        }
+
+        private void OnDropRequested(BusMessage message)
+        {
+            if (Service is null || !Round.IsRoundInProgress)
+                return;
+
+            DropProfile profile = Service.Find(message.Text);
+
+            if (profile is null)
+                Logger.Warn($"Largage demande inconnu : \"{message.Text}\".");
+            else
+                Service.Trigger(profile, true);
         }
 
         private void OnTeamWiped(BusMessage message)

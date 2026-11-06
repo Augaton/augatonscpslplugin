@@ -24,7 +24,7 @@ namespace SpectatorVote
         [Description("Delai entre deux commandes .vi d'un meme joueur, en secondes. 1 au plus bas.")]
         public float VoteCommandCooldownSeconds { get; set; } = 1f;
 
-        [Description("Incidents proposes au vote. CameraOutage n'y est pas : sans SCP-079, il ne ferait rien.")]
+        [Description("Choix proposes au vote. CameraOutage n'y est pas : sans SCP-079, il ne ferait rien.")]
         public List<IncidentOption> Options { get; set; } = new List<IncidentOption>
         {
             new IncidentOption { Incident = "Blackout", Label = "Panne d'eclairage" },
@@ -32,6 +32,10 @@ namespace SpectatorVote
             new IncidentOption { Incident = "Lockdown", Label = "Portes bloquees" },
             new IncidentOption { Incident = "GasLeak", Label = "Fuite de gaz" },
             new IncidentOption { Incident = "TeslaSurge", Label = "Surcharge des portes Tesla" },
+            new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "mtf", Label = "Largage MTF" },
+            new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "chaos", Label = "Largage du Chaos" },
+            new IncidentOption { Kind = VoteOptionKind.Mutator, Incident = "SwiftScps", Label = "SCP acceleres" },
+            new IncidentOption { Kind = VoteOptionKind.Mutator, Incident = "NightFall", Label = "Nuit noire" },
         };
 
         [Description("Suspend les votes pendant un mode de jeu.")]

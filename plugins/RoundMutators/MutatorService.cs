@@ -148,6 +148,21 @@ namespace RoundMutators
             BeginRandom();
         }
 
+        public void OnMutatorRequested(BusMessage message)
+        {
+            if (!Enum.TryParse(message.Text, true, out MutatorType type) || !Enum.IsDefined(typeof(MutatorType), type))
+            {
+                Logger.Warn($"Mutateur demande inconnu : \"{message.Text}\".");
+                return;
+            }
+
+            if (Active.HasValue || !Round.IsRoundInProgress || (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses))
+                return;
+
+            Begin(type);
+            pacing.MarkUsed();
+        }
+
         public string NameOf(MutatorType type)
         {
             switch (type)

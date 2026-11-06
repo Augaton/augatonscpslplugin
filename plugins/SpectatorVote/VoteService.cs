@@ -16,7 +16,6 @@ namespace SpectatorVote
 {
     public sealed class VoteService
     {
-        private const string IncidentPlugin = "SiteIncidents";
         private const int MinChoices = 2;
 
         private readonly Plugin plugin;
@@ -29,6 +28,7 @@ namespace SpectatorVote
         private CoroutineHandle closing;
         private bool running;
         private bool closingScheduled;
+        private bool mutatorRunning;
 
         public VoteService(Plugin plugin) => this.plugin = plugin;
 
@@ -58,6 +58,22 @@ namespace SpectatorVote
             box.Close();
             current.Clear();
             Cooldowns.Clear();
+            mutatorRunning = false;
+        }
+
+        public void OnMutatorStarted(BusMessage message) => mutatorRunning = true;
+
+        public string CheckOptions()
+        {
+            int available = 0;
+
+            foreach (IncidentOption option in Config.Options)
+            {
+                if (IsAvailable(option))
+                    available++;
+            }
+
+            return available >= MinChoices ? null : "moins de deux choix possibles : aucun vote ne s'ouvrira";
         }
 
         public void OnLeft(PlayerLeftEventArgs ev)
@@ -90,9 +106,6 @@ namespace SpectatorVote
             if (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses)
                 return "Suspendu pendant un mode de jeu.";
 
-            if (!PluginDirectory.IsRegistered(IncidentPlugin))
-                return $"{IncidentPlugin} n'est pas charge.";
-
             CollectSpectators();
 
             if (!forced && spectators.Count < Config.MinSpectators)
@@ -101,7 +114,7 @@ namespace SpectatorVote
             DrawOptions();
 
             if (current.Count < MinChoices)
-                return "Pas assez d'incidents disponibles.";
+                return "Pas assez de choix disponibles.";
 
             box.Open(current.Count);
 
@@ -181,7 +194,7 @@ namespace SpectatorVote
 
             foreach (IncidentOption option in Config.Options)
             {
-                if (option is not null && option.Weight > 0 && !string.IsNullOrEmpty(option.Incident))
+                if (IsAvailable(option))
                     pool.Add(option);
             }
 
@@ -191,6 +204,37 @@ namespace SpectatorVote
 
                 pool.Remove(picked);
                 current.Add(picked);
+            }
+        }
+
+        private bool IsAvailable(IncidentOption option)
+        {
+            if (option is null || option.Weight <= 0 || string.IsNullOrEmpty(option.Incident))
+                return false;
+
+            if (option.Kind == VoteOptionKind.Mutator && mutatorRunning)
+                return false;
+
+            return PluginDirectory.IsRegistered(PluginOf(option.Kind));
+        }
+
+        private static string PluginOf(VoteOptionKind kind)
+        {
+            switch (kind)
+            {
+                case VoteOptionKind.SupplyDrop: return "SupplyDrop";
+                case VoteOptionKind.Mutator: return "RoundMutators";
+                default: return "SiteIncidents";
+            }
+        }
+
+        private static string TopicOf(VoteOptionKind kind)
+        {
+            switch (kind)
+            {
+                case VoteOptionKind.SupplyDrop: return BusTopics.DropRequested;
+                case VoteOptionKind.Mutator: return BusTopics.MutatorRequested;
+                default: return BusTopics.IncidentRequested;
             }
         }
 
@@ -205,12 +249,12 @@ namespace SpectatorVote
 
                 box.Close();
 
-                if (winner is null || (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses))
+                if (winner is null || !IsAvailable(winner) || (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses))
                     return;
 
-                if (PluginBus.Publish(BusTopics.IncidentRequested, Plugin.Owner, winner.Incident) == 0)
+                if (PluginBus.Publish(TopicOf(winner.Kind), Plugin.Owner, winner.Incident) == 0)
                 {
-                    Logger.Warn("Personne n'a recu l'incident choisi par les spectateurs.");
+                    Logger.Warn("Personne n'a recu le choix des spectateurs.");
                     return;
                 }
 

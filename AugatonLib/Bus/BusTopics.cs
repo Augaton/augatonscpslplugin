@@ -46,6 +46,10 @@ namespace AugatonLib.Bus
 
         public const string GamemodeWon = "gamemode.won";
 
+        public const string DropRequested = "drop.requested";
+
+        public const string MutatorRequested = "mutator.requested";
+
         public const string StreakReached = "streak.reached";
 
         public const string IncidentRequested = "incident.requested";
