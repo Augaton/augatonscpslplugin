@@ -12,32 +12,40 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-dotnet@v6
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
           dotnet-version: '10.0.x'
+
+      - name: Restaurer les paquets NuGet
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props') }}
+
+      - name: Restaurer les assemblies du jeu
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .references
+          key: references-${{ hashFiles('tools/references.sha256') }}
 
       - name: Recuperer les assemblies du jeu
         run: ./tools/fetch-references.sh
 
-      - name: Compiler
-        run: dotnet build -c Release
+      # Une etape a part : sans shellcheck sur le runner, check.sh passerait en silence.
+      - name: Verifier les scripts
+        run: shellcheck --severity=warning tools/*.sh
 
-      - name: Compiler chaque plugin seul
-        run: |
-          for project in plugins/*/*.csproj; do
-            dotnet build "$project" -c Release -v q --nologo
-          done
-
-      - name: Tester
-        run: dotnet test tests/AugatonLib.Tests -c Release --no-build
+      - name: Compiler et tester
+        run: ./tools/check.sh
 
       - name: Preparer l'archive
         run: ./tools/package.sh
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: zone-shilari-labapi
           path: out/zone-shilari-labapi.zip
@@ -45,8 +53,9 @@ jobs:
 
   secrets:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
