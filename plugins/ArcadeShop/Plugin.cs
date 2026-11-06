@@ -35,6 +35,7 @@ namespace ArcadeShop
             PluginBus.Subscribe(Name, BusTopics.ContractCompleted, Service.OnContractCompleted);
             PluginBus.Subscribe(Name, BusTopics.StreakReached, Service.OnStreakReached);
             PluginBus.Subscribe(Name, BusTopics.GamemodeWon, Service.OnGamemodeWon);
+            PluginBus.Subscribe(Name, BusTopics.WarmupChampion, Service.OnWarmupChampion);
             PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, Service.OnPlayerReplaced);
 
             SelfCheck.Register(Name, "objets de la boutique", Service.CheckItems);

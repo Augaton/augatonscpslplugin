@@ -50,6 +50,8 @@ namespace AugatonLib.Bus
 
         public const string WarmupSpawned = "warmup.spawned";
 
+        public const string WarmupChampion = "warmup.champion";
+
         public const string DropRequested = "drop.requested";
 
         public const string MutatorRequested = "mutator.requested";

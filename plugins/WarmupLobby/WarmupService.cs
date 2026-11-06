@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using AugatonLib.Bus;
 using AugatonLib.Spawning;
+using AugatonLib.Text;
 using LabApi.Events.Arguments.Interfaces;
 using LabApi.Events.Arguments.ObjectiveEvents;
 using LabApi.Events.Arguments.PlayerEvents;
@@ -22,6 +23,7 @@ namespace WarmupLobby
 
         private readonly Plugin plugin;
         private readonly List<Player> waiting = new List<Player>(16);
+        private readonly Dictionary<string, int> kills = new Dictionary<string, int>();
 
         private CoroutineHandle loop;
 
@@ -46,6 +48,32 @@ namespace WarmupLobby
 
             IsRunning = false;
             waiting.Clear();
+            kills.Clear();
+        }
+
+        private void NameChampion()
+        {
+            Player champion = null;
+            int best = Config.ChampionMinKills - 1;
+
+            foreach (Player player in Player.ReadyList)
+            {
+                if (kills.TryGetValue(player.UserId, out int count) && count > best)
+                {
+                    champion = player;
+                    best = count;
+                }
+            }
+
+            if (champion is null || Config.ChampionMinKills <= 0)
+                return;
+
+            string text = plugin.Translation.Champion
+                .Replace("%PLAYER%", SafeText.Nickname(champion))
+                .Replace("%COUNT%", best.ToString());
+
+            Server.SendBroadcast(text, Config.ChampionBroadcastDuration);
+            PluginBus.Publish(BusTopics.WarmupChampion, plugin.Name, champion);
         }
 
         // ServerEvents.RoundStarted part avant RoleAssigner, qui ecarte tout joueur vivant : un joueur encore
@@ -55,6 +83,7 @@ namespace WarmupLobby
             if (!IsRunning)
                 return;
 
+            NameChampion();
             Stop();
 
             foreach (Player player in Player.ReadyList)
@@ -76,8 +105,18 @@ namespace WarmupLobby
         {
             try
             {
-                if (IsRunning && ev?.Player is not null)
-                    ev.Player.ClearInventory();
+                if (!IsRunning || ev?.Player is null)
+                    return;
+
+                ev.Player.ClearInventory();
+
+                string killer = ev.Attacker?.UserId;
+
+                if (killer is null || ev.Attacker == ev.Player)
+                    return;
+
+                kills.TryGetValue(killer, out int count);
+                kills[killer] = count + 1;
             }
             catch (Exception e)
             {

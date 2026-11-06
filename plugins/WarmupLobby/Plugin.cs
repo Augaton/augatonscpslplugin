@@ -66,6 +66,7 @@ namespace WarmupLobby
 
         protected override void ValidateConfig()
         {
+            Config.ChampionMinKills = (int)AtLeast("champion_min_kills", Config.ChampionMinKills, 0f);
             Config.RespawnSeconds = AtLeast("respawn_seconds", Config.RespawnSeconds, 1f);
 
             if (Config.FirstRole.IsHuman() && Config.SecondRole.IsHuman() && Config.FirstRole.GetFaction() != Config.SecondRole.GetFaction())

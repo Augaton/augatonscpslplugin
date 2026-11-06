@@ -27,6 +27,9 @@ namespace ArcadeShop
         [Description("Points offerts au vainqueur d'un mode de jeu, credites au round suivant. 0 = aucun.")]
         public int PointsForGamemodeWin { get; set; } = 50;
 
+        [Description("Points du champion du lobby de WarmupLobby, au debut du round. 0 = aucun.")]
+        public int PointsForWarmupChampion { get; set; } = 20;
+
         [Description("Nom d'achat du changement de contrat, si Contracts est installe.")]
         public string ContractRerollKey { get; set; } = "contrat";
 

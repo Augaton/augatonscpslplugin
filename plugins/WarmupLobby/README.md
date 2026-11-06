@@ -18,6 +18,9 @@ si l'echauffement vous semble trop court. L'echauffement ne prolonge pas le lobb
 Gardez-la sous `afk_time`, 90 secondes par defaut : le jeu expulse aussi pendant le lobby un joueur vivant qui ne bouge
 pas.
 
+Au lancement, le joueur qui a le plus tue dans le lobby est nomme champion, a partir de `champion_min_kills` kills.
+Avec ArcadeShop, il commence le round avec des points.
+
 ## Configuration
 
 | Cle | Defaut | Role |
@@ -26,6 +29,8 @@ pas.
 | `arena_spawn_role` | `ChaosConscript` | Role dont le point d'apparition sert d'arene |
 | `respawn_seconds` | `3` | Secondes entre deux reapparitions, 1 au plus bas |
 | `min_players` | `2` | Joueurs requis pour lancer l'echauffement |
+| `champion_min_kills` | `3` | Kills requis pour etre nomme champion. `0` = pas de champion |
+| `champion_broadcast_duration` | `5` | Duree de l'annonce, en secondes |
 | `hint_duration` | `4` | Duree des hints, en secondes |
 
 `collection check` signale un `arena_spawn_role` sans point d'apparition.

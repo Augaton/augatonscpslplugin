@@ -21,6 +21,12 @@ namespace WarmupLobby
         [Description("Joueurs requis pour lancer l'echauffement.")]
         public int MinPlayers { get; set; } = 2;
 
+        [Description("Kills du lobby requis pour etre nomme champion. 0 = pas de champion.")]
+        public int ChampionMinKills { get; set; } = 3;
+
+        [Description("Duree de l'annonce du champion, en secondes.")]
+        public ushort ChampionBroadcastDuration { get; set; } = 5;
+
         [Description("Duree des hints, en secondes.")]
         public float HintDuration { get; set; } = 4f;
 

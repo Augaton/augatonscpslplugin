@@ -115,6 +115,12 @@ namespace ArcadeShop
             plugin.Hints.Show(player, Text.WinnerBonus.Replace("%AMOUNT%", Config.PointsForGamemodeWin.ToString()), Config.HintDuration);
         }
 
+        public void OnWarmupChampion(BusMessage message)
+        {
+            if (message.TryGet(out Player player))
+                Award(player, Config.PointsForWarmupChampion);
+        }
+
         public void OnStreakReached(BusMessage message)
         {
             if (message.TryGet(out PlayerStreak streak) && streak.IsMilestone && IsOpen)
