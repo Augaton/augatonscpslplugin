@@ -56,6 +56,14 @@ namespace RandomGamemode.Commands
 
             if (arguments.Count == 0)
             {
+                if (plugin.VoteCooldowns.IsOnCooldown(player.UserId, plugin.Config.VoteCommandCooldownSeconds, out _))
+                {
+                    response = text.VoteTooFast;
+                    return false;
+                }
+
+                plugin.VoteCooldowns.Register(player.UserId);
+
                 response = vote.Describe();
                 return true;
             }
