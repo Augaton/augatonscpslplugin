@@ -8,5 +8,6 @@ namespace SiteIncidents
         GasLeak,
         TeslaSurge,
         CameraOutage,
+        ElevatorOutage,
     }
 }

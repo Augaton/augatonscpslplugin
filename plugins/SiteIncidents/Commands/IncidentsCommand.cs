@@ -34,7 +34,7 @@ namespace SiteIncidents.Commands
 
         public override string[] Aliases => new[] { "t" };
 
-        public override string Description => "Declenche un incident : Blackout, Alert, Lockdown, GasLeak, TeslaSurge ou CameraOutage.";
+        public override string Description => "Declenche un incident : Blackout, Alert, Lockdown, GasLeak, TeslaSurge, CameraOutage ou ElevatorOutage.";
 
         public override string Permission => IncidentsCommand.Node;
 
@@ -42,7 +42,7 @@ namespace SiteIncidents.Commands
         {
             if (arguments.Count != 1 || !Enum.TryParse(arguments.At(0), true, out IncidentType type) || !Enum.IsDefined(typeof(IncidentType), type))
             {
-                response = "Usage : incidents trigger <Blackout|Alert|Lockdown|GasLeak|TeslaSurge|CameraOutage>";
+                response = "Usage : incidents trigger <Blackout|Alert|Lockdown|GasLeak|TeslaSurge|CameraOutage|ElevatorOutage>";
                 return false;
             }
 

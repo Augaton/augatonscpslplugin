@@ -39,6 +39,7 @@ namespace SiteIncidents
             IncidentType.GasLeak,
             IncidentType.TeslaSurge,
             IncidentType.CameraOutage,
+            IncidentType.ElevatorOutage,
         };
 
         private readonly Plugin plugin;
@@ -48,6 +49,7 @@ namespace SiteIncidents
         private CoroutineHandle loop;
         private bool running;
         private bool postponed;
+        private bool elevatorsLocked;
 
         public IncidentService(Plugin plugin) => this.plugin = plugin;
 
@@ -74,6 +76,7 @@ namespace SiteIncidents
             timers.Clear();
             LightArbiter.ReleaseOwner(Plugin.Owner);
             UnlockDoors();
+            UnlockElevators();
         }
 
         public string CheckCassieWords()
@@ -87,6 +90,7 @@ namespace SiteIncidents
                 text.GasLeakCassie,
                 text.TeslaSurgeCassie,
                 text.CameraOutageCassie,
+                text.ElevatorOutageCassie,
             });
 
             return unknown is null ? null : $"mot inconnu : {unknown}";
@@ -135,6 +139,14 @@ namespace SiteIncidents
                         return false;
 
                     Announce(plugin.Translation.CameraOutageCassie, plugin.Translation.CameraOutageSubtitles, zone);
+                    break;
+
+                case IncidentType.ElevatorOutage:
+                    if (elevatorsLocked || !ElevatorsCanStop())
+                        return false;
+
+                    LockElevators();
+                    Announce(plugin.Translation.ElevatorOutageCassie, plugin.Translation.ElevatorOutageSubtitles, zone);
                     break;
 
                 default:
@@ -217,6 +229,7 @@ namespace SiteIncidents
                 case IncidentType.GasLeak: return Config.GasLeakWeight;
                 case IncidentType.TeslaSurge: return Config.TeslaSurgeWeight;
                 case IncidentType.CameraOutage: return HasScp079() ? Config.CameraOutageWeight : 0;
+                case IncidentType.ElevatorOutage: return ElevatorsCanStop() ? Config.ElevatorOutageWeight : 0;
                 default: return 0;
             }
         }
@@ -251,6 +264,24 @@ namespace SiteIncidents
 
         // Isolation est un drapeau distinct d'AdminCommand : lever ce verrou ne touche pas aux portes
         // bloquees par le staff, et les portes deja verrouillees sont de toute facon ignorees.
+        // Bloquer les ascenseurs pendant l'ogive ou la decontamination condamnerait ceux qui fuient.
+        private static bool ElevatorsCanStop() => !Warhead.IsDetonationInProgress && !Decontamination.IsDecontaminating;
+
+        private void LockElevators()
+        {
+            Elevator.LockAll();
+            elevatorsLocked = true;
+            timers.Add(Timing.CallDelayed(Config.ElevatorOutageDuration, UnlockElevators));
+        }
+
+        private void UnlockElevators()
+        {
+            if (elevatorsLocked)
+                Elevator.UnlockAll();
+
+            elevatorsLocked = false;
+        }
+
         private void StartLockdown(FacilityZone zone)
         {
             List<Door> candidates = new List<Door>(64);

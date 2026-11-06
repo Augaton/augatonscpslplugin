@@ -46,6 +46,12 @@ namespace SiteIncidents
         [Description("Poids du verrouillage de portes. 0 = jamais.")]
         public int LockdownWeight { get; set; } = 10;
 
+        [Description("Probabilite relative de l'arret des ascenseurs. 0 = jamais.")]
+        public int ElevatorOutageWeight { get; set; } = 6;
+
+        [Description("Duree de l'arret des ascenseurs, en secondes, 5 au plus bas.")]
+        public float ElevatorOutageDuration { get; set; } = 20f;
+
         [Description("Duree du verrouillage, en secondes.")]
         public float LockdownDuration { get; set; } = 15f;
 

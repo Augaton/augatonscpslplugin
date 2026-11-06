@@ -289,7 +289,7 @@ namespace BetterCoinflipsRewritten
         public int TriggerIncidentChance { get; set; } = 5;
 
         [Description("Incidents que cet effet peut provoquer.")]
-        public List<string> CoinIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "GasLeak", "TeslaSurge" };
+        public List<string> CoinIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "GasLeak", "TeslaSurge", "ElevatorOutage" };
 
         [Description("Poids de l'effet largage surprise, avec SupplyDrop. Il touche tout le site et passe donc par facility_effect_cooldown.")]
         public int SurpriseDropChance { get; set; } = 3;

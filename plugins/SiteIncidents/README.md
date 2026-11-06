@@ -1,8 +1,8 @@
 # SiteIncidents
 
 Provoque des incidents aleatoires dans le complexe pendant le round : panne d'eclairage d'une zone,
-alerte lumineuse rouge, portes bloquees, fuite de gaz dans une salle, surcharge des portes Tesla ou
-coupure de cameras pour SCP-079. Chaque incident est annonce par C.A.S.S.I.E, avec des sous-titres
+alerte lumineuse rouge, portes bloquees, fuite de gaz dans une salle, surcharge des portes Tesla, arret
+des ascenseurs ou coupure de cameras pour SCP-079. Chaque incident est annonce par C.A.S.S.I.E, avec des sous-titres
 en francais.
 
 La fuite de gaz vise une salle ou se trouve un humain : elle s'eclaire en vert et empoisonne les humains
@@ -31,6 +31,8 @@ plus aucun incident apres l'explosion de l'ogive.
 | `blackout_duration`, `alert_duration`, `lockdown_duration` | `20`, `30`, `15` | Durees en secondes |
 | `alert_color` | `#FF0000` | Couleur de l'alerte |
 | `lockdown_doors` | `10` | Portes bloquees dans la zone |
+| `elevator_outage_weight` | `6` | Probabilite de l'arret des ascenseurs. `0` = jamais |
+| `elevator_outage_duration` | `20` | Duree de l'arret, 5 au plus bas. Il n'a jamais lieu pendant l'ogive ni la decontamination |
 | `gas_leak_weight`, `tesla_surge_weight`, `camera_outage_weight` | `6` | Probabilite de chaque nouvel incident. `0` = jamais |
 | `gas_leak_duration`, `tesla_surge_duration`, `camera_outage_duration` | `20`, `15`, `15` | Durees en secondes |
 | `gas_leak_color` | `#33FF66` | Couleur de la salle touchee |
@@ -43,7 +45,7 @@ Les annonces et les noms de zones se reglent dans `translation.yml`.
 | Commande | Permission | Effet |
 |---|---|---|
 | `incidents status` | `siteincidents.manage` | Etat du plugin |
-| `incidents trigger <type>` | `siteincidents.manage` | Declenche `Blackout`, `Alert`, `Lockdown`, `GasLeak`, `TeslaSurge` ou `CameraOutage` |
+| `incidents trigger <type>` | `siteincidents.manage` | Declenche `Blackout`, `Alert`, `Lockdown`, `GasLeak`, `TeslaSurge`, `CameraOutage` ou `ElevatorOutage` |
 
 Alias `inc`. Chaque declenchement manuel est trace.
 

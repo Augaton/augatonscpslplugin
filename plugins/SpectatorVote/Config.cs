@@ -32,6 +32,7 @@ namespace SpectatorVote
             new IncidentOption { Incident = "Lockdown", Label = "Portes bloquees" },
             new IncidentOption { Incident = "GasLeak", Label = "Fuite de gaz" },
             new IncidentOption { Incident = "TeslaSurge", Label = "Surcharge des portes Tesla" },
+            new IncidentOption { Incident = "ElevatorOutage", Label = "Ascenseurs hors service" },
             new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "mtf", Label = "Largage MTF" },
             new IncidentOption { Kind = VoteOptionKind.SupplyDrop, Incident = "chaos", Label = "Largage du Chaos" },
             new IncidentOption { Kind = VoteOptionKind.Mutator, Incident = "SwiftScps", Label = "SCP acceleres" },

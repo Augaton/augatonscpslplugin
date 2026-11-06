@@ -54,6 +54,7 @@ namespace SiteIncidents
 
         protected override void ValidateConfig()
         {
+            Config.ElevatorOutageDuration = AtLeast("elevator_outage_duration", Config.ElevatorOutageDuration, 5f);
             Config.TeslaSurgeInterval = AtLeast("tesla_surge_interval", Config.TeslaSurgeInterval, 2f);
             Config.MinEventGapSeconds = AtLeast("min_event_gap_seconds", Config.MinEventGapSeconds, 0f);
         }

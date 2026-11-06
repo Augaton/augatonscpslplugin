@@ -27,13 +27,13 @@ Alias de `.voteincident`. Seuls les spectateurs votent.
 | `option_count` | `3` | Choix proposes, 2 au plus bas |
 | `min_spectators` | `2` | Spectateurs requis pour ouvrir un vote |
 | `vote_command_cooldown_seconds` | `1` | Delai entre deux `.vi`, 1 au plus bas |
-| `options` | 9 choix | Choix possibles : `kind`, `incident`, `label`, `weight` |
+| `options` | 10 choix | Choix possibles : `kind`, `incident`, `label`, `weight` |
 | `pause_during_gamemodes` | `true` | Suspend les votes pendant un mode de jeu |
 | `hint_duration` | `5` | Duree du hint de resultat, en secondes |
 
 `kind` vaut `Incident` par defaut, `SupplyDrop` ou `Mutator`. `incident` nomme la cible :
 
-- avec `Incident`, `Blackout`, `Alert`, `Lockdown`, `GasLeak`, `TeslaSurge` ou `CameraOutage` ;
+- avec `Incident`, `Blackout`, `Alert`, `Lockdown`, `GasLeak`, `TeslaSurge`, `CameraOutage` ou `ElevatorOutage` ;
 - avec `SupplyDrop`, la cle d'un profil de largage, par exemple `mtf` ou `chaos` ;
 - avec `Mutator`, `LowGravity`, `Swift`, `Tiny`, `Tireless`, `NightFall`, `ScarceAmmo`, `ScarceMedical`, `SwiftScps` ou
   `FragileHumans`.

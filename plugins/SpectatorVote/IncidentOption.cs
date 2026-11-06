@@ -7,7 +7,7 @@ namespace SpectatorVote
         [Description("Type de choix : Incident, SupplyDrop ou Mutator.")]
         public VoteOptionKind Kind { get; set; } = VoteOptionKind.Incident;
 
-        [Description("Cible du choix. Incident : Blackout, Alert, Lockdown, GasLeak, TeslaSurge ou CameraOutage. SupplyDrop : cle d'un profil de largage. Mutator : nom d'un mutateur.")]
+        [Description("Cible du choix. Incident : Blackout, Alert, Lockdown, GasLeak, TeslaSurge, CameraOutage ou ElevatorOutage. SupplyDrop : cle d'un profil de largage. Mutator : nom d'un mutateur.")]
         public string Incident { get; set; } = string.Empty;
 
         [Description("Nom affiche aux joueurs.")]

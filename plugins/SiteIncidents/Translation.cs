@@ -16,6 +16,12 @@ namespace SiteIncidents
         [Description("Sous-titres de l'alerte. %ZONE% est remplace par le nom de la zone.")]
         public string AlertSubtitles { get; set; } = "Attention. Alerte de securite en %ZONE%.";
 
+        [Description("Annonce C.A.S.S.I.E de l'arret des ascenseurs. Vide = aucune annonce.")]
+        public string ElevatorOutageCassie { get; set; } = "attention . facility system failure detected";
+
+        [Description("Sous-titres de l'arret des ascenseurs.")]
+        public string ElevatorOutageSubtitles { get; set; } = "Attention. Ascenseurs hors service.";
+
         [Description("Annonce C.A.S.S.I.E du verrouillage. Vide = aucune annonce.")]
         public string LockdownCassie { get; set; } = "attention . door system failure detected";
 

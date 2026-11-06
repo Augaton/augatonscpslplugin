@@ -199,7 +199,7 @@ namespace SCP500s
         public float BlackoutDuration { get; set; } = 20f;
 
         [Description("Incidents de SiteIncidents que la pilule d'incident peut provoquer.")]
-        public List<string> PillIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "GasLeak", "TeslaSurge" };
+        public List<string> PillIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "GasLeak", "TeslaSurge", "ElevatorOutage" };
 
         [Description("Profils de SupplyDrop que la pilule de largage peut appeler.")]
         public List<string> PillDropProfiles { get; set; } = new List<string> { "mtf", "chaos" };
