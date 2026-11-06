@@ -22,6 +22,18 @@ namespace SupplyDrop
         [Description("Intervalle en secondes du planificateur. Une seule coroutine gere tous les largages.")]
         public float SchedulerTick { get; set; } = 1f;
 
+        [Description("Chance, en pourcentage, qu'un largage soit piege. 0 = jamais.")]
+        public float TrapChancePercent { get; set; } = 15f;
+
+        [Description("Distance en metres a laquelle un humain declenche le piege.")]
+        public float TrapRange { get; set; } = 4f;
+
+        [Description("Secondes entre le declenchement du piege et son explosion : le joueur attentif a le temps de fuir.")]
+        public float TrapFuseSeconds { get; set; } = 2f;
+
+        [Description("Secondes apres lesquelles un piege intact se desamorce.")]
+        public float TrapLifetimeSeconds { get; set; } = 180f;
+
         [Description("Journalise chaque largage dans la console serveur.")]
         public bool LogDrops { get; set; } = true;
 

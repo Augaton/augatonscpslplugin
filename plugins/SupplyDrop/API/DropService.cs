@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AugatonLib.Bus;
+using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Spawning;
 using Cassie;
@@ -20,6 +21,8 @@ namespace SupplyDrop.API
 {
     public sealed class DropService
     {
+        private const float TrapTickSeconds = 0.5f;
+
         private readonly Plugin plugin;
         private readonly Dictionary<string, DropState> states = new Dictionary<string, DropState>();
         private readonly List<CoroutineHandle> pending = new List<CoroutineHandle>(8);
@@ -238,6 +241,9 @@ namespace SupplyDrop.API
 
                 PluginBus.Publish(BusTopics.SupplyDropped, Plugin.BusOwner, profile.Key);
 
+                if (Chance.Roll(Config.TrapChancePercent))
+                    pending.Add(Timing.RunCoroutine(WatchTrap(anchor)));
+
                 if (Config.LogDrops)
                     Logger.Info($"[SupplyDrop] Largage \"{profile.Key}\" : {spawned}/{attempted} objets places autour de {Describe(anchor)}.");
             }
@@ -245,6 +251,38 @@ namespace SupplyDrop.API
             {
                 Logger.Error($"DropService.Deliver: {e}");
             }
+        }
+
+        private IEnumerator<float> WatchTrap(Vector3 anchor)
+        {
+            float end = Time.time + Config.TrapLifetimeSeconds;
+
+            while (Time.time < end)
+            {
+                yield return Timing.WaitForSeconds(TrapTickSeconds);
+
+                if (!IsHumanNear(anchor))
+                    continue;
+
+                ItemType grenade = Chance.Roll(50f) ? ItemType.GrenadeHE : ItemType.GrenadeFlash;
+
+                TimedGrenadeProjectile.SpawnActive(anchor + (Vector3.up * 0.5f), grenade, null, Config.TrapFuseSeconds);
+                yield break;
+            }
+        }
+
+        // Chemin chaud : Player.ReadyList allouerait un iterateur LINQ a chaque tick.
+        private bool IsHumanNear(Vector3 anchor)
+        {
+            float rangeSquared = Config.TrapRange * Config.TrapRange;
+
+            foreach (Player player in Player.Dictionary.Values)
+            {
+                if (player.IsPlayer && player.IsHuman && (player.Position - anchor).sqrMagnitude <= rangeSquared)
+                    return true;
+            }
+
+            return false;
         }
 
         private int PlaceItems(DropProfile profile, Vector3? forcedPosition, Vector3 anchor, out int attempted)

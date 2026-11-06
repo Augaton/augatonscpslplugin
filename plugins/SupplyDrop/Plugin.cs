@@ -75,6 +75,10 @@ namespace SupplyDrop
 
         protected override void ValidateConfig()
         {
+            Config.TrapChancePercent = AtLeast("trap_chance_percent", Config.TrapChancePercent, 0f);
+            Config.TrapRange = AtLeast("trap_range", Config.TrapRange, 1f);
+            Config.TrapFuseSeconds = AtLeast("trap_fuse_seconds", Config.TrapFuseSeconds, 0.5f);
+
             if (Config.MinPlayers < 0)
             {
                 Logger.Warn($"MinPlayers ({Config.MinPlayers}) negatif, remis a 0.");

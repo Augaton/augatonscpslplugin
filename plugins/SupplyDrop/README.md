@@ -67,6 +67,15 @@ qu'ils ne traversent pas le sol au moment de l'apparition.
 
 ## Configuration
 
+Un largage sur sept environ est piege par defaut : une grenade, explosive ou aveuglante, part quelques secondes apres qu'un humain s'en approche.
+
+| Cle | Defaut | Role |
+|---|---|---|
+| `trap_chance_percent` | `15` | Chance qu'un largage soit piege. `0` = jamais |
+| `trap_range` | `4` | Distance en metres qui declenche le piege |
+| `trap_fuse_seconds` | `2` | Delai avant l'explosion |
+| `trap_lifetime_seconds` | `180` | Duree de vie d'un piege intact |
+
 Les fichiers sont `LabAPI/configs/<port>/SupplyDrop/config.yml` et `translation.yml`.
 Le format des valeurs ne change pas, coordonnees `x` / `y` / `z` comprises.
 
