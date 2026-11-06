@@ -82,6 +82,18 @@ namespace RandomGamemode
         [Description("Un traitre parmi nous : le temps est ecoule. %PLAYER% est le pseudo du traitre.")]
         public string TraitorEscapedJustice { get; set; } = "<size=30><color=green>Fin de l'enquete, les survivants gagnent. %PLAYER% etait le traitre.</color></size>";
 
+        [Description("Roi de la salle : annonce de la salle. %ROOM% est son nom.")]
+        public string KingOfTheHillRoom { get; set; } = "<size=30><color=yellow>Prenez la salle eclairee en jaune : %ROOM%.</color></size>";
+
+        [Description("Roi de la salle : score. %GUARDS% et %RAIDERS% sont les scores du NTF et du Chaos.")]
+        public string KingOfTheHillProgress { get; set; } = "<size=26>NTF %GUARDS% - %RAIDERS% Chaos</size>";
+
+        [Description("Roi de la salle : victoire du NTF.")]
+        public string KingOfTheHillGuardsWon { get; set; } = "<size=30><color=#3399ff>Le NTF tient la salle et gagne.</color></size>";
+
+        [Description("Roi de la salle : victoire du Chaos.")]
+        public string KingOfTheHillRaidersWon { get; set; } = "<size=30><color=green>Le Chaos tient la salle et gagne.</color></size>";
+
         [Description("Confirmation du vote. %MODE% est remplace par le mode choisi.")]
         public string VoteRegistered { get; set; } = "Vote enregistre pour %MODE%.";
     }

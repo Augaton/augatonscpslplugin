@@ -111,6 +111,15 @@ namespace RandomGamemode
         [Description("Un traitre parmi nous : duree de l'enquete, en secondes.")]
         public float TraitorRoundSeconds { get; set; } = 360f;
 
+        [Description("Roi de la salle : secondes de tenue pour gagner.")]
+        public int KingOfTheHillTarget { get; set; } = 120;
+
+        [Description("Roi de la salle : secondes avant de revenir apres une mort.")]
+        public float KingOfTheHillRespawnSeconds { get; set; } = 6f;
+
+        [Description("Roi de la salle : couleur de la salle disputee.")]
+        public string KingOfTheHillColor { get; set; } = "#FFD700";
+
         [Description("Vie du joueur Juggernaut.")]
         public float JuggernautHealth { get; set; } = 2500f;
 
@@ -328,6 +337,13 @@ namespace RandomGamemode
                 Description = "Un traitre se cache parmi vous. Demasquez-le, mais chaque innocent abattu desarme son tireur.",
                 PauseRespawnWaves = true,
                 ForceFriendlyFire = true,
+            },
+            ["kingofthehill"] = new GamemodeSettings
+            {
+                Weight = 8,
+                MinPlayers = 6,
+                Description = "Tenez la salle designee plus longtemps que l'autre camp.",
+                PauseRespawnWaves = true,
             },
             ["gungame"] = new GamemodeSettings
             {
