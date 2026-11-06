@@ -214,6 +214,10 @@ namespace RandomGamemode.API
 
             Active = gamemode;
 
+            // Avant la premiere etape du mode, qui part des RunCoroutine et change souvent les roles :
+            // GamemodeStarted arriverait trop tard pour un plugin qui reagit a ces changements.
+            GamemodeState.Begin();
+
             if (gamemode.Settings.ForceFriendlyFire)
             {
                 friendlyFireOverridden = true;
