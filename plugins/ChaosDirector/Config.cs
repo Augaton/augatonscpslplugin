@@ -25,6 +25,9 @@ namespace ChaosDirector
         [Description("Points de chaos par echange a SCP-1162.")]
         public int PointsPerExchange { get; set; } = 1;
 
+        [Description("Points de chaos par palier atteint dans une serie de kills.")]
+        public int PointsPerStreak { get; set; } = 2;
+
         [Description("Points de chaos par utilisation de SCP-261.")]
         public int PointsPerVending { get; set; } = 1;
 

@@ -27,6 +27,7 @@ namespace ChaosDirector
             PluginBus.Subscribe(owner, BusTopics.TeamWiped, _ => Add(Config.PointsPerTeamWipe));
             PluginBus.Subscribe(owner, BusTopics.VendingUsed, _ => Add(Config.PointsPerVending));
             PluginBus.Subscribe(owner, BusTopics.ItemExchanged, _ => Add(Config.PointsPerExchange));
+            PluginBus.Subscribe(owner, BusTopics.StreakReached, OnStreakReached);
         }
 
         public void OnDeath(PlayerDeathEventArgs ev)
@@ -39,6 +40,12 @@ namespace ChaosDirector
             {
                 Logger.Error($"OnDeath: {e}");
             }
+        }
+
+        private void OnStreakReached(BusMessage message)
+        {
+            if (message.TryGet(out PlayerStreak streak) && streak.IsMilestone)
+                Add(Config.PointsPerStreak);
         }
 
         public void Reset()
