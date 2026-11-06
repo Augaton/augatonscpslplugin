@@ -57,7 +57,7 @@ namespace ScpLevels
         {
             try
             {
-                Player scp = ev?.Attacker ?? FindPocketKiller(ev);
+                Player scp = CreditedScp(ev);
 
                 if (scp is null || ev.Player is null || scp == ev.Player || !scp.IsSCP || !Round.IsRoundInProgress)
                     return;
@@ -176,9 +176,24 @@ namespace ScpLevels
             if (ev?.DamageHandler is not UniversalDamageHandler handler || handler.TranslationId != DeathTranslations.PocketDecay.Id)
                 return null;
 
+            return FirstWithRole(RoleTypeId.Scp106);
+        }
+
+        private Player CreditedScp(PlayerDeathEventArgs ev)
+        {
+            Player killer = ev?.Attacker ?? FindPocketKiller(ev);
+
+            if (killer?.Role == RoleTypeId.Scp0492 && Config.ZombieKillsFeedScp049)
+                return FirstWithRole(RoleTypeId.Scp049) ?? killer;
+
+            return killer;
+        }
+
+        private static Player FirstWithRole(RoleTypeId role)
+        {
             foreach (Player player in Player.ReadyList)
             {
-                if (player.Role == RoleTypeId.Scp106)
+                if (player.Role == role)
                     return player;
             }
 

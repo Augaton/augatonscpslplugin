@@ -16,6 +16,9 @@ namespace ScpLevels
             new ScpLevel { Kills = 11, MovementBoost = 12, BonusHealth = 250f, RegenPerSecond = 3f },
         };
 
+        [Description("Un kill de SCP-049-2 compte pour SCP-049.")]
+        public bool ZombieKillsFeedScp049 { get; set; } = true;
+
         [Description("Roles SCP qui ne montent pas de niveau.")]
         public List<RoleTypeId> ExcludedRoles { get; set; } = new List<RoleTypeId>
         {
