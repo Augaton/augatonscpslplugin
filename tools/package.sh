@@ -49,8 +49,11 @@ cp "$root"/out/plugins/*.dll "$stage/plugins/global/"
 cp "$root"/out/dependencies/AugatonLib.dll "$stage/dependencies/global/"
 
 # Les dependances obligatoires sont livrees avec la collection, aux versions utilisees pour compiler.
-cp "$(package_dll AugatonLib/AugatonLib.csproj HintServiceMeow HintServiceMeow.dll)" "$stage/plugins/global/"
-cp "$(package_dll plugins/AntiSLCrush/AntiSLCrush.csproj Lib.Harmony 0Harmony.dll)" "$stage/dependencies/global/"
+hint_service="$(package_dll AugatonLib/AugatonLib.csproj HintServiceMeow HintServiceMeow.dll)"
+harmony="$(package_dll plugins/AntiSLCrush/AntiSLCrush.csproj Lib.Harmony 0Harmony.dll)"
+
+cp "$hint_service" "$stage/plugins/global/"
+cp "$harmony" "$stage/dependencies/global/"
 
 cp "$root/LICENSE" "$stage/licenses/AugatonLib-LICENSE.txt"
 cp "$root/third_party/FairScpSelection/LICENSE.txt" "$stage/licenses/FairScpSelection-LICENSE.txt"
