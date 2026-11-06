@@ -301,3 +301,51 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Aucune saccade 5 s apres le debut du round, et tout le loot prevu est bien remplace.
 - [ ] `labapi reload configs` applique une pilule ajoutee ou un poids change. Une pilule deja au sol reste utilisable.
 - [ ] Sans pilule active ou inventaire plein, SCP-261 donne bien quelque chose au joueur.
+
+## 4. Synergies entre plugins
+
+**Remplacement**
+- [ ] Avec Replacer : le remplacant reprend les points, le contrat et la serie du joueur parti.
+- [ ] Avec SCPReplacer : un SCP de niveau 2 parti, son remplacant a le meme niveau et ses effets, et la vie n'est pas donnee deux fois.
+
+**Discord**
+- [ ] `send_alerts` : TPS bas puis retour a la normale, deux messages. Un seul message par type d'exploit bloque.
+- [ ] Un probleme de `collection check` au demarrage arrive sur le salon.
+- [ ] `send_round_recap` : le bilan arrive sans balise de couleur ni de taille.
+
+**Chaos et niveaux**
+- [ ] SCP-106 gagne un niveau quand un joueur meurt dans la dimension de poche.
+- [ ] `collection check` ne signale aucun mot inconnu dans les annonces `Mutator` et `ScpLevel`.
+- [ ] Niveau de chaos 3 : un mutateur demarre s'il n'y en a pas, et aucun second mutateur ne s'ajoute.
+- [ ] Niveau de chaos 2 : les annonces `Late` arrivent avant `late_round_seconds`.
+- [ ] Un niveau de SCP ajoute des points de chaos, et le bilan nomme le SCP le plus dangereux.
+- [ ] `reaction_cooldown_seconds` espace bien deux reactions de C.A.S.S.I.E.
+
+**Contrats et boutique**
+- [ ] Les quatre nouveaux contrats avancent : piece lancee, pilule avalee, SCP-261 utilise, echange a SCP-1162.
+- [ ] Une pilule rengainee apres activation compte, une pilule refusee par le cooldown ne compte pas.
+- [ ] Sans le plugin concerne, le contrat n'est jamais propose.
+- [ ] `.shop contrat` : le contrat change, le type differe, et les points partent une seule fois.
+- [ ] `.shop contrat` sans contrat, ou contrat deja rempli : aucun point debite.
+- [ ] Un palier de serie rapporte des points de boutique.
+
+**Modes de jeu**
+- [ ] Gun Game, Patate chaude et Un traitre parmi nous : le vainqueur est nomme au bilan.
+- [ ] Le vainqueur commence le round suivant avec son bonus de points et son avance de serie.
+- [ ] WarmupLobby : le rappel `.votemode` s'affiche a l'apparition, au plus une fois par `vote_reminder_seconds`.
+
+**Vote des spectateurs**
+- [ ] Les trois types de choix fonctionnent : incident, largage, mutateur.
+- [ ] Un mutateur n'est plus propose quand le round en a deja un.
+- [ ] Sans SiteIncidents, un vote s'ouvre quand meme avec SupplyDrop et RoundMutators.
+
+**Pieces et pilules**
+- [ ] Incident provoque et largage surprise, en piece et en pilule.
+- [ ] Ces effets ne sortent pas pendant un mode de jeu, ni sans le plugin cible.
+- [ ] `facility_effect_cooldown` espace bien ces effets de piece.
+
+**Micro-HID et largages**
+- [ ] Surcharge Tesla : recharge trois fois plus rapide pendant 30 s, puis retour a la normale.
+- [ ] Panne d'eclairage : recharge coupee pendant 20 s.
+- [ ] `ScarceAmmo` et `ScarceMedical` : chaque largage contient le bonus de sa config.
+- [ ] `trap_chance_percent: 0` : aucun piege, quel que soit le niveau de chaos.

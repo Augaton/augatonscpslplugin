@@ -6,6 +6,9 @@ vitesse et une regeneration. Tout le serveur voit le SCP monter : la menace gran
 Les niveaux disparaissent avec le role. SCP-079 et SCP-049-2 n'en prennent pas, et rien ne compte pendant un mode
 de jeu. Avec ScpScaling, les PV bonus s'ajoutent a des PV deja adaptes au nombre de joueurs.
 
+Une mort par decomposition dans la dimension de poche compte pour SCP-106. Un remplacant de Replacer ou de SCPReplacer
+reprend le niveau du joueur parti. Chaque niveau gagne alimente ChaosDirector, RoundRecap et AmbientCassie.
+
 ## Configuration
 
 | Cle | Defaut | Role |

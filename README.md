@@ -37,38 +37,38 @@ Trente et un plugins et une bibliothèque partagée pour **SCP: Secret Laborator
 
 | Plugin | Version | Rôle |
 |---|---|---|
-| [AugatonLib](AugatonLib) | 2.4.0 | Bibliothèque partagée, **obligatoire** |
-| [AmbientCassie](plugins/AmbientCassie) | 1.0.0 | Annonces d'ambiance de C.A.S.S.I.E pendant le round |
-| [AntiSLCrush](plugins/AntiSLCrush) | 4.0.0 | Protège le serveur contre des bugs du jeu. **Licence non commerciale** |
-| [ArcadeShop](plugins/ArcadeShop) | 1.0.0 | Des points gagnés pendant le round, à dépenser dans une boutique |
-| [ChaosDirector](plugins/ChaosDirector) | 1.2.0 | Niveau de chaos commun, nourri par les événements du round |
+| [AugatonLib](AugatonLib) | 2.5.0 | Bibliothèque partagée, **obligatoire** |
+| [AmbientCassie](plugins/AmbientCassie) | 1.1.0 | Annonces d'ambiance de C.A.S.S.I.E pendant le round |
+| [AntiSLCrush](plugins/AntiSLCrush) | 4.0.1 | Protège le serveur contre des bugs du jeu. **Licence non commerciale** |
+| [ArcadeShop](plugins/ArcadeShop) | 1.1.0 | Des points gagnés pendant le round, à dépenser dans une boutique |
+| [ChaosDirector](plugins/ChaosDirector) | 1.3.0 | Niveau de chaos commun, nourri par les événements du round |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
-| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.2.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
-| [Contracts](plugins/Contracts) | 1.0.0 | Un objectif secret par joueur, récompensé s'il le remplit |
-| [DiscordAudit](plugins/DiscordAudit) | 1.0.0 | Envoie les actions du staff vers un webhook Discord |
-| [MicroHidDock](plugins/MicroHidDock) | 1.0.0 | Repose le Micro-HID sur son socle, où il se recharge |
+| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.3.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
+| [Contracts](plugins/Contracts) | 1.1.0 | Un objectif secret par joueur, récompensé s'il le remplit |
+| [DiscordAudit](plugins/DiscordAudit) | 1.1.0 | Envoie les actions du staff vers un webhook Discord |
+| [MicroHidDock](plugins/MicroHidDock) | 1.1.0 | Repose le Micro-HID sur son socle, où il se recharge |
 | [PocketCorpses](plugins/PocketCorpses) | 1.0.0 | Fait retomber les corps de la dimension de poche |
-| [RandomGamemode](plugins/RandomGamemode) | 4.2.0 | 25 modes de jeu spéciaux, avec vote des joueurs |
-| [RoundMutators](plugins/RoundMutators) | 1.1.0 | Une règle légère sur certains rounds normaux |
-| [RoundRecap](plugins/RoundRecap) | 1.3.0 | Bilan de fin de round |
+| [RandomGamemode](plugins/RandomGamemode) | 4.3.0 | 25 modes de jeu spéciaux, avec vote des joueurs |
+| [RoundMutators](plugins/RoundMutators) | 1.2.0 | Une règle légère sur certains rounds normaux |
+| [RoundRecap](plugins/RoundRecap) | 1.4.0 | Bilan de fin de round |
 | [RealisticSizes](plugins/RealisticSizes) | 5.1.0 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
-| [Replacer](plugins/Replacer) | 3.1.0 | Remplace un joueur parti par un spectateur, avec son état complet |
-| [Scp261](plugins/Scp261) | 2.0.1 | Machine distributrice : une pièce contre un résultat au hasard |
+| [Replacer](plugins/Replacer) | 3.1.1 | Remplace un joueur parti par un spectateur, avec son état complet |
+| [Scp261](plugins/Scp261) | 2.0.2 | Machine distributrice : une pièce contre un résultat au hasard |
 | [Scp914Recipes](plugins/Scp914Recipes) | 1.0.0 | Recettes de SCP-914 réglables en config |
-| [SCP1162](plugins/SCP1162) | 3.1.0 | Le trou dans le mur : échange un objet contre un autre |
-| [SCP500s](plugins/SCP500s) | 7.1.0 | 62 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
-| [ScpLevels](plugins/ScpLevels) | 1.0.0 | Les SCP montent de niveau en tuant |
+| [SCP1162](plugins/SCP1162) | 3.1.1 | Le trou dans le mur : échange un objet contre un autre |
+| [SCP500s](plugins/SCP500s) | 7.2.0 | 62 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
+| [ScpLevels](plugins/ScpLevels) | 1.1.0 | Les SCP montent de niveau en tuant |
 | [ScpProximityChat](plugins/ScpProximityChat) | 3.1.0 | Permet aux SCP de parler aux joueurs proches |
-| [SCPReplacer](plugins/SCPReplacer) | 3.1.0 | Loterie de volontaires pour reprendre un SCP parti |
+| [SCPReplacer](plugins/SCPReplacer) | 3.1.1 | Loterie de volontaires pour reprendre un SCP parti |
 | [ScpScaling](plugins/ScpScaling) | 1.0.0 | Adapte les PV des SCP au nombre de joueurs |
-| [SiteIncidents](plugins/SiteIncidents) | 1.2.0 | Pannes, alertes, portes bloquées, fuites de gaz, surcharges Tesla et coupures de caméras |
-| [SpectatorVote](plugins/SpectatorVote) | 1.0.0 | Les spectateurs votent pour le prochain incident |
-| [Streaks](plugins/Streaks) | 1.0.0 | Séries de kills récompensées et primes sur les meilleurs joueurs |
-| [SupplyDrop](plugins/SupplyDrop) | 5.1.0 | Largages de ravitaillement, sur minuteur ou événement |
-| [TickGuard](plugins/TickGuard) | 1.0.0 | Surveille les TPS et suspend les événements si le serveur souffre |
+| [SiteIncidents](plugins/SiteIncidents) | 1.2.1 | Pannes, alertes, portes bloquées, fuites de gaz, surcharges Tesla et coupures de caméras |
+| [SpectatorVote](plugins/SpectatorVote) | 1.1.0 | Les spectateurs votent pour le prochain incident |
+| [Streaks](plugins/Streaks) | 1.1.0 | Séries de kills récompensées et primes sur les meilleurs joueurs |
+| [SupplyDrop](plugins/SupplyDrop) | 5.2.0 | Largages de ravitaillement, sur minuteur ou événement |
+| [TickGuard](plugins/TickGuard) | 1.1.0 | Surveille les TPS et suspend les événements si le serveur souffre |
 | [TeamGenocide](plugins/TeamGenocide) | 4.0.0 | Annonces C.A.S.S.I.E à l'extinction d'une équipe |
-| [WarmupLobby](plugins/WarmupLobby) | 1.0.0 | Fait combattre les joueurs en attendant le round |
+| [WarmupLobby](plugins/WarmupLobby) | 1.1.0 | Fait combattre les joueurs en attendant le round |
 
 Chaque plugin a son propre README, avec le détail de sa configuration.
 
@@ -277,8 +277,26 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | Streaks et RoundRecap sont présents | Le bilan nomme la meilleure série de kills |
 | Contracts et SCP500s sont présents | La récompense `SCP500` d'un contrat est une vraie pilule |
 | Contracts et ArcadeShop sont présents | Un contrat rempli rapporte des points de boutique |
-| SpectatorVote et SiteIncidents sont présents | Les spectateurs votent pour le prochain incident. Sans SiteIncidents, aucun vote ne s'ouvre |
+| SpectatorVote est présent | Les spectateurs votent pour un incident, un largage ou un mutateur, selon les plugins installés. Il faut au moins deux choix possibles |
 | ScpScaling et ScpLevels sont présents | Les PV de niveau s'ajoutent à des PV déjà adaptés au nombre de joueurs |
+| Replacer ou SCPReplacer, avec ScpLevels, ArcadeShop, Contracts ou Streaks | Le remplaçant reprend le niveau, les points, le contrat et la série du joueur parti |
+| TickGuard, AntiSLCrush et DiscordAudit sont présents | Un serveur en souffrance, un exploit bloqué et les problèmes de `collection check` arrivent sur Discord |
+| RoundRecap et DiscordAudit sont présents | Le bilan de chaque round arrive sur Discord |
+| ChaosDirector et SupplyDrop sont présents | Les largages sont plus souvent piégés quand le chaos monte |
+| ChaosDirector et RoundMutators sont présents | Un niveau de chaos élevé lance un mutateur en cours de round |
+| ChaosDirector et AmbientCassie sont présents | Les annonces deviennent plus inquiétantes quand le chaos monte |
+| ScpLevels et ChaosDirector sont présents | Chaque niveau gagné par un SCP fait monter le chaos |
+| ScpLevels et RoundRecap sont présents | Le bilan nomme le SCP le plus dangereux |
+| AmbientCassie, avec RoundMutators ou ScpLevels | C.A.S.S.I.E réagit à un mutateur ou à un SCP qui monte de niveau |
+| Contracts, avec BetterCoinflips, SCP500s, Scp261 ou SCP1162 | De nouveaux contrats apparaissent : lancer des pièces, avaler une pilule, utiliser SCP-261, échanger à SCP-1162 |
+| ArcadeShop et Streaks sont présents | Un palier de série rapporte des points |
+| ArcadeShop et Contracts sont présents | `.shop contrat` échange le contrat en cours contre des points |
+| RandomGamemode et RoundRecap sont présents | Le bilan nomme le vainqueur du mode |
+| RandomGamemode, avec ArcadeShop ou Streaks | Le vainqueur d'un mode commence le round suivant avec des points ou une avance de série |
+| WarmupLobby et RandomGamemode sont présents | Le lobby rappelle le vote du mode |
+| BetterCoinflips ou SCP500s, avec SiteIncidents ou SupplyDrop | Une pièce ou une pilule peut provoquer un incident ou un largage |
+| MicroHidDock et SiteIncidents sont présents | Une surcharge Tesla accélère la recharge du Micro-HID, une panne la coupe |
+| SupplyDrop et RoundMutators sont présents | Les largages compensent un peu les mutateurs de pénurie |
 | Un plugin manque | Seule la synergie concernée disparaît |
 
 Une CI vérifie qu'aucun plugin n'en référence un autre.

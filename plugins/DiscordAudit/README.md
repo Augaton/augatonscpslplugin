@@ -4,6 +4,9 @@ Envoie vers un salon Discord les actions du staff que les plugins de la collecti
 console : `gamemode force`, `scp500 give`, `supplydrop call`, `incidents trigger` et les autres. Sans ce
 plugin, ou sans adresse de webhook, rien ne change et rien ne sort du serveur.
 
+Il envoie aussi les alertes du serveur et, avec RoundRecap, le bilan de chaque round : TPS bas et retour a la
+normale avec TickGuard, exploit bloque avec AntiSLCrush, et problemes de `collection check` au demarrage.
+
 Les envois partent hors du thread principal : un Discord lent ne ralentit pas le serveur. Les actions sont
 regroupees, la limite de debit de Discord est respectee, et une action qui ne part pas est retentee deux
 fois avant d'etre abandonnee.

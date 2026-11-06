@@ -68,6 +68,7 @@ Pour un profil Vivant :
 |---|---|---|
 | RandomGamemode | `gamemode_chance` | Si vous l'activez, gardez 5 ou moins pour que les modes restent rares |
 | RoundMutators | `chance_percent` | Si vous l'activez, gardez 15 ou moins |
+| RoundMutators | `chaos_level_for_mutator` | Mettez 0 pour qu'aucun mutateur ne démarre en cours de round |
 | SiteIncidents | `min_interval_seconds` | Montez à 240 pour un round plus posé |
 | SiteIncidents, SupplyDrop | `min_event_gap_seconds` | Montez à 120 si les événements s'enchaînent trop |
 | SupplyDrop | `trap_chance_percent` | Mettez 0 pour des largages toujours sûrs |

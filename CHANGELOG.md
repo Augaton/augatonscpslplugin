@@ -47,6 +47,18 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - `scp261 status` indique la salle de chaque machine.
 - `collection check` couvre aussi les annonces de TeamGenocide et de BetterCoinflips, les portes de La vie selon Larry et le point de largage.
 - La config de BetterCoinflips est décrite en français.
+- DiscordAudit reçoit aussi les alertes du serveur et le bilan de round.
+- Le niveau de chaos pilote les largages piégés, les mutateurs en cours de round et le ton des annonces.
+- ScpLevels annonce chaque niveau : points de chaos, ligne « SCP le plus dangereux » au bilan, réaction de C.A.S.S.I.E.
+- AmbientCassie réagit aux mutateurs et aux niveaux de SCP.
+- Contracts ajoute quatre contrats : pièces, pilules, SCP-261 et SCP-1162.
+- ArcadeShop paie les paliers de série et vend le changement de contrat avec `.shop contrat`.
+- Le vainqueur d'un mode est nommé au bilan, et il commence le round suivant avec des points et une avance de série.
+- SpectatorVote propose aussi des largages et des mutateurs, et n'a plus besoin de SiteIncidents pour s'ouvrir.
+- WarmupLobby rappelle le vote du mode.
+- Pièces et pilules gagnent l'incident provoqué et le largage surprise.
+- MicroHidDock réagit aux incidents : une surcharge Tesla accélère la recharge, une panne la coupe.
+- SupplyDrop compense un peu les mutateurs Munitions rares et Soins rares.
 
 ### Corrections
 
@@ -65,6 +77,10 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - Les grenades piégées et aveuglantes sans lanceur n'avaient aucun effet avec le tir allié coupé.
 - Gun Game et Dodgeball se terminaient dès le départ : le jeu ne voyait qu'un seul camp.
 - Le rappel `.human` ne s'affiche plus pendant un mode de jeu, et les refus de `.human` se traduisent.
+- SCP-106 ne montait presque jamais de niveau : une mort par décomposition n'a pas de tueur. Elle compte désormais pour lui.
+- Un remplaçant reprend le niveau de SCP, les points, le contrat et la série du joueur parti.
+- SiteIncidents ne tire plus de panne d'éclairage quand tout le site est déjà dans le noir.
+- Les pilules par défaut ont toutes un halo de couleur distincte.
 
 ### Sécurité
 
@@ -95,3 +111,5 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - Après une mise à jour du jeu, `fetch-references.sh` et la CI échouent tant que `./tools/fetch-references.sh --update` n'a pas accepté la nouvelle empreinte.
 - CorpsesFallPocketDimension et MicroHIDReturn sont remplacés : ne les gardez pas avec PocketCorpses et MicroHidDock.
 - `ScaleArbiter.Clear` devient `ResetBaselines`, et le sujet de bus `round.reset` disparaît.
+- Le message de bus `round.mutator.started` porte désormais un `RoundMutatorInfo`. `PillConsumed`, `VendingUsed` et `ItemExchanged` portent le joueur.
+- Un `config.yml` existant garde ses listes : les nouveaux contrats de Contracts et les nouveaux choix de SpectatorVote s'y ajoutent à la main. Un `translation.yml` existant d'AmbientCassie ne reçoit pas les annonces `Mutator` et `ScpLevel`. Les nouvelles pilules, elles, sont ajoutées toutes seules.

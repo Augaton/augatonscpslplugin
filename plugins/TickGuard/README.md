@@ -4,7 +4,8 @@ Mesure les TPS du serveur pendant le round. Quand ils restent trop bas, le plugi
 suspend les evenements automatiques le temps que le serveur respire. C'est la meme pause que celle des
 modes arene : largages, pilules, pieces, incidents, SCP-1162, SCP-261, remplacements et niveau de chaos.
 
-Les TPS les plus bas du round restent consultables, ce qui donne une vraie mesure de la charge.
+Les TPS les plus bas du round restent consultables, ce qui donne une vraie mesure de la charge. Avec DiscordAudit,
+l'alerte et le retour a la normale arrivent aussi sur le salon du webhook.
 
 ## Configuration
 
