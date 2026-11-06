@@ -141,6 +141,13 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] A la fin du vote, le resultat s'affiche et l'incident part avec son annonce de C.A.S.S.I.E.
 - [ ] Sans bulletin, rien ne se passe. Sans SiteIncidents, aucun vote ne s'ouvre et `collection check` le signale.
 
+**Contracts**
+- [ ] Chaque humain recoit un hint de contrat au debut du round, et `.contrat` le rappelle.
+- [ ] Chaque type se remplit : kills d'ennemis, generateur, evasion, soins, survie.
+- [ ] La recompense n'arrive qu'une fois, et un inventaire plein la laisse au sol.
+- [ ] Un joueur revenu par une vague recoit un contrat s'il n'en avait pas.
+- [ ] Rien n'est distribue ni compte pendant un mode de jeu.
+
 **RoundMutators**
 - [ ] `mutators force LowGravity` : les humains sautent plus haut, les SCP non, et `mutators stop` remet tout a la normale.
 - [ ] La gravite retombe aussi pour un humain devenu SCP-049-2, et pour un joueur mort.
@@ -148,6 +155,9 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Une pilule qui rapetisse garde son effet avec `Tiny`.
 - [ ] Un mode de jeu force retire le mutateur, et aucun mutateur ne part pendant un mode.
 - [ ] Sur plusieurs rounds, jamais deux mutateurs de suite : le plugin reste discret.
+- [ ] `mutators force NightFall` : lumieres coupees tout le round, chaque humain recoit une seule lampe, et tout revient apres `mutators stop`.
+- [ ] `ScarceAmmo` et `ScarceMedical` : les objets disparaissent bien de la carte, sans saccade.
+- [ ] `SwiftScps` et `FragileHumans` : l'effet suit les renforts, et disparait quand un mode demarre.
 
 **PocketCorpses**
 - [ ] Un joueur meurt dans la dimension de poche : son corps retombe du plafond, au-dessus d'un joueur vivant.
@@ -211,6 +221,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Des pilules SCP500s apparaissent dans les largages, et rien ne casse sans SCP500s.
 - [ ] Le profil `mtf` part quand les 3 generateurs sont actifs, en respectant `max_drops_per_round`.
 - [ ] `decontamination_trigger` et `warhead_trigger` declenchent bien un largage.
+- [ ] Avec `trap_chance_percent: 100` : rien ne part tant que personne n'approche, puis une grenade part apres le delai.
 
 **RandomGamemode**
 - [ ] Mode arene (Gun Game, Dodgeball) : ni largage, ni pilule, ni piece n'apparait, meme au debut du round, et tout reprend ensuite.
@@ -233,6 +244,13 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Cache-cache : le round ne se termine pas pendant la cachette, le chasseur arrive ensuite, et les survivants gagnent a la fin du temps.
 - [ ] Cache-cache : si le chasseur se deconnecte pendant la cachette, le round se termine proprement.
 - [ ] Evacuation : l'ogive part apres le delai, sans pouvoir etre annulee, et le verrou saute au round suivant.
+- [ ] Patate chaude : une balle passe la bombe et ne blesse pas, le porteur meurt a la fin du compte a rebours, et le dernier survivant gagne.
+- [ ] Un traitre parmi nous : seul le traitre recoit le message prive, tuer un innocent vide l'inventaire du tireur, et la fin du traitre termine le round.
+- [ ] Roi de la salle : la salle s'eclaire en jaune, le score monte seulement pour le camp majoritaire, et les morts reviennent.
+- [ ] Escorte : les escortes demarrent avec le scientifique, sa sortie fait gagner le NTF, sa mort fait gagner le Chaos.
+- [ ] Zones condamnees : les zones passent au rouge dans l'ordre, y rester tue, et la surface reste sure.
+- [ ] Course aux generateurs : la victoire tombe au troisieme generateur, et la fin du temps fait gagner les SCP.
+- [ ] Un config.yml ancien donne bien aux nouveaux modes leurs reglages par defaut, tir allie compris pour Patate chaude.
 
 **BetterCoinflipsRewritten**
 - [ ] La piece disparait apres l'animation, y compris lachee au sol.
@@ -246,12 +264,19 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] Lancer, lacher : la piece ramassee par un autre disparait de son inventaire, et il ne peut pas la relancer avant.
 - [ ] La taille donnee par une piece disparait au changement de role.
 - [ ] Spammer une piece en cooldown n'affiche qu'un message par seconde.
+- [ ] Seconde chance : la mort est annulee une seule fois, et disparait au changement de role.
+- [ ] Jackpot : 3 objets au sol. Chargeur plein : tire seulement avec une arme entamee.
+- [ ] Soin de groupe : seuls les allies a portee sont soignes. Detecteur : la distance annoncee est plausible.
+- [ ] Desarmement : l'arme tombe au sol, et l'effet n'est pas tire sans arme en main.
+- [ ] Repere : les SCP recoivent le hint pendant la duree prevue, et plus du tout si le joueur meurt.
+- [ ] Fausse alerte : C.A.S.S.I.E parle, avec ses sous-titres, et `collection check` ne signale aucun mot inconnu.
 
 **RoundRecap**
 - [ ] Le bilan s'affiche en fin de round, et une ligne a zero n'apparait pas.
 - [ ] Les compteurs repartent de zero au round suivant.
 - [ ] Le bilan affiche le mode du round, et compte les volontaires de SCPReplacer et les echanges a SCP-1162.
 - [ ] Le bilan nomme le meilleur tueur, la premiere evasion et le survivant, sans role Tutorial.
+- [ ] Le bilan affiche le mutateur du round et les contrats remplis.
 
 **SCP500s**
 - [ ] Halo au spawn, apres depot, ramassage et mort, et disparition avec le pickup.

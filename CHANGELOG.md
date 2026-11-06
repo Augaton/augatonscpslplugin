@@ -12,6 +12,7 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 - **DiscordAudit** : envoie les actions du staff vers un webhook Discord.
 - **Scp914Recipes** : recettes de SCP-914 réglables en config.
 - **AmbientCassie** : annonces d'ambiance de C.A.S.S.I.E pendant le round.
+- **Contracts** : un objectif secret par joueur, récompensé s'il le remplit.
 - **ScpScaling** : les PV des SCP suivent le nombre de joueurs.
 - **Streaks** : séries de kills récompensées, et primes sur les meilleurs joueurs.
 - **ScpLevels** : les SCP montent de niveau en tuant.
@@ -22,6 +23,11 @@ Les versions de chaque plugin figurent dans le [README](README.md). Rien de ce q
 
 ### Ajouts
 
+- RandomGamemode : modes Patate chaude, Un traître parmi nous, Roi de la salle, Escorte, Zones condamnées et Course aux générateurs.
+- BetterCoinflips : effets Seconde chance, Jackpot, Chargeur plein, Soin de groupe, Détecteur, Désarmement, Repéré et Fausse alerte.
+- RoundMutators : mutateurs Nuit noire, Munitions rares, Soins rares, SCP rapides et Humains fragiles.
+- SupplyDrop : un largage peut être piégé, et une grenade part quand un humain s'en approche.
+- RoundRecap : le mutateur du round et les contrats remplis.
 - AugatonLib : `GamemodeState` voit tous les modes de jeu, `ItemGrant` donne un objet sans qu'il se perde.
 - SiteIncidents : un autre plugin peut demander un incident par le bus.
 - ChaosDirector : points pour les paliers de série de kills.

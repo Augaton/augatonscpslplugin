@@ -1,6 +1,6 @@
 # Augaton SCP:SL Plugins
 
-Vingt-trois plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
+Trente et un plugins et une bibliothèque partagée pour **SCP: Secret Laboratory**, conçus pour tourner ensemble sur le même serveur. Ils sont développés pour la communauté francophone **Zone-Shilari** et construits sur [LabAPI](https://github.com/northwood-studios/LabAPI), le framework officiel du jeu.
 
 [![CI](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Augaton/augatonscpslplugin/actions/workflows/ci.yml)
 ![LabAPI 1.1.7](https://img.shields.io/badge/LabAPI-1.1.7-blue)
@@ -42,13 +42,14 @@ Vingt-trois plugins et une bibliothèque partagée pour **SCP: Secret Laboratory
 | [ArcadeShop](plugins/ArcadeShop) | 1.0.0 | Des points gagnés pendant le round, à dépenser dans une boutique |
 | [ChaosDirector](plugins/ChaosDirector) | 1.2.0 | Niveau de chaos commun, nourri par les événements du round |
 | [AutoFFToggle](plugins/AutoFFToggle) | 3.0.0 | Coupe le tir allié pendant le round et le réactive à la fin |
-| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.1.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
+| [BetterCoinflipsRewritten](plugins/BetterCoinflipsRewritten) | 3.2.0 | Pile ou face aux effets positifs et négatifs, avec des pièces qui reviennent en cours de round |
+| [Contracts](plugins/Contracts) | 1.0.0 | Un objectif secret par joueur, récompensé s'il le remplit |
 | [DiscordAudit](plugins/DiscordAudit) | 1.0.0 | Envoie les actions du staff vers un webhook Discord |
 | [MicroHidDock](plugins/MicroHidDock) | 1.0.0 | Repose le Micro-HID sur son socle, où il se recharge |
 | [PocketCorpses](plugins/PocketCorpses) | 1.0.0 | Fait retomber les corps de la dimension de poche |
-| [RandomGamemode](plugins/RandomGamemode) | 4.1.1 | 19 modes de jeu spéciaux, avec vote des joueurs |
-| [RoundMutators](plugins/RoundMutators) | 1.0.0 | Une règle légère sur certains rounds normaux |
-| [RoundRecap](plugins/RoundRecap) | 1.2.0 | Bilan de fin de round |
+| [RandomGamemode](plugins/RandomGamemode) | 4.2.0 | 25 modes de jeu spéciaux, avec vote des joueurs |
+| [RoundMutators](plugins/RoundMutators) | 1.1.0 | Une règle légère sur certains rounds normaux |
+| [RoundRecap](plugins/RoundRecap) | 1.3.0 | Bilan de fin de round |
 | [RealisticSizes](plugins/RealisticSizes) | 5.0.1 | Taille variable par joueur, avec effets de gameplay en option |
 | [RemoteKeycard](plugins/RemoteKeycard) | 5.0.0 | Utilise une carte d'accès sans la sortir de l'inventaire |
 | [Replacer](plugins/Replacer) | 3.1.0 | Remplace un joueur parti par un spectateur, avec son état complet |
@@ -63,7 +64,7 @@ Vingt-trois plugins et une bibliothèque partagée pour **SCP: Secret Laboratory
 | [SiteIncidents](plugins/SiteIncidents) | 1.2.0 | Pannes, alertes, portes bloquées, fuites de gaz, surcharges Tesla et coupures de caméras |
 | [SpectatorVote](plugins/SpectatorVote) | 1.0.0 | Les spectateurs votent pour le prochain incident |
 | [Streaks](plugins/Streaks) | 1.0.0 | Séries de kills récompensées et primes sur les meilleurs joueurs |
-| [SupplyDrop](plugins/SupplyDrop) | 5.0.0 | Largages de ravitaillement, sur minuteur ou événement |
+| [SupplyDrop](plugins/SupplyDrop) | 5.1.0 | Largages de ravitaillement, sur minuteur ou événement |
 | [TickGuard](plugins/TickGuard) | 1.0.0 | Surveille les TPS et suspend les événements si le serveur souffre |
 | [TeamGenocide](plugins/TeamGenocide) | 4.0.0 | Annonces C.A.S.S.I.E à l'extinction d'une équipe |
 | [WarmupLobby](plugins/WarmupLobby) | 1.0.0 | Fait combattre les joueurs en attendant le round |
@@ -162,6 +163,7 @@ Appliquez vos changements à chaud avec `labapi reload configs`. Les permissions
 | `.volunteer [numéro]` (`.v`) | SCPReplacer | Se porte volontaire pour reprendre un SCP parti |
 | `.human` | SCPReplacer | Renonce à son rôle de SCP en début de round |
 | `.shop [nom]` (`.boutique`) | ArcadeShop | Affiche la boutique ou achète un objet |
+| `.contrat` (`.contract`) | Contracts | Rappelle votre contrat secret et son avancement |
 | `.voteincident [numéro]` (`.vi`) | SpectatorVote | Affiche les choix ou vote pour le prochain incident, réservé aux spectateurs |
 
 ### Staff
@@ -180,6 +182,7 @@ Disponibles dans le Remote Admin et la console du serveur. Sans argument, une co
 | `discordaudit` | `daudit` | `discordaudit.manage` | `status`, `test` |
 | `incidents` | `inc` | `siteincidents.manage` | `status`, `trigger` |
 | `microdock` | `mdock` | `microhiddock.manage` | `status`, `test` |
+| `contracts` | `ctr` | `contracts.manage` | `status` |
 | `mutators` | `mutator`, `mut` | `roundmutators.manage` | `status`, `force`, `stop` |
 | `pocketcorpses` | `corpses` | `pocketcorpses.manage` | `status`, `test` |
 | `sizes` | `rsize` | `realisticsizes.manage` | `status`, `reset` |
@@ -255,6 +258,7 @@ Le bus sert par exemple à SupplyDrop pour demander des pilules à SCP500s, ou �
 | Streaks ou ArcadeShop, et SCP500s, sont présents | Les récompenses et achats `SCP500` sont de vraies pilules |
 | Streaks et ChaosDirector sont présents | Les paliers de série font monter le chaos |
 | Streaks et RoundRecap sont présents | Le bilan nomme la meilleure série de kills |
+| Contracts et SCP500s sont présents | La récompense `SCP500` d'un contrat est une vraie pilule |
 | SpectatorVote et SiteIncidents sont présents | Les spectateurs votent pour le prochain incident. Sans SiteIncidents, aucun vote ne s'ouvre |
 | ScpScaling et ScpLevels sont présents | Les PV de niveau s'ajoutent à des PV déjà adaptés au nombre de joueurs |
 | Un plugin manque | Seule la synergie concernée disparaît |
@@ -320,7 +324,7 @@ Les plugins portés sont des réécritures. Leur conception et leurs mécaniques
 | Composant | Auteur(s) d'origine | Licence |
 |---|---|---|
 | AugatonLib, tests et outillage | Augaton | [MIT](LICENSE) |
-| AmbientCassie, ArcadeShop, ChaosDirector, DiscordAudit, RoundMutators, RoundRecap, Scp914Recipes, ScpLevels, ScpScaling, SiteIncidents, SpectatorVote, Streaks, TickGuard, WarmupLobby | Augaton | [MIT](plugins/ChaosDirector/LICENSE) |
+| AmbientCassie, ArcadeShop, ChaosDirector, Contracts, DiscordAudit, RoundMutators, RoundRecap, Scp914Recipes, ScpLevels, ScpScaling, SiteIncidents, SpectatorVote, Streaks, TickGuard, WarmupLobby | Augaton | [MIT](plugins/ChaosDirector/LICENSE) |
 | MicroHidDock | Augaton, d'après une idée d'EngineerLND | [MIT](plugins/MicroHidDock/LICENSE) |
 | PocketCorpses | Augaton, d'après une idée de DentyTxR | [MIT](plugins/PocketCorpses/LICENSE) |
 | AntiSLCrush | ui_2506, version modifiée | [Non commerciale](plugins/AntiSLCrush/LICENSE.md) |
