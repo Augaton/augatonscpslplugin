@@ -21,11 +21,13 @@ namespace SCP500s.API
         private const float Scp914TransitDelay = 3.5f;
 
         private const float DenialHintSeconds = 1f;
+        private const float ItemHintSeconds = 0.5f;
 
         private readonly List<PillBase> pills = new List<PillBase>(48);
         private readonly Dictionary<uint, PillBase> byId = new Dictionary<uint, PillBase>();
         private readonly Dictionary<string, float> lastUse = new Dictionary<string, float>();
         private readonly CooldownTracker denialHints = new CooldownTracker();
+        private readonly CooldownTracker itemHints = new CooldownTracker();
         private readonly List<ushort> carried = new List<ushort>(8);
 
         // Un numero de serie survit au passage objet / pickup, et un ramassage detruit le pickup :
@@ -127,6 +129,7 @@ namespace SCP500s.API
         {
             lastUse.Clear();
             denialHints.Clear();
+            itemHints.Clear();
         }
 
         private void OnUsingItem(PlayerUsingItemEventArgs ev)
@@ -179,8 +182,15 @@ namespace SCP500s.API
         {
             try
             {
-                if (ev?.Player is not null && TryGet(ev.NewItem, out PillBase pill))
-                    pill.ShowItemInfo(ev.Player);
+                if (ev?.Player is null || !TryGet(ev.NewItem, out PillBase pill))
+                    return;
+
+                // Le jeu ne limite pas le changement d'objet : un client modifie pourrait alterner a chaque paquet.
+                if (itemHints.IsOnCooldown(ev.Player, ItemHintSeconds, out _))
+                    return;
+
+                itemHints.Register(ev.Player);
+                pill.ShowItemInfo(ev.Player);
             }
             catch (Exception e)
             {
