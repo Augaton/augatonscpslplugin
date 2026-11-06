@@ -18,6 +18,8 @@ namespace Streaks
         private readonly Plugin plugin;
         private readonly Dictionary<string, int> retained = new Dictionary<string, int>();
 
+        private string headStart;
+
         public StreakService(Plugin plugin) => this.plugin = plugin;
 
         private Config Config => plugin.Config;
@@ -87,6 +89,19 @@ namespace Streaks
                 Ladder.SetKills(replacement.Replacement?.UserId, kills);
 
             retained.Remove(replacement.ReplacedUserId);
+        }
+
+        public void OnGamemodeWon(BusMessage message)
+        {
+            if (message.TryGet(out Player player))
+                headStart = player.UserId;
+        }
+
+        // Au debut du round et pas a la fin du precedent : la deconnexion du redemarrage efface la serie.
+        public void GrantHeadStart()
+        {
+            Ladder.SetKills(headStart, Config.KillsForGamemodeWin);
+            headStart = null;
         }
 
         public void Reset()

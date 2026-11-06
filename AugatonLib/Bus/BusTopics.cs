@@ -44,6 +44,8 @@ namespace AugatonLib.Bus
 
         public const string ContractRerollRequested = "contract.reroll.requested";
 
+        public const string GamemodeWon = "gamemode.won";
+
         public const string StreakReached = "streak.reached";
 
         public const string IncidentRequested = "incident.requested";

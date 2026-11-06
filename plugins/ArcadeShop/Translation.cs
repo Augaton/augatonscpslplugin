@@ -40,6 +40,9 @@ namespace ArcadeShop
         [Description("Reponse quand la limite d'achat de l'objet est atteinte.")]
         public string LimitReached { get; set; } = "Limite d'achat atteinte pour ce round.";
 
+        [Description("Hint du vainqueur d'un mode de jeu. %AMOUNT% est le bonus.")]
+        public string WinnerBonus { get; set; } = "Victoire : +%AMOUNT% points au prochain round.";
+
         [Description("Nom du changement de contrat dans le catalogue.")]
         public string ContractRerollLabel { get; set; } = "Changer de contrat";
 

@@ -157,6 +157,8 @@ namespace RandomGamemode.API
                 ShowVote(player);
         }
 
+        public void DeclareWinner(Player winner) => PluginBus.Publish(BusTopics.GamemodeWon, Owner, winner);
+
         public void ShowVote(Player player)
         {
             if (Vote.IsOpen && player is not null)

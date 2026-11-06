@@ -23,6 +23,7 @@ namespace RoundRecap
         private readonly Dictionary<string, TimeSpan> aliveSince = new Dictionary<string, TimeSpan>();
 
         private string firstEscapee;
+        private string gamemodeWinner;
         private string topScp;
         private int topScpLevel;
         private TimeSpan firstEscapeTime;
@@ -34,6 +35,7 @@ namespace RoundRecap
             kills.Clear();
             aliveSince.Clear();
             firstEscapee = null;
+            gamemodeWinner = null;
             topScp = null;
             topScpLevel = 0;
             bestStreaker = null;
@@ -47,6 +49,12 @@ namespace RoundRecap
 
             bestStreak = streak.Kills;
             bestStreaker = SafeText.Nickname(streak.Player);
+        }
+
+        public void OnGamemodeWon(BusMessage message)
+        {
+            if (message.TryGet(out Player player))
+                gamemodeWinner = SafeText.Nickname(player);
         }
 
         public void OnScpLevelReached(BusMessage message)
@@ -145,6 +153,9 @@ namespace RoundRecap
 
             if (firstEscapee is not null && !string.IsNullOrEmpty(text.FirstEscape))
                 lines.Add(text.FirstEscape.Replace("%PLAYER%", firstEscapee).Replace("%TIME%", firstEscapeTime.ToString(@"m\:ss")));
+
+            if (gamemodeWinner is not null && !string.IsNullOrEmpty(text.GamemodeWinner))
+                lines.Add(text.GamemodeWinner.Replace("%PLAYER%", gamemodeWinner));
 
             if (topScp is not null && !string.IsNullOrEmpty(text.TopScp))
                 lines.Add(text.TopScp.Replace("%PLAYER%", topScp).Replace("%LEVEL%", topScpLevel.ToString()));

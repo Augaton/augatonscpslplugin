@@ -31,6 +31,7 @@ Alias `.boutique`.
 | `points_per_escape` | `30` | Points pour une evasion |
 | `points_per_contract` | `15` | Points par contrat rempli, si Contracts est installe |
 | `points_per_streak` | `10` | Points par palier d'une serie de kills, si Streaks est installe |
+| `points_for_gamemode_win` | `50` | Points du vainqueur d'un mode de jeu, credites au round suivant. `0` = aucun |
 | `contract_reroll_key` | `contrat` | Nom d'achat du changement de contrat, si Contracts est installe |
 | `contract_reroll_price` | `25` | Prix du changement de contrat. `0` = pas en vente |
 | `max_balance` | `500` | Solde maximal d'un joueur |

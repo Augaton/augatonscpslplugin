@@ -88,7 +88,7 @@ namespace RandomGamemode.Gamemodes
             }
 
             if (CountAlive() <= 1)
-                EndRound(Text.TraitorWon.Replace("%PLAYER%", TraitorName()));
+                EndWithTraitorVictory();
         }
 
         public override void OnPlayerLeft(string userId)
@@ -99,7 +99,13 @@ namespace RandomGamemode.Gamemodes
             if (userId == traitorUserId)
                 EndRound(Text.TraitorLeft);
             else if (CountAlive() <= 1)
-                EndRound(Text.TraitorWon.Replace("%PLAYER%", TraitorName()));
+                EndWithTraitorVictory();
+        }
+
+        private void EndWithTraitorVictory()
+        {
+            Plugin.Instance.Registry.DeclareWinner(Player.Get(traitorUserId));
+            EndRound(Text.TraitorWon.Replace("%PLAYER%", TraitorName()));
         }
 
         private string TraitorName()

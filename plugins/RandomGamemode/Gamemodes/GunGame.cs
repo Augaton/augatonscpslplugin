@@ -94,6 +94,7 @@ namespace RandomGamemode.Gamemodes
             if (next >= Config.GunGameLadder.Count)
             {
                 Announce(Text.GunGameWinner.Replace("%PLAYER%", SafeText.Nickname(ev.Attacker)));
+                Plugin.Instance.Registry.DeclareWinner(ev.Attacker);
                 Plugin.Instance.Registry.ForceRoundEnd();
                 return;
             }

@@ -24,6 +24,9 @@ namespace Streaks
         [Description("Nombre d'objets de la prime, ou de munitions pour une boite.")]
         public int BountyQuantity { get; set; } = 1;
 
+        [Description("Kills d'avance au round suivant pour le vainqueur d'un mode de jeu. 0 = aucun.")]
+        public int KillsForGamemodeWin { get; set; } = 2;
+
         [Description("Ne compte rien pendant un mode de jeu.")]
         public bool PauseDuringGamemodes { get; set; } = true;
 

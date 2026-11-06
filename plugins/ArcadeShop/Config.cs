@@ -24,6 +24,9 @@ namespace ArcadeShop
         [Description("Points par palier atteint dans une serie de kills, si Streaks est installe.")]
         public int PointsPerStreak { get; set; } = 10;
 
+        [Description("Points offerts au vainqueur d'un mode de jeu, credites au round suivant. 0 = aucun.")]
+        public int PointsForGamemodeWin { get; set; } = 50;
+
         [Description("Nom d'achat du changement de contrat, si Contracts est installe.")]
         public string ContractRerollKey { get; set; } = "contrat";
 

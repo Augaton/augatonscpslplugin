@@ -30,6 +30,8 @@ namespace Streaks
             PlayerEvents.Left += Service.OnLeft;
             PlayerDeparture.Departing += Service.OnDeparting;
             PluginBus.Subscribe(Name, BusTopics.PlayerReplaced, Service.OnPlayerReplaced);
+            PluginBus.Subscribe(Name, BusTopics.GamemodeWon, Service.OnGamemodeWon);
+            ServerEvents.RoundStarted += Service.GrantHeadStart;
             ServerEvents.RoundRestarted += Service.Reset;
 
             SelfCheck.Register(Name, "objets des recompenses", Service.CheckItems);
@@ -43,6 +45,7 @@ namespace Streaks
             PlayerEvents.Left -= Service.OnLeft;
             PlayerDeparture.Departing -= Service.OnDeparting;
             PluginBus.UnsubscribeOwner(Name);
+            ServerEvents.RoundStarted -= Service.GrantHeadStart;
             ServerEvents.RoundRestarted -= Service.Reset;
 
             Service.Reset();

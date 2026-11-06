@@ -60,7 +60,10 @@ namespace RandomGamemode.Gamemodes
                 if (alive.Count <= 1)
                 {
                     if (alive.Count == 1)
+                    {
                         Announce(Text.HotPotatoWinner.Replace("%PLAYER%", SafeText.Nickname(alive[0])));
+                        Plugin.Instance.Registry.DeclareWinner(alive[0]);
+                    }
 
                     Plugin.Instance.Registry.ForceRoundEnd();
                     yield break;

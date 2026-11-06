@@ -15,6 +15,7 @@ Avec SCP500s, la recompense `SCP500` est une vraie pilule. Un inventaire plein l
 | `rewards` | 3, 5, 8 et 12 kills | Paliers : `kills`, `item`, `quantity`, `label` |
 | `bounty_kills` | `5` | Kills d'affilee qui mettent une prime. `0` = jamais |
 | `bounty_item`, `bounty_quantity` | `Adrenaline`, `1` | Objet donne a celui qui abat la cible |
+| `kills_for_gamemode_win` | `2` | Kills d'avance au round suivant pour le vainqueur d'un mode de jeu. `0` = aucun |
 | `pause_during_gamemodes` | `true` | Ne compte rien pendant un mode de jeu |
 | `hint_duration` | `4` | Duree des hints, en secondes |
 

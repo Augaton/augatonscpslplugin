@@ -23,6 +23,7 @@ namespace ArcadeShop
         private readonly CooldownTracker cooldowns = new CooldownTracker();
         private readonly CooldownTracker catalogCooldowns = new CooldownTracker();
         private readonly HashSet<Generator> paidGenerators = new HashSet<Generator>();
+        private readonly Dictionary<string, int> carriedOver = new Dictionary<string, int>();
 
         public ShopService(Plugin plugin) => this.plugin = plugin;
 
@@ -102,6 +103,16 @@ namespace ArcadeShop
                 Award(player, Config.PointsPerContract);
         }
 
+        // La boutique est fermee pendant un mode et le solde tombe avec le round : ce gain attend le suivant.
+        public void OnGamemodeWon(BusMessage message)
+        {
+            if (!message.TryGet(out Player player) || Config.PointsForGamemodeWin <= 0)
+                return;
+
+            carriedOver[player.UserId] = Config.PointsForGamemodeWin;
+            plugin.Hints.Show(player, Text.WinnerBonus.Replace("%AMOUNT%", Config.PointsForGamemodeWin.ToString()), Config.HintDuration);
+        }
+
         public void OnStreakReached(BusMessage message)
         {
             if (message.TryGet(out PlayerStreak streak) && streak.IsMilestone && IsOpen)
@@ -131,6 +142,11 @@ namespace ArcadeShop
             cooldowns.Clear();
             catalogCooldowns.Clear();
             paidGenerators.Clear();
+
+            foreach (KeyValuePair<string, int> gain in carriedOver)
+                Wallet.Earn(gain.Key, gain.Value);
+
+            carriedOver.Clear();
         }
 
         public string CheckItems()
