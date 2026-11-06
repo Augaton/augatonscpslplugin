@@ -31,6 +31,7 @@ namespace RoundMutators
             ServerEvents.RoundRestarted += Service.Stop;
 
             PluginBus.Subscribe(Owner, BusTopics.GamemodeStarted, Service.OnGamemodeStarted);
+            PluginBus.Subscribe(Owner, BusTopics.ChaosLevelChanged, Service.OnChaosLevelChanged);
 
             PluginDirectory.Register(this, Capability.Scale, Capability.Light, Capability.Bus);
         }
@@ -55,6 +56,7 @@ namespace RoundMutators
             Config.RoundsBetween = (int)AtLeast("rounds_between", Config.RoundsBetween, 0f);
             Config.StartDelaySeconds = AtLeast("start_delay_seconds", Config.StartDelaySeconds, 3f);
             Config.GravityFactor = AtLeast("gravity_factor", Config.GravityFactor, 0.2f);
+            Config.ChaosLevelForMutator = (int)AtLeast("chaos_level_for_mutator", Config.ChaosLevelForMutator, 0f);
             Config.ScarcePercent = System.Math.Min(100f, AtLeast("scarce_percent", Config.ScarcePercent, 0f));
             Config.SwiftScpPercent = System.Math.Min((int)AtLeast("swift_scp_percent", Config.SwiftScpPercent, 0f), 100);
             Config.FragileHealthPercent = AtLeast("fragile_health_percent", Config.FragileHealthPercent, 10f);

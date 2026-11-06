@@ -92,7 +92,7 @@ namespace RoundMutators
                 thinning = Timing.RunCoroutine(ThinOut(type == MutatorType.ScarceAmmo ? AmmoTypes : MedicalTypes));
             }
 
-            PluginBus.Publish(BusTopics.RoundMutatorStarted, Plugin.Owner, NameOf(type));
+            PluginBus.Publish(BusTopics.RoundMutatorStarted, Plugin.Owner, new RoundMutatorInfo(type.ToString(), NameOf(type)));
 
             plugin.Hints.ShowAll(plugin.Translation.Announcement.Replace("%NAME%", NameOf(type)), Config.HintDuration);
         }
@@ -133,6 +133,21 @@ namespace RoundMutators
                 Stop();
         }
 
+        // Le chaos monte en cours de round : ce mutateur arrive quand la partie s'emballe, pas au depart.
+        public void OnChaosLevelChanged(BusMessage message)
+        {
+            if (!message.TryGet(out int level) || Config.ChaosLevelForMutator <= 0 || level < Config.ChaosLevelForMutator)
+                return;
+
+            if (Active.HasValue || !Round.IsRoundInProgress || Player.Count < Config.MinPlayers)
+                return;
+
+            if (Config.PauseDuringGamemodes && GamemodeState.BlocksBonuses)
+                return;
+
+            BeginRandom();
+        }
+
         public string NameOf(MutatorType type)
         {
             switch (type)
@@ -165,21 +180,26 @@ namespace RoundMutators
                 if (!pacing.TryAdvance(Config.RoundsBetween) || !Chance.Roll(Config.ChancePercent))
                     return;
 
-                int total = 0;
-
-                foreach (MutatorType type in Types)
-                    total += Math.Max(0, WeightOf(type));
-
-                if (total == 0)
-                    return;
-
-                Begin(Chance.PickWeighted(Types, WeightOf));
-                pacing.MarkUsed();
+                BeginRandom();
             }
             catch (Exception e)
             {
                 Logger.Error($"MutatorService.Draw: {e}");
             }
+        }
+
+        private void BeginRandom()
+        {
+            int total = 0;
+
+            foreach (MutatorType type in Types)
+                total += Math.Max(0, WeightOf(type));
+
+            if (total == 0)
+                return;
+
+            Begin(Chance.PickWeighted(Types, WeightOf));
+            pacing.MarkUsed();
         }
 
         private int WeightOf(MutatorType type)

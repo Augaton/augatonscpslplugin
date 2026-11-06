@@ -30,6 +30,7 @@ pilule ou a SCP-261 qui changent la taille d'un joueur.
 | Cle | Defaut | Role |
 |---|---|---|
 | `chance_percent` | `25` | Chance qu'un round recoive un mutateur |
+| `chaos_level_for_mutator` | `3` | Niveau du Directeur du chaos qui lance un mutateur en cours de round, s'il n'y en a pas deja un. `0` = jamais |
 | `rounds_between` | `1` | Rounds normaux garantis apres un mutateur |
 | `min_players` | `6` | Joueurs requis |
 | `start_delay_seconds` | `10` | Delai avant le tirage, 3 au plus bas |

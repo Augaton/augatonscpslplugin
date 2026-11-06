@@ -73,6 +73,7 @@ Un largage sur sept environ est piege par defaut : une grenade, explosive ou ave
 |---|---|---|
 | `min_event_gap_seconds` | `60` | Ecart minimal avec un incident de SiteIncidents. Le largage retente apres `retry_seconds` |
 | `trap_chance_percent` | `15` | Chance qu'un largage soit piege. `0` = jamais |
+| `trap_chance_per_chaos_level` | `5` | Chance ajoutee par niveau du Directeur du chaos |
 | `trap_range` | `4` | Distance en metres qui declenche le piege |
 | `trap_fuse_seconds` | `2` | Delai avant l'explosion |
 | `trap_flash_seconds` | `4` | Duree de l'aveuglement |

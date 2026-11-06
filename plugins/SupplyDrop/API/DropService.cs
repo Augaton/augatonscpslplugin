@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AugatonLib.Bus;
+using AugatonLib.Chaos;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Spawning;
@@ -248,7 +249,7 @@ namespace SupplyDrop.API
 
                 PluginBus.Publish(BusTopics.SupplyDropped, Plugin.BusOwner, profile.Key);
 
-                if (Chance.Roll(Config.TrapChancePercent))
+                if (Chance.Roll(Config.TrapChancePercent + (Config.TrapChancePerChaosLevel * ChaosState.BonusLevel)))
                     pending.Add(Timing.RunCoroutine(WatchTrap(anchor)));
 
                 if (Config.LogDrops)

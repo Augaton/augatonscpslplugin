@@ -93,8 +93,8 @@ namespace RoundRecap
 
         private void OnMutatorStarted(BusMessage message)
         {
-            if (message.TryGet(out string name))
-                mutator = name;
+            if (message.TryGet(out RoundMutatorInfo info))
+                mutator = info.Name;
         }
 
         private static void Add(List<string> lines, string template, int count)

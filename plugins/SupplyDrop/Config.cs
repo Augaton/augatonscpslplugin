@@ -28,6 +28,9 @@ namespace SupplyDrop
         [Description("Chance, en pourcentage, qu'un largage soit piege. 0 = jamais.")]
         public float TrapChancePercent { get; set; } = 15f;
 
+        [Description("Chance ajoutee par niveau du Directeur du chaos, s'il est installe.")]
+        public float TrapChancePerChaosLevel { get; set; } = 5f;
+
         [Description("Distance en metres a laquelle un humain declenche le piege.")]
         public float TrapRange { get; set; } = 4f;
 

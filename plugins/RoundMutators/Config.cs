@@ -17,6 +17,9 @@ namespace RoundMutators
         [Description("Secondes apres le debut du round avant le tirage, 3 au plus bas. Laisse un mode de jeu demarrer d'abord.")]
         public float StartDelaySeconds { get; set; } = 10f;
 
+        [Description("Niveau du Directeur du chaos qui declenche un mutateur en cours de round. 0 = jamais.")]
+        public int ChaosLevelForMutator { get; set; } = 3;
+
         [Description("Poids du mutateur de gravite. 0 = jamais.")]
         public int LowGravityWeight { get; set; } = 10;
 

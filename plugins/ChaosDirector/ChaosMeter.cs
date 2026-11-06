@@ -71,6 +71,7 @@ namespace ChaosDirector
                 return;
 
             ChaosState.SetBonusLevel(level);
+            PluginBus.Publish(BusTopics.ChaosLevelChanged, plugin.Name, level);
 
             if (Config.AnnounceLevels)
                 Server.SendBroadcast(plugin.Translation.LevelUp.Replace("%LEVEL%", level.ToString()), Config.BroadcastDuration);
