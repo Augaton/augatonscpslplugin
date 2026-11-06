@@ -31,5 +31,7 @@ namespace AugatonLib.Bus
         public const string StaffAction = "staff.action";
 
         public const string StreakReached = "streak.reached";
+
+        public const string IncidentRequested = "incident.requested";
     }
 }

@@ -1,8 +1,10 @@
 using System;
+using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.Handlers;
 using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
 
 namespace SiteIncidents
 {
@@ -29,6 +31,8 @@ namespace SiteIncidents
             ServerEvents.RoundEnded += OnRoundEnded;
             ServerEvents.RoundRestarted += Service.Stop;
 
+            PluginBus.Subscribe(Owner, BusTopics.IncidentRequested, OnIncidentRequested);
+
             SelfCheck.Register(Name, "mots de C.A.S.S.I.E", Service.CheckCassieWords);
 
             PluginDirectory.Register(this, Capability.Light, Capability.Bus);
@@ -41,6 +45,7 @@ namespace SiteIncidents
             ServerEvents.RoundRestarted -= Service.Stop;
 
             Service.Stop();
+            PluginBus.UnsubscribeOwner(Owner);
             PluginDirectory.Unregister(this);
 
             Service = null;
@@ -66,5 +71,18 @@ namespace SiteIncidents
         }
 
         private void OnRoundEnded(RoundEndedEventArgs ev) => Service.Stop();
+
+        // Le nom vient de la config d'un autre plugin : il peut etre faux.
+        private void OnIncidentRequested(BusMessage message)
+        {
+            if (!Enum.TryParse(message.Text, true, out IncidentType type) || !Enum.IsDefined(typeof(IncidentType), type))
+            {
+                Logger.Warn($"Incident demande inconnu : {message.Text}.");
+                return;
+            }
+
+            if (Round.IsRoundInProgress && !(Config.PauseDuringGamemodes && WorldEvents.IsPaused))
+                Service.Trigger(type);
+        }
     }
 }
