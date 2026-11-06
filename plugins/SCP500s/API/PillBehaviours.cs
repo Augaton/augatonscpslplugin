@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AugatonLib.Arbitration;
 using AugatonLib.Bus;
+using AugatonLib.Caching;
 using AugatonLib.Random;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
@@ -115,10 +116,13 @@ namespace SCP500s.API
         // Le message de la pilule est deja affiche : un refus le remplace, pour ne pas annoncer ce qui n'arrivera pas.
         private static void Request(Player player, string topic, List<string> choices)
         {
-            if (choices.Count > 0 && PluginBus.Request(topic, Interop.Owner, Chance.Pick(choices)))
-                return;
+            CooldownTracker cooldowns = Plugin.Instance.SiteRequests;
+            bool ready = choices.Count > 0 && !cooldowns.IsOnCooldown(Interop.Owner, Config.SiteRequestCooldownSeconds, out _);
 
-            PayloadExecutor.ShowMessage(player, Text.PillRequestRefused);
+            if (ready && PluginBus.Request(topic, Interop.Owner, Chance.Pick(choices)))
+                cooldowns.Register(Interop.Owner);
+            else
+                PayloadExecutor.ShowMessage(player, Text.PillRequestRefused);
         }
 
         private static void AmmoRefill(Player player)

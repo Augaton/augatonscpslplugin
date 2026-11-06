@@ -204,6 +204,9 @@ namespace SCP500s
         [Description("Profils de SupplyDrop que la pilule de largage peut appeler.")]
         public List<string> PillDropProfiles { get; set; } = new List<string> { "mtf", "chaos" };
 
+        [Description("Secondes minimales entre deux incidents ou largages demandes par des pilules, tous joueurs confondus, 1 au plus bas.")]
+        public float SiteRequestCooldownSeconds { get; set; } = 60f;
+
         [Description("Duree en secondes de la recoloration des lumieres d'une salle.")]
         public float DiscoDuration { get; set; } = 30f;
 

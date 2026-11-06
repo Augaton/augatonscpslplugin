@@ -1,3 +1,4 @@
+using AugatonLib.Caching;
 using AugatonLib.Effects;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,8 @@ namespace SCP500s
         public TargetPicker Targets { get; private set; }
 
         public RegenerationService Regeneration { get; private set; }
+
+        public CooldownTracker SiteRequests { get; } = new CooldownTracker();
 
         public PillRegistry Registry => registry;
 
@@ -111,6 +114,7 @@ namespace SCP500s
             Hints.Clear();
             continuousSpawn?.Stop();
             Regeneration?.Clear();
+            SiteRequests.Clear();
             lootReplacement?.Reset();
             Delayed?.Clear();
             Tints?.Clear();
@@ -224,6 +228,7 @@ namespace SCP500s
         protected override void ValidateConfig()
         {
             EnsureLists();
+            Config.SiteRequestCooldownSeconds = AtLeast("site_request_cooldown_seconds", Config.SiteRequestCooldownSeconds, 1f);
 
             ClampPercent(nameof(Config.ReplacementChancePercent), Config.ReplacementChancePercent, v => Config.ReplacementChancePercent = v);
             ClampPercent(nameof(Config.CoinSharePercent), Config.CoinSharePercent, v => Config.CoinSharePercent = v);
