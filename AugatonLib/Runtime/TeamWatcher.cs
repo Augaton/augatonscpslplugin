@@ -10,8 +10,8 @@ using PlayerRoles;
 namespace AugatonLib.Runtime
 {
     /// <summary>
-    /// Detecte l'extinction d'une equipe et publie BusTopics.TeamWiped, pour que SupplyDrop et
-    /// TeamGenocide en profitent chacun sans dependre de l'autre.
+    /// Detecte l'extinction d'une equipe et son dernier survivant, et les publie sur le bus, pour que
+    /// SupplyDrop et TeamGenocide en profitent chacun sans dependre de l'autre.
     /// </summary>
     internal static class TeamWatcher
     {
@@ -42,7 +42,7 @@ namespace AugatonLib.Runtime
                 Team leaving = ev.OldRole.Team;
 
                 if (leaving != Team.Dead && ev.NewRole.GetTeam() != leaving)
-                    ReportIfWiped(leaving, ev.Player);
+                    Report(leaving, ev.Player);
             }
             catch (Exception e)
             {
@@ -53,10 +53,10 @@ namespace AugatonLib.Runtime
         private static void OnCheckRequested(BusMessage message)
         {
             if (message.TryGet(out Team team))
-                ReportIfWiped(team, null);
+                Report(team, null);
         }
 
-        private static void ReportIfWiped(Team team, Player excluded)
+        private static void Report(Team team, Player excluded)
         {
             if (!Round.IsRoundInProgress || Round.Duration.TotalSeconds < ActivationSeconds)
                 return;
@@ -64,13 +64,24 @@ namespace AugatonLib.Runtime
             if (GenocideArbiter.IsSuppressed || GenocideArbiter.IsHeld(team))
                 return;
 
+            Player survivor = null;
+
             foreach (Player player in Player.ReadyList)
             {
-                if (player != excluded && player.Team == team)
+                if (player == excluded || player.Team != team)
+                    continue;
+
+                if (survivor is not null)
                     return;
+
+                survivor = player;
             }
 
-            PluginBus.Publish(BusTopics.TeamWiped, Source, team);
+            // Sans mort a l'origine, c'est une verification apres un remplacement : personne ne vient de tomber.
+            if (survivor is null)
+                PluginBus.Publish(BusTopics.TeamWiped, Source, team);
+            else if (excluded is not null)
+                PluginBus.Publish(BusTopics.TeamLastSurvivor, Source, survivor);
         }
     }
 }

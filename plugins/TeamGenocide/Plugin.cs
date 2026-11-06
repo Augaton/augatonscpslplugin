@@ -35,6 +35,7 @@ namespace TeamGenocide
             ServerEvents.RoundRestarted += genocideHandlers.OnRoundRestarted;
 
             PluginBus.Subscribe(Name, BusTopics.TeamWiped, genocideHandlers.OnTeamWiped);
+            PluginBus.Subscribe(Name, BusTopics.TeamLastSurvivor, genocideHandlers.OnLastSurvivor);
 
             SelfCheck.Register(Name, "mots de C.A.S.S.I.E", CheckCassieWords);
 
@@ -80,6 +81,8 @@ namespace TeamGenocide
 
         protected override void ValidateConfig()
         {
+            Config.LastSurvivorTeams ??= new List<Team>();
+
             if (Config.ActivationDelay < 0f)
             {
                 Logger.Warn($"ActivationDelay ({Config.ActivationDelay}) negatif, remis a 0.");

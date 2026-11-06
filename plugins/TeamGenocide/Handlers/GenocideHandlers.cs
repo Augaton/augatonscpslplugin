@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using AugatonLib.Bus;
+using AugatonLib.Text;
+using AugatonLib.World;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
 using MEC;
 using PlayerRoles;
+using PlayerStatsSystem;
 using TeamGenocide.API;
 
 namespace TeamGenocide.Handlers
@@ -13,6 +17,7 @@ namespace TeamGenocide.Handlers
     {
         private readonly Plugin plugin;
         private readonly HashSet<Team> announced = new HashSet<Team>();
+        private readonly HashSet<Team> lastSurvivors = new HashSet<Team>();
         private readonly List<CoroutineHandle> pending = new List<CoroutineHandle>(8);
 
         private CoroutineHandle activationHandle;
@@ -43,6 +48,28 @@ namespace TeamGenocide.Handlers
         public void OnRoundEnded(RoundEndedEventArgs ev) => Reset();
 
         public void OnRoundRestarted() => Reset();
+
+        public void OnLastSurvivor(BusMessage message)
+        {
+            if (!activated || !message.TryGet(out Player player))
+                return;
+
+            Config config = plugin.Config;
+
+            if (config.LastSurvivorMinPlayers <= 0 || Player.Count < config.LastSurvivorMinPlayers)
+                return;
+
+            if (!config.LastSurvivorTeams.Contains(player.Team) || !lastSurvivors.Add(player.Team))
+                return;
+
+            if (config.LastSurvivorShield > 0f)
+                player.CreateAhpProcess(config.LastSurvivorShield, config.LastSurvivorShield, AhpStat.DefaultDecay, AhpStat.DefaultEfficacy, 0f, false);
+
+            if (config.LastSurvivorItem != ItemType.None)
+                ItemGrant.Give(player, config.LastSurvivorItem);
+
+            Server.SendBroadcast(config.LastSurvivorBroadcast.Replace("%PLAYER%", SafeText.Nickname(player)), config.LastSurvivorBroadcastDuration);
+        }
 
         public void OnTeamWiped(BusMessage message)
         {
@@ -78,6 +105,8 @@ namespace TeamGenocide.Handlers
 
         public void Reset()
         {
+            lastSurvivors.Clear();
+
             if (activationScheduled)
             {
                 Timing.KillCoroutines(activationHandle);

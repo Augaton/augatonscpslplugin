@@ -23,6 +23,10 @@ Classe-D, SCP, scientifiques, Insurrection du Chaos et forces de la Fondation.
 |---|---|---|
 | `activation_delay` | `5` | Delai apres le debut du round avant activation de la detection |
 | `announce_once_per_team` | `true` | Une seule annonce par equipe et par round |
+| `last_survivor_min_players` | `8` | Joueurs requis pour annoncer un dernier survivant. `0` = jamais |
+| `last_survivor_teams` | 4 equipes humaines | Equipes concernees |
+| `last_survivor_shield`, `last_survivor_item` | `50`, `Adrenaline` | Bouclier et objet donnes au dernier survivant |
+| `last_survivor_broadcast`, `last_survivor_broadcast_duration` | texte, `5` | Annonce a tout le serveur |
 | `hint_y_coordinate` | `500` | Ligne HintServiceMeow reservee a ce plugin |
 
 Chaque annonce porte son texte C.A.S.S.I.E, ses sous-titres, son broadcast, son

@@ -8,6 +8,8 @@ namespace AugatonLib.Bus
 
         public const string TeamWiped = "team.wiped";
 
+        public const string TeamLastSurvivor = "team.last.survivor";
+
         public const string CoinFlipped = "coin.flipped";
 
         public const string PillConsumed = "pill.consumed";

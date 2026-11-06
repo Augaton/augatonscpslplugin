@@ -17,6 +17,30 @@ namespace TeamGenocide
         [Description("N'annonce l'extinction d'une equipe qu'une seule fois par round.")]
         public bool AnnounceOncePerTeam { get; set; } = true;
 
+        [Description("Joueurs requis pour annoncer un dernier survivant. 0 = jamais.")]
+        public int LastSurvivorMinPlayers { get; set; } = 8;
+
+        [Description("Equipes dont le dernier survivant est annonce et recompense.")]
+        public List<Team> LastSurvivorTeams { get; set; } = new List<Team>
+        {
+            Team.ClassD,
+            Team.Scientists,
+            Team.FoundationForces,
+            Team.ChaosInsurgency,
+        };
+
+        [Description("Bouclier donne au dernier survivant.")]
+        public float LastSurvivorShield { get; set; } = 50f;
+
+        [Description("Objet donne au dernier survivant. None = aucun.")]
+        public ItemType LastSurvivorItem { get; set; } = ItemType.Adrenaline;
+
+        [Description("Annonce a tout le serveur. %PLAYER% est le pseudo.")]
+        public string LastSurvivorBroadcast { get; set; } = "<size=30><color=orange>%PLAYER% est le dernier de son equipe !</color></size>";
+
+        [Description("Duree de cette annonce, en secondes.")]
+        public ushort LastSurvivorBroadcastDuration { get; set; } = 5;
+
         [Description("Position verticale du hint dans HintServiceMeow. Doit differer des autres plugins.")]
         public float HintYCoordinate { get; set; } = 500f;
 
