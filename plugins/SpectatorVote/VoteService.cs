@@ -255,15 +255,12 @@ namespace SpectatorVote
                 return false;
             }
 
-            // Flashed fixe sa duree sur son intensite, a raison d'un dixieme de seconde par cran.
-            byte blindness = (byte)Math.Round(Config.BlessingBlindSeconds * 10f);
-
             foreach (Player player in Player.ReadyList)
             {
                 if (blessing == BlessingType.HealHumans && player.IsHuman && !player.IsTutorial)
                     player.Heal(Config.BlessingHeal);
                 else if (blessing == BlessingType.BlindScps && player.IsSCP)
-                    player.EnableEffect<Flashed>(blindness);
+                    player.EnableEffect<Flashed>(1, Config.BlessingBlindSeconds);
             }
 
             return true;

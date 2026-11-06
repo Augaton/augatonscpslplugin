@@ -45,7 +45,7 @@ namespace SpectatorVote
         [Description("Vie rendue aux humains par le choix HealHumans.")]
         public float BlessingHeal { get; set; } = 30f;
 
-        [Description("Duree de l'aveuglement des SCP par le choix BlindScps, en secondes, de 1 a 25.")]
+        [Description("Duree de l'aveuglement des SCP par le choix BlindScps, en secondes, 1 au plus bas.")]
         public float BlessingBlindSeconds { get; set; } = 5f;
 
         [Description("Suspend les votes pendant un mode de jeu.")]

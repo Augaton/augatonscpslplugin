@@ -30,7 +30,7 @@ Alias de `.voteincident`. Seuls les spectateurs votent.
 | `vote_command_cooldown_seconds` | `1` | Delai entre deux `.vi`, 1 au plus bas |
 | `options` | 13 choix | Choix possibles : `kind`, `incident`, `label`, `weight` |
 | `blessing_heal` | `30` | Vie rendue aux humains par `HealHumans` |
-| `blessing_blind_seconds` | `5` | Aveuglement des SCP par `BlindScps`, de 1 a 25 secondes |
+| `blessing_blind_seconds` | `5` | Aveuglement des SCP par `BlindScps`, 1 au plus bas |
 | `pause_during_gamemodes` | `true` | Suspend les votes pendant un mode de jeu |
 | `hint_duration` | `5` | Duree du hint de resultat, en secondes |
 
