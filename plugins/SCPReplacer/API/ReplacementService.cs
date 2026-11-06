@@ -269,7 +269,11 @@ namespace SCPReplacer.API
             winner.DisableAllEffects();
             winner.SetRole(entry.Role, RoleChangeReason.LateJoin, RoleSpawnFlags.All);
 
-            PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, new PlayerReplacement(winner, entry.Size, entry.DepartedUserId, false));
+            // .human laisse le joueur en jeu, et un joueur parti peut revenir avant le tirage : il garde alors
+            // ses points et son contrat.
+            string replacedUserId = Player.Get(entry.DepartedUserId) is null ? entry.DepartedUserId : null;
+
+            PluginBus.Publish(BusTopics.PlayerReplaced, Plugin.DepartureOwner, new PlayerReplacement(winner, entry.Size, replacedUserId, false));
 
             foreach (Player player in Player.ReadyList)
             {
