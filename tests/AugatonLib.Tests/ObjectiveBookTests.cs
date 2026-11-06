@@ -93,19 +93,59 @@ namespace AugatonLib.Tests
             book.Advance("a", Kind.Kill);
 
             Assert.True(book.Transfer("a", "b"));
-            Assert.False(book.Has("a"));
             Assert.True(book.Advance("b", Kind.Kill));
         }
 
         [Fact]
-        public void ATransferNeverOverwritesAnExistingObjective()
+        public void TheFormerHolderCannotPickUpASecondObjective()
+        {
+            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
+
+            book.Assign("a", Kind.Kill, 2);
+            book.Transfer("a", "b");
+
+            Assert.False(book.Assign("a", Kind.Escape, 1));
+            Assert.False(book.Advance("a", Kind.Kill));
+        }
+
+        [Fact]
+        public void ATransferReplacesAnUnfinishedObjective()
         {
             ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
 
             book.Assign("a", Kind.Kill, 2);
             book.Assign("b", Kind.Escape, 1);
 
+            Assert.True(book.Transfer("a", "b"));
+            Assert.True(book.TryGet("b", out Kind kind, out _, out int target));
+            Assert.Equal(Kind.Kill, kind);
+            Assert.Equal(2, target);
+        }
+
+        [Fact]
+        public void ATransferNeverOverwritesAFinishedObjective()
+        {
+            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
+
+            book.Assign("a", Kind.Kill, 2);
+            book.Assign("b", Kind.Escape, 1);
+            book.Advance("b", Kind.Escape);
+
             Assert.False(book.Transfer("a", "b"));
+            Assert.True(book.TryGet("b", out Kind kind, out _, out _));
+            Assert.Equal(Kind.Escape, kind);
+        }
+
+        [Fact]
+        public void AFinishedObjectiveIsNotTransferred()
+        {
+            ObjectiveBook<Kind> book = new ObjectiveBook<Kind>();
+
+            book.Assign("a", Kind.Kill, 1);
+            book.Advance("a", Kind.Kill);
+
+            Assert.False(book.Transfer("a", "b"));
+            Assert.False(book.Has("b"));
             Assert.True(book.Has("a"));
         }
 

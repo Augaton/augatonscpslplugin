@@ -100,6 +100,7 @@ namespace Contracts
 
             offers.Remove(from);
             offers[to] = offer;
+            ShowContract(replacement.Replacement, offer);
         }
 
         public void OnDeath(PlayerDeathEventArgs ev)
@@ -248,6 +249,11 @@ namespace Contracts
 
             offers[player.UserId] = offer;
 
+            ShowContract(player, offer);
+        }
+
+        private void ShowContract(Player player, ContractOffer offer)
+        {
             plugin.Hints.Show(
                 player,
                 Text.Assigned.Replace("%OBJECTIVE%", ObjectiveOf(offer.Kind, offer.Target)).Replace("%REWARD%", offer.RewardLabel),
