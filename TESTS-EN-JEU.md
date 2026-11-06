@@ -157,6 +157,7 @@ A tester en premier : un defaut ici priverait des joueurs de role.
 - [ ] `Swift`, `Tiny` et `Tireless` agissent, et un renfort arrive avec le mutateur en moins de 3 secondes.
 - [ ] Une pilule qui rapetisse garde son effet avec `Tiny`.
 - [ ] Un mode de jeu force retire le mutateur, et aucun mutateur ne part pendant un mode.
+- [ ] `mutators stop` ne retire pas la vitesse d'un SCP monte de niveau.
 - [ ] Sur plusieurs rounds, jamais deux mutateurs de suite : le plugin reste discret.
 - [ ] `mutators force NightFall` : lumieres coupees tout le round, chaque humain recoit une seule lampe, et tout revient apres `mutators stop`.
 - [ ] `ScarceAmmo` et `ScarceMedical` : les objets disparaissent bien de la carte, sans saccade.
