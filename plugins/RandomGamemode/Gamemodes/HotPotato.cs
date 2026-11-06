@@ -31,6 +31,8 @@ namespace RandomGamemode.Gamemodes
         {
             yield return Timing.WaitForSeconds(3f);
 
+            KeepRoundOpen = true;
+
             int changed = 0;
 
             foreach (Player player in ReadyPlayers())
@@ -47,7 +49,6 @@ namespace RandomGamemode.Gamemodes
                     yield return Timing.WaitForOneFrame;
             }
 
-            KeepRoundOpen = true;
             Announce(Settings.Description);
 
             yield return Timing.WaitForSeconds(Config.HotPotatoPauseSeconds);

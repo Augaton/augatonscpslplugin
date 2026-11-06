@@ -33,6 +33,7 @@ namespace RandomGamemode.Gamemodes
             if (players.Count < 3)
                 yield break;
 
+            KeepRoundOpen = true;
             Chance.Shuffle(players);
 
             Player vip = players[0];
@@ -59,7 +60,6 @@ namespace RandomGamemode.Gamemodes
                     yield return Timing.WaitForOneFrame;
             }
 
-            KeepRoundOpen = true;
             Announce(Text.EscortStart.Replace("%PLAYER%", SafeText.Nickname(vip)));
 
             // Le jeu place le scientifique apres SetRole : sa position n'est juste qu'un instant plus tard.

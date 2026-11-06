@@ -35,6 +35,8 @@ namespace RandomGamemode.Gamemodes
             Player traitor = Chance.Pick(players);
             traitorUserId = traitor.UserId;
 
+            KeepRoundOpen = true;
+
             int changed = 0;
 
             foreach (Player player in players)
@@ -52,7 +54,6 @@ namespace RandomGamemode.Gamemodes
                     yield return Timing.WaitForOneFrame;
             }
 
-            KeepRoundOpen = true;
             Announce(Settings.Description);
             traitor.SendBroadcast(Text.TraitorSecret, 10);
 

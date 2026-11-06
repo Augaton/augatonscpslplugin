@@ -47,6 +47,8 @@ namespace RandomGamemode.Gamemodes
 
             LightArbiter.TintRoom(Interop.Owner, hill, color);
 
+            KeepRoundOpen = true;
+
             List<Player> players = ReadyPlayers();
             Chance.Shuffle(players);
 
@@ -64,7 +66,6 @@ namespace RandomGamemode.Gamemodes
                     yield return Timing.WaitForOneFrame;
             }
 
-            KeepRoundOpen = true;
             Announce(Text.KingOfTheHillRoom.Replace("%ROOM%", hill.Name.ToString()));
 
             int elapsed = 0;
