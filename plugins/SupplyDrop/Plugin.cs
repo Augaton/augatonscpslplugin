@@ -45,6 +45,7 @@ namespace SupplyDrop
 
             PluginBus.Subscribe(BusOwner, BusTopics.TeamWiped, OnTeamWiped);
             PluginBus.Subscribe(BusOwner, BusTopics.DropRequested, OnDropRequested);
+            PluginBus.Subscribe(BusOwner, BusTopics.RoundMutatorStarted, Service.OnMutatorStarted);
 
             SelfCheck.Register(Name, "point de largage en surface", () => Door.Get(DoorName.SurfaceNuke) is null ? "introuvable" : null);
 

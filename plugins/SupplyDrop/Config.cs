@@ -31,6 +31,12 @@ namespace SupplyDrop
         [Description("Chance ajoutee par niveau du Directeur du chaos, s'il est installe.")]
         public float TrapChancePerChaosLevel { get; set; } = 5f;
 
+        [Description("Objets ajoutes a chaque largage pendant le mutateur ScarceAmmo de RoundMutators.")]
+        public List<ItemType> ScarceAmmoBonus { get; set; } = new List<ItemType> { ItemType.Ammo9x19, ItemType.Ammo556x45, ItemType.Ammo762x39 };
+
+        [Description("Objets ajoutes a chaque largage pendant le mutateur ScarceMedical de RoundMutators.")]
+        public List<ItemType> ScarceMedicalBonus { get; set; } = new List<ItemType> { ItemType.Medkit, ItemType.Medkit, ItemType.Painkillers };
+
         [Description("Distance en metres a laquelle un humain declenche le piege.")]
         public float TrapRange { get; set; } = 4f;
 

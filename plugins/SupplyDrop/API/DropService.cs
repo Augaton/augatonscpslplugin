@@ -32,6 +32,7 @@ namespace SupplyDrop.API
 
         private CoroutineHandle scheduler;
         private bool running;
+        private string activeMutator;
         private int generatorsActivated;
         private readonly HashSet<Team> wipedTeams = new HashSet<Team>();
 
@@ -93,8 +94,15 @@ namespace SupplyDrop.API
             scheduler = Timing.RunCoroutine(Schedule(), Segment.FixedUpdate);
         }
 
+        public void OnMutatorStarted(BusMessage message)
+        {
+            if (message.TryGet(out RoundMutatorInfo info))
+                activeMutator = info.Key;
+        }
+
         public void Stop()
         {
+            activeMutator = null;
             generatorsActivated = 0;
             wipedTeams.Clear();
             if (running)
@@ -245,6 +253,8 @@ namespace SupplyDrop.API
 
                 PlacePills(profile, forcedPosition, anchor);
 
+                PlaceMutatorBonus(profile, forcedPosition, anchor);
+
                 PlaceBeacon(profile, forcedPosition ?? ResolveBeaconPosition(profile, anchor));
 
                 PluginBus.Publish(BusTopics.SupplyDropped, Plugin.BusOwner, profile.Key);
@@ -344,6 +354,24 @@ namespace SupplyDrop.API
             }
 
             return spawned;
+        }
+
+        // Le mutateur retire ces objets de la carte : les largages en rendent un peu, sans annuler la regle.
+        private void PlaceMutatorBonus(DropProfile profile, Vector3? forcedPosition, Vector3 anchor)
+        {
+            List<ItemType> bonus = activeMutator == "ScarceAmmo" ? Config.ScarceAmmoBonus
+                : activeMutator == "ScarceMedical" ? Config.ScarceMedicalBonus
+                : null;
+
+            if (bonus is null)
+                return;
+
+            foreach (ItemType type in bonus)
+            {
+                Vector3 origin = forcedPosition ?? ResolvePosition(profile, type, anchor);
+
+                SpawnPickup(type, Scatter(origin, profile.ScatterRadius) + (Vector3.up * Config.SpawnHeightOffset));
+            }
         }
 
         private void PlacePills(DropProfile profile, Vector3? forcedPosition, Vector3 anchor)
