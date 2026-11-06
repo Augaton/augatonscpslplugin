@@ -27,6 +27,7 @@ namespace BetterCoinflipsRewritten.Effects.Bad
                    !player.IsDestroyed &&
                    player.IsAlive &&
                    !Decontamination.IsDecontaminating &&
+                   !Warhead.IsDetonated &&
                    FindCells() is not null;
         }
 

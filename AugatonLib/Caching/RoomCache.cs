@@ -25,8 +25,13 @@ namespace AugatonLib.Caching
 
         public void Clear() => rooms.Clear();
 
+        // Toutes les salles gardees sont dans le complexe : apres l'ogive, un joueur de la surface y
+        // resterait bloque sans sortie.
         public Room PickRandom()
         {
+            if (Warhead.IsDetonated)
+                return null;
+
             if (rooms.Count == 0)
                 Rebuild();
 
