@@ -124,7 +124,7 @@ namespace SCPReplacer.API
 
             if (IsReplacementLimitReached())
             {
-                reason = "Limite de remplacements par round atteinte.";
+                reason = plugin.Translation.HumanCommandLimitReached;
                 return false;
             }
 
@@ -137,13 +137,13 @@ namespace SCPReplacer.API
 
             if (elapsedSeconds > plugin.Config.QuitCutoff)
             {
-                reason = "Le delai de remplacement est depasse.";
+                reason = plugin.Translation.HumanCommandTooLate;
                 return false;
             }
 
             if (scpPlayer.Health < requiredHealth)
             {
-                reason = "Le SCP a perdu trop de vie.";
+                reason = plugin.Translation.HumanCommandTooLowHealth;
                 return false;
             }
 

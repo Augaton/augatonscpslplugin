@@ -3,12 +3,18 @@ using AugatonLib.Arbitration;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
+using MEC;
 
 namespace SCPReplacer.Handlers
 {
     public sealed class ServerHandlers
     {
+        private const float ReminderDelaySeconds = 1f;
+
         private readonly Plugin plugin;
+
+        private CoroutineHandle reminder;
+        private bool reminderScheduled;
 
         public ServerHandlers(Plugin plugin) => this.plugin = plugin;
 
@@ -22,6 +28,34 @@ namespace SCPReplacer.Handlers
                 if (plugin.Config.HumanHintDuration == 0 || !plugin.Config.AllowHumanCommand)
                     return;
 
+                // Un mode de jeu part sur le meme evenement : un instant plus tard, on sait s'il coupe .human.
+                CancelReminder();
+                reminderScheduled = true;
+                reminder = Timing.CallDelayed(ReminderDelaySeconds, SendReminder);
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"OnRoundStarted: {e}");
+            }
+        }
+
+        public void CancelReminder()
+        {
+            if (reminderScheduled)
+                Timing.KillCoroutines(reminder);
+
+            reminderScheduled = false;
+        }
+
+        private void SendReminder()
+        {
+            reminderScheduled = false;
+
+            try
+            {
+                if (plugin.Service.IsSuspended)
+                    return;
+
                 foreach (Player player in Player.ReadyList)
                 {
                     if (!player.IsSCP)
@@ -32,7 +66,7 @@ namespace SCPReplacer.Handlers
             }
             catch (Exception e)
             {
-                Logger.Error($"OnRoundStarted: {e}");
+                Logger.Error($"SendReminder: {e}");
             }
         }
 
@@ -62,6 +96,7 @@ namespace SCPReplacer.Handlers
         {
             try
             {
+                CancelReminder();
                 plugin.Service.Reset();
                 plugin.Service.GamemodeActive = false;
                 plugin.Cooldowns.Clear();

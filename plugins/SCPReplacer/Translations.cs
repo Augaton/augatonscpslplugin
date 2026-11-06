@@ -61,6 +61,9 @@ namespace SCPReplacer
         [Description("Reponse de .human et .volunteer pendant un mode de jeu.")]
         public string GamemodeActiveMessage { get; set; } = "Indisponible pendant un mode de jeu.";
 
+        [Description("Reponse de .human quand la limite de remplacements du round est atteinte.")]
+        public string HumanCommandLimitReached { get; set; } = "Limite de remplacements par round atteinte.";
+
         [Description("Reponse de .human quand personne ne pourrait reprendre le role.")]
         public string HumanCommandUnavailable { get; set; } = "Votre role ne peut pas etre repris pour le moment.";
 

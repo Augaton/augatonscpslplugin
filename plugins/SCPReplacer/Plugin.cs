@@ -59,6 +59,7 @@ namespace SCPReplacer
                 ServerEvents.RoundEnded -= serverHandlers.OnRoundEnded;
                 ServerEvents.RoundRestarted -= serverHandlers.OnRoundRestarted;
                 PlayerDeparture.Departing -= serverHandlers.OnDeparting;
+                serverHandlers.CancelReminder();
             }
 
             Service?.Reset();
