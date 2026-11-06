@@ -170,7 +170,7 @@ namespace SupplyDrop
 
         private void OnDropRequested(BusMessage message)
         {
-            if (Service is null || !Round.IsRoundInProgress)
+            if (Service is null || !Round.IsRoundInProgress || (Config.PauseDuringGamemodes && WorldEvents.IsPaused))
                 return;
 
             DropProfile profile = Service.Find(message.Text);

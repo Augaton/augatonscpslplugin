@@ -66,6 +66,11 @@ namespace BetterCoinflipsRewritten
 
             goodEffects.Add(
                 new WeightedEffect(
+                    new SurpriseDropEffect(),
+                    plugin.Config.SurpriseDropChance));
+
+            goodEffects.Add(
+                new WeightedEffect(
                     new MedicalKitEffect(),
                     plugin.Config.MedicalKitChance));
 
@@ -167,6 +172,11 @@ namespace BetterCoinflipsRewritten
                 new WeightedEffect(
                     new FalseAlarmEffect(),
                     plugin.Config.FalseAlarmChance));
+
+            badEffects.Add(
+                new WeightedEffect(
+                    new TriggerIncidentEffect(),
+                    plugin.Config.TriggerIncidentChance));
 
             badEffects.Add(
                 new WeightedEffect(

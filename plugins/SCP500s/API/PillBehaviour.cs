@@ -24,5 +24,7 @@ namespace SCP500s.API
         Census,
         ScpRadar,
         KeycardUpgrade,
+        TriggerIncident,
+        SurpriseDrop,
     }
 }

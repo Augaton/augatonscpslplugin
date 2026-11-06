@@ -285,6 +285,18 @@ namespace BetterCoinflipsRewritten
         [Description("Poids de l'effet fausse alerte. Il touche tout le site et passe donc par facility_effect_cooldown.")]
         public int FalseAlarmChance { get; set; } = 5;
 
+        [Description("Poids de l'effet incident provoque, avec SiteIncidents. Il touche tout le site et passe donc par facility_effect_cooldown.")]
+        public int TriggerIncidentChance { get; set; } = 5;
+
+        [Description("Incidents que cet effet peut provoquer.")]
+        public List<string> CoinIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "GasLeak", "TeslaSurge" };
+
+        [Description("Poids de l'effet largage surprise, avec SupplyDrop. Il touche tout le site et passe donc par facility_effect_cooldown.")]
+        public int SurpriseDropChance { get; set; } = 3;
+
+        [Description("Profils de largage que cet effet peut appeler.")]
+        public List<string> SurpriseDropProfiles { get; set; } = new List<string> { "mtf", "chaos" };
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 

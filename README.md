@@ -57,7 +57,7 @@ Trente et un plugins et une bibliothèque partagée pour **SCP: Secret Laborator
 | [Scp261](plugins/Scp261) | 2.0.1 | Machine distributrice : une pièce contre un résultat au hasard |
 | [Scp914Recipes](plugins/Scp914Recipes) | 1.0.0 | Recettes de SCP-914 réglables en config |
 | [SCP1162](plugins/SCP1162) | 3.1.0 | Le trou dans le mur : échange un objet contre un autre |
-| [SCP500s](plugins/SCP500s) | 7.1.0 | 44 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
+| [SCP500s](plugins/SCP500s) | 7.1.0 | 62 pilules personnalisées, dont une roulette, renouvelées de plus en plus vite au fil du round |
 | [ScpLevels](plugins/ScpLevels) | 1.0.0 | Les SCP montent de niveau en tuant |
 | [ScpProximityChat](plugins/ScpProximityChat) | 3.1.0 | Permet aux SCP de parler aux joueurs proches |
 | [SCPReplacer](plugins/SCPReplacer) | 3.1.0 | Loterie de volontaires pour reprendre un SCP parti |

@@ -398,6 +398,8 @@ namespace SCP500s
             Config.IgnoredRoles = Replace(nameof(Config.IgnoredRoles), Config.IgnoredRoles);
             Config.ForceWaveFactions = Replace(nameof(Config.ForceWaveFactions), Config.ForceWaveFactions);
             Config.CassieLines = Replace(nameof(Config.CassieLines), Config.CassieLines);
+            Config.PillIncidents = Replace(nameof(Config.PillIncidents), Config.PillIncidents);
+            Config.PillDropProfiles = Replace(nameof(Config.PillDropProfiles), Config.PillDropProfiles);
             Config.RandomOnlyPills = Replace(nameof(Config.RandomOnlyPills), Config.RandomOnlyPills);
             Config.KeycardUpgradePath = Replace(nameof(Config.KeycardUpgradePath), Config.KeycardUpgradePath);
         }

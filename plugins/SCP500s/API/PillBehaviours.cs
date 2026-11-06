@@ -2,7 +2,9 @@ using AugatonLib.World;
 using System.Collections.Generic;
 using System.Text;
 using AugatonLib.Arbitration;
+using AugatonLib.Bus;
 using AugatonLib.Random;
+using AugatonLib.Runtime;
 using AugatonLib.Text;
 using Cassie;
 using Footprinting;
@@ -90,7 +92,25 @@ namespace SCP500s.API
                 case PillBehaviour.Census: Census(player); return;
                 case PillBehaviour.ScpRadar: ScpRadar(player); return;
                 case PillBehaviour.KeycardUpgrade: KeycardUpgrade(player, sourceKey); return;
+                case PillBehaviour.TriggerIncident: Request(BusTopics.IncidentRequested, Config.PillIncidents); return;
+                case PillBehaviour.SurpriseDrop: Request(BusTopics.DropRequested, Config.PillDropProfiles); return;
             }
+        }
+
+        public static bool HasTarget(PillBehaviour behaviour)
+        {
+            switch (behaviour)
+            {
+                case PillBehaviour.TriggerIncident: return PluginDirectory.IsRegistered("SiteIncidents");
+                case PillBehaviour.SurpriseDrop: return PluginDirectory.IsRegistered("SupplyDrop");
+                default: return true;
+            }
+        }
+
+        private static void Request(string topic, List<string> choices)
+        {
+            if (choices.Count > 0)
+                PluginBus.Publish(topic, Interop.Owner, Chance.Pick(choices));
         }
 
         private static void AmmoRefill(Player player)

@@ -162,6 +162,10 @@ namespace SCP500s.API
 
         public const string Lamp = "<color=#FFFACD>Un peu de lumiere dans le noir.</color>";
 
+        public const string Incident = "<color=#FA8072>Un grondement parcourt le site. Qu'avez-vous avale ?</color>";
+
+        public const string SurpriseDrop = "<color=#66CDAA>Le gout du metal, puis un bruit de rotors au loin.</color>";
+
         public const string Clairvoyance = "<color=#E0FFFF>Le brouillard se dissipe devant vos yeux.</color>";
     }
 }

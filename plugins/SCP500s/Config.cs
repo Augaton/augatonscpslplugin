@@ -198,6 +198,12 @@ namespace SCP500s
         [Description("Duree en secondes de la coupure de lumiere.")]
         public float BlackoutDuration { get; set; } = 20f;
 
+        [Description("Incidents de SiteIncidents que la pilule d'incident peut provoquer.")]
+        public List<string> PillIncidents { get; set; } = new List<string> { "Blackout", "Alert", "Lockdown", "GasLeak", "TeslaSurge" };
+
+        [Description("Profils de SupplyDrop que la pilule de largage peut appeler.")]
+        public List<string> PillDropProfiles { get; set; } = new List<string> { "mtf", "chaos" };
+
         [Description("Duree en secondes de la recoloration des lumieres d'une salle.")]
         public float DiscoDuration { get; set; } = 30f;
 

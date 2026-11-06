@@ -88,6 +88,10 @@ detecteur sans SCP. La seconde chance ne vaut que pour le role en cours.
 `disco_lights`, `mice_invasion` et `cassie_mock` touchent tout le serveur : ils
 passent par `facility_effect_cooldown`, comme `lights_out`.
 
+`trigger_incident` demande a SiteIncidents un incident tire dans `coin_incidents`, et `surprise_drop` demande a
+SupplyDrop un largage tire dans `surprise_drop_profiles`. Sans ces plugins, ou pendant un mode de jeu, ces effets ne
+sont pas tires. Ils passent aussi par `facility_effect_cooldown`.
+
 `position_swap` deplace un second joueur, qui recoit son propre message. Son
 poids reste bas pour cette raison.
 

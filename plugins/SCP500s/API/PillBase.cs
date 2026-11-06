@@ -34,7 +34,7 @@ namespace SCP500s.API
 
         public string Key => Definition.Key;
 
-        public int SpawnWeight => IsRandomOnly ? 0 : Definition.SpawnWeight;
+        public int SpawnWeight => IsRandomOnly || !PillBehaviours.HasTarget(Definition.Behaviour) ? 0 : Definition.SpawnWeight;
 
         public int MaxPerRound => Definition.MaxPerRound;
 

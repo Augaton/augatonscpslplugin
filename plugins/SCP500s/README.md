@@ -4,7 +4,7 @@
 > Portage LabAPI d'un plugin de **VividZap, Lumi**. Depot non affilie a
 > l'auteur d'origine. Voir [NOTICE.md](NOTICE.md) pour l'attribution.
 
-44 pilules SCP-500 personnalisees. LabAPI n'ayant pas d'objets personnalises, le
+62 pilules SCP-500 personnalisees. LabAPI n'ayant pas d'objets personnalises, le
 plugin suit lui-meme les numeros de serie, qui survivent au passage objet / pickup.
 
 ## Ce qui change en 7.0
@@ -228,6 +228,8 @@ choisi dans une liste fermee :
 | `Blackout` | Coupe les lumieres de la zone du joueur |
 | `DiscoLights` | Repeint les lumieres de la salle, puis les restaure |
 | `Mice` | Fait apparaitre des souris dans l'abri |
+| `TriggerIncident` | Demande a SiteIncidents un incident tire dans `pill_incidents` |
+| `SurpriseDrop` | Demande a SupplyDrop un largage tire dans `pill_drop_profiles` |
 | `Tantrum` | Laisse une flaque de SCP-173 |
 | `Fireworks` | Explosion purement decorative |
 | `Contagion` | Applique les effets de la pilule a tout le monde autour |
@@ -236,6 +238,9 @@ choisi dans une liste fermee :
 | `Census` | Affiche le nombre de survivants de chaque camp |
 | `ScpRadar` | Liste les SCP en vie et leur distance (`radar_max_entries`) |
 | `KeycardUpgrade` | Remplace la meilleure carte d'acces par la suivante de `keycard_upgrade_path` |
+
+`TriggerIncident` et `SurpriseDrop` ne sont pas tirees en remplacement du butin sans SiteIncidents ou SupplyDrop. Placees
+sur un point d'apparition, elles se consomment alors sans effet.
 
 Mettre `is_enabled: false` sur une entree la desinscrit completement : ni
 enregistrement, ni spawn.
@@ -284,7 +289,7 @@ logs.
 ## Halo
 
 Chaque pilule a sa propre couleur, declaree en hexadecimal dans sa definition.
-Les 44 couleurs par defaut sont distinctes ; le plugin previent au demarrage si
+Les 62 couleurs par defaut sont distinctes ; le plugin previent au demarrage si
 deux entrees partagent une couleur.
 
 Le systeme est centralise : un seul abonnement a `ItemPickupBase.OnPickupAdded`

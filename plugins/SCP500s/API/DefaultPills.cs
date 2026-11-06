@@ -871,6 +871,30 @@ namespace SCP500s.API
                 },
                 new PillDefinition
                 {
+                    Id = 76,
+                    Key = "incident",
+                    DisplayName = "SCP500-Incident",
+                    Description = "Provoque un incident de site, avec SiteIncidents.",
+                    GlowColor = "#FA8072",
+                    SpawnWeight = 6,
+                    MaxPerRound = 1,
+                    Message = Messages.Incident,
+                    Behaviour = PillBehaviour.TriggerIncident,
+                },
+                new PillDefinition
+                {
+                    Id = 77,
+                    Key = "largage",
+                    DisplayName = "SCP500-Largage",
+                    Description = "Appelle un largage de ravitaillement, avec SupplyDrop.",
+                    GlowColor = "#66CDAA",
+                    SpawnWeight = 4,
+                    MaxPerRound = 1,
+                    Message = Messages.SurpriseDrop,
+                    Behaviour = PillBehaviour.SurpriseDrop,
+                },
+                new PillDefinition
+                {
                     Id = 99,
                     Key = "chaos",
                     DisplayName = "SCP500-Roulette",
