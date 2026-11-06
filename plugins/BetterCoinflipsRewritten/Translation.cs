@@ -252,6 +252,10 @@ namespace BetterCoinflipsRewritten
         public string GroupHealEffectMessage { get; set; } =
             "Une onde de soin touche {count} joueur(s) autour de vous.";
 
+        [Description("Message de l'effet detecteur. {distance} est la distance du SCP le plus proche, en metres.")]
+        public string DetectorEffectMessage { get; set; } =
+            "Le SCP le plus proche est a {distance} m.";
+
         [Description("Message de la fausse explosion.")]
         public string FakeExplosionEffectMessage { get; set; } =
             "Une explosion vous a traverse sans une egratignure.";

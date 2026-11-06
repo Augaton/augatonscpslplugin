@@ -267,6 +267,9 @@ namespace BetterCoinflipsRewritten
         [Description("Portee du soin de groupe, en metres.")]
         public float GroupHealRange { get; set; } = 8f;
 
+        [Description("Poids de l'effet detecteur. Il n'est tire que si un SCP est en jeu.")]
+        public int DetectorChance { get; set; } = 6;
+
         [Description("Fait reapparaitre des pieces sur la carte pendant le round, dans des emplacements surs, loin des joueurs.")]
         public bool CoinRenewal { get; set; } = true;
 
