@@ -123,6 +123,7 @@ namespace RandomGamemode
 
         protected override void ValidateConfig()
         {
+            Config.HeldRoundLimitSeconds = AtLeast("held_round_limit_seconds", Config.HeldRoundLimitSeconds, 60f);
             Config.VoteReminderSeconds = AtLeast("vote_reminder_seconds", Config.VoteReminderSeconds, 5f);
             Config.VoteCommandCooldownSeconds = AtLeast("vote_command_cooldown_seconds", Config.VoteCommandCooldownSeconds, 0.5f);
 

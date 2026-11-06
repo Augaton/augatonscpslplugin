@@ -121,18 +121,21 @@ namespace RandomGamemode.API
             if (ev is null)
                 return;
 
-            if (KeepRoundOpen || (PlaysToLastStanding && CountAlive() > 1))
+            if (IsHoldingRound)
                 ev.CanEnd = false;
             else if (PlaysToLastStanding && ev.CanEnd)
                 NameLastStanding();
         }
+
+        // Sans joueur connecte, plus rien ne pourrait terminer un mode qui retient le round.
+        public bool IsHoldingRound => Player.Count > 0 && (KeepRoundOpen || (PlaysToLastStanding && CountAlive() > 1));
 
         // Le jeu termine seul un round a un survivant : aucun mode ne le nomme, et il peut deja avoir un vainqueur.
         private static void NameLastStanding()
         {
             foreach (Player player in Player.ReadyList)
             {
-                if (player is null || !player.IsAlive)
+                if (!IsContender(player))
                     continue;
 
                 if (Plugin.Instance.Registry.DeclareWinner(player))
@@ -245,11 +248,17 @@ namespace RandomGamemode.API
 
             foreach (Player player in Player.ReadyList)
             {
-                if (player is not null && player.IsAlive)
+                if (IsContender(player))
                     alive++;
             }
 
             return alive;
+        }
+
+        // Un membre du staff en Tutorial ou un dummy ne doit pas retenir un round a lui seul.
+        private static bool IsContender(Player player)
+        {
+            return player is not null && player.IsAlive && !player.IsTutorial && !player.IsDummy;
         }
 
         protected static void EndRound(string message)

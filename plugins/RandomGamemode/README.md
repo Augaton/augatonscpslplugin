@@ -167,6 +167,10 @@ modes sont proposes et les joueurs votent dans la console `~` : `.votemode` list
 `.votemode 2` vote, et `.vm` est un alias. Le mode le plus vote demarre, avec un tirage en cas
 d'egalite. Sans vote, ou si aucun choix ne peut demarrer, le tirage pondere habituel s'applique.
 
+Un mode qui retient le round ne peut pas le bloquer : il cesse de le retenir sans joueur connecte, et il y met fin apres
+`held_round_limit_seconds` secondes, `900` par defaut, s'il n'a pas de `round_time_limit`. Les joueurs en Tutorial et les
+dummies ne comptent pas comme survivants.
+
 Le dernier mode joue n'est ni propose au vote ni retire au sort, sauf s'il est le seul possible. `gamemode force`
 reste libre.
 

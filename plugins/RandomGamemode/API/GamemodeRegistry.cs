@@ -292,23 +292,25 @@ namespace RandomGamemode.API
             if (Active != gamemode)
                 return;
 
-            if (gamemode.Settings.RoundTimeLimit > 0f)
-            {
-                limitScheduled = true;
-                limitHandle = Timing.CallDelayed(gamemode.Settings.RoundTimeLimit, () =>
-                {
-                    limitScheduled = false;
+            bool hasLimit = gamemode.Settings.RoundTimeLimit > 0f;
 
-                    try
-                    {
+            limitScheduled = true;
+            limitHandle = Timing.CallDelayed(hasLimit ? gamemode.Settings.RoundTimeLimit : Config.HeldRoundLimitSeconds, () =>
+            {
+                limitScheduled = false;
+
+                try
+                {
+                    // Sans limite propre, seul un mode qui retient encore le round est arrete : deux joueurs d'accord
+                    // pour ne pas se battre, ou une salle que personne ne tient, ne figent pas le serveur.
+                    if (hasLimit || gamemode.IsHoldingRound)
                         ForceRoundEnd();
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Error($"Limite de temps du mode {gamemode.Key} : {e}");
-                    }
-                });
-            }
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Limite de temps du mode {gamemode.Key} : {e}");
+                }
+            });
 
             PluginBus.Publish(BusTopics.GamemodeStarted, Owner, gamemode.DisplayName);
 

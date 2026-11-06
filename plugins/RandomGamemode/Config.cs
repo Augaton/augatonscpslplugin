@@ -23,6 +23,9 @@ namespace RandomGamemode
         [Description("Duree du broadcast de vote, en secondes.")]
         public ushort VoteBroadcastDuration { get; set; } = 10;
 
+        [Description("Secondes apres lesquelles un mode sans limite propre qui retient encore le round y met fin, 60 au plus bas.")]
+        public float HeldRoundLimitSeconds { get; set; } = 900f;
+
         [Description("Delai minimal en secondes entre deux rappels du vote dans le lobby de WarmupLobby, 5 au plus bas.")]
         public float VoteReminderSeconds { get; set; } = 30f;
 
