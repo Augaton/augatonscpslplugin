@@ -20,6 +20,12 @@
     <Reference Include="UnityEngine.PhysicsModule" HintPath="$(SL_REFERENCES)/UnityEngine.PhysicsModule.dll" Private="false" />
   </ItemGroup>
 
+  <!-- Une DLL peut etre telechargee seule depuis une release : sa licence doit l'accompagner. -->
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildProjectDirectory)/LICENSE" LogicalName="LICENSE" Condition="Exists('$(MSBuildProjectDirectory)/LICENSE')" />
+    <EmbeddedResource Include="$(MSBuildProjectDirectory)/LICENSE.txt" LogicalName="LICENSE.txt" Condition="Exists('$(MSBuildProjectDirectory)/LICENSE.txt')" />
+  </ItemGroup>
+
   <ItemGroup Condition=" '$(MSBuildProjectName)' != 'AugatonLib' And '$(UseAugatonLib)' != 'false' ">
     <ProjectReference Include="$(MSBuildThisFileDirectory)AugatonLib/AugatonLib.csproj" Private="false" />
   </ItemGroup>
