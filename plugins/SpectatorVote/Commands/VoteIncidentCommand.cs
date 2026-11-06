@@ -54,6 +54,14 @@ namespace SpectatorVote.Commands
                 return false;
             }
 
+            if (service.Cooldowns.IsOnCooldown(player.UserId, plugin.Config.VoteCommandCooldownSeconds, out _))
+            {
+                response = text.VoteTooFast;
+                return false;
+            }
+
+            service.Cooldowns.Register(player.UserId);
+
             if (arguments.Count == 0)
             {
                 response = service.DescribeOptions();
@@ -65,14 +73,6 @@ namespace SpectatorVote.Commands
                 response = text.SpectatorsOnly;
                 return false;
             }
-
-            if (service.Cooldowns.IsOnCooldown(player.UserId, plugin.Config.VoteCommandCooldownSeconds, out _))
-            {
-                response = text.VoteTooFast;
-                return false;
-            }
-
-            service.Cooldowns.Register(player.UserId);
 
             if (!int.TryParse(arguments.At(0), out int choice) || !service.Cast(player, choice, out string label))
             {
