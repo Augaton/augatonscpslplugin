@@ -17,6 +17,7 @@
     <Project Path="plugins/Scp261/Scp261.csproj" />
     <Project Path="plugins/SCP500s/SCP500s.csproj" />
     <Project Path="plugins/Scp914Recipes/Scp914Recipes.csproj" />
+    <Project Path="plugins/ScpLevels/ScpLevels.csproj" />
     <Project Path="plugins/ScpProximityChat/ScpProximityChat.csproj" />
     <Project Path="plugins/SCPReplacer/SCPReplacer.csproj" />
     <Project Path="plugins/ScpScaling/ScpScaling.csproj" />

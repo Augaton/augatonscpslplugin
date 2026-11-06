@@ -39,6 +39,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("Scp261", "Scp261", "machine distributrice"),
             new KnownPlugin("SCP500s", "SCP500s", "pilules SCP-500"),
             new KnownPlugin("Scp914Recipes", "Scp914Recipes", "recettes SCP-914"),
+            new KnownPlugin("ScpLevels", "ScpLevels", "niveaux des SCP"),
             new KnownPlugin("ScpProximityChat", "ScpProximityChat", "proximite SCP"),
             new KnownPlugin("SCPReplacer", "SCPReplacer", "volontariat SCP"),
             new KnownPlugin("ScpScaling", "ScpScaling", "PV des SCP selon les joueurs"),
