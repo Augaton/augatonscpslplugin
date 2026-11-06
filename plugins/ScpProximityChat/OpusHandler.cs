@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AugatonLib.Caching;
 using LabApi.Features.Wrappers;
 using VoiceChat.Codec;
 using VoiceChat.Codec.Enums;
@@ -10,6 +11,9 @@ namespace ScpProximityChat
     {
         public const int SampleBufferSize = 480;
         public const int EncodedBufferSize = 512;
+
+        // Un client normal envoie 100 paquets par seconde, et le jeu en tolere 256.
+        public const int MaxPacketsPerSecond = 120;
 
         private static readonly Dictionary<string, OpusHandler> Handlers = new Dictionary<string, OpusHandler>();
 
@@ -22,6 +26,8 @@ namespace ScpProximityChat
         public float[] SampleBuffer { get; } = new float[SampleBufferSize];
 
         public byte[] EncodedBuffer { get; } = new byte[EncodedBufferSize];
+
+        public RateWindow Packets { get; } = new RateWindow();
 
         public static OpusHandler Get(Player player)
         {

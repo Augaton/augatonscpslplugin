@@ -124,6 +124,10 @@ namespace ScpProximityChat.Handlers
                 if (listeners.Count == 0)
                     return;
 
+                // Le decodage tourne sur le fil principal : un client hostile ne doit pas pouvoir l'occuper au debit maximal.
+                if (!opusHandler.Packets.TryTake(Time.realtimeSinceStartup, OpusHandler.MaxPacketsPerSecond))
+                    return;
+
                 float gain = Mathf.Clamp(settings.Volume, 0f, settings.MaxVolume);
                 float[] samples = opusHandler.SampleBuffer;
 
@@ -143,7 +147,8 @@ namespace ScpProximityChat.Handlers
             }
             catch (OpusException e)
             {
-                Logger.Debug($"OnSendingVoiceMessage: paquet voix invalide ignore ({e.Message}).", config.Debug);
+                if (config.Debug)
+                    Logger.Debug($"OnSendingVoiceMessage: paquet voix invalide ignore ({e.Message}).", config.Debug);
             }
             catch (Exception e)
             {
