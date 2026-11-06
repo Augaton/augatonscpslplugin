@@ -45,6 +45,7 @@ namespace AugatonLib.Runtime
             new KnownPlugin("SCPReplacer", "SCPReplacer", "volontariat SCP"),
             new KnownPlugin("ScpScaling", "ScpScaling", "PV des SCP selon les joueurs"),
             new KnownPlugin("SiteIncidents", "SiteIncidents", "incidents de site"),
+            new KnownPlugin("SpectatorVote", "SpectatorVote", "vote des spectateurs"),
             new KnownPlugin("Streaks", "Streaks", "series de kills"),
             new KnownPlugin("SupplyDrop", "SupplyDrop", "largages"),
             new KnownPlugin("TeamGenocide", "TeamGenocide", "extinction d'equipe"),
