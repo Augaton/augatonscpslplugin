@@ -26,6 +26,7 @@ namespace Contracts
         private readonly ObjectiveBook<ContractKind> book = new ObjectiveBook<ContractKind>();
         private readonly Dictionary<string, ContractOffer> offers = new Dictionary<string, ContractOffer>();
         private readonly Dictionary<string, int> completed = new Dictionary<string, int>();
+        private readonly HashSet<(string, Generator)> activatedGenerators = new HashSet<(string, Generator)>();
         private readonly Dictionary<string, float> followUps = new Dictionary<string, float>();
 
         private CoroutineHandle loop;
@@ -61,6 +62,7 @@ namespace Contracts
             offers.Clear();
             completed.Clear();
             followUps.Clear();
+            activatedGenerators.Clear();
         }
 
         public string CheckRewards()
@@ -111,7 +113,7 @@ namespace Contracts
         {
             try
             {
-                Player killer = ev?.Attacker;
+                Player killer = ev?.Attacker ?? PocketKills.ScpBehind(ev);
 
                 if (killer is null || killer == ev.Player || !IsHolder(killer))
                     return;
@@ -141,7 +143,9 @@ namespace Contracts
         {
             try
             {
-                Advance(ev?.Player, ContractKind.ActivateGenerators);
+                // ActivatedGenerator repart a chaque remise en marche : relancer le meme generateur ne compte pas.
+                if (ev?.Player is not null && activatedGenerators.Add((ev.Player.UserId, ev.Generator)))
+                    Advance(ev.Player, ContractKind.ActivateGenerators);
             }
             catch (Exception e)
             {

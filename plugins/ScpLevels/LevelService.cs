@@ -4,6 +4,7 @@ using AugatonLib.Arcade;
 using AugatonLib.Bus;
 using AugatonLib.Runtime;
 using AugatonLib.Text;
+using AugatonLib.World;
 using CustomPlayerEffects;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Console;
@@ -170,18 +171,9 @@ namespace ScpLevels
                 plugin.Hints.Show(scp, text, Config.HintDuration);
         }
 
-        // La decomposition n'a pas de tueur : sans cela, SCP-106 ne monterait presque jamais de niveau.
-        private static Player FindPocketKiller(PlayerDeathEventArgs ev)
-        {
-            if (ev?.DamageHandler is not UniversalDamageHandler handler || handler.TranslationId != DeathTranslations.PocketDecay.Id)
-                return null;
-
-            return FirstWithRole(RoleTypeId.Scp106);
-        }
-
         private Player CreditedScp(PlayerDeathEventArgs ev)
         {
-            Player killer = ev?.Attacker ?? FindPocketKiller(ev);
+            Player killer = ev?.Attacker ?? PocketKills.ScpBehind(ev);
 
             if (killer?.Role == RoleTypeId.Scp0492 && Config.ZombieKillsFeedScp049)
                 return FirstWithRole(RoleTypeId.Scp049) ?? killer;
